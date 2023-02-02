@@ -11,13 +11,16 @@ public class OmaMoottori extends Moottori{
 	
 	
 	public OmaMoottori(){
-			
-		palvelupisteet = new Palvelupiste[3];
-	
-		palvelupisteet[0]=new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.DEP1);	
-		palvelupisteet[1]=new Palvelupiste(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.DEP2);
-		palvelupisteet[2]=new Palvelupiste(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.DEP3);
-		saapumisprosessi = new Saapumisprosessi(new Negexp(15,5),tapahtumalista,TapahtumanTyyppi.ARR1);
+		palvelupisteet = new Palvelupiste[4];
+		//Palvelutiski on Palvelupisteen alaluokka.
+		palvelupisteet[0]=new Palvelutiski(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.PAASAAPUMINEN);
+
+		//Jätepalvelut
+		palvelupisteet[1]=new Jatelava(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.ELEKTRONIIKKA);
+		palvelupisteet[2]=new Jatelava(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.PALAMATONJATE);
+		palvelupisteet[3]=new Jatelava(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.PALAVAJATE);
+
+		saapumisprosessi = new Saapumisprosessi(new Negexp(15,5),tapahtumalista,TapahtumanTyyppi.PAASAAPUMINEN);
 	}
 
 	
@@ -32,23 +35,30 @@ public class OmaMoottori extends Moottori{
 		Asiakas a;
 		switch (t.getTyyppi()){
 			
-			case ARR1: palvelupisteet[0].lisaaJonoon(new Asiakas());	
-				       saapumisprosessi.generoiSeuraava();	
+			case PAASAAPUMINEN:
+				palvelupisteet[0].lisaaJonoon(new Asiakas());
+				saapumisprosessi.generoiSeuraava();
 				break;
-			case DEP1: a = palvelupisteet[0].otaJonosta();
-				   	   palvelupisteet[1].lisaaJonoon(a);
+			case ELEKTRONIIKKA: a = palvelupisteet[0].otaJonosta();
+				palvelupisteet[1].lisaaJonoon(a);
 				break;
-			case DEP2: a = palvelupisteet[1].otaJonosta();
-				   	   palvelupisteet[2].lisaaJonoon(a); 
-				break;  
-			case DEP3: 
-				       a = palvelupisteet[2].otaJonosta();
-					   a.setPoistumisaika(Kello.getInstance().getAika());
-			           a.raportti(); 
-		}	
+			case PALAMATONJATE: a = palvelupisteet[1].otaJonosta();
+				palvelupisteet[2].lisaaJonoon(a);
+				break;
+			case PALAVAJATE:
+				a = palvelupisteet[2].otaJonosta();
+				a.setPoistumisaika(Kello.getInstance().getAika());
+				a.raportti();
+				break;
+//			case POISTUMINEN:
+//				a = palvelupisteet[2].otaJonosta();
+//				a.setPoistumisaika(Kello.getInstance().getAika());
+//				a.raportti();
+//				break;
+
+		}
 	}
 
-	
 	@Override
 	protected void tulokset() {	
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());

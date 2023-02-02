@@ -8,6 +8,7 @@ public class Saapumisprosessi {
 	private Tapahtumalista tapahtumalista;
 	private TapahtumanTyyppi tyyppi;
 
+	//TapahtumanTyyppi = Luo pääsaapumisen
 	public Saapumisprosessi(ContinuousGenerator g, Tapahtumalista tl, TapahtumanTyyppi tyyppi){
 		this.generaattori = g;
 		this.tapahtumalista = tl;
@@ -15,6 +16,7 @@ public class Saapumisprosessi {
 	}
 
 	public void generoiSeuraava(){
+		//Luo uuden pääsaapumistapahtuman
 		Tapahtuma t = new Tapahtuma(tyyppi, Kello.getInstance().getAika()+generaattori.sample());
 		tapahtumalista.lisaa(t);
 	}
