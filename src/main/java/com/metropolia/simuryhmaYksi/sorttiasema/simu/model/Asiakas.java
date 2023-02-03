@@ -2,8 +2,9 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.model;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
+import java.util.LinkedList;
 
 
 // TODO:
@@ -14,14 +15,14 @@ public class Asiakas {
 	private int id;
 	private static int i = 1;
 	private static long sum = 0;
-
-	private final ArrayList<Jate> jatteet = new ArrayList<>(Arrays.asList(new Jate(Jatelaji.ELEKTRONIIKKA,
-			(int) 1+ Math.random()*100), new Jate(Jatelaji.PALAMATONAJATE,10), new Jate(Jatelaji.PALAVAJATE,10)));
+	private String[] status = {"palvelutiskillä", "elektroniikka", "palamaton", "palava", "poistuu"};
+	private LinkedList<Jate> jatteet = new LinkedList<>(Arrays.asList(new Jate(Jatelaji.ELEKTRONIIKKA,
+			30), new Jate(Jatelaji.PALAMATONAJATE,20), new Jate(Jatelaji.PALAVAJATE,10)));
 	
 	public Asiakas(){
 	    id = i++;
 		saapumisaika = Kello.getInstance().getAika();
-		jatteet.forEach(jate -> System.out.println(jate));
+		//jatteet.forEach(jate -> System.out.println(jate));
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo "+saapumisaika);
 	}
 
@@ -55,7 +56,11 @@ public class Asiakas {
 		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti "+ keskiarvo);
 	}
 
-	public ArrayList<Jate> getJatteet() {
+	public LinkedList<Jate> getJatteet() {
 		return jatteet;
+	}
+
+	public void status(int i){
+		System.out.println("STATUS: " +  status[i] + ", ID: " + this.id);
 	}
 }
