@@ -11,9 +11,9 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.model;
 //}
 
 public enum TapahtumanTyyppi{
-	PAASAAPUMINEN, // Asiakas menee tiskille tai jonoon
-	ELEKTRONIIKKA,
-	PALAMATONJATE,
-	PALAVAJATE,
+	PAA_SAAPUMINEN, // Asiakas menee tiskille tai jonoon
+	ELEKTRONIIKKA_SAAPUMINEN,
+	PALAMATONJATE_SAAPUMINEN,
+	PALAVAJATE_SAAPUMINEN,
 	POISTUMINEN
 }
