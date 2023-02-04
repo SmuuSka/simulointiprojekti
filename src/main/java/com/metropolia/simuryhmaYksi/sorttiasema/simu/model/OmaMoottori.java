@@ -12,7 +12,8 @@ public class OmaMoottori extends Moottori{
 	
 	public OmaMoottori(){
 		palvelupisteet = new Palvelupiste[4];
-		//Palvelutiski on Palvelupisteen alaluokka.
+		
+		//Palvelutiski
 		palvelupisteet[0]=new Palvelutiski(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.ELEKTRONIIKKA_SAAPUMINEN);
 
 		//Jätelavat
