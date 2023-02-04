@@ -5,7 +5,8 @@ public class Jate {
     private Jatelaji jatelaji;
 
     public Jate(){
-
+        // TODO:
+        // Satunnainen lajin ja painon arpominen
     }
 
     public Jate(Jatelaji jatelaji, double maara){
