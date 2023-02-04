@@ -1,4 +1,6 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.model;
+import java.util.LinkedList;
+
 import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.ContinuousGenerator;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
@@ -23,11 +25,15 @@ public class Jatelava extends Palvelupiste {
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + palveltava.getId());
 		varattu = true;
 		double palveluaika = generator.sample();
-        // Palveltavan asiakkaan jäte
-        Jate j = palveltava.getJatteet().removeFirst();
-        System.out.println("LAJITELTU JATE: " + j);
-        System.out.println(palveltava.getJatteet().toString());
-        maara += j.getPaino();
+        // Asiakkaan kantamat jätteet
+        LinkedList<Jate> jatteet = palveltava.getJatteet();
+        // Jätelavalle jätetty jäte
+        Jate poistettuJate = jatteet.removeFirst();
+        // Tulostuksia
+        System.out.println("Poistettu jäte: " + poistettuJate);
+        System.out.println("Asiakkaan jätteet nyt: " + jatteet.toString());
+        // Jätemäärän lisäys
+        maara += poistettuJate.getPaino();
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluaika));
 	}
 
@@ -40,6 +46,6 @@ public class Jatelava extends Palvelupiste {
     }
 
     public String toString(){
-        return "LAVA: "+getLavanTyyppi()+", JATTEENMAARA LAVALLA: "+getMaara(); 
+        return "Lava: "+getLavanTyyppi()+", Jätteen määrä lavalla: "+getMaara()+" kg"; 
     }
 }

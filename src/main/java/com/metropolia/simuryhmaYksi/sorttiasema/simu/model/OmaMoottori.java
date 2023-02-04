@@ -21,7 +21,7 @@ public class OmaMoottori extends Moottori{
 		palvelupisteet[2]=new Jatelava(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.PALAVAJATE_SAAPUMINEN,Jatelaji.PALAMATONAJATE);
 		palvelupisteet[3]=new Jatelava(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.POISTUMINEN, Jatelaji.PALAVAJATE);
 
-		// Saapuminen
+		// Järjestelmään Saapuminen
 		saapumisprosessi = new Saapumisprosessi(new Negexp(15,5),tapahtumalista,TapahtumanTyyppi.PALVELUTISKI_SAAPUMINEN);
 	}
 
@@ -65,6 +65,9 @@ public class OmaMoottori extends Moottori{
 	protected void tulokset() {	
 		double jatteenKokonaismaara = 0;
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
+		
+		System.out.println("Jätelavat: ");
+		for (int i=1;i<palvelupisteet.length;i++) System.out.println(palvelupisteet[i]);
 		for (int i=1;i<palvelupisteet.length;i++) jatteenKokonaismaara +=  ((Jatelava) (palvelupisteet[i])).getMaara();
 		System.out.println("Keskimääräinen jätemäärä per asiakas: " +  jatteenKokonaismaara/(Jatelava.saapuneet) + " kg");
 		//System.out.println("Tulokset ... puuttuvat vielä");
