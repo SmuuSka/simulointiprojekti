@@ -4,11 +4,11 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.Kontrolleri;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -20,9 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.awt.event.WindowEvent;
 
-public class SimulaattoriGUI extends Application implements ISimulaattoriUI{
+public class SimulaattoriGUI extends Application {
     private IKontrolleriVtoM kontrolleri;
     // Käyttöliittymäkomponentit:
     private TextField aika;
@@ -38,12 +37,12 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI{
 
     private IVisualisointi naytto;
 
-    @Override
-    public void init() {
-        Trace.setTraceLevel(Trace.Level.INFO);
-        kontrolleri = new Kontrolleri(this);
-
-    }
+//    @Override
+//    public void init() {
+//        Trace.setTraceLevel(Trace.Level.INFO);
+//        kontrolleri = new Kontrolleri((ISimulaattoriUI) this);
+//
+//    }
 
     public static void main(String[] args) {
         launch(args);
@@ -136,23 +135,4 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI{
 
     }
 
-    @Override
-    public double getAika() {
-        return 0;
-    }
-
-    @Override
-    public long getViive() {
-        return 0;
-    }
-
-    @Override
-    public void setLoppuaika() {
-
-    }
-
-    @Override
-    public IVisualisointi getVisualisointi() {
-        return null;
-    }
 }
