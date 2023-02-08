@@ -3,6 +3,8 @@ import com.metropolia.simuryhmaYksi.sorttiasema.testi.Calculator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import javax.lang.model.element.Parameterizable;
+
 import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
