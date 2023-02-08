@@ -1,5 +1,6 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.model;
 import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.*;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriMtoV;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Moottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
@@ -10,7 +11,8 @@ public class OmaMoottori extends Moottori{
 	private Saapumisprosessi saapumisprosessi;
 	
 	
-	public OmaMoottori(){
+	public OmaMoottori(IKontrolleriMtoV kontrolleri){
+		super(kontrolleri);
 		palvelupisteet = new Palvelupiste[4];
 		
 		//Palvelutiski
