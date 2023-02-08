@@ -1,9 +1,11 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.framework;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriMtoV;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Palvelupiste;
 
-public abstract class Moottori extends Thread {
+public abstract class Moottori extends Thread implements IMoottori {
 	
 	private double simulointiaika = 0;
+	protected IKontrolleriMtoV kontrolleri;
 	
 	private Kello kello;
 	
@@ -11,8 +13,8 @@ public abstract class Moottori extends Thread {
 	protected Palvelupiste[] palvelupisteet;
 	
 
-	public Moottori(){
-
+	public Moottori(IKontrolleriMtoV kontrolleri){
+		this.kontrolleri = kontrolleri;
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 		
 		tapahtumalista = new Tapahtumalista();
