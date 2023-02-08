@@ -1,7 +1,7 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.framework;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Palvelupiste;
 
-public abstract class Moottori {
+public abstract class Moottori extends Thread {
 	
 	private double simulointiaika = 0;
 	
