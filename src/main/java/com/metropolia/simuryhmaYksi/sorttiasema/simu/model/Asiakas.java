@@ -25,6 +25,9 @@ public class Asiakas {
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo "+saapumisaika);
 	}
 
+	public static int getID(){
+		return i;
+	}
 	public double getPoistumisaika() {
 		return poistumisaika;
 	}

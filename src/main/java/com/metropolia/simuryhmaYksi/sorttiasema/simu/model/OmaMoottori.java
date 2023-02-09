@@ -66,12 +66,17 @@ public class OmaMoottori extends Moottori{
 	@Override
 	protected void tulokset() {	
 		double jatteenKokonaismaara = 0;
+
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		
 		System.out.println("Jätelavat: ");
 		for (int i=1;i<palvelupisteet.length;i++) System.out.println(palvelupisteet[i]);
 		for (int i=1;i<palvelupisteet.length;i++) jatteenKokonaismaara +=  ((Jatelava) (palvelupisteet[i])).getMaara();
-		System.out.println("Keskimääräinen jätemäärä per asiakas: " +  jatteenKokonaismaara/(Jatelava.saapuneet) + " kg");
+
+		System.out.println("Jatteen kokonaismäärä: " + jatteenKokonaismaara);
+		System.out.println("Asiakkaiden kokonaismäärä: " + Jatelava.saapuneet);
+
+		System.out.println("Keskimääräinen jätemäärä per asiakas: " +  jatteenKokonaismaara/Asiakas.getID() + " kg");
 		//System.out.println("Tulokset ... puuttuvat vielä");
 	}
 
