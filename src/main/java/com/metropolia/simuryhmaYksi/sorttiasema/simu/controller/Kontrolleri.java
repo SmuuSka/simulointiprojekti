@@ -11,8 +11,16 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV{
         this.ui = ui;
     }
 
+    @Override
     public void kaynnistaSimulointi(){
+        //Luodaan Gui käskyn perusteella uusi moottori ja asetetaan simulointiaika
         moottori = new OmaMoottori(this);
+        System.out.println("Asetetaan simulointiaika: " + ui.getAika());
+        moottori.setSimulointiaika(ui.getAika());
+        //ui.getVisualisointi().tyhjennaNaytto();
+
+        //Käynnistetään moottori
+        ((Thread)moottori).start();
     }
 
     @Override
