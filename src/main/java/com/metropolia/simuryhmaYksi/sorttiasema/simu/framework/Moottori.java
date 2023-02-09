@@ -29,7 +29,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 	
 	
-	public void aja(){
+	public void run(){
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
 		while (simuloidaan()){
 			

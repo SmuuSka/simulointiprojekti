@@ -18,6 +18,6 @@ public class Simulaattori { //Tekstipohjainen
             }
         });
 		m.setSimulointiaika(50);
-		m.aja();
+		m.start();
 	}
 }

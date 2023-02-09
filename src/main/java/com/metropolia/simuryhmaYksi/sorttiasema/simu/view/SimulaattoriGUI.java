@@ -21,7 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 
-public class SimulaattoriGUI extends Application {
+public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     private IKontrolleriVtoM kontrolleri;
     // Käyttöliittymäkomponentit:
     private TextField aika;
@@ -37,12 +37,12 @@ public class SimulaattoriGUI extends Application {
 
     private IVisualisointi naytto;
 
-//    @Override
-//    public void init() {
-//        Trace.setTraceLevel(Trace.Level.INFO);
-//        kontrolleri = new Kontrolleri((ISimulaattoriUI) this);
-//
-//    }
+    @Override
+    public void init() {
+        Trace.setTraceLevel(Trace.Level.INFO);
+        kontrolleri = new Kontrolleri(this);
+
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -68,6 +68,9 @@ public class SimulaattoriGUI extends Application {
             kaynnistaButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+                    //Kun "Käynnistä simulointi"-näppäintä on painettu,
+                    //Kutsutaan Kontrolli-luokan metodia kaynnistaSimulointi()
+                    //moottori käynnistyy
                     kontrolleri.kaynnistaSimulointi();
                     kaynnistaButton.setDisable(true);
                 }
@@ -135,4 +138,23 @@ public class SimulaattoriGUI extends Application {
 
     }
 
+    @Override
+    public double getAika() {
+        return Double.parseDouble(aika.getText());
+    }
+
+    @Override
+    public long getViive() {
+        return 0;
+    }
+
+    @Override
+    public void setLoppuaika() {
+
+    }
+
+    @Override
+    public IVisualisointi getVisualisointi() {
+        return null;
+    }
 }
