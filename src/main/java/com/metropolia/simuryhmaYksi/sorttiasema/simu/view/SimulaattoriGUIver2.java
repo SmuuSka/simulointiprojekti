@@ -34,8 +34,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     @Override
     public void start(Stage primaryStage) {
         try {
+            //STRATEGIA FXML
             FXMLLoader loaderStrategia = new FXMLLoader(getClass().getResource("/uifxml/Strategia.fxml"));
+            //PÄÄSIMULAATTORI FXML
             FXMLLoader loadersimu = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
+
+            //FXML KONTROLLERI
             FXML_CONTROLLER FXMLcontroller = new FXML_CONTROLLER(kontrolleri);
             loaderStrategia.setController(FXMLcontroller);
             loadersimu.setController(FXMLcontroller);
@@ -46,6 +50,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
             nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
             strategiaButtonOK = FXMLcontroller.getSTRATEGIA_SIIRY_SIMULAATIOON();
+
             try {
                 aloitaButton.setOnAction(event -> {
                     FXMLcontroller.aloitaSimulaatio(event);
