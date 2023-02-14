@@ -4,7 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.effect.SepiaTone?>
@@ -13,9 +15,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="769.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="508.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Asiakaan ajan kesto palvelupisteessä" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="-2.0" layoutY="444.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Asiakaan ajan kesto palvelupisteessä" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
@@ -25,7 +27,7 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="-2.0" layoutY="615.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Tapahtumat" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="-2.0" layoutY="552.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Tapahtumat" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
@@ -35,9 +37,9 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="-1.0" layoutY="528.0" prefHeight="87.0" prefWidth="431.0">
+      <Pane layoutX="-2.0" layoutY="465.0" prefHeight="87.0" prefWidth="431.0">
          <children>
-            <TextField fx:id="STRATEGIA_KGMAARA_SEKUNTEJA" alignment="CENTER" layoutX="142.0" layoutY="45.0" text="Kg määrä" />
+            <TextField fx:id="STRATEGIA_KGMAARA_SEKUNTEJA" alignment="CENTER" layoutX="142.0" layoutY="45.0" text="Sekunteja" />
             <Label alignment="CENTER" layoutX="74.0" layoutY="18.0" prefHeight="21.0" prefWidth="284.0" style="-fx-background-color: #a9dfbf;" text="Sekunteja(Kesto) per kilogramma" textAlignment="CENTER">
                <font>
                   <Font size="15.0" />
@@ -55,7 +57,7 @@
             <TextField fx:id="STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ" alignment="CENTER" layoutX="272.0" layoutY="14.0" prefHeight="25.0" prefWidth="109.0" text="Max Määrä" />
          </children>
       </Pane>
-      <Pane layoutY="633.0" prefHeight="123.0" prefWidth="431.0">
+      <Pane layoutX="-2.0" layoutY="573.0" prefHeight="123.0" prefWidth="431.0">
          <children>
             <CheckBox fx:id="STRATEGIA_TAPAHTUMAT_ASIAKASAUTO" alignment="CENTER" layoutX="136.0" layoutY="15.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="159.0" text="Asiakaan auto voi hajota" />
             <CheckBox fx:id="STRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA" alignment="CENTER" layoutX="125.0" layoutY="48.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" text="Saapumispisteellä ongelma" />
@@ -102,11 +104,19 @@
             <TextField fx:id="STRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" layoutX="255.0" layoutY="85.0" prefHeight="25.0" prefWidth="109.0" />
          </children>
       </Pane>
-      <Pane layoutX="2.0" layoutY="400.0" prefHeight="108.0" prefWidth="431.0">
+      <Pane layoutX="2.0" layoutY="400.0" prefHeight="44.0" prefWidth="431.0">
          <children>
-            <CheckBox fx:id="STRATEGIA_RUUHKA_RAUHALLINEN_CHECK" alignment="CENTER" layoutX="136.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="159.0" text="Rauhallista" />
-            <CheckBox fx:id="STRATEGIA_RUUHKA_NORMAALIA_CHECK" alignment="CENTER" layoutX="136.0" layoutY="41.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="159.0" text="Normaalia" />
-            <CheckBox fx:id="STRATEGIA_RUUHKA_RUUHKA_CHECK" alignment="CENTER" layoutX="136.0" layoutY="68.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="159.0" text="Ruuhka" />
+            <RadioButton fx:id="STRATEGIA_RUUHKA_RAUHALLINEN_CHECK" layoutX="50.0" layoutY="14.0" mnemonicParsing="false" text="Rauhallista">
+               <toggleGroup>
+                  <ToggleGroup fx:id="AktiivisuusGroup" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="STRATEGIA_RUUHKA_NORMAALIA_CHECK" layoutX="128.0" layoutY="14.0" mnemonicParsing="false" text="Normaalia" toggleGroup="$AktiivisuusGroup">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </RadioButton>
+            <RadioButton fx:id="STRATEGIA_RUUHKA_RUUHKA_CHECK" layoutX="304.0" layoutY="14.0" mnemonicParsing="false" text="Ruuhka" toggleGroup="$AktiivisuusGroup" />
          </children>
       </Pane>
       <Label alignment="CENTER" layoutX="-2.0" layoutY="126.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Kuinka monta kiloa jätettä yhdellä asiakkaalla voi olla?" textAlignment="CENTER">
@@ -116,7 +126,7 @@
       </Label>
       <Pane layoutX="-2.0" layoutY="60.0" prefHeight="66.0" prefWidth="438.0">
          <children>
-            <TextField fx:id="STRATEGIA_SIMULOINTIAIKA" alignment="CENTER" layoutX="128.0" layoutY="21.0" prefHeight="25.0" prefWidth="182.0" text="Aika">
+            <TextField fx:id="STRATEGIA_SIMULOINTIAIKA" alignment="CENTER" layoutX="128.0" layoutY="21.0" prefHeight="25.0" prefWidth="182.0" text="1">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
