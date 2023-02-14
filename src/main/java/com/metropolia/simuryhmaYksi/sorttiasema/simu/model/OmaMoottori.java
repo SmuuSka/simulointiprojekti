@@ -16,12 +16,12 @@ public class OmaMoottori extends Moottori{
 		palvelupisteet = new Palvelupiste[4];
 		
 		//Palvelutiski
-		palvelupisteet[0]=new Palvelutiski(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.ELEKTRONIIKKA_SAAPUMINEN);
+		palvelupisteet[0]=new Palvelutiski(new Normal(10,6), tapahtumalista);
 
 		//Jätelavat
-		palvelupisteet[1]=new Jatelava(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.PALAMATONJATE_SAAPUMINEN, Jatelaji.ELEKTRONIIKKA);
-		palvelupisteet[2]=new Jatelava(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.PALAVAJATE_SAAPUMINEN,Jatelaji.PALAMATONAJATE);
-		palvelupisteet[3]=new Jatelava(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.POISTUMINEN, Jatelaji.PALAVAJATE);
+		palvelupisteet[1]=new Jatelava(new Normal(10,6), tapahtumalista, Jatelaji.ELEKTRONIIKKA);
+		palvelupisteet[2]=new Jatelava(new Normal(10,10), tapahtumalista ,Jatelaji.PALAMATONAJATE);
+		palvelupisteet[3]=new Jatelava(new Normal(5,3), tapahtumalista,  Jatelaji.PALAVAJATE);
 
 		// Järjestelmään Saapuminen
 		saapumisprosessi = new Saapumisprosessi(new Negexp(15,5),tapahtumalista,TapahtumanTyyppi.PALVELUTISKI_SAAPUMINEN);
@@ -37,26 +37,31 @@ public class OmaMoottori extends Moottori{
 	protected void suoritaTapahtuma(Tapahtuma t){  // B-vaiheen tapahtumat
 
 		Asiakas a;
+		int jono1 = t.getTapahtumanLuoja();
+		int jono2 = t.getTyyppi().ordinal();
+
+		System.out.println("ASIAKAS LÄHTEE JONOSTA " + jono1 + " JA SAAPUU JONOON " + jono2 );
 		switch (t.getTyyppi()){
+			
 			case PALVELUTISKI_SAAPUMINEN:
 				a = new Asiakas();
 				palvelupisteet[0].lisaaJonoon(a);
 				saapumisprosessi.generoiSeuraava();
 				break;
 			case ELEKTRONIIKKA_SAAPUMINEN: 
-				a = palvelupisteet[0].otaJonosta();
-				palvelupisteet[1].lisaaJonoon(a);
+				a = palvelupisteet[jono1].otaJonosta();
+				palvelupisteet[jono2].lisaaJonoon(a);
 				break;
 			case PALAMATONJATE_SAAPUMINEN: 
-				a = palvelupisteet[1].otaJonosta();
-				palvelupisteet[2].lisaaJonoon(a);
+				a = palvelupisteet[jono1].otaJonosta();
+				palvelupisteet[jono2].lisaaJonoon(a);
 				break;
 			case PALAVAJATE_SAAPUMINEN:
-				a = palvelupisteet[2].otaJonosta();
-				palvelupisteet[3].lisaaJonoon(a);
+				a = palvelupisteet[jono1].otaJonosta();
+				palvelupisteet[jono2].lisaaJonoon(a);
 				break;
 			case POISTUMINEN:
-				a = palvelupisteet[3].otaJonosta();
+				a = palvelupisteet[jono1].otaJonosta();
 				a.setPoistumisaika(Kello.getInstance().getAika());
 				a.raportti();
 				break;

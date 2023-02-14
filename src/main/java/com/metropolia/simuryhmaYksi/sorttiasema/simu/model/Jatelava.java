@@ -13,8 +13,8 @@ public class Jatelava extends Palvelupiste {
     private final Jatelaji lavanTyyppi;
     public static int saapuneet = 0;
 
-    public Jatelava(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi, Jatelaji lavanTyyppi) {
-        super(generator, tapahtumalista, tyyppi);
+    public Jatelava(ContinuousGenerator generator, Tapahtumalista tapahtumalista, Jatelaji lavanTyyppi) {
+        super(generator, tapahtumalista);
         this.lavanTyyppi = lavanTyyppi;
     }
 
@@ -34,7 +34,10 @@ public class Jatelava extends Palvelupiste {
         System.out.println("Asiakkaan jätteet nyt: " + jatteet.toString());
         // Jätemäärän lisäys
         maara += poistettuJate.getPaino();
-		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluaika));
+
+        TapahtumanTyyppi seuraavaTapahtuma = jatteet.size() == 0 ? TapahtumanTyyppi.POISTUMINEN : seuraavaPalvelu(jatteet);
+
+		tapahtumalista.lisaa(new Tapahtuma(seuraavaTapahtuma,Kello.getInstance().getAika()+palveluaika, palvelupisteID));
 	}
 
     public double getMaara(){

@@ -22,6 +22,10 @@ public class Jate {
         return jatelaji;
     }
 
+    public void setPaino(double paino){
+        this.paino = paino;
+    }
+
     @Override
     public String toString() {
         return "Jate{" +
