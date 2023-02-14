@@ -4,10 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -22,6 +19,8 @@ public class FXML_CONTROLLER {
     }
 
     ///PÄÄSIMULAATORIN ELEMENTIT
+    @FXML
+    private ToggleGroup AktiivisuusGroup;
     @FXML
     private Button BUTTON_ALOITA;
 
@@ -163,13 +162,13 @@ public class FXML_CONTROLLER {
     private TextField STRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ;
 
     @FXML
-    private CheckBox STRATEGIA_RUUHKA_NORMAALIA_CHECK;
+    private RadioButton STRATEGIA_RUUHKA_NORMAALIA_CHECK;
 
     @FXML
-    private CheckBox STRATEGIA_RUUHKA_RAUHALLINEN_CHECK;
+    private RadioButton STRATEGIA_RUUHKA_RAUHALLINEN_CHECK;
 
     @FXML
-    private CheckBox STRATEGIA_RUUHKA_RUUHKA_CHECK;
+    private RadioButton STRATEGIA_RUUHKA_RUUHKA_CHECK;
 
     @FXML
     private Button STRATEGIA_SIIRY_SIMULAATIOON;
@@ -374,6 +373,11 @@ public class FXML_CONTROLLER {
 
     ///STRATEGIA GETTERIT!
 
+
+    public ToggleGroup getAktiivisuusGroup() {
+        return AktiivisuusGroup;
+    }
+
     public TextField getSTRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ() {
         return STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ;
     }
@@ -382,15 +386,15 @@ public class FXML_CONTROLLER {
         return STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ;
     }
 
-    public CheckBox getSTRATEGIA_RUUHKA_NORMAALIA_CHECK() {
+    public RadioButton getSTRATEGIA_RUUHKA_NORMAALIA_CHECK() {
         return STRATEGIA_RUUHKA_NORMAALIA_CHECK;
     }
 
-    public CheckBox getSTRATEGIA_RUUHKA_RAUHALLINEN_CHECK() {
+    public RadioButton getSTRATEGIA_RUUHKA_RAUHALLINEN_CHECK() {
         return STRATEGIA_RUUHKA_RAUHALLINEN_CHECK;
     }
 
-    public CheckBox getSTRATEGIA_RUUHKA_RUUHKA_CHECK() {
+    public RadioButton getSTRATEGIA_RUUHKA_RUUHKA_CHECK() {
         return STRATEGIA_RUUHKA_RUUHKA_CHECK;
     }
 

@@ -7,8 +7,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -24,9 +24,13 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     private TextField simulointiAikaInput,asiakasJateMIN_INPUT,asiakasJateMAX_INPUT,elektroniikkaJatePROSENTTI,palavaJatePROSENTTI,palamatonJatePROSENTTI,asiakasPurku_KG_Sekunti;
 
-    private CheckBox RauhallinenAktiivisuus;
-    private CheckBox NormaaliAktiivisuus;
-    private CheckBox RuuhkainenAktiivisuus;
+    private RadioButton RauhallinenAktiivisuus;
+    private RadioButton NormaaliAktiivisuus;
+    private RadioButton RuuhkainenAktiivisuus;
+    private CheckBox AsiakasAuto_Hajioa;
+    private CheckBox SaapumispisteOnglema;
+
+    private ToggleGroup aktiivisuusRadioGroup;
     private Scene scene;
 
     private FXML_CONTROLLER FXMLcontroller;
@@ -51,25 +55,58 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
              root = loaderStrategia.load();
 
-            //Hae Napit FXML CONTROLLERISTA
+            //Hae Napit FXML CONTROLLERISTA//
+
+            //PääSimulaattori napit.
             aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
             hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
             nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
+
+            //Strategia näkymän napit.
             strategiaButton = FXMLcontroller.getSTRATEGIA_SIIRY_SIMULAATIOON();
 
-            //Hae TextFields FXML CONTROLLERISTA
+            //Hae TextFields FXML CONTROLLERISTA//
+
+            //SimulointiAika
             simulointiAikaInput = FXMLcontroller.getSTRATEGIA_SIMULOINTIAIKA();
+
+            //Min ja Max kg määrä per asiakas.
             asiakasJateMIN_INPUT = FXMLcontroller.getSTRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ();
             asiakasJateMAX_INPUT = FXMLcontroller.getSTRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ();
+
+            /// Purku aika per kg
             asiakasPurku_KG_Sekunti = FXMLcontroller.getSTRATEGIA_KGMAARA_SEKUNTEJA();
+
+            //Jäte Prosentti määrät (kuinka paljon tuodaan jätettä)
             elektroniikkaJatePROSENTTI = FXMLcontroller.getSTRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ();
             palavaJatePROSENTTI = FXMLcontroller.getSTRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ();
             palamatonJatePROSENTTI= FXMLcontroller.getSTRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ();
 
-            //Hae Checkboxit FXML CONTROLLERISTA
+            //RadioButtonGroup
+            aktiivisuusRadioGroup = FXMLcontroller.getAktiivisuusGroup();
+            //////
+
+            //Hae Checkboxit FXML CONTROLLERISTA//
+
+            //Aktiivisuus
             RauhallinenAktiivisuus = FXMLcontroller.getSTRATEGIA_RUUHKA_RAUHALLINEN_CHECK();
+            RauhallinenAktiivisuus.setId("1");
+
             NormaaliAktiivisuus = FXMLcontroller.getSTRATEGIA_RUUHKA_NORMAALIA_CHECK();
+            NormaaliAktiivisuus.setId("2");
+
             RuuhkainenAktiivisuus = FXMLcontroller.getSTRATEGIA_RUUHKA_RUUHKA_CHECK();
+            RuuhkainenAktiivisuus.setId("3");
+
+            //Tapahtumat
+            AsiakasAuto_Hajioa = FXMLcontroller.getSTRATEGIA_TAPAHTUMAT_ASIAKASAUTO();
+            AsiakasAuto_Hajioa.setId("4");
+
+            SaapumispisteOnglema = FXMLcontroller.getSTRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA();
+            SaapumispisteOnglema.setId("5");
+
+            ////
+
 
 
 
@@ -113,6 +150,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 }
 
             });
+
 
             primaryStage.setScene(scene);
 
@@ -167,6 +205,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public int getRuuhkaAika() {
+        Toggle id = aktiivisuusRadioGroup.getSelectedToggle();
+        System.out.println(id.toString());
         return 0;
     }
 
