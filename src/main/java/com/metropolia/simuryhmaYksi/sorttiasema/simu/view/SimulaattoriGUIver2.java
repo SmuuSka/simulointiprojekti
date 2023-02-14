@@ -8,19 +8,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.imageio.IIOException;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
 
-    private Button aloitaButton,nopeutaButton,hidastaButton,strategiaButtonOK;
-    private Parent root;
+    private Button aloitaButton,nopeutaButton,hidastaButton,strategiaButton;
+
+    private TextField simulointiAikaInput;
     private Scene scene;
+
+    private FXML_CONTROLLER FXMLcontroller;
+    private Parent root;
     private IKontrolleriVtoM kontrolleri;
     public static void main(String[] args) {
         launch(args);
@@ -34,22 +38,23 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     @Override
     public void start(Stage primaryStage) {
         try {
-            //STRATEGIA FXML
             FXMLLoader loaderStrategia = new FXMLLoader(getClass().getResource("/uifxml/Strategia.fxml"));
-            //PÄÄSIMULAATTORI FXML
-            FXMLLoader loadersimu = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
-
-            //FXML KONTROLLERI
-            FXML_CONTROLLER FXMLcontroller = new FXML_CONTROLLER(kontrolleri);
+            FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
+            FXMLcontroller = new FXML_CONTROLLER(kontrolleri);
             loaderStrategia.setController(FXMLcontroller);
-            loadersimu.setController(FXMLcontroller);
+
              root = loaderStrategia.load();
 
             //Hae Napit FXML CONTROLLERISTA
             aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
             hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
             nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
-            strategiaButtonOK = FXMLcontroller.getSTRATEGIA_SIIRY_SIMULAATIOON();
+            strategiaButton = FXMLcontroller.getSTRATEGIA_SIIRY_SIMULAATIOON();
+
+            //Hae TextFields FXML CONTROLLERISTA
+            simulointiAikaInput = FXMLcontroller.getSTRATEGIA_SIMULOINTIAIKA();
+
+            scene = new Scene(root);
 
             try {
                 aloitaButton.setOnAction(event -> {
@@ -63,24 +68,32 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 nopeutaButton.setOnAction(event -> {
                     FXMLcontroller.nopeutaSimulaatio(event);
                 });
-            }catch(Exception er){
-                System.out.println("Pääsimulaatorin napit ei vielä käytössä.");
+            }catch(Exception e){
+                System.out.println("Pääsimulaatorin napit ei vielä käytössä koska strategia ikkuna on auki");
             }
 
-            strategiaButtonOK.setOnAction(event ->{
-                try {
-                    root = loadersimu.load();
-                    System.out.println("Vaihettu");
-                    scene = new Scene(root);
-                    primaryStage.setScene(scene);
-                    primaryStage.setTitle("Sortti-Asema Simu");
-                    primaryStage.show();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            });
 
-            scene = new Scene(root);
+            //Siiry PÄÄSIMULAATIO IKKUNAAN
+            strategiaButton.setOnAction(event ->{
+
+                loaderSIMU.setController(FXMLcontroller);
+                try{
+                     root = loaderSIMU.load();
+                    scene = new Scene(root);
+
+                    primaryStage.setScene(scene);
+
+                    primaryStage.setTitle("Sortti-Asema Simu");
+
+                    primaryStage.show();
+
+                }catch(IOException er){
+                    System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
+                    er.printStackTrace();
+
+                }
+
+            });
 
             primaryStage.setScene(scene);
 
@@ -95,7 +108,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public double getAika() {
-        return 0;
+        return Double.parseDouble(simulointiAikaInput.getText());
     }
 
     @Override
