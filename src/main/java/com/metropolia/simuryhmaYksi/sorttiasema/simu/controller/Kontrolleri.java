@@ -1,12 +1,17 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.controller;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.OmaMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
 
-public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV{
+import java.util.Arrays;
+
+public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private ISimulaattoriUI ui;
     private IMoottori moottori;
+
+
     public Kontrolleri(ISimulaattoriUI ui){
         this.ui = ui;
     }
@@ -19,13 +24,15 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV{
         moottori.setSimulointiaika(ui.getAika());
         //ui.getVisualisointi().tyhjennaNaytto();
 
+        Asiakas.setJatemaara(ui.getVaihteluvali());
+        System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
+
         //Käynnistetään moottori
         ((Thread)moottori).start();
     }
 
     @Override
     public void nopeuta() {
-
     }
 
     @Override

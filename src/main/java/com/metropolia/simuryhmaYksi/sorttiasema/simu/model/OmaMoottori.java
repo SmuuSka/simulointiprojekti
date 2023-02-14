@@ -74,7 +74,7 @@ public class OmaMoottori extends Moottori{
 		for (int i=1;i<palvelupisteet.length;i++) jatteenKokonaismaara +=  ((Jatelava) (palvelupisteet[i])).getMaara();
 
 		System.out.println("Jatteen kokonaismäärä: " + jatteenKokonaismaara);
-		System.out.println("Asiakkaiden kokonaismäärä: " + Jatelava.saapuneet);
+		System.out.println("Asiakkaiden kokonaismäärä: " + Asiakas.getID());
 
 		System.out.println("Keskimääräinen jätemäärä per asiakas: " +  jatteenKokonaismaara/Asiakas.getID() + " kg");
 		//System.out.println("Tulokset ... puuttuvat vielä");
