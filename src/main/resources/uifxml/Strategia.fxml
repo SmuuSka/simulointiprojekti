@@ -30,7 +30,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="379.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Ruuhka ajan valikko" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="-1.0" layoutY="379.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Sortti-aseman aktiivisuus" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
