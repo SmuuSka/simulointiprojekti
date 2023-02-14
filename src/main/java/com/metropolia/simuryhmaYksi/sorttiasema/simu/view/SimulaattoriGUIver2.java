@@ -1,17 +1,24 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
+/**
+ * @Author
+ * Kaspar Tullus,Samu Aikio, Joel Tikkanen
+ * */
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.Kontrolleri;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -20,31 +27,37 @@ import java.io.IOException;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
 
-    private Button aloitaButton,nopeutaButton,hidastaButton,strategiaButton;
+    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton;
 
-    private TextField simulointiAikaInput,asiakasJateMIN_INPUT,asiakasJateMAX_INPUT,elektroniikkaJatePROSENTTI,palavaJatePROSENTTI,palamatonJatePROSENTTI,asiakasPurku_KG_Sekunti;
+    private TextField simulointiAikaInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
+            palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
 
-    private RadioButton RauhallinenAktiivisuus;
-    private RadioButton NormaaliAktiivisuus;
-    private RadioButton RuuhkainenAktiivisuus;
-    private CheckBox AsiakasAuto_Hajioa;
-    private CheckBox SaapumispisteOnglema;
+    private RadioButton RauhallinenAktiivisuus, NormaaliAktiivisuus, RuuhkainenAktiivisuus;
 
+    private CheckBox AsiakasAuto_Hajioa,SaapumispisteOnglema;
+
+    private Label paaSim_ELEKTRO_JateCounter, paaSim_PALAVA_JateCounter, paaSim_PALAMATON_JateCounter,
+            paaSim_JONOINFO_SAAPUMINEN,paaSim_SAAPUMISIAYHT_COUNTER,paaSim_JONOINFO_PALAVAJATE,
+            paaSim_JONOINFO_ELEKTRONIIKKAJATE,paaSim_JONOINFO_PALAMATONJATE,paaSim_POISTUNUT_COUNTER;
     private ToggleGroup aktiivisuusRadioGroup;
     private Scene scene;
 
     private FXML_CONTROLLER FXMLcontroller;
     private Parent root;
     private IKontrolleriVtoM kontrolleri;
+    //-------------------------------------------------------------------------------------------
+
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void init() {
         Trace.setTraceLevel(Trace.Level.INFO);
         kontrolleri = new Kontrolleri(this);
 
     }
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -53,7 +66,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             FXMLcontroller = new FXML_CONTROLLER(kontrolleri);
             loaderStrategia.setController(FXMLcontroller);
 
-             root = loaderStrategia.load();
+            root = loaderStrategia.load();
 
             //Hae Napit FXML CONTROLLERISTA//
 
@@ -64,6 +77,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //Strategia näkymän napit.
             strategiaButton = FXMLcontroller.getSTRATEGIA_SIIRY_SIMULAATIOON();
+
 
             //Hae TextFields FXML CONTROLLERISTA//
 
@@ -80,11 +94,39 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //Jäte Prosentti määrät (kuinka paljon tuodaan jätettä)
             elektroniikkaJatePROSENTTI = FXMLcontroller.getSTRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ();
             palavaJatePROSENTTI = FXMLcontroller.getSTRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ();
-            palamatonJatePROSENTTI= FXMLcontroller.getSTRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ();
+            palamatonJatePROSENTTI = FXMLcontroller.getSTRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ();
 
             //RadioButtonGroup
             aktiivisuusRadioGroup = FXMLcontroller.getAktiivisuusGroup();
-            //////
+
+            //PÄÄSIMULAAATORI Teksti/Label elementit
+
+            ///POISHEITETTYJATE COUNTERIT
+            paaSim_ELEKTRO_JateCounter = FXMLcontroller.getELEKTRO_POISHEITETTY_NUM();
+            paaSim_PALAVA_JateCounter = FXMLcontroller.getPA_POISHEITETTY_NUM();
+            paaSim_PALAMATON_JateCounter = FXMLcontroller.getEPA_POISHEITETTY_NUM();
+
+            ///JONOSSA COUNTER LABEL/TEXT
+
+            //PALAVAJÄTE JONO
+            paaSim_JONOINFO_PALAVAJATE = FXMLcontroller.getJONOSSAINFO_PA();
+
+            //ELEKTRONIIKA JONO
+            paaSim_JONOINFO_ELEKTRONIIKKAJATE = FXMLcontroller.getJONOSSAINFO_ELEKTRO();
+
+            //PALAMATONJÄTE JONO
+            paaSim_JONOINFO_PALAMATONJATE = FXMLcontroller.getJONOSSAINFO_EPA();
+
+            //SAAPUMISEN JONO
+            paaSim_JONOINFO_SAAPUMINEN = FXMLcontroller.getJONOSSA_SAAPUMINEN();
+
+            //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
+            paaSim_SAAPUMISIAYHT_COUNTER = FXMLcontroller.getJONOSSAINFO_SAAPUMINEN();
+
+            //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
+            paaSim_POISTUNUT_COUNTER = FXMLcontroller.getPOISTUNUTINFO();
+
+            //-------------------------------------------------------------------------------------------
 
             //Hae Checkboxit FXML CONTROLLERISTA//
 
@@ -105,13 +147,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             SaapumispisteOnglema = FXMLcontroller.getSTRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA();
             SaapumispisteOnglema.setId("5");
 
-            ////
+            //-------------------------------------------------------------------------------------------
 
-
-
-
+            //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(root);
 
+            //PÄÄSIMULAATORIN NAPPI ACTIONEVENTIT
             try {
                 aloitaButton.setOnAction(event -> {
                     FXMLcontroller.aloitaSimulaatio(event);
@@ -124,17 +165,18 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 nopeutaButton.setOnAction(event -> {
                     FXMLcontroller.nopeutaSimulaatio(event);
                 });
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Pääsimulaatorin napit ei vielä käytössä koska strategia ikkuna on auki");
             }
-
+            //-------------------------------------------------------------------------------------------
 
             //Siiry PÄÄSIMULAATIO IKKUNAAN
-            strategiaButton.setOnAction(event ->{
-
+            strategiaButton.setOnAction(event -> {
+                this.getRuuhkaAika();
+                this.getStrategiaTapahtumat();
                 loaderSIMU.setController(FXMLcontroller);
-                try{
-                     root = loaderSIMU.load();
+                try {
+                    root = loaderSIMU.load();
                     scene = new Scene(root);
 
                     primaryStage.setScene(scene);
@@ -143,7 +185,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
                     primaryStage.show();
 
-                }catch(IOException er){
+                } catch (IOException er) {
                     System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
                     er.printStackTrace();
 
@@ -158,11 +200,13 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             primaryStage.show();
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    //-------------------------------------------------------------------------------------------
 
+    //INTERFACE METHOTID
     @Override
     public double getAika() {
         return Double.parseDouble(simulointiAikaInput.getText());
@@ -205,13 +249,37 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public int getRuuhkaAika() {
-        Toggle id = aktiivisuusRadioGroup.getSelectedToggle();
-        System.out.println(id.toString());
+        //Radiobuttonin "getter" radiogroupista.
+        RadioButton id = (RadioButton) aktiivisuusRadioGroup.getSelectedToggle();
+
+        //switchcase joka katsoo mikä radiobutton on valittu.
+        switch (id.getId()){
+            case "1":
+                System.out.println("Aktiivisuus : Rauhallinen");
+                return 1;
+            case "2":
+                System.out.println("Aktiivisuus : Normaali");
+                return 2;
+            case "3":
+                System.out.println("Aktiivisuus : Ruuhka");
+                return 3;
+        }
         return 0;
     }
 
     @Override
     public int getStrategiaTapahtumat() {
+        if (AsiakasAuto_Hajioa.isSelected() == true && SaapumispisteOnglema.isSelected() == false){
+            System.out.println("TAPAHTUMA MAHDOLLISUUS : ASIAKKAAN AUTO HAJOOA");
+            return 1;
+        } else if (SaapumispisteOnglema.isSelected() == true && AsiakasAuto_Hajioa.isSelected() == false ) {
+            System.out.println("TAPAHTUMA MAHDOLLISUUS : SAAPUMISPISTEESSÄ VOI OLLA ONGELMIA");
+            return 2;
+        }else if (SaapumispisteOnglema.isSelected() == true && AsiakasAuto_Hajioa.isSelected() == true ){
+            System.out.println("TAPAHTUMA MAHDOLLISUUS : SAAPUMISPISTEESSÄ VOI OLLA ONGELMIA JA ASIAKKAAN AUTO HAJOOA");
+            return 3;
+        }
+        System.out.println("TAPAHTUMA MAHDOLLISUUS : EI VALITTU MITÄÄN");
         return 0;
     }
 
