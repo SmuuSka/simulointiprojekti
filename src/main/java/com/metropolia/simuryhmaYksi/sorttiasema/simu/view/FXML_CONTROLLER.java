@@ -145,19 +145,10 @@ public class FXML_CONTROLLER {
 
     ///STRATEGIA ELEMENTIT
     @FXML
-    private TextField ASIAKAS_MAX_JÄTEMÄÄRÄ;
+    private TextField STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ;
 
     @FXML
-    private TextField ASIAKAS_MIN_JÄTEMÄÄRÄ;
-
-    @FXML
-    private CheckBox RUUHKA_NORMAALIA_CHECK;
-
-    @FXML
-    private CheckBox RUUHKA_RAUHALLINEN_CHECK;
-
-    @FXML
-    private CheckBox RUUHKA_RUUHKA_CHECK;
+    private TextField STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ;
 
     @FXML
     private TextField STRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ;
@@ -172,7 +163,19 @@ public class FXML_CONTROLLER {
     private TextField STRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ;
 
     @FXML
+    private CheckBox STRATEGIA_RUUHKA_NORMAALIA_CHECK;
+
+    @FXML
+    private CheckBox STRATEGIA_RUUHKA_RAUHALLINEN_CHECK;
+
+    @FXML
+    private CheckBox STRATEGIA_RUUHKA_RUUHKA_CHECK;
+
+    @FXML
     private Button STRATEGIA_SIIRY_SIMULAATIOON;
+
+    @FXML
+    private TextField STRATEGIA_SIMULOINTIAIKA;
 
     @FXML
     private CheckBox STRATEGIA_TAPAHTUMAT_ASIAKASAUTO;
@@ -370,24 +373,29 @@ public class FXML_CONTROLLER {
     }
 
     ///STRATEGIA GETTERIT!
-    public TextField getASIAKAS_MAX_JÄTEMÄÄRÄ() {
-        return ASIAKAS_MAX_JÄTEMÄÄRÄ;
+
+    public TextField getSTRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ() {
+        return STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ;
     }
 
-    public TextField getASIAKAS_MIN_JÄTEMÄÄRÄ() {
-        return ASIAKAS_MIN_JÄTEMÄÄRÄ;
+    public TextField getSTRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ() {
+        return STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ;
     }
 
-    public CheckBox getRUUHKA_NORMAALIA_CHECK() {
-        return RUUHKA_NORMAALIA_CHECK;
+    public CheckBox getSTRATEGIA_RUUHKA_NORMAALIA_CHECK() {
+        return STRATEGIA_RUUHKA_NORMAALIA_CHECK;
     }
 
-    public CheckBox getRUUHKA_RAUHALLINEN_CHECK() {
-        return RUUHKA_RAUHALLINEN_CHECK;
+    public CheckBox getSTRATEGIA_RUUHKA_RAUHALLINEN_CHECK() {
+        return STRATEGIA_RUUHKA_RAUHALLINEN_CHECK;
     }
 
-    public CheckBox getRUUHKA_RUUHKA_CHECK() {
-        return RUUHKA_RUUHKA_CHECK;
+    public CheckBox getSTRATEGIA_RUUHKA_RUUHKA_CHECK() {
+        return STRATEGIA_RUUHKA_RUUHKA_CHECK;
+    }
+
+    public TextField getSTRATEGIA_SIMULOINTIAIKA() {
+        return STRATEGIA_SIMULOINTIAIKA;
     }
 
     public TextField getSTRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ() {

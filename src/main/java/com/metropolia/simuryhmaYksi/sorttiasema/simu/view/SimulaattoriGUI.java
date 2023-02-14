@@ -140,6 +140,7 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
 
     @Override
     public double getAika() {
+
         return Double.parseDouble(aika.getText());
     }
 
