@@ -101,7 +101,7 @@
             </Pane>
          </items>
       </SplitPane>
-      <SplitPane id="InfoEPP" layoutY="308.0" prefHeight="244.0" prefWidth="251.0">
+      <SplitPane id="InfoEPP" layoutY="246.0" prefHeight="244.0" prefWidth="251.0">
          <items>
             <Pane id="INFO_KAKSI" prefHeight="272.0" prefWidth="283.0">
                <children>
@@ -407,6 +407,6 @@
       </AnchorPane>
    </children>
    <effect>
-      <InnerShadow />
+      <InnerShadow height="31.26" radius="15.497499999999999" width="32.73" />
    </effect>
 </Pane>

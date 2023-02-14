@@ -106,7 +106,7 @@
       </Pane>
       <Pane layoutX="2.0" layoutY="400.0" prefHeight="44.0" prefWidth="431.0">
          <children>
-            <RadioButton fx:id="STRATEGIA_RUUHKA_RAUHALLINEN_CHECK" layoutX="50.0" layoutY="14.0" mnemonicParsing="false" text="Rauhallista">
+            <RadioButton fx:id="STRATEGIA_RUUHKA_RAUHALLINEN_CHECK" layoutX="50.0" layoutY="14.0" mnemonicParsing="false" selected="true" text="Rauhallista">
                <toggleGroup>
                   <ToggleGroup fx:id="AktiivisuusGroup" />
                </toggleGroup>
