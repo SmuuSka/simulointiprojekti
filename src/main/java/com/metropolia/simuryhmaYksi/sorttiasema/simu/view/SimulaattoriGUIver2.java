@@ -297,6 +297,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
+    public int[] getVaihteluvali() {
+        return new int[0];
+    }
+
+    @Override
     public IVisualisointi getVisualisointi() {
         return null;
     }

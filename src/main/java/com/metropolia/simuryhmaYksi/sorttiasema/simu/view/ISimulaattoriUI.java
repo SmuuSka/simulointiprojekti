@@ -5,7 +5,7 @@ public interface ISimulaattoriUI {
     public double getAika();
     public long getViive();
     public void setLoppuaika();
-
+    public int[] getVaihteluvali();
     //Asiakaan Jäte MIN ja MAX määrä getterit.
     public double getAsiakasJäteMin();
     public double getAsiakasJäteMax();
