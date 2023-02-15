@@ -277,6 +277,21 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
+    public int getElektro_JateCounter() {
+        return Integer.parseInt(paaSim_ELEKTRO_JateCounter.getText());
+    }
+
+    @Override
+    public int getPalavaJateCounter() {
+        return Integer.parseInt(paaSim_PALAVA_JateCounter.getText());
+    }
+
+    @Override
+    public int getPalamatonJateCounter() {
+        return Integer.parseInt(paaSim_PALAMATON_JateCounter.getText());
+    }
+
+    @Override
     public void setLoppuaika() {
 
     }

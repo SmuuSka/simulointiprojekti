@@ -216,6 +216,21 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
+    public int getElektro_JateCounter() {
+        return 0;
+    }
+
+    @Override
+    public int getPalavaJateCounter() {
+        return 0;
+    }
+
+    @Override
+    public int getPalamatonJateCounter() {
+        return 0;
+    }
+
+    @Override
     public void setLoppuaika() {
 
     }
