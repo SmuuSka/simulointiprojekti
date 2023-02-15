@@ -15,18 +15,15 @@ public class Palvelupiste {
 	
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
-	protected TapahtumanTyyppi skeduloitavanTapahtumanTyyppi; 
-	
-	//JonoStartegia strategia; //optio: asiakkaiden järjestys
-	
+	protected int palvelupisteID = 0;
+	protected static int i = 0; 	
 	protected boolean varattu = false;
 
 
-	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi){
+	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista){
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
-		this.skeduloitavanTapahtumanTyyppi = tyyppi;
-				
+		palvelupisteID = i++;
 	}
 
 
@@ -43,9 +40,25 @@ public class Palvelupiste {
 	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 		varattu = true;
-		double palveluaika = generator.sample();
-		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluaika));
 	}
+
+	public TapahtumanTyyppi seuraavaPalvelu(LinkedList<Jate> jatteet){ // Asiakkaan jätteistä määräytyvä seuraava tapahtuma 
+
+        TapahtumanTyyppi seuraavaTapahtuma = TapahtumanTyyppi.POISTUMINEN;
+
+        switch (jatteet.getFirst().getJatelaji()){
+            case ELEKTRONIIKKA:
+                seuraavaTapahtuma = TapahtumanTyyppi.ELEKTRONIIKKA_SAAPUMINEN;
+                break;
+            case PALAVAJATE:
+                seuraavaTapahtuma = TapahtumanTyyppi.PALAVAJATE_SAAPUMINEN;
+                break;
+            case PALAMATONAJATE:
+                seuraavaTapahtuma = TapahtumanTyyppi.PALAMATONJATE_SAAPUMINEN;
+                break;
+        }
+        return seuraavaTapahtuma;
+    }
 
 
 	public boolean onVarattu(){

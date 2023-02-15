@@ -12,18 +12,22 @@ public class Asiakas {
 	private int id;
 	private static int i = 1;
 	private static long sum = 0;
-	private LinkedList<Jate> jatteet = new LinkedList<>();
+	private Jategeneraattori jategeneraattori = new Jategeneraattori(new int[] {33,33,33}, new int[] {33,33,33});
+	private LinkedList<Jate> jatteet;
 										
 	
 	public Asiakas(){
 	    id = i++;
 		saapumisaika = Kello.getInstance().getAika();
+		jategeneraattori.generoiJatteet();
+		jatteet = jategeneraattori.getJatteet();
 		// Lisätään asiakkaalle ennaltamäärätyt jätteet
-		jatteet.add(new Jate(Jatelaji.ELEKTRONIIKKA,30));
-		jatteet.add(new Jate(Jatelaji.PALAMATONAJATE,20));
-		jatteet.add(new Jate(Jatelaji.PALAVAJATE,10));										
+		//jatteet.add(new Jate(Jatelaji.ELEKTRONIIKKA,30));
+		//jatteet.add(new Jate(Jatelaji.PALAMATONAJATE,20));
+		//jatteet.add(new Jate(Jatelaji.PALAVAJATE,10));										
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo "+saapumisaika);
 	}
+
 
 	public static int getID(){
 		return i;

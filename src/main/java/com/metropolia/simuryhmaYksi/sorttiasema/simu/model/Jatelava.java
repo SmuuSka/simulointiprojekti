@@ -5,7 +5,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.ContinuousGe
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtumalista;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
+
 
 public class Jatelava extends Palvelupiste {
 
@@ -13,28 +13,36 @@ public class Jatelava extends Palvelupiste {
     private final Jatelaji lavanTyyppi;
     public static int saapuneet = 0;
 
-    public Jatelava(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi, Jatelaji lavanTyyppi) {
-        super(generator, tapahtumalista, tyyppi);
+    public Jatelava(ContinuousGenerator generator, Tapahtumalista tapahtumalista, Jatelaji lavanTyyppi) {
+        super(generator, tapahtumalista);
         this.lavanTyyppi = lavanTyyppi;
     }
 
     @Override
     public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
+
+        super.aloitaPalvelu();
         saapuneet++;
+
         Asiakas palveltava = jono.peek();
-		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + palveltava.getId());
-		varattu = true;
-		double palveluaika = generator.sample();
+
         // Asiakkaan kantamat jätteet
         LinkedList<Jate> jatteet = palveltava.getJatteet();
+
         // Jätelavalle jätetty jäte
         Jate poistettuJate = jatteet.removeFirst();
+
+        double palveluaika = generator.sample() * poistettuJate.getPaino() * 0.1;
+
         // Tulostuksia
         System.out.println("Poistettu jäte: " + poistettuJate);
         System.out.println("Asiakkaan jätteet nyt: " + jatteet.toString());
+
         // Jätemäärän lisäys
         maara += poistettuJate.getPaino();
-		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluaika));
+
+        TapahtumanTyyppi seuraavaTapahtuma = jatteet.size() == 0 ? TapahtumanTyyppi.POISTUMINEN : seuraavaPalvelu(jatteet);
+		tapahtumalista.lisaa(new Tapahtuma(seuraavaTapahtuma,Kello.getInstance().getAika()+palveluaika, palvelupisteID));
 	}
 
     public double getMaara(){
