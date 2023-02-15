@@ -22,7 +22,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         moottori = new OmaMoottori(this);
         System.out.println("Asetetaan simulointiaika: " + ui.getAika());
         moottori.setSimulointiaika(ui.getAika());
-        //ui.getVisualisointi().tyhjennaNaytto();
 
         //Korjaa tämä funktio
         //Asiakas.setJatemaara(ui.getVaihteluvali());

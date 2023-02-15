@@ -70,7 +70,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.metropolia.simuryhmaYksi.sorttiasema/com.metropolia.simuryhmaYksi.sorttiasema.HelloApplication
+                                com.metropolia.simuryhmaYksi.sorttiasema/com.metropolia.simuryhmaYksi.sorttiasema.simu.view.SimulaattoriGUI
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
