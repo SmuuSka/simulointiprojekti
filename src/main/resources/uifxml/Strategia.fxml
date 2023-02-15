@@ -11,129 +11,215 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" layoutX="-2.0" layoutY="444.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Asiakaan ajan kesto palvelupisteessä" textAlignment="CENTER">
+      <AnchorPane layoutY="571.0" prefHeight="136.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="129.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <CheckBox fx:id="STRATEGIA_TAPAHTUMAT_ASIAKASAUTO" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="27.0" prefWidth="159.0" text="Asiakaan auto voi hajota" textAlignment="CENTER" />
+                  <CheckBox fx:id="STRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" text="Saapumispisteellä ongelma" />
+                  <Button fx:id="STRATEGIA_SIIRY_SIMULAATIOON" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="OK">
+                     <effect>
+                        <SepiaTone level="0.02" />
+                     </effect>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" layoutX="-2.0" layoutY="436.0" prefHeight="25.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Asiakaan ajan kesto palvelupisteessä" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutY="-3.0" prefHeight="44.0" prefWidth="431.0" style="-fx-background-color: a2d4c2;" text="Strategia" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutY="-3.0" prefHeight="44.0" prefWidth="431.0" style="-fx-background-color: a2d4c2;" text="Strategia" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="-2.0" layoutY="552.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Tapahtumat" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="-2.0" layoutY="552.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Tapahtumat" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="379.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Sortti-aseman aktiivisuus" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="-1.0" layoutY="379.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Sortti-aseman aktiivisuus" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="-2.0" layoutY="465.0" prefHeight="87.0" prefWidth="431.0">
+      <AnchorPane layoutY="239.0" prefHeight="143.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <TextField fx:id="STRATEGIA_KGMAARA_SEKUNTEJA" alignment="CENTER" layoutX="142.0" layoutY="45.0" text="Sekunteja" />
-            <Label alignment="CENTER" layoutX="74.0" layoutY="18.0" prefHeight="21.0" prefWidth="284.0" style="-fx-background-color: #a9dfbf;" text="Sekunteja(Kesto) per kilogramma" textAlignment="CENTER">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
+            <HBox alignment="CENTER" prefHeight="143.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <VBox prefHeight="143.0" prefWidth="150.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="182.0" style="-fx-background-color: #a9dfbf;" text="Elektroniikajäte %" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="182.0" style="-fx-background-color: #a9dfbf;" text="Palavajäte %" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="182.0" style="-fx-background-color: #a9dfbf;" text="Palaamatonjäte %" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="143.0" prefWidth="113.0">
+                     <children>
+                        <TextField fx:id="STRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="7.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="STRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="7.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="STRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="7.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
-      </Pane>
-      <Pane layoutX="-1.0" layoutY="155.0" prefHeight="66.0" prefWidth="431.0">
+      </AnchorPane>
+      <AnchorPane layoutX="6.0" layoutY="399.0" prefHeight="38.0" prefWidth="425.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <TextField fx:id="STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ" alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="25.0" prefWidth="109.0" text="Min Määrä">
+            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="425.0" spacing="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <RadioButton fx:id="STRATEGIA_RUUHKA_RAUHALLINEN_CHECK" mnemonicParsing="false" selected="true" text="Rauhallista">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="AktiivisuusGroup" />
+                     </toggleGroup>
+                     <HBox.margin>
+                        <Insets right="25.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="STRATEGIA_RUUHKA_NORMAALIA_CHECK" mnemonicParsing="false" prefHeight="17.0" prefWidth="80.0" text="Normaalia" toggleGroup="$AktiivisuusGroup">
+                     <HBox.margin>
+                        <Insets left="25.0" right="25.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="STRATEGIA_RUUHKA_RUUHKA_CHECK" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="17.0" prefWidth="64.0" text="Ruuhka" toggleGroup="$AktiivisuusGroup">
+                     <HBox.margin>
+                        <Insets left="25.0" right="10.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="146.0" prefHeight="77.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="411.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <TextField fx:id="STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" text="Min Määrä">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" text="Max Määrä">
+                     <HBox.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
-            </TextField>
-            <TextField fx:id="STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ" alignment="CENTER" layoutX="272.0" layoutY="14.0" prefHeight="25.0" prefWidth="109.0" text="Max Määrä" />
+            </HBox>
          </children>
-      </Pane>
-      <Pane layoutX="-2.0" layoutY="573.0" prefHeight="123.0" prefWidth="431.0">
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </AnchorPane>
+      <AnchorPane layoutY="460.0" prefHeight="92.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <CheckBox fx:id="STRATEGIA_TAPAHTUMAT_ASIAKASAUTO" alignment="CENTER" layoutX="136.0" layoutY="15.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="159.0" text="Asiakaan auto voi hajota" />
-            <CheckBox fx:id="STRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA" alignment="CENTER" layoutX="125.0" layoutY="48.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="182.0" text="Saapumispisteellä ongelma" />
-            <Button fx:id="STRATEGIA_SIIRY_SIMULAATIOON" alignment="CENTER" layoutX="149.0" layoutY="83.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="OK">
-               <effect>
-                  <SepiaTone level="0.02" />
-               </effect>
-            </Button>
+            <VBox alignment="CENTER" layoutX="8.0" prefHeight="95.0" prefWidth="419.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="284.0" style="-fx-background-color: #a9dfbf;" text="Sekunteja(Kesto) per kilogramma" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="STRATEGIA_KGMAARA_SEKUNTEJA" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="148.0" text="Sekunteja" />
+               </children>
+            </VBox>
          </children>
-      </Pane>
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="221.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Jätelajit prosentteina (montako % tuotaan mitääkin jätettä)" textAlignment="CENTER">
+      </AnchorPane>
+      <AnchorPane layoutY="60.0" prefHeight="66.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="68.0" prefWidth="96.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <TextField fx:id="STRATEGIA_SIMULOINTIAIKA" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="182.0" text="1">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TextField>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" layoutX="-1.0" layoutY="221.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Jätelajit prosentteina (montako % tuotaan mitääkin jätettä)" textAlignment="CENTER" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Pane id="RUUHKAAIKAINFO_PANE" layoutX="-1.0" layoutY="242.0" prefHeight="129.0" prefWidth="431.0">
-         <children>
-            <Label alignment="CENTER" layoutX="68.0" layoutY="21.0" prefHeight="21.0" prefWidth="182.0" style="-fx-background-color: #a9dfbf;" text="Elektroniikajäte %" textAlignment="CENTER">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </Label>
-            <Label alignment="CENTER" layoutX="68.0" layoutY="54.0" prefHeight="21.0" prefWidth="182.0" style="-fx-background-color: #a9dfbf;" text="Palavajäte %" textAlignment="CENTER">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </Label>
-            <Label alignment="CENTER" layoutX="68.0" layoutY="87.0" prefHeight="21.0" prefWidth="182.0" style="-fx-background-color: #a9dfbf;" text="Palaamatonjäte %" textAlignment="CENTER">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </Label>
-            <TextField fx:id="STRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" layoutX="255.0" layoutY="19.0" prefHeight="25.0" prefWidth="109.0" />
-            <TextField fx:id="STRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" layoutX="255.0" layoutY="52.0" prefHeight="25.0" prefWidth="109.0" />
-            <TextField fx:id="STRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" layoutX="255.0" layoutY="85.0" prefHeight="25.0" prefWidth="109.0" />
-         </children>
-      </Pane>
-      <Pane layoutX="2.0" layoutY="400.0" prefHeight="44.0" prefWidth="431.0">
-         <children>
-            <RadioButton fx:id="STRATEGIA_RUUHKA_RAUHALLINEN_CHECK" layoutX="50.0" layoutY="14.0" mnemonicParsing="false" selected="true" text="Rauhallista">
-               <toggleGroup>
-                  <ToggleGroup fx:id="AktiivisuusGroup" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="STRATEGIA_RUUHKA_NORMAALIA_CHECK" layoutX="128.0" layoutY="14.0" mnemonicParsing="false" text="Normaalia" toggleGroup="$AktiivisuusGroup">
-               <padding>
-                  <Insets left="50.0" right="50.0" />
-               </padding>
-            </RadioButton>
-            <RadioButton fx:id="STRATEGIA_RUUHKA_RUUHKA_CHECK" layoutX="304.0" layoutY="14.0" mnemonicParsing="false" text="Ruuhka" toggleGroup="$AktiivisuusGroup" />
-         </children>
-      </Pane>
-      <Label alignment="CENTER" layoutX="-2.0" layoutY="126.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Kuinka monta kiloa jätettä yhdellä asiakkaalla voi olla?" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="-2.0" layoutY="126.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Kuinka monta kiloa jätettä yhdellä asiakkaalla voi olla?" textAlignment="CENTER" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="-2.0" layoutY="60.0" prefHeight="66.0" prefWidth="438.0">
-         <children>
-            <TextField fx:id="STRATEGIA_SIMULOINTIAIKA" alignment="CENTER" layoutX="128.0" layoutY="21.0" prefHeight="25.0" prefWidth="182.0" text="1">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </TextField>
-         </children>
-      </Pane>
-      <Label alignment="CENTER" layoutY="41.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Simulointiaika" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutY="41.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Simulointiaika" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>

@@ -8,7 +8,6 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.Kontrolleri;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,13 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.awt.*;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {

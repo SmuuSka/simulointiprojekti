@@ -20,8 +20,6 @@ public class FXML_CONTROLLER {
 
     ///PÄÄSIMULAATORIN ELEMENTIT
     @FXML
-    private ToggleGroup AktiivisuusGroup;
-    @FXML
     private Button BUTTON_ALOITA;
 
     @FXML
@@ -144,6 +142,9 @@ public class FXML_CONTROLLER {
 
     ///STRATEGIA ELEMENTIT
     @FXML
+    private ToggleGroup AktiivisuusGroup;
+
+    @FXML
     private TextField STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ;
 
     @FXML
@@ -181,6 +182,7 @@ public class FXML_CONTROLLER {
 
     @FXML
     private CheckBox STRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA;
+
 
     /////////////
 
