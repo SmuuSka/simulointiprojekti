@@ -166,11 +166,67 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
 
     @Override
     public double getAika() {
+
         return Double.parseDouble(aika.getText());
     }
 
     @Override
     public long getViive() {
+        return 0;
+    }
+
+    @Override
+    public double getAsiakasJäteMin() {
+        return 0;
+    }
+
+    @Override
+    public double getAsiakasJäteMax() {
+        return 0;
+    }
+
+    @Override
+    public double getAsiakasKgPerSekunti() {
+        return 0;
+    }
+
+    @Override
+    public int getJatelajiProsenttiELEKTRO() {
+        return 0;
+    }
+
+    @Override
+    public int getJatelajiProsenttiPALAVA() {
+        return 0;
+    }
+
+    @Override
+    public int getJatelajiProsenttiPALAMATON() {
+        return 0;
+    }
+
+    @Override
+    public int getRuuhkaAika() {
+        return 0;
+    }
+
+    @Override
+    public int getStrategiaTapahtumat() {
+        return 0;
+    }
+
+    @Override
+    public int getElektro_JateCounter() {
+        return 0;
+    }
+
+    @Override
+    public int getPalavaJateCounter() {
+        return 0;
+    }
+
+    @Override
+    public int getPalamatonJateCounter() {
         return 0;
     }
 
