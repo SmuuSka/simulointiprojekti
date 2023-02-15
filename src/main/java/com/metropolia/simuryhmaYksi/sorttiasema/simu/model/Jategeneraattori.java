@@ -9,7 +9,8 @@ public class Jategeneraattori {
 
     private int[] todE; //[10,200]
     private int[] todT; // {30, 60, 10}
-    private LinkedList<Jate> jatteet = new LinkedList<>(); 
+    private LinkedList<Jate> jatteet = new LinkedList<>();
+
     // Jakauma
     private ContinuousGenerator generaattori;
 
@@ -33,7 +34,7 @@ public class Jategeneraattori {
         return i; 
     }
 
-    public LinkedList<Jate> generoiJatteet(){
+    public void generoiJatteet(){
 
         double paino = 30.0;
         int jatteidenLkm = arvoArvo(todE)+1;
@@ -53,6 +54,9 @@ public class Jategeneraattori {
             }
             if (!loytyi) jatteet.add(new Jate(Jatelaji.values()[arvottuLaji], paino));
         }
+    }
+
+    public LinkedList<Jate> getJatteet(){
         return jatteet;
     }
 }

@@ -13,12 +13,14 @@ public class Asiakas {
 	private static int i = 1;
 	private static long sum = 0;
 	private Jategeneraattori jategeneraattori = new Jategeneraattori(new int[] {33,33,33}, new int[] {33,33,33});
-	private LinkedList<Jate> jatteet = jategeneraattori.generoiJatteet();
+	private LinkedList<Jate> jatteet;
 										
 	
 	public Asiakas(){
 	    id = i++;
 		saapumisaika = Kello.getInstance().getAika();
+		jategeneraattori.generoiJatteet();
+		jatteet = jategeneraattori.getJatteet();
 		// Lisätään asiakkaalle ennaltamäärätyt jätteet
 		//jatteet.add(new Jate(Jatelaji.ELEKTRONIIKKA,30));
 		//jatteet.add(new Jate(Jatelaji.PALAMATONAJATE,20));

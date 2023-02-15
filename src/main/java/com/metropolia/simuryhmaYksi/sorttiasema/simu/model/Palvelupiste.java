@@ -15,12 +15,8 @@ public class Palvelupiste {
 	
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
-	protected TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 	protected int palvelupisteID = 0;
-	protected static int i = 0; 
-	
-	//JonoStartegia strategia; //optio: asiakkaiden järjestys
-	
+	protected static int i = 0; 	
 	protected boolean varattu = false;
 
 
@@ -28,7 +24,6 @@ public class Palvelupiste {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		palvelupisteID = i++;
-		System.out.println(palvelupisteID);
 	}
 
 
@@ -45,11 +40,9 @@ public class Palvelupiste {
 	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 		varattu = true;
-		double palveluaika = generator.sample();
-		tapahtumalista.lisaa(new Tapahtuma(seuraavaPalvelu(jono.peek().getJatteet()),Kello.getInstance().getAika()+palveluaika,palvelupisteID));
 	}
 
-	public TapahtumanTyyppi seuraavaPalvelu(LinkedList<Jate> jatteet){
+	public TapahtumanTyyppi seuraavaPalvelu(LinkedList<Jate> jatteet){ // Asiakkaan jätteistä määräytyvä seuraava tapahtuma 
 
         TapahtumanTyyppi seuraavaTapahtuma = TapahtumanTyyppi.POISTUMINEN;
 
