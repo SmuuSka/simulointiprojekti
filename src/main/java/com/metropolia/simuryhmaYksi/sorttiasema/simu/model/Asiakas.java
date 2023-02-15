@@ -1,6 +1,9 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.model;
+import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.Normal;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
+
+import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -10,24 +13,29 @@ public class Asiakas {
 	private double saapumisaika;
 	private double poistumisaika;
 	private int id;
+	private static int[] JATEMAARA;
 	private static int i = 1;
 	private static long sum = 0;
-	private Jategeneraattori jategeneraattori = new Jategeneraattori(new int[] {33,33,33}, new int[] {33,33,33});
-	private LinkedList<Jate> jatteet;
-										
+	private LinkedList<Jate> jatteet = new LinkedList<>();
+
+	public static void setJatemaara(int[] jatemaaranVaihteluvali){
+		JATEMAARA = jatemaaranVaihteluvali;
+		System.out.println("JATEMÄÄRÄ: " + Arrays.toString(JATEMAARA));
+	}
 	
 	public Asiakas(){
 	    id = i++;
+
 		saapumisaika = Kello.getInstance().getAika();
-		jategeneraattori.generoiJatteet();
-		jatteet = jategeneraattori.getJatteet();
 		// Lisätään asiakkaalle ennaltamäärätyt jätteet
+		jatteet.add(new Jate(JATEMAARA, Jatelaji.ELEKTRONIIKKA));
+		jatteet.add(new Jate(JATEMAARA, Jatelaji.PALAMATONAJATE));
+		jatteet.add(new Jate(JATEMAARA, Jatelaji.PALAVAJATE));
 		//jatteet.add(new Jate(Jatelaji.ELEKTRONIIKKA,30));
 		//jatteet.add(new Jate(Jatelaji.PALAMATONAJATE,20));
-		//jatteet.add(new Jate(Jatelaji.PALAVAJATE,10));										
+		//jatteet.add(new Jate(Jatelaji.PALAVAJATE,10));
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo "+saapumisaika);
 	}
-
 
 	public static int getID(){
 		return i;
@@ -65,4 +73,5 @@ public class Asiakas {
 	public LinkedList<Jate> getJatteet() {
 		return jatteet;
 	}
+
 }
