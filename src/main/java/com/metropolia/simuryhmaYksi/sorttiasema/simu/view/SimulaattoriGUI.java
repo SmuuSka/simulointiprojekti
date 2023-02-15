@@ -20,20 +20,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+
 
 public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     private IKontrolleriVtoM kontrolleri;
     // Käyttöliittymäkomponentit:
-    private TextField aika;
-    private TextField viive;
-    private Label tulos;
-    private Label aikaLabel;
-    private Label viiveLabel;
-    private Label tulosLabel;
-
-    private Button kaynnistaButton;
-    private Button hidastaButton;
-    private Button nopeutaButton;
+    private TextField aika,viive,vaihteluvaliMistaMaara, vaihteluvaliMihinMaara;
+    private Label tulos,aikaLabel,viiveLabel,tulosLabel,vaihteluvaliMistaLabel, vaihteluvaliMihinLabel;
+    private Button kaynnistaButton,hidastaButton,nopeutaButton;
 
     private IVisualisointi naytto;
 
@@ -102,6 +97,22 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
             tulos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             tulos.setPrefWidth(150);
 
+            //Vaihteluväli mista
+            vaihteluvaliMistaLabel= new Label("Min kg");
+            vaihteluvaliMistaLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            vaihteluvaliMistaMaara = new TextField("Syötä minimimäärä");
+            vaihteluvaliMistaMaara.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            vaihteluvaliMistaMaara.setPrefWidth(150);
+
+            //Vaihteluväli mihin
+            vaihteluvaliMihinLabel = new Label("Max kg");
+            vaihteluvaliMihinLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            vaihteluvaliMihinMaara = new TextField("Syötä minimimäärä");
+            vaihteluvaliMihinMaara.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            vaihteluvaliMihinMaara.setPrefWidth(150);
+
+
+
             HBox hBox = new HBox();
             hBox.setPadding(new Insets(15, 12, 15, 12)); // marginaalit ylä, oikea, ala, vasen
             hBox.setSpacing(10);   // noodien välimatka 10 pikseliä
@@ -117,14 +128,21 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
             grid.add(viive, 1, 1);           // sarake, rivi
             grid.add(tulosLabel, 0, 2);      // sarake, rivi
             grid.add(tulos, 1, 2);           // sarake, rivi
+            //Mistä
+            grid.add(vaihteluvaliMistaLabel,2,0);
+            grid.add(vaihteluvaliMistaMaara,2,1);
+            //Mihin
+            grid.add(vaihteluvaliMihinLabel,3,0);
+            grid.add(vaihteluvaliMihinMaara,3,1);
             grid.add(kaynnistaButton,0, 3);  // sarake, rivi
             grid.add(nopeutaButton, 0, 4);   // sarake, rivi
             grid.add(hidastaButton, 1, 4);   // sarake, rivi
 
-            naytto = new Visualisointi2(400,200);
+            //naytto = new Visualisointi2(400,200);
 
             // Täytetään boxi:
-            hBox.getChildren().addAll(grid, (Canvas)naytto);
+            //hBox.getChildren().addAll(grid, (Canvas)naytto);
+            hBox.getChildren().addAll(grid);
 
             Scene scene = new Scene(hBox);
             primaryStage.setScene(scene);
@@ -136,6 +154,14 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public int[] getVaihteluvali() {
+        int[] vaihteluvali = new int[2];
+        vaihteluvali[0] = Integer.parseInt(vaihteluvaliMistaMaara.getText());
+        vaihteluvali[1] = Integer.parseInt(vaihteluvaliMihinMaara.getText());
+        return vaihteluvali;
     }
 
     @Override
