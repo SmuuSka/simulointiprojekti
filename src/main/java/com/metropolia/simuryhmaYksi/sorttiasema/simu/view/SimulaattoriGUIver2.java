@@ -1,8 +1,7 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 /**
- * @Author
- * Kaspar Tullus,Samu Aikio, Joel Tikkanen
- * */
+ * @Author Kaspar Tullus,Samu Aikio, Joel Tikkanen
+ */
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.Kontrolleri;
@@ -16,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
@@ -27,17 +27,19 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     private RadioButton RauhallinenAktiivisuus, NormaaliAktiivisuus, RuuhkainenAktiivisuus;
 
-    private CheckBox AsiakasAuto_Hajioa,SaapumispisteOnglema;
+    private CheckBox AsiakasAuto_Hajioa, SaapumispisteOnglema;
 
     private Label paaSim_ELEKTRO_JateCounter, paaSim_PALAVA_JateCounter, paaSim_PALAMATON_JateCounter,
-            paaSim_JONOINFO_SAAPUMINEN,paaSim_SAAPUMISIAYHT_COUNTER,paaSim_JONOINFO_PALAVAJATE,
-            paaSim_JONOINFO_ELEKTRONIIKKAJATE,paaSim_JONOINFO_PALAMATONJATE,paaSim_POISTUNUT_COUNTER;
+            paaSim_JONOINFO_SAAPUMINEN, paaSim_SAAPUMISIAYHT_COUNTER, paaSim_JONOINFO_PALAVAJATE,
+            paaSim_JONOINFO_ELEKTRONIIKKAJATE, paaSim_JONOINFO_PALAMATONJATE, paaSim_POISTUNUT_COUNTER;
     private ToggleGroup aktiivisuusRadioGroup;
     private Scene scene;
 
     private FXML_CONTROLLER FXMLcontroller;
     private Parent root;
     private IKontrolleriVtoM kontrolleri;
+
+    private IVisualisointi naytto;
     //-------------------------------------------------------------------------------------------
 
     public static void main(String[] args) {
@@ -53,6 +55,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public void start(Stage primaryStage) {
+
         try {
             FXMLLoader loaderStrategia = new FXMLLoader(getClass().getResource("/uifxml/Strategia.fxml"));
             FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
@@ -61,16 +64,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             root = loaderStrategia.load();
 
-            //Hae Napit FXML CONTROLLERISTA//
+            //Hae STRATEGIA Napit FXML CONTROLLERISTA
 
-            //PääSimulaattori napit.
-            aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
-            hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
-            nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
+            // (TÄÄLÄ ON KAIKKI STRATEGIA NÄKYMÄN ELEMENTIT)//
 
             //Strategia näkymän napit.
             strategiaButton = FXMLcontroller.getSTRATEGIA_SIIRY_SIMULAATIOON();
-
 
             //Hae TextFields FXML CONTROLLERISTA//
 
@@ -91,34 +90,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //RadioButtonGroup
             aktiivisuusRadioGroup = FXMLcontroller.getAktiivisuusGroup();
-
-            //PÄÄSIMULAAATORI Teksti/Label elementit
-
-            ///POISHEITETTYJATE COUNTERIT
-            paaSim_ELEKTRO_JateCounter = FXMLcontroller.getELEKTRO_POISHEITETTY_NUM();
-            paaSim_PALAVA_JateCounter = FXMLcontroller.getPA_POISHEITETTY_NUM();
-            paaSim_PALAMATON_JateCounter = FXMLcontroller.getEPA_POISHEITETTY_NUM();
-
-            ///JONOSSA COUNTER LABEL/TEXT
-
-            //PALAVAJÄTE JONO
-            paaSim_JONOINFO_PALAVAJATE = FXMLcontroller.getJONOSSAINFO_PA();
-
-            //ELEKTRONIIKA JONO
-            paaSim_JONOINFO_ELEKTRONIIKKAJATE = FXMLcontroller.getJONOSSAINFO_ELEKTRO();
-
-            //PALAMATONJÄTE JONO
-            paaSim_JONOINFO_PALAMATONJATE = FXMLcontroller.getJONOSSAINFO_EPA();
-
-            //SAAPUMISEN JONO
-            paaSim_JONOINFO_SAAPUMINEN = FXMLcontroller.getJONOSSA_SAAPUMINEN();
-
-            //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
-            paaSim_SAAPUMISIAYHT_COUNTER = FXMLcontroller.getJONOSSAINFO_SAAPUMINEN();
-
-            //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
-            paaSim_POISTUNUT_COUNTER = FXMLcontroller.getPOISTUNUTINFO();
-
             //-------------------------------------------------------------------------------------------
 
             //Hae Checkboxit FXML CONTROLLERISTA//
@@ -145,47 +116,102 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(root);
 
-            //PÄÄSIMULAATORIN NAPPI ACTIONEVENTIT
-            try {
-                aloitaButton.setOnAction(event -> {
-                    FXMLcontroller.aloitaSimulaatio(event);
-                });
-
-                hidastaButton.setOnAction(event -> {
-                    FXMLcontroller.hidastaSimulaatio(event);
-                });
-
-                nopeutaButton.setOnAction(event -> {
-                    FXMLcontroller.nopeutaSimulaatio(event);
-                });
-            } catch (Exception e) {
-                System.out.println("Pääsimulaatorin napit ei vielä käytössä koska strategia ikkuna on auki");
-            }
-            //-------------------------------------------------------------------------------------------
-
-            //Siiry PÄÄSIMULAATIO IKKUNAAN
+            //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
             strategiaButton.setOnAction(event -> {
-                this.getRuuhkaAika();
-                this.getStrategiaTapahtumat();
-                loaderSIMU.setController(FXMLcontroller);
-                try {
-                    root = loaderSIMU.load();
-                    scene = new Scene(root);
+                try{
+                    Integer.parseInt(asiakasJateMIN_INPUT.getText());
+                    Integer.parseInt(asiakasJateMAX_INPUT.getText());
+                }catch (NumberFormatException numberex){
+                    numberex.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Varoitus");
+                    alert.setHeaderText("Varoitus:");
+                    alert.setContentText("Et antanut asiakaan MIN ja MAX kg määrää.");
+                    alert.show();
+                    System.out.println("Et ole Syöttänyt mitää arvoja asiakkaan min ja max kilo määriin!");
+                }
+                if (Integer.parseInt(asiakasJateMIN_INPUT.getText()) < 0 || Integer.parseInt(asiakasJateMAX_INPUT.getText()) < 0 ||
+                        Integer.parseInt(asiakasJateMIN_INPUT.getText()) == Integer.parseInt(asiakasJateMAX_INPUT.getText())) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Varoitus");
+                    alert.setHeaderText("Varoitus:");
+                    alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä.");
+                    alert.show();
+                }else {
 
-                    primaryStage.setScene(scene);
+                    try {
+                        loaderSIMU.setController(FXMLcontroller);
+                        root = loaderSIMU.load();
+                        scene = new Scene(root);
 
-                    primaryStage.setTitle("Sortti-Asema Simu");
+                        primaryStage.setScene(scene);
 
+                        primaryStage.setTitle("Sortti-Asema Simu");
+
+                    } catch (IOException er) {
+                        System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
+                        er.printStackTrace();
+
+                    }
                     primaryStage.show();
 
-                } catch (IOException er) {
-                    System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
-                    er.printStackTrace();
+                    //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
+                    if (primaryStage.isShowing() == true) {
 
+                        //PÄÄSIMULAATORIN NAPIT.
+                        aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
+                        hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
+                        nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
+
+                        ///PÄÄSIMULAAATORI Teksti/Label elementit
+
+                        //POISHEITETTYJATE COUNTERIT
+                        paaSim_ELEKTRO_JateCounter = FXMLcontroller.getELEKTRO_POISHEITETTY_NUM();
+                        paaSim_PALAVA_JateCounter = FXMLcontroller.getPA_POISHEITETTY_NUM();
+                        paaSim_PALAMATON_JateCounter = FXMLcontroller.getEPA_POISHEITETTY_NUM();
+
+                        ///JONOSSA COUNTER LABEL/TEXT
+
+                        //PALAVAJÄTE JONO
+                        paaSim_JONOINFO_PALAVAJATE = FXMLcontroller.getJONOSSAINFO_PA();
+
+                        //ELEKTRONIIKA JONO
+                        paaSim_JONOINFO_ELEKTRONIIKKAJATE = FXMLcontroller.getJONOSSAINFO_ELEKTRO();
+
+                        //PALAMATONJÄTE JONO
+                        paaSim_JONOINFO_PALAMATONJATE = FXMLcontroller.getJONOSSAINFO_EPA();
+
+                        //SAAPUMISEN JONO
+                        paaSim_JONOINFO_SAAPUMINEN = FXMLcontroller.getJONOSSA_SAAPUMINEN();
+
+                        //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
+                        paaSim_SAAPUMISIAYHT_COUNTER = FXMLcontroller.getJONOSSAINFO_SAAPUMINEN();
+
+                        //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
+                        paaSim_POISTUNUT_COUNTER = FXMLcontroller.getPOISTUNUTINFO();
+
+
+                        System.out.println("Siirytään Pääsimulaatorille.");
+                        try {
+                            aloitaButton.setOnAction(event1 -> {
+                                FXMLcontroller.startSimulaatio(event1);
+                            });
+
+                            hidastaButton.setOnAction(event2 -> {
+                                FXMLcontroller.simulaatioHidaamin(event2);
+                            });
+
+                            nopeutaButton.setOnAction(event3 -> {
+                                FXMLcontroller.simulaatioNopeemmin(event3);
+                            });
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("Pääsimulaatori ei ole vielä päälä.");
+                    }
                 }
-
             });
-
 
             primaryStage.setScene(scene);
 
@@ -197,7 +223,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             e.printStackTrace();
         }
     }
+
     //-------------------------------------------------------------------------------------------
+
 
     //INTERFACE METHOTID
     @Override
@@ -211,34 +239,15 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    public double getAsiakasJäteMin() {
-        return Double.parseDouble(asiakasJateMIN_INPUT.getText());
-    }
-
-    @Override
-    public double getAsiakasJäteMax() {
-        return Double.parseDouble(asiakasJateMAX_INPUT.getText());
-    }
-
-    @Override
     public double getAsiakasKgPerSekunti() {
         return Double.parseDouble(asiakasPurku_KG_Sekunti.getText());
     }
 
     @Override
-    public int getJatelajiProsenttiELEKTRO() {
-        return Integer.parseInt(elektroniikkaJatePROSENTTI.getText());
+    public int[] getJatelajiProsentit() {
+        return new int[0];
     }
 
-    @Override
-    public int getJatelajiProsenttiPALAVA() {
-        return Integer.parseInt(palavaJatePROSENTTI.getText());
-    }
-
-    @Override
-    public int getJatelajiProsenttiPALAMATON() {
-        return Integer.parseInt(palamatonJatePROSENTTI.getText());
-    }
 
     @Override
     public int getRuuhkaAika() {
@@ -246,7 +255,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         RadioButton id = (RadioButton) aktiivisuusRadioGroup.getSelectedToggle();
 
         //switchcase joka katsoo mikä radiobutton on valittu.
-        switch (id.getId()){
+        switch (id.getId()) {
             case "1":
                 System.out.println("Aktiivisuus : Rauhallinen");
                 return 1;
@@ -262,13 +271,15 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public int getStrategiaTapahtumat() {
-        if (AsiakasAuto_Hajioa.isSelected() == true && SaapumispisteOnglema.isSelected() == false){
+
+        //Palautaa Valitun TAPAHTUMAN
+        if (AsiakasAuto_Hajioa.isSelected() == true && SaapumispisteOnglema.isSelected() == false) {
             System.out.println("TAPAHTUMA MAHDOLLISUUS : ASIAKKAAN AUTO HAJOOA");
             return 1;
-        } else if (SaapumispisteOnglema.isSelected() == true && AsiakasAuto_Hajioa.isSelected() == false ) {
+        } else if (SaapumispisteOnglema.isSelected() == true && AsiakasAuto_Hajioa.isSelected() == false) {
             System.out.println("TAPAHTUMA MAHDOLLISUUS : SAAPUMISPISTEESSÄ VOI OLLA ONGELMIA");
             return 2;
-        }else if (SaapumispisteOnglema.isSelected() == true && AsiakasAuto_Hajioa.isSelected() == true ){
+        } else if (SaapumispisteOnglema.isSelected() == true && AsiakasAuto_Hajioa.isSelected() == true) {
             System.out.println("TAPAHTUMA MAHDOLLISUUS : SAAPUMISPISTEESSÄ VOI OLLA ONGELMIA JA ASIAKKAAN AUTO HAJOOA");
             return 3;
         }
@@ -298,7 +309,15 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public int[] getVaihteluvali() {
-        return new int[0];
+        int[] vaihteluvali = new int[2];
+        try {
+            vaihteluvali[0] = Integer.parseInt(asiakasJateMIN_INPUT.getText());
+            vaihteluvali[1] = Integer.parseInt(asiakasJateMAX_INPUT.getText());
+            return vaihteluvali;
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+        return vaihteluvali;
     }
 
     @Override

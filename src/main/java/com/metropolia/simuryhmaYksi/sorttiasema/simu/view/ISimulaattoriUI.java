@@ -5,18 +5,13 @@ public interface ISimulaattoriUI {
     public double getAika();
     public long getViive();
     public void setLoppuaika();
+    //Asiakaan Jäte MIN ja MAX määrä getteri.
     public int[] getVaihteluvali();
-    //Asiakaan Jäte MIN ja MAX määrä getterit.
-    public double getAsiakasJäteMin();
-    public double getAsiakasJäteMax();
-
     //Asiakaan kesto 1 kilon heittämisessä getter.
     public double getAsiakasKgPerSekunti();
 
     //Simulaattorin Mitä jätettä tuotaan "prosentti int"
-    public int getJatelajiProsenttiELEKTRO();
-    public int getJatelajiProsenttiPALAVA();
-    public int getJatelajiProsenttiPALAMATON();
+    public int[] getJatelajiProsentit();
 
     //Simulaattorin Aktiivisuus input arvot.
     public int getRuuhkaAika();

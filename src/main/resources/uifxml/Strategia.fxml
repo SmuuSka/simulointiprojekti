@@ -126,7 +126,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="6.0" layoutY="399.0" prefHeight="38.0" prefWidth="425.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="6.0" layoutY="399.0" prefHeight="38.0" prefWidth="411.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <HBox alignment="CENTER" prefHeight="38.0" prefWidth="425.0" spacing="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
@@ -135,7 +135,7 @@
                         <ToggleGroup fx:id="AktiivisuusGroup" />
                      </toggleGroup>
                      <HBox.margin>
-                        <Insets right="25.0" />
+                        <Insets right="2.0" />
                      </HBox.margin>
                   </RadioButton>
                   <RadioButton fx:id="STRATEGIA_RUUHKA_NORMAALIA_CHECK" mnemonicParsing="false" prefHeight="17.0" prefWidth="80.0" text="Normaalia" toggleGroup="$AktiivisuusGroup">
@@ -226,7 +226,7 @@
       </Label>
    </children>
    <effect>
-      <InnerShadow height="47.38" radius="27.5875" width="64.97">
+      <InnerShadow height="56.18" radius="19.53" width="23.94">
          <color>
             <Color red="0.44642218947410583" green="0.9736841917037964" blue="0.42824074625968933" />
          </color>

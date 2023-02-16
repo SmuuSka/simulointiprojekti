@@ -176,33 +176,13 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
-    public double getAsiakasJäteMin() {
-        return 0;
-    }
-
-    @Override
-    public double getAsiakasJäteMax() {
-        return 0;
-    }
-
-    @Override
     public double getAsiakasKgPerSekunti() {
         return 0;
     }
 
     @Override
-    public int getJatelajiProsenttiELEKTRO() {
-        return 0;
-    }
-
-    @Override
-    public int getJatelajiProsenttiPALAVA() {
-        return 0;
-    }
-
-    @Override
-    public int getJatelajiProsenttiPALAMATON() {
-        return 0;
+    public int[] getJatelajiProsentit() {
+        return new int[0];
     }
 
     @Override

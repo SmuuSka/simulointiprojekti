@@ -188,29 +188,28 @@ public class FXML_CONTROLLER {
 
     ///PÄÄSIMULAATION ACTION METHODIT!
     @FXML
-    void aloitaSimulaatio(ActionEvent event) {
-        kontrolleri.kaynnistaSimulointi();
-    }
-
-    @FXML
-    void hidastaSimulaatio(ActionEvent event) {
-        kontrolleri.nopeuta();
-    }
-
-    @FXML
-    void lopetaSimulaatio(ActionEvent event) {
-    }
-
-    @FXML
-    void naytaKaikkiTulokset(ActionEvent event) {
+    void showKaikkiTulokset(ActionEvent event) {
 
     }
 
     @FXML
-    void nopeutaSimulaatio(ActionEvent event) {
-        kontrolleri.nopeuta();
+    void simulaatioHidaamin(ActionEvent event) {
+    kontrolleri.hidasta();
     }
 
+    @FXML
+    void simulaatioNopeemmin(ActionEvent event) {
+    kontrolleri.nopeuta();
+    }
+
+    @FXML
+    void startSimulaatio(ActionEvent event) {
+    kontrolleri.kaynnistaSimulointi();
+    }
+
+    @FXML
+    void stopSimulaatio(ActionEvent event) {
+    }
     /// PÄÄSIMULAATORIN GETTERIT
 
     public Button getBUTTON_ALOITA() {
