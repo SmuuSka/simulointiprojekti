@@ -11,7 +11,8 @@ public abstract class Moottori extends Thread implements IMoottori {
 	
 	protected Tapahtumalista tapahtumalista;
 	protected Palvelupiste[] palvelupisteet;
-	
+
+	private long viive;
 
 	public Moottori(IKontrolleriMtoV kontrolleri){
 		this.kontrolleri = kontrolleri;
@@ -32,7 +33,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	public void run(){
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
 		while (simuloidaan()){
-			
+			viive();
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 			
@@ -70,6 +71,25 @@ public abstract class Moottori extends Thread implements IMoottori {
 		return kello.getAika() < simulointiaika;
 	}
 	
+
+	public void viive() {
+		Trace.out(Trace.Level.INFO, "Viive " + viive);
+		try {
+			sleep(viive);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void setViive(long viive) {
+		this.viive = viive;
+	}
+
+	@Override
+	public long getViive() {
+		return 0;
+	}
 			
 
 	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa

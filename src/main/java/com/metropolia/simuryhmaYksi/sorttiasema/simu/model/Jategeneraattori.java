@@ -12,7 +12,7 @@ public class Jategeneraattori {
     private LinkedList<Jate> jatteet = new LinkedList<>();
     private final static int ERIJATTEIDENLKM = 3;
 
-    // Jakauma
+    // Jakauman mukainen satunnaisluku generaattori
     private ContinuousGenerator generaattori;
 
     public Jategeneraattori(int[] todT, ContinuousGenerator generaattori) {
