@@ -32,6 +32,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private Label paaSim_ELEKTRO_JateCounter, paaSim_PALAVA_JateCounter, paaSim_PALAMATON_JateCounter,
             paaSim_JONOINFO_SAAPUMINEN, paaSim_SAAPUMISIAYHT_COUNTER, paaSim_JONOINFO_PALAVAJATE,
             paaSim_JONOINFO_ELEKTRONIIKKAJATE, paaSim_JONOINFO_PALAMATONJATE, paaSim_POISTUNUT_COUNTER;
+   private int elektroJateProsentti = 0;
+    private int palavaJateProsentti = 0;
+   private int palamatonJateProsentti = 0;
     private ToggleGroup aktiivisuusRadioGroup;
     private Scene scene;
 
@@ -92,7 +95,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             aktiivisuusRadioGroup = FXMLcontroller.getAktiivisuusGroup();
             //-------------------------------------------------------------------------------------------
 
-            //Hae Checkboxit FXML CONTROLLERISTA//
+            //Hae Checkboxit/RadioButtonit FXML CONTROLLERISTA//
 
             //Aktiivisuus
             RauhallinenAktiivisuus = FXMLcontroller.getSTRATEGIA_RUUHKA_RAUHALLINEN_CHECK();
@@ -118,98 +121,121 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
             strategiaButton.setOnAction(event -> {
-                int asiakasMin = 0;
-                int asiakasMax = 0;
+                try{
+                    elektroJateProsentti = Integer.parseInt(elektroniikkaJatePROSENTTI.getText());
+                    palavaJateProsentti = Integer.parseInt(palavaJatePROSENTTI.getText());
+                    palamatonJateProsentti = Integer.parseInt(palamatonJatePROSENTTI.getText());
+                }catch(NumberFormatException numberex){
+                    System.out.println("Kaikkiin prosentti kenttiin pitää syöttää arvoja.");
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Varoitus");
+                    alert.setHeaderText("Varoitus:");
+                    alert.setContentText("Prosentti kenttiin ei voi syötää kirjaimia arvona!");
+                    alert.show();
+                }
 
-                try {
-                    asiakasMin = Integer.parseInt(asiakasJateMIN_INPUT.getText());
-                    asiakasMax = Integer.parseInt(asiakasJateMAX_INPUT.getText());
-                } catch (NumberFormatException numberex) {
-                    System.out.println("Et ole Syöttänyt mitää arvoja asiakkaan min ja max kilo määriin!");
-                } finally {
-
-                    if (asiakasMin < 0 || asiakasMax < 0 || asiakasMin == asiakasMax) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Varoitus");
-                        alert.setHeaderText("Varoitus:");
-                        alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä. Tai et ole antanut mitään arvoja.");
-                        alert.show();
-                    } else {
-
+                if(elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti != 100){
+                   int summa = elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti;
+                    System.out.println("Jäteprosentti luvut pitää olla yhteensä 100%, sinulla on " + summa + "%" );
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Varoitus");
+                    alert.setHeaderText("Varoitus:");
+                    alert.setContentText("Prosentit pitää olla tasan 100% yhteensä, sinulla on " + summa + "%");
+                    alert.show();
+                }else{
+                        //Asiakaan MIN/MAX kg määrä tarkistus.
+                        int asiakasMin = 0;
+                        int asiakasMax = 0;
                         try {
-                            loaderSIMU.setController(FXMLcontroller);
-                            root = loaderSIMU.load();
-                            scene = new Scene(root);
+                            asiakasMin = Integer.parseInt(asiakasJateMIN_INPUT.getText());
+                            asiakasMax = Integer.parseInt(asiakasJateMAX_INPUT.getText());
+                        } catch (NumberFormatException numberex) {
+                            System.out.println("Et ole Syöttänyt mitää arvoja asiakkaan min ja max kilo määriin!");
+                        } finally {
 
-                            primaryStage.setScene(scene);
+                            if (asiakasMin < 0 || asiakasMax < 0 || asiakasMin == asiakasMax) {
+                                Alert alert = new Alert(Alert.AlertType.WARNING);
+                                alert.setTitle("Varoitus");
+                                alert.setHeaderText("Varoitus:");
+                                alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä. Tai et ole antanut mitään arvoja.");
+                                alert.show();
+                            } else {
 
-                            primaryStage.setTitle("Sortti-Asema Simu");
+                                try {
+                                    loaderSIMU.setController(FXMLcontroller);
+                                    root = loaderSIMU.load();
+                                    scene = new Scene(root);
 
-                        } catch (IOException er) {
-                            System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
-                            er.printStackTrace();
+                                    primaryStage.setScene(scene);
 
-                        }
-                        primaryStage.show();
+                                    primaryStage.setTitle("Sortti-Asema Simu");
 
-                        //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
-                        if (primaryStage.isShowing() == true) {
+                                } catch (IOException er) {
+                                    System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
+                                    er.printStackTrace();
 
-                            //PÄÄSIMULAATORIN NAPIT.
-                            aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
-                            hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
-                            nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
+                                }
+                                primaryStage.show();
 
-                            ///PÄÄSIMULAAATORI Teksti/Label elementit
+                                //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
+                                if (primaryStage.isShowing() == true) {
 
-                            //POISHEITETTYJATE COUNTERIT
-                            paaSim_ELEKTRO_JateCounter = FXMLcontroller.getELEKTRO_POISHEITETTY_NUM();
-                            paaSim_PALAVA_JateCounter = FXMLcontroller.getPA_POISHEITETTY_NUM();
-                            paaSim_PALAMATON_JateCounter = FXMLcontroller.getEPA_POISHEITETTY_NUM();
+                                    //PÄÄSIMULAATORIN NAPIT.
+                                    aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
+                                    hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
+                                    nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
 
-                            ///JONOSSA COUNTER LABEL/TEXT
+                                    ///PÄÄSIMULAAATORI Teksti/Label elementit
 
-                            //PALAVAJÄTE JONO
-                            paaSim_JONOINFO_PALAVAJATE = FXMLcontroller.getJONOSSAINFO_PA();
+                                    //POISHEITETTYJATE COUNTERIT
+                                    paaSim_ELEKTRO_JateCounter = FXMLcontroller.getELEKTRO_POISHEITETTY_NUM();
+                                    paaSim_PALAVA_JateCounter = FXMLcontroller.getPA_POISHEITETTY_NUM();
+                                    paaSim_PALAMATON_JateCounter = FXMLcontroller.getEPA_POISHEITETTY_NUM();
 
-                            //ELEKTRONIIKA JONO
-                            paaSim_JONOINFO_ELEKTRONIIKKAJATE = FXMLcontroller.getJONOSSAINFO_ELEKTRO();
+                                    ///JONOSSA COUNTER LABEL/TEXT
 
-                            //PALAMATONJÄTE JONO
-                            paaSim_JONOINFO_PALAMATONJATE = FXMLcontroller.getJONOSSAINFO_EPA();
+                                    //PALAVAJÄTE JONO
+                                    paaSim_JONOINFO_PALAVAJATE = FXMLcontroller.getJONOSSAINFO_PA();
 
-                            //SAAPUMISEN JONO
-                            paaSim_JONOINFO_SAAPUMINEN = FXMLcontroller.getJONOSSA_SAAPUMINEN();
+                                    //ELEKTRONIIKA JONO
+                                    paaSim_JONOINFO_ELEKTRONIIKKAJATE = FXMLcontroller.getJONOSSAINFO_ELEKTRO();
 
-                            //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
-                            paaSim_SAAPUMISIAYHT_COUNTER = FXMLcontroller.getJONOSSAINFO_SAAPUMINEN();
+                                    //PALAMATONJÄTE JONO
+                                    paaSim_JONOINFO_PALAMATONJATE = FXMLcontroller.getJONOSSAINFO_EPA();
 
-                            //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
-                            paaSim_POISTUNUT_COUNTER = FXMLcontroller.getPOISTUNUTINFO();
+                                    //SAAPUMISEN JONO
+                                    paaSim_JONOINFO_SAAPUMINEN = FXMLcontroller.getJONOSSA_SAAPUMINEN();
+
+                                    //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
+                                    paaSim_SAAPUMISIAYHT_COUNTER = FXMLcontroller.getJONOSSAINFO_SAAPUMINEN();
+
+                                    //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
+                                    paaSim_POISTUNUT_COUNTER = FXMLcontroller.getPOISTUNUTINFO();
 
 
-                            System.out.println("Siirytään Pääsimulaatorille.");
-                            try {
-                                aloitaButton.setOnAction(event1 -> {
-                                    kontrolleri.kaynnistaSimulointi();
-                                });
+                                    System.out.println("Siirytään Pääsimulaatorille.");
+                                    try {
+                                        aloitaButton.setOnAction(event1 -> {
+                                            kontrolleri.kaynnistaSimulointi();
+                                        });
 
-                                hidastaButton.setOnAction(event2 -> {
-                                    kontrolleri.hidasta();
-                                });
+                                        hidastaButton.setOnAction(event2 -> {
+                                            kontrolleri.hidasta();
+                                        });
 
-                                nopeutaButton.setOnAction(event3 -> {
-                                    kontrolleri.nopeuta();
-                                });
-                            } catch (NullPointerException e) {
-                                e.printStackTrace();
+                                        nopeutaButton.setOnAction(event3 -> {
+                                            kontrolleri.nopeuta();
+                                        });
+                                    } catch (NullPointerException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    System.out.println("Pääsimulaatori ei ole vielä päälä.");
+                                }
                             }
-                        } else {
-                            System.out.println("Pääsimulaatori ei ole vielä päälä.");
                         }
                     }
-                }
-            });
+                });
 
             primaryStage.setScene(scene);
 
@@ -220,7 +246,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+}
+
 
 
     //-------------------------------------------------------------------------------------------
@@ -317,6 +344,17 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             er.printStackTrace();
         }
         return vaihteluvali;
+    }
+
+    @Override
+    public int[] getJateLaijenProsentit() {
+    int[] prosenttiLista = new int[0];
+        if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti == 100) {
+            prosenttiLista = new int[]{elektroJateProsentti, palavaJateProsentti, palamatonJateProsentti};
+            System.out.println("Prosentit on tasan 100% yhteensä, se on hyvä!");
+            return prosenttiLista;
+        }
+            return prosenttiLista;
     }
 
     @Override
