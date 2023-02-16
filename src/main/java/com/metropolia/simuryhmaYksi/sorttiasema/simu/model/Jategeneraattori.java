@@ -7,16 +7,17 @@ import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.ContinuousGe
 
 public class Jategeneraattori {
 
-    private int[] todE; //[10,200]
+ 
     private int[] todT; // {30, 60, 10}
     private LinkedList<Jate> jatteet = new LinkedList<>();
+    private final static int ERIJATTEIDENLKM = 3;
 
     // Jakauma
     private ContinuousGenerator generaattori;
 
-    public Jategeneraattori(int[] todE, int[] todT) {
-        this.todE = todE;
+    public Jategeneraattori(int[] todT, ContinuousGenerator generaattori) {
         this.todT = todT;
+        this.generaattori = generaattori;
     }
 
     public int arvoArvo(int[] arr){
@@ -36,23 +37,19 @@ public class Jategeneraattori {
 
     public void generoiJatteet(){
 
-        double paino = 30.0;
-        int jatteidenLkm = arvoArvo(todE)+1;
-        //System.out.println("Jätteitä generoidaan " + jatteidenLkm + " kappaletta.");    
-
-        for (int i=0;i<jatteidenLkm;i++){
+        for (int i=0;i<ERIJATTEIDENLKM;i++){
 
             int arvottuLaji = arvoArvo(todT);
             boolean loytyi = false;
 
             for (Jate jate : jatteet) {
                 if (jate.getJatelaji() == Jatelaji.values()[arvottuLaji]){
-                    jate.setPaino(jate.getPaino() + paino);
+                    jate.setPaino(jate.getPaino() + generaattori.sample());
                     loytyi = true;
                     break;
                 }
             }
-            if (!loytyi) jatteet.add(new Jate(Jatelaji.values()[arvottuLaji], paino));
+            if (!loytyi) jatteet.add(new Jate(Jatelaji.values()[arvottuLaji], generaattori.sample()));
         }
     }
 
