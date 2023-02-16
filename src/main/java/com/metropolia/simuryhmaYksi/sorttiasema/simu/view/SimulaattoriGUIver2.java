@@ -194,15 +194,15 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                         System.out.println("Siirytään Pääsimulaatorille.");
                         try {
                             aloitaButton.setOnAction(event1 -> {
-                                FXMLcontroller.startSimulaatio(event1);
+                                kontrolleri.kaynnistaSimulointi();
                             });
 
                             hidastaButton.setOnAction(event2 -> {
-                                FXMLcontroller.simulaatioHidaamin(event2);
+                                kontrolleri.hidasta();
                             });
 
                             nopeutaButton.setOnAction(event3 -> {
-                                FXMLcontroller.simulaatioNopeemmin(event3);
+                                kontrolleri.nopeuta();
                             });
                         } catch (NullPointerException e) {
                             e.printStackTrace();

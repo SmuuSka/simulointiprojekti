@@ -186,30 +186,6 @@ public class FXML_CONTROLLER {
 
     /////////////
 
-    ///PÄÄSIMULAATION ACTION METHODIT!
-    @FXML
-    void showKaikkiTulokset(ActionEvent event) {
-
-    }
-
-    @FXML
-    void simulaatioHidaamin(ActionEvent event) {
-    kontrolleri.hidasta();
-    }
-
-    @FXML
-    void simulaatioNopeemmin(ActionEvent event) {
-    kontrolleri.nopeuta();
-    }
-
-    @FXML
-    void startSimulaatio(ActionEvent event) {
-    kontrolleri.kaynnistaSimulointi();
-    }
-
-    @FXML
-    void stopSimulaatio(ActionEvent event) {
-    }
     /// PÄÄSIMULAATORIN GETTERIT
 
     public Button getBUTTON_ALOITA() {
