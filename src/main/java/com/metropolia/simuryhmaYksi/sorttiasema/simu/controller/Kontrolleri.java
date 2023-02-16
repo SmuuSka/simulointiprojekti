@@ -28,6 +28,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
 
         Asiakas.setJatemaara(ui.getVaihteluvali());
+        Asiakas.setTJATELAJI(new int[] {80, 10, 10});
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
 
         //Käynnistetään moottori
