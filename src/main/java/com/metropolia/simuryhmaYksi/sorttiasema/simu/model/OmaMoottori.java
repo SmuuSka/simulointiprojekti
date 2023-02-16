@@ -84,15 +84,4 @@ public class OmaMoottori extends Moottori{
 		System.out.println("Keskimääräinen jätemäärä per asiakas: " +  jatteenKokonaismaara/Asiakas.getID() + " kg");
 		//System.out.println("Tulokset ... puuttuvat vielä");
 	}
-
-
-	@Override
-	public void setViive() {
-
-	}
-
-	@Override
-	public long getViive() {
-		return 0;
-	}
 }
