@@ -14,15 +14,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
+    private AnchorPane MainSoftwarePane_STRATEGIA;
 
     private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton;
 
-    private TextField simulointiAikaInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
+    private TextField simulointiAikaInput,simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
             palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
 
     private RadioButton RauhallinenAktiivisuus, NormaaliAktiivisuus, RuuhkainenAktiivisuus;
@@ -35,6 +37,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
    private int elektroJateProsentti = 0;
     private int palavaJateProsentti = 0;
    private int palamatonJateProsentti = 0;
+   private int simulaatioAika = 0;
+
+   private int simulaatioViive = 0;
     private ToggleGroup aktiivisuusRadioGroup;
     private Scene scene;
 
@@ -70,14 +75,14 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //Hae STRATEGIA Napit FXML CONTROLLERISTA
 
             // (TÄÄLÄ ON KAIKKI STRATEGIA NÄKYMÄN ELEMENTIT)//
-
             //Strategia näkymän napit.
             strategiaButton = FXMLcontroller.getSTRATEGIA_SIIRY_SIMULAATIOON();
 
             //Hae TextFields FXML CONTROLLERISTA//
 
-            //SimulointiAika
+            //SimulointiAika ja viive
             simulointiAikaInput = FXMLcontroller.getSTRATEGIA_SIMULOINTIAIKA();
+            simulointiAikaViiveInput = FXMLcontroller.getSTRATEGIA_SIMULOINTIVIIVE();
 
             //Min ja Max kg määrä per asiakas.
             asiakasJateMIN_INPUT = FXMLcontroller.getSTRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ();
@@ -122,15 +127,17 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
             strategiaButton.setOnAction(event -> {
                 try{
+                    simulaatioAika = Integer.parseInt(simulointiAikaInput.getText());
+                    simulaatioViive = Integer.parseInt(simulointiAikaViiveInput.getText());
                     elektroJateProsentti = Integer.parseInt(elektroniikkaJatePROSENTTI.getText());
                     palavaJateProsentti = Integer.parseInt(palavaJatePROSENTTI.getText());
                     palamatonJateProsentti = Integer.parseInt(palamatonJatePROSENTTI.getText());
                 }catch(NumberFormatException numberex){
-                    System.out.println("Kaikkiin prosentti kenttiin pitää syöttää arvoja.");
+                    System.out.println("Kaikkiin kenttiin pitää syöttää numero arvoja.");
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Varoitus");
                     alert.setHeaderText("Varoitus:");
-                    alert.setContentText("Prosentti kenttiin ei voi syötää kirjaimia arvona!");
+                    alert.setContentText("Syöte kenttiin ei voi syötää kirjaimia arvona!");
                     alert.show();
                 }
 
@@ -261,7 +268,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public long getViive() {
-        return 0;
+        return simulaatioViive;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         System.out.println("Asetetaan simulointiaika: " + ui.getAika());
         moottori.setSimulointiaika(ui.getAika());
 
-        moottori.setViive(1000);
+        moottori.setViive(ui.getViive());
         //Korjaa tämä funktio
         //Asiakas.setJatemaara(ui.getVaihteluvali());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
