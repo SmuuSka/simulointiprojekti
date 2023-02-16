@@ -118,97 +118,95 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
             strategiaButton.setOnAction(event -> {
-                try{
-                    Integer.parseInt(asiakasJateMIN_INPUT.getText());
-                    Integer.parseInt(asiakasJateMAX_INPUT.getText());
-                }catch (NumberFormatException numberex){
-                    numberex.printStackTrace();
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Varoitus");
-                    alert.setHeaderText("Varoitus:");
-                    alert.setContentText("Et antanut asiakaan MIN ja MAX kg määrää.");
-                    alert.show();
+                int asiakasMin = 0;
+                int asiakasMax = 0;
+
+                try {
+                    asiakasMin = Integer.parseInt(asiakasJateMIN_INPUT.getText());
+                    asiakasMax = Integer.parseInt(asiakasJateMAX_INPUT.getText());
+                } catch (NumberFormatException numberex) {
                     System.out.println("Et ole Syöttänyt mitää arvoja asiakkaan min ja max kilo määriin!");
-                }
-                if (Integer.parseInt(asiakasJateMIN_INPUT.getText()) < 0 || Integer.parseInt(asiakasJateMAX_INPUT.getText()) < 0 ||
-                        Integer.parseInt(asiakasJateMIN_INPUT.getText()) == Integer.parseInt(asiakasJateMAX_INPUT.getText())) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Varoitus");
-                    alert.setHeaderText("Varoitus:");
-                    alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä.");
-                    alert.show();
-                }else {
+                } finally {
 
-                    try {
-                        loaderSIMU.setController(FXMLcontroller);
-                        root = loaderSIMU.load();
-                        scene = new Scene(root);
-
-                        primaryStage.setScene(scene);
-
-                        primaryStage.setTitle("Sortti-Asema Simu");
-
-                    } catch (IOException er) {
-                        System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
-                        er.printStackTrace();
-
-                    }
-                    primaryStage.show();
-
-                    //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
-                    if (primaryStage.isShowing() == true) {
-
-                        //PÄÄSIMULAATORIN NAPIT.
-                        aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
-                        hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
-                        nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
-
-                        ///PÄÄSIMULAAATORI Teksti/Label elementit
-
-                        //POISHEITETTYJATE COUNTERIT
-                        paaSim_ELEKTRO_JateCounter = FXMLcontroller.getELEKTRO_POISHEITETTY_NUM();
-                        paaSim_PALAVA_JateCounter = FXMLcontroller.getPA_POISHEITETTY_NUM();
-                        paaSim_PALAMATON_JateCounter = FXMLcontroller.getEPA_POISHEITETTY_NUM();
-
-                        ///JONOSSA COUNTER LABEL/TEXT
-
-                        //PALAVAJÄTE JONO
-                        paaSim_JONOINFO_PALAVAJATE = FXMLcontroller.getJONOSSAINFO_PA();
-
-                        //ELEKTRONIIKA JONO
-                        paaSim_JONOINFO_ELEKTRONIIKKAJATE = FXMLcontroller.getJONOSSAINFO_ELEKTRO();
-
-                        //PALAMATONJÄTE JONO
-                        paaSim_JONOINFO_PALAMATONJATE = FXMLcontroller.getJONOSSAINFO_EPA();
-
-                        //SAAPUMISEN JONO
-                        paaSim_JONOINFO_SAAPUMINEN = FXMLcontroller.getJONOSSA_SAAPUMINEN();
-
-                        //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
-                        paaSim_SAAPUMISIAYHT_COUNTER = FXMLcontroller.getJONOSSAINFO_SAAPUMINEN();
-
-                        //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
-                        paaSim_POISTUNUT_COUNTER = FXMLcontroller.getPOISTUNUTINFO();
-
-
-                        System.out.println("Siirytään Pääsimulaatorille.");
-                        try {
-                            aloitaButton.setOnAction(event1 -> {
-                                kontrolleri.kaynnistaSimulointi();
-                            });
-
-                            hidastaButton.setOnAction(event2 -> {
-                                kontrolleri.hidasta();
-                            });
-
-                            nopeutaButton.setOnAction(event3 -> {
-                                kontrolleri.nopeuta();
-                            });
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
-                        }
+                    if (asiakasMin < 0 || asiakasMax < 0 || asiakasMin == asiakasMax) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Varoitus");
+                        alert.setHeaderText("Varoitus:");
+                        alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä. Tai et ole antanut mitään arvoja.");
+                        alert.show();
                     } else {
-                        System.out.println("Pääsimulaatori ei ole vielä päälä.");
+
+                        try {
+                            loaderSIMU.setController(FXMLcontroller);
+                            root = loaderSIMU.load();
+                            scene = new Scene(root);
+
+                            primaryStage.setScene(scene);
+
+                            primaryStage.setTitle("Sortti-Asema Simu");
+
+                        } catch (IOException er) {
+                            System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
+                            er.printStackTrace();
+
+                        }
+                        primaryStage.show();
+
+                        //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
+                        if (primaryStage.isShowing() == true) {
+
+                            //PÄÄSIMULAATORIN NAPIT.
+                            aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
+                            hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
+                            nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
+
+                            ///PÄÄSIMULAAATORI Teksti/Label elementit
+
+                            //POISHEITETTYJATE COUNTERIT
+                            paaSim_ELEKTRO_JateCounter = FXMLcontroller.getELEKTRO_POISHEITETTY_NUM();
+                            paaSim_PALAVA_JateCounter = FXMLcontroller.getPA_POISHEITETTY_NUM();
+                            paaSim_PALAMATON_JateCounter = FXMLcontroller.getEPA_POISHEITETTY_NUM();
+
+                            ///JONOSSA COUNTER LABEL/TEXT
+
+                            //PALAVAJÄTE JONO
+                            paaSim_JONOINFO_PALAVAJATE = FXMLcontroller.getJONOSSAINFO_PA();
+
+                            //ELEKTRONIIKA JONO
+                            paaSim_JONOINFO_ELEKTRONIIKKAJATE = FXMLcontroller.getJONOSSAINFO_ELEKTRO();
+
+                            //PALAMATONJÄTE JONO
+                            paaSim_JONOINFO_PALAMATONJATE = FXMLcontroller.getJONOSSAINFO_EPA();
+
+                            //SAAPUMISEN JONO
+                            paaSim_JONOINFO_SAAPUMINEN = FXMLcontroller.getJONOSSA_SAAPUMINEN();
+
+                            //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
+                            paaSim_SAAPUMISIAYHT_COUNTER = FXMLcontroller.getJONOSSAINFO_SAAPUMINEN();
+
+                            //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
+                            paaSim_POISTUNUT_COUNTER = FXMLcontroller.getPOISTUNUTINFO();
+
+
+                            System.out.println("Siirytään Pääsimulaatorille.");
+                            try {
+                                aloitaButton.setOnAction(event1 -> {
+                                    kontrolleri.kaynnistaSimulointi();
+                                });
+
+                                hidastaButton.setOnAction(event2 -> {
+                                    kontrolleri.hidasta();
+                                });
+
+                                nopeutaButton.setOnAction(event3 -> {
+                                    kontrolleri.nopeuta();
+                                });
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            System.out.println("Pääsimulaatori ei ole vielä päälä.");
+                        }
                     }
                 }
             });
@@ -223,6 +221,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             e.printStackTrace();
         }
     }
+
 
     //-------------------------------------------------------------------------------------------
 

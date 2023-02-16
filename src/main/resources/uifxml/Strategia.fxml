@@ -156,7 +156,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="76.0" prefWidth="411.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <TextField fx:id="STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" text="Min Määrä">
+                  <TextField fx:id="STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" promptText="Min Määrä">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -164,7 +164,7 @@
                         <Insets left="30.0" right="30.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" text="Max Määrä">
+                  <TextField fx:id="STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" promptText="Max Määrä">
                      <HBox.margin>
                         <Insets left="30.0" right="30.0" />
                      </HBox.margin>
@@ -191,7 +191,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="STRATEGIA_KGMAARA_SEKUNTEJA" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="148.0" text="Sekunteja" />
+                  <TextField fx:id="STRATEGIA_KGMAARA_SEKUNTEJA" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="148.0" promptText="Sekunteja" />
                </children>
             </VBox>
          </children>
