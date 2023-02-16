@@ -145,7 +145,14 @@ public class FXML_CONTROLLER {
 
     ///STRATEGIA ELEMENTIT
     @FXML
+    private TextField STRATEGIA_SIMULOINTIVIIVE;
+    @FXML
+    private Button STRATEGIA_NAYTATULOKSET;
+    @FXML
     private ToggleGroup AktiivisuusGroup;
+
+    @FXML
+    private AnchorPane STRATEGIA_MAINSOFTWARE_PANE;
 
     @FXML
     private TextField STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ;
@@ -353,6 +360,14 @@ public class FXML_CONTROLLER {
 
     ///STRATEGIA GETTERIT!
 
+
+    public TextField getSTRATEGIA_SIMULOINTIVIIVE() {
+        return STRATEGIA_SIMULOINTIVIIVE;
+    }
+
+    public Button getSTRATEGIA_NAYTATULOKSET() {
+        return STRATEGIA_NAYTATULOKSET;
+    }
 
     public ToggleGroup getAktiivisuusGroup() {
         return AktiivisuusGroup;
