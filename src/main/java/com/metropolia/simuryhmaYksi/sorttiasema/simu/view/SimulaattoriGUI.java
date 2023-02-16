@@ -165,6 +165,11 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
+    public int[] getJateLaijenProsentit() {
+        return new int[0];
+    }
+
+    @Override
     public double getAika() {
 
         return Double.parseDouble(aika.getText());

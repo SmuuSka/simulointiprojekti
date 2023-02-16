@@ -11,6 +11,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+/**
+ * @Author Kaspar Tullus
+ */
 
 public class FXML_CONTROLLER {
     private IKontrolleriVtoM kontrolleri;

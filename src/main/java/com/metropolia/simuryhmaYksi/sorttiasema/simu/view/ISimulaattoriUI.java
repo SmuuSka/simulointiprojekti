@@ -1,4 +1,7 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
+/**
+ * @Author Kaspar Tullus,Samu Aikio, Joel Tikkanen
+ */
 
 public interface ISimulaattoriUI {
 
@@ -7,6 +10,7 @@ public interface ISimulaattoriUI {
     public void setLoppuaika();
     //Asiakaan Jäte MIN ja MAX määrä getteri.
     public int[] getVaihteluvali();
+    public int[] getJateLaijenProsentit();
     //Asiakaan kesto 1 kilon heittämisessä getter.
     public double getAsiakasKgPerSekunti();
 

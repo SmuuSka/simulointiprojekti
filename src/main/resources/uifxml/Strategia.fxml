@@ -16,9 +16,28 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="841.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutY="571.0" prefHeight="136.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="1.0" layoutY="99.0" prefHeight="44.0" prefWidth="431.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0">
+         <children>
+            <VBox alignment="CENTER" layoutY="-13.0" prefHeight="55.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Button fx:id="STRATEGIA_SIIRY_SIMULAATIOON1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="38.0" prefWidth="133.0" text="Katso Tulokset">
+                     <effect>
+                        <SepiaTone level="0.02" />
+                     </effect>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="1.0" layoutY="717.0" prefHeight="136.0" prefWidth="431.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0">
          <children>
             <VBox alignment="CENTER" prefHeight="129.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
@@ -36,27 +55,27 @@
             </VBox>
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" layoutX="-2.0" layoutY="436.0" prefHeight="25.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Asiakaan ajan kesto palvelupisteessä" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label alignment="CENTER" layoutX="2.0" layoutY="582.0" prefHeight="25.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Asiakaan ajan kesto palvelupisteessä" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutY="-3.0" prefHeight="44.0" prefWidth="431.0" style="-fx-background-color: a2d4c2;" text="Strategia" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label alignment="CENTER" layoutX="2.0" layoutY="143.0" prefHeight="44.0" prefWidth="431.0" style="-fx-background-color: a2d4c2;" text="Strategia" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="-2.0" layoutY="552.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Tapahtumat" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label alignment="CENTER" layoutX="2.0" layoutY="698.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Tapahtumat" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="379.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Sortti-aseman aktiivisuus" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label alignment="CENTER" layoutX="2.0" layoutY="525.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Sortti-aseman aktiivisuus" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <AnchorPane layoutY="239.0" prefHeight="143.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="2.0" layoutY="385.0" prefHeight="143.0" prefWidth="431.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
          <children>
             <HBox alignment="CENTER" prefHeight="143.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
@@ -102,17 +121,17 @@
                   </VBox>
                   <VBox prefHeight="143.0" prefWidth="113.0">
                      <children>
-                        <TextField fx:id="STRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0">
+                        <TextField fx:id="STRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" text="10">
                            <VBox.margin>
                               <Insets bottom="10.0" top="7.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextField fx:id="STRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0">
+                        <TextField fx:id="STRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" text="20">
                            <VBox.margin>
                               <Insets bottom="10.0" top="7.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextField fx:id="STRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0">
+                        <TextField fx:id="STRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" text="70">
                            <VBox.margin>
                               <Insets bottom="10.0" top="7.0" />
                            </VBox.margin>
@@ -126,7 +145,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="6.0" layoutY="399.0" prefHeight="38.0" prefWidth="411.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="2.0" layoutY="545.0" prefHeight="38.0" prefWidth="411.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
          <children>
             <HBox alignment="CENTER" prefHeight="38.0" prefWidth="425.0" spacing="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
@@ -152,11 +171,11 @@
             </HBox>
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="146.0" prefHeight="77.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="2.0" layoutY="292.0" prefHeight="77.0" prefWidth="431.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
          <children>
             <HBox alignment="CENTER" prefHeight="76.0" prefWidth="411.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <TextField fx:id="STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" promptText="Min Määrä">
+                  <TextField fx:id="STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" promptText="Min Määrä" text="1">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -164,7 +183,7 @@
                         <Insets left="30.0" right="30.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" promptText="Max Määrä">
+                  <TextField fx:id="STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ" alignment="CENTER" prefHeight="25.0" prefWidth="109.0" promptText="Max Määrä" text="50">
                      <HBox.margin>
                         <Insets left="30.0" right="30.0" />
                      </HBox.margin>
@@ -179,7 +198,7 @@
             <Insets left="10.0" right="10.0" />
          </padding>
       </AnchorPane>
-      <AnchorPane layoutY="460.0" prefHeight="92.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="2.0" layoutY="606.0" prefHeight="92.0" prefWidth="431.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
          <children>
             <VBox alignment="CENTER" layoutX="8.0" prefHeight="95.0" prefWidth="419.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
@@ -191,16 +210,16 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="STRATEGIA_KGMAARA_SEKUNTEJA" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="148.0" promptText="Sekunteja" />
+                  <TextField fx:id="STRATEGIA_KGMAARA_SEKUNTEJA" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="148.0" promptText="Sekunteja" text="1.5" />
                </children>
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="60.0" prefHeight="66.0" prefWidth="431.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="2.0" layoutY="206.0" prefHeight="66.0" prefWidth="431.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
          <children>
             <VBox alignment="CENTER" prefHeight="68.0" prefWidth="96.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <TextField fx:id="STRATEGIA_SIMULOINTIAIKA" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="182.0" text="1">
+                  <TextField fx:id="STRATEGIA_SIMULOINTIAIKA" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="182.0" text="1000">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -209,19 +228,29 @@
             </VBox>
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="221.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Jätelajit prosentteina (montako % tuotaan mitääkin jätettä)" textAlignment="CENTER" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0">
+      <Label alignment="CENTER" layoutX="1.0" layoutY="367.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Jätelajit prosentteina (montako % tuotaan mitääkin jätettä)" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="-2.0" layoutY="126.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Kuinka monta kiloa jätettä yhdellä asiakkaalla voi olla?" textAlignment="CENTER" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0">
+      <Label alignment="CENTER" layoutX="1.0" layoutY="272.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Kuinka monta kiloa jätettä yhdellä asiakkaalla voi olla?" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutY="41.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Simulointiaika" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label alignment="CENTER" layoutX="2.0" layoutY="187.0" prefHeight="19.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Simulointiaika" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="1.0" layoutY="7.0" prefHeight="44.0" prefWidth="431.0" style="-fx-background-color: a2d4c2;" text="Päävalikko" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="51.0" prefHeight="28.0" prefWidth="431.0" style="-fx-background-color: a5e8cd;" text="Edelliset Tulokset" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="19.0" />
          </font>
       </Label>
    </children>
