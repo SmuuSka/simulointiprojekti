@@ -138,10 +138,10 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
             grid.add(nopeutaButton, 0, 4);   // sarake, rivi
             grid.add(hidastaButton, 1, 4);   // sarake, rivi
 
-            //naytto = new Visualisointi2(400,200);
+            naytto = new Visualisointi2(400,200);
 
             // Täytetään boxi:
-            //hBox.getChildren().addAll(grid, (Canvas)naytto);
+            hBox.getChildren().addAll(grid,(Canvas)naytto);
             hBox.getChildren().addAll(grid);
 
             Scene scene = new Scene(hBox);
@@ -176,33 +176,13 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
-    public double getAsiakasJäteMin() {
-        return 0;
-    }
-
-    @Override
-    public double getAsiakasJäteMax() {
-        return 0;
-    }
-
-    @Override
     public double getAsiakasKgPerSekunti() {
         return 0;
     }
 
     @Override
-    public int getJatelajiProsenttiELEKTRO() {
-        return 0;
-    }
-
-    @Override
-    public int getJatelajiProsenttiPALAVA() {
-        return 0;
-    }
-
-    @Override
-    public int getJatelajiProsenttiPALAMATON() {
-        return 0;
+    public int[] getJatelajiProsentit() {
+        return new int[0];
     }
 
     @Override

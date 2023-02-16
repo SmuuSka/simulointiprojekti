@@ -40,14 +40,14 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button id="BUTTON_KAIKKITULOKSET" fx:id="BUTTON_KAIKKITULOKSET" alignment="CENTER" mnemonicParsing="false" onAction="#naytaKaikkiTulokset" prefHeight="65.0" prefWidth="187.0" text="Kaikki Tulokset" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                        <Button id="BUTTON_KAIKKITULOKSET" fx:id="BUTTON_KAIKKITULOKSET" alignment="CENTER" mnemonicParsing="false" prefHeight="65.0" prefWidth="187.0" text="Kaikki Tulokset" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                            <font>
                               <Font name="System Bold" size="19.0" />
                            </font>
                         </Button>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <children>
-                              <Button id="BUTTON_LOPETA" fx:id="BUTTON_LOPETA" alignment="CENTER" mnemonicParsing="false" onAction="#lopetaSimulaatio" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #E41B17;" text="Lopeta" textAlignment="CENTER">
+                              <Button id="BUTTON_ALOITA" fx:id="BUTTON_ALOITA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #64E986;" text="Aloita" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -55,7 +55,7 @@
                                     <Insets left="20.0" right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button id="BUTTON_ALOITA" fx:id="BUTTON_ALOITA" alignment="CENTER" mnemonicParsing="false" onAction="#aloitaSimulaatio" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #64E986;" text="Aloita" textAlignment="CENTER">
+                              <Button id="BUTTON_LOPETA" fx:id="BUTTON_LOPETA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #E41B17;" text="Lopeta" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -67,12 +67,12 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <Button id="BUTTON_NOPEAMMIN" fx:id="BUTTON_NOPEAMMIN" alignment="CENTER" mnemonicParsing="false" onAction="#nopeutaSimulaatio" prefHeight="43.0" prefWidth="90.0" text="Nopeammin" textAlignment="CENTER">
+                              <Button id="BUTTON_NOPEAMMIN" fx:id="BUTTON_NOPEAMMIN" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" text="Nopeammin" textAlignment="CENTER">
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button id="BUTTON_HITAAMMIN" fx:id="BUTTON_HITAAMMIN" alignment="CENTER" mnemonicParsing="false" onAction="#hidastaSimulaatio" prefHeight="43.0" prefWidth="90.0" text="Hitaammin" textAlignment="CENTER">
+                              <Button id="BUTTON_HITAAMMIN" fx:id="BUTTON_HITAAMMIN" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" text="Hitaammin" textAlignment="CENTER">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -183,7 +183,7 @@
          <center>
             <BorderPane prefHeight="620.0" prefWidth="767.0" BorderPane.alignment="CENTER">
                <center>
-                  <AnchorPane id="SIMULAATIO_VIEWBOX" fx:id="SIMULAATIO_VIEWBOX" prefHeight="606.0" prefWidth="746.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER">
+                  <AnchorPane id="SIMULAATIO_VIEWBOX" fx:id="SIMULAATIO_VIEWBOX" prefHeight="598.0" prefWidth="752.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER">
                      <children>
                         <Line id="LINE_POISTUMINEN_ELEKTRO" fx:id="LINE_POISTUMINEN_ELEKTRO" endX="124.5" endY="-115.5028076171875" layoutX="473.0" layoutY="403.0" startX="-82.0" startY="34.0" stroke="RED" />
                         <Line id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" fx:id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" endX="-270.0" endY="-107.0" layoutX="437.0" layoutY="413.0" startX="-87.0" startY="35.0" />
@@ -454,12 +454,27 @@
                         </Pane>
                         <Label layoutX="10.0" layoutY="234.0" text="Saapumisia:" />
                         <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="76.0" layoutY="234.0" text="0" />
+                        <ImageView fx:id="ASIAKAS_MOVE_PA" fitHeight="19.0" fitWidth="21.0" layoutX="178.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_EPA" fitHeight="19.0" fitWidth="21.0" layoutX="179.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_ELEKTRO" fitHeight="19.0" fitWidth="21.0" layoutX="168.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
                      </children>
                      <effect>
                         <DropShadow />
                      </effect>
                      <BorderPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                      </BorderPane.margin>
                   </AnchorPane>
                </center>
@@ -467,7 +482,4 @@
          </center>
       </BorderPane>
    </children>
-   <effect>
-      <InnerShadow height="31.26" radius="15.497499999999999" width="32.73" />
-   </effect>
 </AnchorPane>
