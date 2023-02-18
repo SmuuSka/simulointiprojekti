@@ -88,7 +88,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	@Override
 	public long getViive() {
-		return 0;
+		return viive;
 	}
 			
 

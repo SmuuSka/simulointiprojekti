@@ -220,8 +220,28 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
 
     }
 
+    
+
     @Override
     public IVisualisointi getVisualisointi() {
         return null;
+    }
+
+    @Override
+    public void setEJateJonossa(int pituus) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setPTJateJonossa(int pituus) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setPJateJonossa(int pituus) {
+        // TODO Auto-generated method stub
+        
     }
 }
