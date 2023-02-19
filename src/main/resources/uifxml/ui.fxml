@@ -199,6 +199,66 @@
                         <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA1" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA1" endX="197.0" endY="-331.0" layoutX="194.0" layoutY="799.0" startX="197.0" startY="-188.0" stroke="#089ecc" />
                         <Line id="LINE_SIIRTYY_ELEKTRO_TO_EPA" fx:id="LINE_SIIRTYY_ELEKTRO_TO_EPA" endX="211.0" endY="-331.0" layoutX="178.0" layoutY="629.0" startX="212.0" startY="-173.2303466796875" stroke="#1ea2d9" />
                         <Line id="LINE_SIIRTYY_PA_TO_EPA" fx:id="LINE_SIIRTYY_PA_TO_EPA" endX="212.0" endY="-358.2303466796875" layoutX="176.0" layoutY="489.0" startX="212.0" startY="-197.2303466796875" stroke="#c47f00" />
+                        <ImageView fx:id="ASIAKAS_MOVE_ELEKTRO_TO_EPA" fitHeight="19.0" fitWidth="21.0" layoutX="375.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_EPA_TO_ELEKTRO" fitHeight="19.0" fitWidth="21.0" layoutX="341.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_PA_TO_EPA" fitHeight="19.0" fitWidth="21.0" layoutX="377.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_EPA_TO_PA" fitHeight="19.0" fitWidth="21.0" layoutX="341.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_PA" fitHeight="19.0" fitWidth="21.0" layoutX="158.0" layoutY="258.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_EPA" fitHeight="19.0" fitWidth="21.0" layoutX="168.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_ELEKTRO" fitHeight="19.0" fitWidth="21.0" layoutX="158.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_PA_TO_POISTUMINEN" fitHeight="19.0" fitWidth="21.0" layoutX="381.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_EPA_TO_POISTUMINEN" fitHeight="19.0" fitWidth="21.0" layoutX="381.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_ELEKTRO_TO_POISTUMINEN" fitHeight="19.0" fitWidth="21.0" layoutX="380.0" layoutY="428.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_ELEKTRO_TO_PA" fitHeight="19.0" fitWidth="21.0" layoutX="379.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ASIAKAS_MOVE_PA_TO_ELEKTRO" fitHeight="19.0" fitWidth="21.0" layoutX="349.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Asiakas.png" />
+                           </image>
+                        </ImageView>
                         <ImageView id="PALVELUPISTE_ELEKTRO" fx:id="PALVELUPISTE_ELEKTRO" fitHeight="82.0" fitWidth="70.0" layoutX="337.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Elektroniikkajäte.png" />
@@ -274,24 +334,24 @@
                               </Lighting>
                            </effect>
                         </ImageView>
-                        <HBox id="JONO_EPA" alignment="CENTER_RIGHT" layoutX="259.0" layoutY="268.0" prefHeight="32.0" prefWidth="79.0">
+                        <HBox id="JONO_EPA" fx:id="JONO_EPA" alignment="CENTER_RIGHT" layoutX="259.0" layoutY="268.0" prefHeight="32.0" prefWidth="79.0">
                            <children>
-                              <Rectangle id="ASIAKAS_EPA_JONOSSA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                              <Rectangle id="ASIAKAS_EPA_JONOSSA" fx:id="JONO_PALIKKA_EPA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
                            </children>
                         </HBox>
-                        <HBox id="JONO_PA" alignment="CENTER_RIGHT" layoutX="280.0" layoutY="155.0" prefHeight="29.0" prefWidth="70.0" rotate="-38.2">
+                        <HBox id="JONO_PA" fx:id="JONO_PA" alignment="CENTER_RIGHT" layoutX="280.0" layoutY="155.0" prefHeight="29.0" prefWidth="70.0" rotate="-38.2">
                            <children>
-                              <Rectangle id="ASIAKAS_PA_JONOSSA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
+                              <Rectangle id="ASIAKAS_PA_JONOSSA" fx:id="JONO_PALIKKA_PALAVA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
                            </children>
                         </HBox>
-                        <HBox id="JONO_ELEKTRO" alignment="CENTER_RIGHT" layoutX="278.0" layoutY="403.0" prefHeight="29.0" prefWidth="70.0" rotate="37.6">
+                        <HBox id="JONO_ELEKTRO" fx:id="JONO_ELEKTRO" alignment="CENTER_RIGHT" layoutX="278.0" layoutY="403.0" prefHeight="29.0" prefWidth="70.0" rotate="37.6">
                            <children>
-                              <Rectangle id="ASIAKAS_ELEKTRO_JONOSSA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
+                              <Rectangle id="ASIAKAS_ELEKTRO_JONOSSA" fx:id="JONO_PALIKKA_ELEKTRO" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
                            </children>
                         </HBox>
-                        <HBox id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="19.0" layoutY="267.0" prefHeight="40.0" prefWidth="90.0">
+                        <HBox id="JONO_SAAPUMINEN" fx:id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="19.0" layoutY="267.0" prefHeight="40.0" prefWidth="90.0">
                            <children>
-                              <Rectangle id="ASIAKAS_JONOSSA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                              <Rectangle id="ASIAKAS_JONOSSA" fx:id="JONO_PALIKKA_SAAPUMINEN" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
                            </children>
                         </HBox>
                         <Label layoutX="19.0" layoutY="251.0" text="Jonossa:" />
@@ -454,21 +514,6 @@
                         </Pane>
                         <Label layoutX="10.0" layoutY="234.0" text="Saapumisia:" />
                         <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="76.0" layoutY="234.0" text="0" />
-                        <ImageView fx:id="ASIAKAS_MOVE_PA" fitHeight="19.0" fitWidth="21.0" layoutX="178.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Asiakas.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="ASIAKAS_MOVE_EPA" fitHeight="19.0" fitWidth="21.0" layoutX="179.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Asiakas.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="ASIAKAS_MOVE_ELEKTRO" fitHeight="19.0" fitWidth="21.0" layoutX="168.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Asiakas.png" />
-                           </image>
-                        </ImageView>
                      </children>
                      <effect>
                         <DropShadow />
