@@ -70,4 +70,8 @@ public class Palvelupiste {
 		return jono.size() != 0;
 	}
 
+	public LinkedList<Asiakas> getJono(){
+		return jono;
+	}
+
 }

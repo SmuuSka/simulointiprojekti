@@ -29,4 +29,7 @@ public interface ISimulaattoriUI {
 
 
     public IVisualisointi getVisualisointi();
+    public void setEJateJonossa(int pituus);
+    public void setPTJateJonossa(int pituus);
+    public void setPJateJonossa(int pituus);
 }

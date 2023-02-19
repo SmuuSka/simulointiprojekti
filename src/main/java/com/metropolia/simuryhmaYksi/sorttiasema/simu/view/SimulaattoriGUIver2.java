@@ -7,6 +7,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.Kontrolleri;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -325,14 +326,39 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         return Integer.parseInt(paaSim_ELEKTRO_JateCounter.getText());
     }
 
+    // Elektroniikka jonon pituus tekstin setteri
+    public void setEJateJonossa(int pituus){
+        Platform.runLater(
+  		() -> {
+            paaSim_JONOINFO_ELEKTRONIIKKAJATE.setText(String.valueOf(pituus)); 
+        });
+    }
+
     @Override
     public int getPalavaJateCounter() {
         return Integer.parseInt(paaSim_PALAVA_JateCounter.getText());
     }
 
     @Override
+    public void setPJateJonossa(int pituus) {
+        Platform.runLater(
+            () -> {
+              paaSim_JONOINFO_PALAVAJATE.setText(String.valueOf(pituus)); 
+          });
+    }
+
+    @Override
     public int getPalamatonJateCounter() {
         return Integer.parseInt(paaSim_PALAMATON_JateCounter.getText());
+    }
+
+    @Override
+    public void setPTJateJonossa(int pituus) {
+        Platform.runLater(
+  		() -> {
+            paaSim_JONOINFO_PALAMATONJATE.setText(String.valueOf(pituus)); 
+        });
+        
     }
 
     @Override
@@ -368,5 +394,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     public IVisualisointi getVisualisointi() {
         return null;
     }
+
+    
 
 }

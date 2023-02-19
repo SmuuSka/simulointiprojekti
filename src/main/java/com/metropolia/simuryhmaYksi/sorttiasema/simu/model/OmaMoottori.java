@@ -6,6 +6,8 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Moottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 
+import javafx.application.Platform;
+
 public class OmaMoottori extends Moottori{
 	
 	private Saapumisprosessi saapumisprosessi;
@@ -66,6 +68,12 @@ public class OmaMoottori extends Moottori{
 				a.raportti();
 				break;
 		}
+		// Asetetaan elektroniikka jätelavan jonon pituus
+		kontrolleri.setEJononPituus(palvelupisteet[0].getJono().size());
+		// Asetetaan palamattoman jätteen jätelavan jonon pituss
+		kontrolleri.setPTJononPituus(palvelupisteet[1].getJono().size());
+		// Asetetaan palavan jätteen jätelavan jonon pituss
+		kontrolleri.setPJononPituus(palvelupisteet[2].getJono().size());
 	}
 
 	@Override
