@@ -4,8 +4,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class DAO implements IDAO {
+    private static final ResourceBundle rb = ResourceBundle.getBundle("System");
+    private static final String url = rb.getString("url") +rb.getString("username") +rb.getString("password");
     private static final String SQL_DROPTABLE = "DROP TABLE SIMULAATIO";
     private static final String SQL_INIT = "CREATE TABLE IF NOT EXISTS SIMULAATIO(\n" +
             "    SIMULAATIOID INT(10) NOT NULL AUTO_INCREMENT,\n" +
@@ -36,7 +39,7 @@ public class DAO implements IDAO {
     }
     private static Connection avaaYhteysTietokantaan(){
         try{
-            connection = (Connection) DriverManager.getConnection("");
+            connection = (Connection) DriverManager.getConnection(url);
         }catch (SQLException e) {
             e.printStackTrace();
         }

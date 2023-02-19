@@ -36,3 +36,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+### PROJECT ###
+/src/main/resources/System.properties
