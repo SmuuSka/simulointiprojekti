@@ -138,7 +138,7 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
             grid.add(nopeutaButton, 0, 4);   // sarake, rivi
             grid.add(hidastaButton, 1, 4);   // sarake, rivi
 
-            naytto = new Visualisointi2(400,200);
+            naytto = new Visualisointi(400,200);
 
             // Täytetään boxi:
             hBox.getChildren().addAll(grid,(Canvas)naytto);

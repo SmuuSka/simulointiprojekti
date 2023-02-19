@@ -33,4 +33,49 @@ public class Visualisointi extends Canvas implements IVisualisointi{
         if (i==0) j+=10;
     }
 
+    @Override
+    public void moveAsiakasPALAVA() {
+
+    }
+
+    @Override
+    public void moveAsiakasEPA() {
+
+    }
+
+    @Override
+    public void moveAsiakasELEKTRO() {
+
+    }
+
+    @Override
+    public void moveAsiakasPALAVA_POISTUMINEN() {
+
+    }
+
+    @Override
+    public void moveAsiakasEPA_POISTUMINEN() {
+
+    }
+
+    @Override
+    public void moveAsiakasELEKTRO_POISTUMINEN() {
+
+    }
+
+    @Override
+    public void setPALAVA_VARATTU() {
+
+    }
+
+    @Override
+    public void setEPA_VARATTU() {
+
+    }
+
+    @Override
+    public void setELEKTRO_VARATTU() {
+
+    }
+
 }
