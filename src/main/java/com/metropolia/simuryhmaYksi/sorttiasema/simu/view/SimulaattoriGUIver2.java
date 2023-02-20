@@ -23,7 +23,7 @@ import java.io.IOException;
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private AnchorPane MainSoftwarePane_STRATEGIA;
 
-    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton;
+    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton,lopetaButton;
 
     private TextField simulointiAikaInput,simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
             palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
@@ -191,6 +191,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                     aloitaButton = FXMLcontroller.getBUTTON_ALOITA();
                                     hidastaButton = FXMLcontroller.getBUTTON_HITAAMMIN();
                                     nopeutaButton = FXMLcontroller.getBUTTON_NOPEAMMIN();
+                                    lopetaButton = FXMLcontroller.getBUTTON_LOPETA();
 
                                     ///PÄÄSIMULAAATORI Teksti/Label elementit
 
@@ -225,6 +226,23 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                         aloitaButton.setOnAction(event1 -> {
                                             getVisualisointi();
                                             naytto.moveAsiakasPALAVA();
+                                            naytto.moveAsiakasELEKTRO();
+                                            naytto.moveAsiakasEPA();
+                                            naytto.moveAsiakasELEKTRO_POISTUMINEN();
+                                            naytto.moveAsiakasEPA_POISTUMINEN();
+                                            naytto.moveAsiakasPALAVA_POISTUMINEN();
+                                            naytto.moveAsiakasELEKTRO_EPA();
+                                            naytto.moveAsiakasEPA_PA();
+                                            naytto.moveAsiakasPA_EPA();
+                                            naytto.moveAsiakasEPA_ELEKTRO();
+
+                                            naytto.setPALAVA_VARATTU(true);
+                                            naytto.setELEKTRO_VARATTU(true);
+                                            naytto.setSAAPUMINEN_VARATTU(true);
+                                            naytto.setEPA_VARATTU(true);
+
+                                            naytto.moveAsiakasELEKTRO_PALAVA();
+                                            naytto.moveAsiakasPALAVA_ELEKTRO();
                                             kontrolleri.kaynnistaSimulointi();
                                         });
 
@@ -234,6 +252,13 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
                                         nopeutaButton.setOnAction(event3 -> {
                                             kontrolleri.nopeuta();
+                                        });
+                                        lopetaButton.setOnAction(event4 -> {
+                                            naytto.setPALAVA_VARATTU(false);
+                                            naytto.setELEKTRO_VARATTU(false);
+                                            naytto.setSAAPUMINEN_VARATTU(false);
+                                            naytto.setEPA_VARATTU(false);
+                                            kontrolleri.lopetaSimulointi();
                                         });
                                     } catch (NullPointerException e) {
                                         e.printStackTrace();
@@ -256,9 +281,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             e.printStackTrace();
         }
 }
-
-
-
     //-------------------------------------------------------------------------------------------
 
 
@@ -394,7 +416,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     @Override
     public IVisualisointi getVisualisointi() {
         try {
-            naytto = new Visualisointi2(FXMLcontroller,kontrolleri);
+            naytto = new Visualisointi2(FXMLcontroller,kontrolleri,this);
             return naytto;
         } catch (IOException e) {
             System.out.println("Visualisointia ei saadu kiini");

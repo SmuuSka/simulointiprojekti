@@ -15,10 +15,18 @@ public interface IVisualisointi {
     public void moveAsiakasEPA_POISTUMINEN();
     public  void moveAsiakasELEKTRO_POISTUMINEN();
 
+    public void moveAsiakasELEKTRO_PALAVA();
+    public void moveAsiakasPALAVA_ELEKTRO();
+    public void moveAsiakasELEKTRO_EPA();
+    public void moveAsiakasEPA_ELEKTRO();
+    public void moveAsiakasPA_EPA();
+    public void moveAsiakasEPA_PA();
+
     //Palvelupisteen valo menee punaiseksi kun asiakas on kyseisessä pisteessä.
-    public void setPALAVA_VARATTU();
-    public void setEPA_VARATTU();
-    public void setELEKTRO_VARATTU();
+    public void setPALAVA_VARATTU(boolean onkovarattu);
+    public void setEPA_VARATTU(boolean onkovarattu);
+    public void setELEKTRO_VARATTU(boolean onkovarattu);
+    public void setSAAPUMINEN_VARATTU(boolean onkovarattu);
 
 
 }

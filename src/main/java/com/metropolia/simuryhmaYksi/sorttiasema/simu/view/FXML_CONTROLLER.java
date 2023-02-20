@@ -7,10 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -28,40 +25,8 @@ public class FXML_CONTROLLER {
 
     ///PÄÄSIMULAATORIN ELEMENTIT
     @FXML
-    private ImageView ASIAKAS_MOVE_ELEKTRO;
+    private Pane AnimationPane;
 
-    @FXML
-    private ImageView ASIAKAS_MOVE_ELEKTRO_TO_EPA;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_ELEKTRO_TO_PA;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_ELEKTRO_TO_POISTUMINEN;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_EPA;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_EPA_TO_ELEKTRO;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_EPA_TO_PA;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_EPA_TO_POISTUMINEN;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_PA;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_PA_TO_ELEKTRO;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_PA_TO_EPA;
-
-    @FXML
-    private ImageView ASIAKAS_MOVE_PA_TO_POISTUMINEN;
     @FXML
     private Button BUTTON_ALOITA;
 
@@ -422,54 +387,6 @@ public class FXML_CONTROLLER {
         return SIMULAATIO_VIEWBOX;
     }
 
-    public ImageView getASIAKAS_MOVE_ELEKTRO() {
-        return ASIAKAS_MOVE_ELEKTRO;
-    }
-
-    public ImageView getASIAKAS_MOVE_EPA() {
-        return ASIAKAS_MOVE_EPA;
-    }
-
-    public ImageView getASIAKAS_MOVE_PA() {
-        return ASIAKAS_MOVE_PA;
-    }
-
-    public ImageView getASIAKAS_MOVE_ELEKTRO_TO_POISTUMINEN() {
-        return ASIAKAS_MOVE_ELEKTRO_TO_POISTUMINEN;
-    }
-
-    public ImageView getASIAKAS_MOVE_EPA_TO_POISTUMINEN() {
-        return ASIAKAS_MOVE_EPA_TO_POISTUMINEN;
-    }
-
-    public ImageView getASIAKAS_MOVE_PA_TO_POISTUMINEN() {
-        return ASIAKAS_MOVE_PA_TO_POISTUMINEN;
-    }
-
-    public ImageView getASIAKAS_MOVE_ELEKTRO_TO_PA() {
-        return ASIAKAS_MOVE_ELEKTRO_TO_PA;
-    }
-
-    public ImageView getASIAKAS_MOVE_PA_TO_ELEKTRO() {
-        return ASIAKAS_MOVE_PA_TO_ELEKTRO;
-    }
-
-    public ImageView getASIAKAS_MOVE_ELEKTRO_TO_EPA() {
-        return ASIAKAS_MOVE_ELEKTRO_TO_EPA;
-    }
-
-    public ImageView getASIAKAS_MOVE_EPA_TO_ELEKTRO() {
-        return ASIAKAS_MOVE_EPA_TO_ELEKTRO;
-    }
-
-    public ImageView getASIAKAS_MOVE_EPA_TO_PA() {
-        return ASIAKAS_MOVE_EPA_TO_PA;
-    }
-
-    public ImageView getASIAKAS_MOVE_PA_TO_EPA() {
-        return ASIAKAS_MOVE_PA_TO_EPA;
-    }
-
     public HBox getJONO_ELEKTRO() {
         return JONO_ELEKTRO;
     }
@@ -506,6 +423,9 @@ public class FXML_CONTROLLER {
         return STRATEGIA_MAINSOFTWARE_PANE;
     }
 
+    public Pane getAnimationPane() {
+        return AnimationPane;
+    }
     ///STRATEGIA GETTERIT!
 
 

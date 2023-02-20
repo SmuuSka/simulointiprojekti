@@ -66,6 +66,11 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
+    public void lopetaSimulointi() {
+
+    }
+
+    @Override
     public void naytaLoppuaika(double aika) {
 
     }
