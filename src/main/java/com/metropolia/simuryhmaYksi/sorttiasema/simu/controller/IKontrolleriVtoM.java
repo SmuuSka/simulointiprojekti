@@ -4,4 +4,5 @@ public interface IKontrolleriVtoM {
   public void kaynnistaSimulointi();
     public void nopeuta();
     public void hidasta();
+    public void lopetaSimulointi();
 }

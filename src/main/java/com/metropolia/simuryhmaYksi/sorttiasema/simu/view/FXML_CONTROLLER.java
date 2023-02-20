@@ -25,8 +25,6 @@ public class FXML_CONTROLLER {
 
     ///PÄÄSIMULAATORIN ELEMENTIT
     @FXML
-    private ImageView ASIAKAS_NODE;
-    @FXML
     private Pane AnimationPane;
 
     @FXML
@@ -387,10 +385,6 @@ public class FXML_CONTROLLER {
 
     public AnchorPane getSIMULAATIO_VIEWBOX() {
         return SIMULAATIO_VIEWBOX;
-    }
-
-    public ImageView getASIAKAS_NODE() {
-        return ASIAKAS_NODE;
     }
 
     public HBox getJONO_ELEKTRO() {

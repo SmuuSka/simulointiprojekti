@@ -3,6 +3,8 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import javafx.animation.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -25,16 +28,12 @@ import java.sql.Time;
 
 public class Visualisointi2 extends Canvas implements IVisualisointi {
     private int asiakasLkm = 0;
+    private ISimulaattoriUI ui;
     private IKontrolleriVtoM kontrolleri;
     private FXML_CONTROLLER FXML_controller;
 
     private Pane AnimationPane;
     //----------------------------------ASIAKAS ELEMENTIT------------------------------------//
-
-    //ASIAKAS ELEMENTTI.
-    private ImageView ASIAKAS_NODE;
-
-    //---------------------------------------------------------------------------------------------
 
     //------------------------------------JONOT------------------------------------//
     private HBox JONO_SAAPUMISPISTE;
@@ -79,11 +78,20 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     private Line REITTI_ELEKTRO_TO_EPA;
 
     //---------------------------------------------------------------------------------------------
+
+    //----------------------------------ONKO PALVELUSSA "VALOT" ----------------------------
+    private Ellipse PA_PALVELUSSAINFO;
+    private Ellipse EPA_PALVELUSSAINFO;
+    private Ellipse ELEKTRO_PALVELUSSAINFO;
+    private Ellipse SAAPUMINEN_PALVELUSSAINFO;
+
+    //---------------------------------------------------------------------------------------------
     private Parent root;
     private Stage stage;
     private Scene scene;
 
-    public Visualisointi2(FXML_CONTROLLER FXML_controller, IKontrolleriVtoM kontrolleri) throws IOException {
+    public Visualisointi2(FXML_CONTROLLER FXML_controller, IKontrolleriVtoM kontrolleri,ISimulaattoriUI ui) throws IOException {
+        this.ui = ui;
         this.kontrolleri = kontrolleri;
         this.FXML_controller = FXML_controller;
         FXML_controller = new FXML_CONTROLLER(kontrolleri);
@@ -108,42 +116,14 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         JONOPALIKKA_EPA = FXML_controller.getJONO_PALIKKA_EPA();
         JONOPALIKKA_ELEKTRO = FXML_controller.getJONO_PALIKKA_ELEKTRO();
         //---------------------------------------------------------------------------------------------
-
-
-        //------------------------------------Kulku reitit------------------------------------//
-
-        //SAAPUMISESTA JÄTELAVALLE REITIT
-        REITTI_SAAPUMINEN_EPA = FXML_controller.getLINE_SIIRTYY_PALVELU_TO_EPA();
-        REITTI_SAAPUMINEN_ELEKTRO = FXML_controller.getLINE_SIIRTYY_PALVELU_TO_ELEKTRO();
-
-        //JÄTELAVOISTA POISTUMISEEN
-        REITTI_PALAVA_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_PA();
-        REITTI_EPA_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_EPA();
-        REITTI_ELEKTRO_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_ELEKTRO();
-
-        //JÄTELAVOISTA JÄTELAVALLE REITIT
-
-        //PA TO EPA ja EPA TO PA
-        REITTI_PA_TO_EPA = FXML_controller.getLINE_SIIRTYY_PA_TO_EPA();
-        REITTI_EPA_TO_PA = FXML_controller.getLINE_SIIRTYY_EPA_TO_PA();
-
-        //ELEKTRO TO PA ja PA TO ELEKTRO
-        REITTI_PA_TO_ELEKTRO_TOP_LINE = FXML_controller.getLINE_SIIRTYY_PA_TO_ELEKTRO1();
-        REITTI_PA_TO_ELEKTRO_BOTTOM_LINE = FXML_controller.getLINE_SIIRTYY_PA_TO_ELEKTRO2();
-        REITTI_ELEKTRO_TO_PA_BOTTOM_LINE = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA1();
-        REITTI_ELEKTRO_TO_PA_TOP_LINE = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA2();
-
-        //EPA TO ELEKTRO ja ELEKTRO TO EPA
-        REITTI_EPA_TO_ELEKTRO = FXML_controller.getLINE_SIIRTYY_EPA_TO_ELEKTRO();
-        REITTI_ELEKTRO_TO_EPA = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_EPA();
-
-        //---------------------------------------------------------------------------------------------
         tyhjennaNaytto();
     }
 
 
     public void tyhjennaNaytto() {
-
+        ui.setEJateJonossa(0);
+        ui.setPJateJonossa(0);
+        ui.setPTJateJonossa(0);
     }
 
     public void uusiAsiakas() {
@@ -152,10 +132,10 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     }
 
     @Override
+    // SAAPUMISPISTEELTÄ PALAVAAN ASIAKAS ANIMAATIO
     public void moveAsiakasPALAVA() {
-
         REITTI_SAAPUMINEN_PALAVA = FXML_controller.getLINE_SIIRTYY_PALVELU_TO_PA();
-        ASIAKAS_NODE = new ImageView();
+        ImageView ASIAKAS_NODE = new ImageView();
         Image imageAsiakas = new Image("uifxml/Asiakas.png");
         ASIAKAS_NODE.setImage(imageAsiakas);
         ASIAKAS_NODE.setScaleX(0.1);
@@ -169,48 +149,340 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         pathT.setDuration(Duration.millis(3000));
         pathT.setCycleCount(1);
         pathT.play();
-
-
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
     }
 
     @Override
+    //SAAPUMISPISTEELTÄ EPAAN ASIAKAS ANIMAATIO
     public void moveAsiakasEPA() {
-
+        REITTI_SAAPUMINEN_EPA = FXML_controller.getLINE_SIIRTYY_PALVELU_TO_EPA();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_SAAPUMINEN_EPA);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
     }
 
     @Override
+    //SAAPUMISPISTEELTÄ ELEKTROON ASIAKAS ANIMAATIO
     public void moveAsiakasELEKTRO() {
-
+        REITTI_SAAPUMINEN_ELEKTRO = FXML_controller.getLINE_SIIRTYY_PALVELU_TO_ELEKTRO();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_SAAPUMINEN_ELEKTRO);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
     }
 
     @Override
+    //PALAVA TO POISTUMINEN ASIAKAS ANIMAATIO
     public void moveAsiakasPALAVA_POISTUMINEN() {
-
+        REITTI_PALAVA_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_PA();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_PALAVA_POISTUMINEN);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
     }
 
     @Override
+    //EPA TO POISTUMINEN ASIAKAS ANIMAATIO
     public void moveAsiakasEPA_POISTUMINEN() {
+        REITTI_EPA_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_EPA();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
 
+        pathT.setPath(REITTI_EPA_POISTUMINEN);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
     }
 
     @Override
+    //ELEKTRO TO POISTUMINEN ASIAKAS ANIMAATIO
     public void moveAsiakasELEKTRO_POISTUMINEN() {
+        REITTI_ELEKTRO_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_ELEKTRO();
+       ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_ELEKTRO_POISTUMINEN);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
+    }
+
+    @Override
+    // ELEKTRO TO PALAVA ASIAKAS ANIMAATIO
+    public void moveAsiakasELEKTRO_PALAVA() {
+        REITTI_ELEKTRO_TO_PA_BOTTOM_LINE = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA1();
+        REITTI_ELEKTRO_TO_PA_TOP_LINE = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA2();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_ELEKTRO_TO_PA_BOTTOM_LINE);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+            AnimationPane.getChildren().add(ASIAKAS_NODE);
+            PathTransition pathT2 = new PathTransition();
+            pathT2.setPath(REITTI_ELEKTRO_TO_PA_TOP_LINE);
+            pathT2.setNode(ASIAKAS_NODE);
+            pathT2.setDuration(Duration.millis(3000));
+            pathT2.setCycleCount(1);
+            pathT2.play();
+            pathT2.setOnFinished((event2) -> {
+                AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+            });
+        });
+    }
+
+    @Override
+    //PALAVA TO ELEKTRO ASIAKAS ANIMAATIO
+    public void moveAsiakasPALAVA_ELEKTRO() {
+        REITTI_PA_TO_ELEKTRO_BOTTOM_LINE = FXML_controller.getLINE_SIIRTYY_PA_TO_ELEKTRO2();
+        REITTI_PA_TO_ELEKTRO_TOP_LINE = FXML_controller.getLINE_SIIRTYY_PA_TO_ELEKTRO1();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_PA_TO_ELEKTRO_TOP_LINE);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+            AnimationPane.getChildren().add(ASIAKAS_NODE);
+            PathTransition pathT2 = new PathTransition();
+            pathT2.setPath(REITTI_PA_TO_ELEKTRO_BOTTOM_LINE);
+            pathT2.setNode(ASIAKAS_NODE);
+            pathT2.setDuration(Duration.millis(3000));
+            pathT2.setCycleCount(1);
+            pathT2.play();
+            pathT2.setOnFinished((event2) -> {
+                AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+            });
+        });
+    }
+
+    @Override
+    //ELEKTRO TO EPA ASIAKAS ANIMAATIO
+    public void moveAsiakasELEKTRO_EPA() {
+        REITTI_ELEKTRO_TO_EPA = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_EPA();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_ELEKTRO_TO_EPA);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
+    }
+
+    @Override
+    //EPA TO ELEKTRO ASIAKAS ANIMAATIO
+    public void moveAsiakasEPA_ELEKTRO() {
+        REITTI_EPA_TO_ELEKTRO = FXML_controller.getLINE_SIIRTYY_EPA_TO_ELEKTRO();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_EPA_TO_ELEKTRO);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
+    }
+
+    @Override
+    //PA TO EPA ASIAKAS ANIMAATIO
+    public void moveAsiakasPA_EPA() {
+        REITTI_PA_TO_EPA = FXML_controller.getLINE_SIIRTYY_PA_TO_EPA();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_PA_TO_EPA);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
+    }
+
+    @Override
+    //EPA TO PA ASIAKAS ANIMAATIO
+    public void moveAsiakasEPA_PA() {
+        REITTI_EPA_TO_PA = FXML_controller.getLINE_SIIRTYY_EPA_TO_PA();
+        ImageView ASIAKAS_NODE = new ImageView();
+        Image imageAsiakas = new Image("uifxml/Asiakas.png");
+        ASIAKAS_NODE.setImage(imageAsiakas);
+        ASIAKAS_NODE.setScaleX(0.1);
+        ASIAKAS_NODE.setScaleY(0.1);
+        ASIAKAS_NODE.setScaleZ(0.1);
+        AnimationPane = FXML_controller.getAnimationPane();
+        AnimationPane.getChildren().add(ASIAKAS_NODE);
+        PathTransition pathT = new PathTransition();
+        pathT.setPath(REITTI_EPA_TO_PA);
+        pathT.setNode(ASIAKAS_NODE);
+        pathT.setDuration(Duration.millis(3000));
+        pathT.setCycleCount(1);
+        pathT.play();
+        pathT.setOnFinished((event) -> {
+            AnimationPane.getChildren().removeAll(ASIAKAS_NODE);
+        });
+    }
+
+    @Override
+    //PALAVA PISTEEN VARATTU VALO
+    public void setPALAVA_VARATTU(boolean onkovarattu) {
+        PA_PALVELUSSAINFO = FXML_controller.getPA_PALVELUSSAINFO();
+        if (onkovarattu == true) {
+            PA_PALVELUSSAINFO.setFill(Color.RED);
+            System.out.println("VARATTUPA");
+        }else if (!onkovarattu){
+            PA_PALVELUSSAINFO.setFill(Color.LIMEGREEN);
+            System.out.println("VAPAAPA");
+        }
+    }
+
+    @Override
+    //EPA PISTEEN VARATTU VALO
+    public void setEPA_VARATTU(boolean onkovarattu) {
+        EPA_PALVELUSSAINFO = FXML_controller.getEPA_PALVELUSSAINFO();
+        if (onkovarattu == true) {
+            EPA_PALVELUSSAINFO.setFill(Color.RED);
+            System.out.println("VARATTUPA");
+        }else if (!onkovarattu){
+            EPA_PALVELUSSAINFO.setFill(Color.LIMEGREEN);
+            System.out.println("VAPAAPA");
+        }
 
     }
 
     @Override
-    public void setPALAVA_VARATTU() {
+    //ELEKTRO PISTEEN VARATTU VALO
+    public void setELEKTRO_VARATTU(boolean onkovarattu) {
+        ELEKTRO_PALVELUSSAINFO = FXML_controller.getELEKTRO_PALVELUSSAINFO();
+        if (onkovarattu == true) {
+            ELEKTRO_PALVELUSSAINFO.setFill(Color.RED);
+            System.out.println("VARATTUPA");
+        }else if (!onkovarattu){
+            ELEKTRO_PALVELUSSAINFO.setFill(Color.LIMEGREEN);
+            System.out.println("VAPAAPA");
+        }
 
     }
 
     @Override
-    public void setEPA_VARATTU() {
 
-    }
-
-    @Override
-    public void setELEKTRO_VARATTU() {
-
+    //SAAPUMIS PISTEEN VARATTU VALO
+    public void setSAAPUMINEN_VARATTU(boolean onkovarattu) {
+        SAAPUMINEN_PALVELUSSAINFO = FXML_controller.getSAAPUMINEN_PALVELUSSAINFO();
+        if (onkovarattu == true) {
+            SAAPUMINEN_PALVELUSSAINFO.setFill(Color.RED);
+            System.out.println("VARATTUPA");
+        }else if (!onkovarattu){
+            SAAPUMINEN_PALVELUSSAINFO.setFill(Color.LIMEGREEN);
+            System.out.println("VAPAAPA");
+        }
     }
 
 
