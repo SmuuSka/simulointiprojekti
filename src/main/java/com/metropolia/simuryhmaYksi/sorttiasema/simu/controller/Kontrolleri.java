@@ -46,7 +46,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
             e.printStackTrace();
         }
         System.out.println("Simulaatio: " +tietokanta.haeData() + " loppu.");
-        tietokanta.poistaTaulu();
+        //Tällä voidaan poistaa taulu tietokannasta
+        //tietokanta.poistaTaulu();
     }
 
     @Override
