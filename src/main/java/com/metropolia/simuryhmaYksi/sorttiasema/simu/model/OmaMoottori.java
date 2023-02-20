@@ -6,8 +6,6 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Moottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 
-import javafx.application.Platform;
-
 public class OmaMoottori extends Moottori{
 	
 	private Saapumisprosessi saapumisprosessi;

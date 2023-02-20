@@ -1,5 +1,7 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.controller;
 
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.DAO;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.OmaMoottori;
@@ -10,6 +12,7 @@ import java.util.Arrays;
 public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private ISimulaattoriUI ui;
     private IMoottori moottori;
+    private IDAO tietokanta;
 
 
     public Kontrolleri(ISimulaattoriUI ui){
@@ -18,14 +21,15 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
     @Override
     public void kaynnistaSimulointi(){
-        //Luodaan Gui käskyn perusteella uusi moottori ja asetetaan simulointiaika
+        //Luodaan Gui:n aloitakäskyn perusteella uusi moottori ja tietokantaolio
         moottori = new OmaMoottori(this);
+        tietokanta = new DAO();
+        //Asetetaan simulointiaika ja viive moottorille
+        //Tallennetaan simulointiparametrit tietokantaan
         System.out.println("Asetetaan simulointiaika: " + ui.getAika());
         moottori.setSimulointiaika(ui.getAika());
-
         moottori.setViive(ui.getViive());
-        //Korjaa tämä funktio
-        //Asiakas.setJatemaara(ui.getVaihteluvali());
+        tietokanta.luoData(ui.getAika(), ui.getVaihteluvali());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
 
         Asiakas.setJatemaara(ui.getVaihteluvali());
@@ -34,6 +38,16 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
         //Käynnistetään moottori
         ((Thread)moottori).start();
+
+        try{
+            //Odotetaan simuloinnin loppua
+            ((Thread) moottori).join();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Simulaatio: " +tietokanta.haeData() + " loppu.");
+        //Tällä voidaan poistaa taulu tietokannasta
+        //tietokanta.poistaTaulu();
     }
 
     @Override
