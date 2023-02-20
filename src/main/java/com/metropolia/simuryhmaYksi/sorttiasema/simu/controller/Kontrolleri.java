@@ -14,7 +14,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private IMoottori moottori;
     private IDAO tietokanta;
 
-
     public Kontrolleri(ISimulaattoriUI ui){
         this.ui = ui;
     }

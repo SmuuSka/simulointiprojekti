@@ -70,7 +70,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
             FXMLcontroller = new FXML_CONTROLLER(kontrolleri);
             loaderStrategia.setController(FXMLcontroller);
-
             root = loaderStrategia.load();
 
             //Hae STRATEGIA Napit FXML CONTROLLERISTA
@@ -224,6 +223,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                     System.out.println("Siirytään Pääsimulaatorille.");
                                     try {
                                         aloitaButton.setOnAction(event1 -> {
+                                            getVisualisointi();
+                                            naytto.moveAsiakasPALAVA();
                                             kontrolleri.kaynnistaSimulointi();
                                         });
 
@@ -392,7 +393,14 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public IVisualisointi getVisualisointi() {
-        return null;
+        try {
+            naytto = new Visualisointi2(FXMLcontroller,kontrolleri);
+            return naytto;
+        } catch (IOException e) {
+            System.out.println("Visualisointia ei saadu kiini");
+            throw new RuntimeException(e);
+
+        }
     }
 
     
