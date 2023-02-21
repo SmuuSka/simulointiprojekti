@@ -48,11 +48,12 @@ public class OmaMoottori extends Moottori{
 				palvelupisteet[0].lisaaJonoon(a);
 				saapumisprosessi.generoiSeuraava();
 				break;
-			case ELEKTRONIIKKA_SAAPUMINEN: 
+			case ELEKTRONIIKKA_SAAPUMINEN:
+				kontrolleri.getVisualisointi().moveAsiakasELEKTRO();
 				a = palvelupisteet[jono1].otaJonosta();
 				palvelupisteet[jono2].lisaaJonoon(a);
 				break;
-			case PALAMATONJATE_SAAPUMINEN: 
+			case PALAMATONJATE_SAAPUMINEN:
 				a = palvelupisteet[jono1].otaJonosta();
 				palvelupisteet[jono2].lisaaJonoon(a);
 				break;
