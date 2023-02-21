@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class DAO implements IDAO {
@@ -18,10 +20,35 @@ public class DAO implements IDAO {
             "    PRIMARY KEY (SIMULAATIOID))";
     private static final String SQL_INSERT = "INSERT INTO SIMULAATIO (AIKA, VAIHTELUVALI_MIN, VAIHTELUVALI_MAX) VALUES (?,?,?)";
     private static final String SQL_SELECT = "SELECT SIMULAATIOID FROM SIMULAATIO";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM SIMULAATIO";
     private static Connection connection = null;
     private static PreparedStatement preparedStatement = null;
     private static ResultSet resultSet = null;
     private static int ID;
+    private static final HashMap<Integer,SimulaatioData> simulaatioData = new HashMap<>();
+
+
+    public static void main(String[] args){
+        haeKaikkiTiedot();
+        for (Map.Entry<Integer, SimulaatioData> kvp : simulaatioData.entrySet()){
+            System.out.println("Key: " + kvp.getKey() +"\nValue: " + kvp.getValue());
+        }
+    }
+
+    private static void haeKaikkiTiedot(){
+        try{
+            connection = avaaYhteysTietokantaan();
+            preparedStatement = connection.prepareStatement(SQL_SELECT_ALL);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                simulaatioData.put(resultSet.getInt(1),new SimulaatioData(resultSet.getInt(2), resultSet.getInt(3), resultSet.getInt(4)));
+//                System.out.println("ID: " + resultSet.getInt(1) + ", AIKA: " + resultSet.getInt(2)+ ","
+//                        + " VMIN: " + resultSet.getInt(3)+", VMAX: " + resultSet.getInt(4));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     private static int setID(){
         int simulaatioID = 0;
@@ -79,9 +106,10 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public int haeData() {
-        return ID;
+    public HashMap<Integer, SimulaatioData> haeData() {
+        return simulaatioData;
     }
+
 
     @Override
     public void poistaTaulu() {

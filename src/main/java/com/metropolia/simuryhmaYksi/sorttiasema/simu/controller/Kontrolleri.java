@@ -39,7 +39,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
         //Käynnistetään moottori
         ((Thread)moottori).start();
-        System.out.println("Simulaatio: " +tietokanta.haeData() + " loppu.");
+        //System.out.println("Simulaatio: " +tietokanta.haeData() + " loppu.");
+        //tietokanta.haeData();
         //Tällä voidaan poistaa taulu tietokannasta
         //tietokanta.poistaTaulu();
     }

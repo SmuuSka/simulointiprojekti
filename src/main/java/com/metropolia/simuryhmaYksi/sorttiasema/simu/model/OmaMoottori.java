@@ -45,6 +45,7 @@ public class OmaMoottori extends Moottori{
 			
 			case PALVELUTISKI_SAAPUMINEN:
 				a = new Asiakas();
+				//Palvetiskijono = tapahtumalista
 				palvelupisteet[0].lisaaJonoon(a);
 				saapumisprosessi.generoiSeuraava();
 				break;
@@ -78,7 +79,6 @@ public class OmaMoottori extends Moottori{
 	@Override
 	protected void tulokset() {	
 		double jatteenKokonaismaara = 0;
-
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		
 		System.out.println("Jätelavat: ");
