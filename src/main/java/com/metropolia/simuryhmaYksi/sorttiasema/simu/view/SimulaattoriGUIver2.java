@@ -224,25 +224,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                     System.out.println("Siirytään Pääsimulaatorille.");
                                     try {
                                         aloitaButton.setOnAction(event1 -> {
-                                            getVisualisointi();
-                                            naytto.moveAsiakasPALAVA();
-                                            naytto.moveAsiakasELEKTRO();
-                                            naytto.moveAsiakasEPA();
-                                            naytto.moveAsiakasELEKTRO_POISTUMINEN();
-                                            naytto.moveAsiakasEPA_POISTUMINEN();
-                                            naytto.moveAsiakasPALAVA_POISTUMINEN();
-                                            naytto.moveAsiakasELEKTRO_EPA();
-                                            naytto.moveAsiakasEPA_PA();
-                                            naytto.moveAsiakasPA_EPA();
-                                            naytto.moveAsiakasEPA_ELEKTRO();
-
-                                            naytto.setPALAVA_VARATTU(true);
-                                            naytto.setELEKTRO_VARATTU(true);
-                                            naytto.setSAAPUMINEN_VARATTU(true);
-                                            naytto.setEPA_VARATTU(true);
-
-                                            naytto.moveAsiakasELEKTRO_PALAVA();
-                                            naytto.moveAsiakasPALAVA_ELEKTRO();
+                                            kontrolleri.setVisualisointi(getVisualisointi());
                                             kontrolleri.kaynnistaSimulointi();
                                         });
 

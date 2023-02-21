@@ -6,6 +6,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.OmaMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 
 import java.util.Arrays;
 
@@ -13,6 +14,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private ISimulaattoriUI ui;
     private IMoottori moottori;
     private IDAO tietokanta;
+    private IVisualisointi nayttoVisual;
 
     public Kontrolleri(ISimulaattoriUI ui){
         this.ui = ui;
@@ -59,6 +61,10 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
+    public IVisualisointi getVisualisointi() {
+        return nayttoVisual;
+    }
+    @Override
     public void lopetaSimulointi() {
 
     }
@@ -72,6 +78,13 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void visualisoiAsiakas() {
 
     }
+
+    @Override
+    public IVisualisointi setVisualisointi(IVisualisointi visualisointi) {
+        this.nayttoVisual = visualisointi;
+        return visualisointi;
+    }
+
 
     public void setEJononPituus(int pituus){
         ui.setEJateJonossa(pituus);
