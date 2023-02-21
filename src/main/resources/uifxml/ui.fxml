@@ -185,20 +185,6 @@
                <center>
                   <AnchorPane id="SIMULAATIO_VIEWBOX" fx:id="SIMULAATIO_VIEWBOX" prefHeight="598.0" prefWidth="752.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER">
                      <children>
-                        <Line id="LINE_POISTUMINEN_ELEKTRO" fx:id="LINE_POISTUMINEN_ELEKTRO" endX="124.5" endY="-115.5028076171875" layoutX="473.0" layoutY="403.0" startX="-82.0" startY="34.0" stroke="RED" />
-                        <Line id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" fx:id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" endX="-270.0" endY="-107.0" layoutX="437.0" layoutY="413.0" startX="-87.0" startY="35.0" />
-                        <Line id="LINE_SIIRTYY_PALVELU_TO_PA" fx:id="LINE_SIIRTYY_PALVELU_TO_PA" endX="-284.0" endY="28.0" layoutX="447.0" layoutY="250.0" startX="-89.0" startY="-113.0" />
-                        <Line id="LINE_POISTUMINEN_PA" fx:id="LINE_POISTUMINEN_PA" endX="-65.0" endY="-124.0" layoutX="457.0" layoutY="260.0" startX="141.0" startY="28.0" stroke="RED" />
-                        <Line id="LINE_POISTUMINEN_EPA" fx:id="LINE_POISTUMINEN_EPA" endX="3.0" endY="-48.2303466796875" layoutX="369.0" layoutY="336.0" startX="229.7071533203125" startY="-47.29290771484375" stroke="#ff0505" />
-                        <Line id="LINE_SIIRTYY_PALVELU_TO_EPA" fx:id="LINE_SIIRTYY_PALVELU_TO_EPA" endX="16.0" endY="-51.2303466796875" layoutX="144.0" layoutY="339.0" startX="228.0" startY="-51.2303466796875" />
-                        <Line id="LINE_SIIRTYY_PA_TO_ELEKTRO1" fx:id="LINE_SIIRTYY_PA_TO_ELEKTRO1" endX="197.0" endY="-321.0" layoutX="161.0" layoutY="321.0" startX="197.0" startY="-197.0" stroke="#ff8100" AnchorPane.topAnchor="0.0" />
-                        <Line id="LINE_SIIRTYY_PA_TO_ELEKTRO2" fx:id="LINE_SIIRTYY_PA_TO_ELEKTRO2" endX="214.0" endY="-295.0" layoutX="136.0" layoutY="773.0" startX="214.0" startY="-160.5" stroke="#d69002" />
-                        <Line id="LINE_SIIRTYY_EPA_TO_PA" fx:id="LINE_SIIRTYY_EPA_TO_PA" endX="212.0" endY="-358.2303466796875" layoutX="139.0" layoutY="485.0" startX="212.0" startY="-197.2303466796875" stroke="#3ae800" />
-                        <Line id="LINE_SIIRTYY_EPA_TO_ELEKTRO" fx:id="LINE_SIIRTYY_EPA_TO_ELEKTRO" endX="211.0" endY="-331.0" layoutX="139.0" layoutY="629.0" startX="212.0" startY="-173.2303466796875" stroke="#40eb1d" />
-                        <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA2" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA2" endX="197.0" endY="-321.0" layoutX="193.0" layoutY="321.0" startX="197.0" startY="-197.0" stroke="#17a9d1" AnchorPane.topAnchor="0.0" />
-                        <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA1" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA1" endX="197.0" endY="-331.0" layoutX="194.0" layoutY="799.0" startX="197.0" startY="-188.0" stroke="#089ecc" />
-                        <Line id="LINE_SIIRTYY_ELEKTRO_TO_EPA" fx:id="LINE_SIIRTYY_ELEKTRO_TO_EPA" endX="211.0" endY="-331.0" layoutX="178.0" layoutY="629.0" startX="212.0" startY="-173.2303466796875" stroke="#1ea2d9" />
-                        <Line id="LINE_SIIRTYY_PA_TO_EPA" fx:id="LINE_SIIRTYY_PA_TO_EPA" endX="212.0" endY="-358.2303466796875" layoutX="176.0" layoutY="489.0" startX="212.0" startY="-197.2303466796875" stroke="#c47f00" />
                         <ImageView id="PALVELUPISTE_ELEKTRO" fx:id="PALVELUPISTE_ELEKTRO" fitHeight="82.0" fitWidth="70.0" layoutX="337.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Elektroniikkajäte.png" />
@@ -274,24 +260,42 @@
                               </Lighting>
                            </effect>
                         </ImageView>
-                        <HBox id="JONO_EPA" alignment="CENTER_RIGHT" layoutX="259.0" layoutY="268.0" prefHeight="32.0" prefWidth="79.0">
+                        <Pane fx:id="AnimationPane" layoutX="102.0" layoutY="-6.0" prefHeight="620.0" prefWidth="518.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Rectangle id="ASIAKAS_EPA_JONOSSA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                              <Line id="LINE_POISTUMINEN_ELEKTRO" fx:id="LINE_POISTUMINEN_ELEKTRO" endX="124.5" endY="-115.5028076171875" layoutX="371.0" layoutY="403.0" startX="-82.0" startY="34.0" stroke="RED" />
+                              <Line id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" fx:id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" endX="-87.0" endY="35.0" layoutX="330.0" layoutY="411.0" startX="-270.0" startY="-107.0" />
+                              <Line id="LINE_SIIRTYY_PALVELU_TO_PA" fx:id="LINE_SIIRTYY_PALVELU_TO_PA" endX="-89.0" endY="-113.0" layoutX="339.0" layoutY="253.0" startX="-284.0" startY="28.0" />
+                              <Line id="LINE_POISTUMINEN_PA" fx:id="LINE_POISTUMINEN_PA" endX="141.0" endY="28.0" layoutX="346.0" layoutY="258.0" startX="-65.0" startY="-124.0" stroke="RED" />
+                              <Line id="LINE_POISTUMINEN_EPA" fx:id="LINE_POISTUMINEN_EPA" endX="229.7071533203125" endY="-48.2303466796875" layoutX="275.0" layoutY="334.0" startX="3.0" startY="-47.29290771484375" stroke="#ff0505" />
+                              <Line id="LINE_SIIRTYY_PALVELU_TO_EPA" fx:id="LINE_SIIRTYY_PALVELU_TO_EPA" endX="228.0" endY="-51.2303466796875" layoutX="30.0" layoutY="337.0" startX="16.0" startY="-51.2303466796875" />
+                              <Line id="LINE_SIIRTYY_PA_TO_ELEKTRO2" fx:id="LINE_SIIRTYY_PA_TO_ELEKTRO2" endX="214.0" endY="-295.0" layoutX="34.0" layoutY="774.0" startX="214.0" startY="-160.5" stroke="#d69002" />
+                              <Line id="LINE_SIIRTYY_EPA_TO_PA" fx:id="LINE_SIIRTYY_EPA_TO_PA" endX="212.0" endY="-358.2303466796875" layoutX="78.0" layoutY="470.0" startX="212.0" startY="-197.2303466796875" stroke="#3ae800" />
+                              <Line id="LINE_SIIRTYY_EPA_TO_ELEKTRO" fx:id="LINE_SIIRTYY_EPA_TO_ELEKTRO" endX="211.0" endY="-173.2303466796875" layoutX="39.0" layoutY="614.0" startX="212.0" startY="-331.0" stroke="#40eb1d" />
+                              <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA2" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA2" endX="197.0" endY="-197.0" layoutX="92.0" layoutY="322.0" startX="197.0" startY="-321.0" stroke="#17a9d1" />
+                              <Line id="LINE_SIIRTYY_ELEKTRO_TO_EPA" fx:id="LINE_SIIRTYY_ELEKTRO_TO_EPA" endX="211.0" endY="-331.0" layoutX="78.0" layoutY="627.0" startX="212.0" startY="-173.2303466796875" stroke="#1ea2d9" />
+                              <Line id="LINE_SIIRTYY_PA_TO_EPA" fx:id="LINE_SIIRTYY_PA_TO_EPA" endX="212.0" endY="-197.2303466796875" layoutX="38.0" layoutY="504.0" startX="212.0" startY="-358.2303466796875" stroke="#c47f00" />
+                              <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA1" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA1" endX="197.0" endY="-188.0" layoutX="92.0" layoutY="801.0" startX="197.0" startY="-331.0" stroke="#089ecc" />
+                              <Line id="LINE_SIIRTYY_PA_TO_ELEKTRO1" fx:id="LINE_SIIRTYY_PA_TO_ELEKTRO1" endX="197.0" endY="-321.0" layoutX="52.0" layoutY="322.0" startX="197.0" startY="-197.0" stroke="#ff8100" />
+                           </children>
+                        </Pane>
+                        <HBox id="JONO_EPA" fx:id="JONO_EPA" alignment="CENTER_RIGHT" layoutX="259.0" layoutY="268.0" prefHeight="32.0" prefWidth="79.0">
+                           <children>
+                              <Rectangle id="ASIAKAS_EPA_JONOSSA" fx:id="JONO_PALIKKA_EPA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
                            </children>
                         </HBox>
-                        <HBox id="JONO_PA" alignment="CENTER_RIGHT" layoutX="280.0" layoutY="155.0" prefHeight="29.0" prefWidth="70.0" rotate="-38.2">
+                        <HBox id="JONO_PA" fx:id="JONO_PA" alignment="CENTER_RIGHT" layoutX="280.0" layoutY="155.0" prefHeight="29.0" prefWidth="70.0" rotate="-38.2">
                            <children>
-                              <Rectangle id="ASIAKAS_PA_JONOSSA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
+                              <Rectangle id="ASIAKAS_PA_JONOSSA" fx:id="JONO_PALIKKA_PALAVA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
                            </children>
                         </HBox>
-                        <HBox id="JONO_ELEKTRO" alignment="CENTER_RIGHT" layoutX="278.0" layoutY="403.0" prefHeight="29.0" prefWidth="70.0" rotate="37.6">
+                        <HBox id="JONO_ELEKTRO" fx:id="JONO_ELEKTRO" alignment="CENTER_RIGHT" layoutX="278.0" layoutY="403.0" prefHeight="29.0" prefWidth="70.0" rotate="37.6">
                            <children>
-                              <Rectangle id="ASIAKAS_ELEKTRO_JONOSSA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
+                              <Rectangle id="ASIAKAS_ELEKTRO_JONOSSA" fx:id="JONO_PALIKKA_ELEKTRO" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
                            </children>
                         </HBox>
-                        <HBox id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="19.0" layoutY="267.0" prefHeight="40.0" prefWidth="90.0">
+                        <HBox id="JONO_SAAPUMINEN" fx:id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="19.0" layoutY="267.0" prefHeight="40.0" prefWidth="90.0">
                            <children>
-                              <Rectangle id="ASIAKAS_JONOSSA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                              <Rectangle id="ASIAKAS_JONOSSA" fx:id="JONO_PALIKKA_SAAPUMINEN" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
                            </children>
                         </HBox>
                         <Label layoutX="19.0" layoutY="251.0" text="Jonossa:" />
@@ -454,21 +458,6 @@
                         </Pane>
                         <Label layoutX="10.0" layoutY="234.0" text="Saapumisia:" />
                         <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="76.0" layoutY="234.0" text="0" />
-                        <ImageView fx:id="ASIAKAS_MOVE_PA" fitHeight="19.0" fitWidth="21.0" layoutX="178.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Asiakas.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="ASIAKAS_MOVE_EPA" fitHeight="19.0" fitWidth="21.0" layoutX="179.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Asiakas.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="ASIAKAS_MOVE_ELEKTRO" fitHeight="19.0" fitWidth="21.0" layoutX="168.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Asiakas.png" />
-                           </image>
-                        </ImageView>
                      </children>
                      <effect>
                         <DropShadow />

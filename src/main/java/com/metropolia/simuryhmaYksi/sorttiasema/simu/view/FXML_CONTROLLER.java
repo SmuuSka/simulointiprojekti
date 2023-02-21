@@ -1,4 +1,5 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
+
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -6,22 +7,26 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+
 /**
  * @Author Kaspar Tullus
  */
 
 public class FXML_CONTROLLER {
     private IKontrolleriVtoM kontrolleri;
-    public FXML_CONTROLLER(IKontrolleriVtoM kontrolleri){
+
+    public FXML_CONTROLLER(IKontrolleriVtoM kontrolleri) {
         this.kontrolleri = kontrolleri;
     }
 
     ///PÄÄSIMULAATORIN ELEMENTIT
+    @FXML
+    private Pane AnimationPane;
+
     @FXML
     private Button BUTTON_ALOITA;
 
@@ -66,6 +71,30 @@ public class FXML_CONTROLLER {
 
     @FXML
     private Label JONOSSA_SAAPUMINEN;
+
+    @FXML
+    private HBox JONO_ELEKTRO;
+
+    @FXML
+    private HBox JONO_EPA;
+
+    @FXML
+    private HBox JONO_PA;
+
+    @FXML
+    private Rectangle JONO_PALIKKA_ELEKTRO;
+
+    @FXML
+    private Rectangle JONO_PALIKKA_EPA;
+
+    @FXML
+    private Rectangle JONO_PALIKKA_PALAVA;
+
+    @FXML
+    private Rectangle JONO_PALIKKA_SAAPUMINEN;
+
+    @FXML
+    private HBox JONO_SAAPUMINEN;
 
     @FXML
     private Line LINE_POISTUMINEN_ELEKTRO;
@@ -358,6 +387,45 @@ public class FXML_CONTROLLER {
         return SIMULAATIO_VIEWBOX;
     }
 
+    public HBox getJONO_ELEKTRO() {
+        return JONO_ELEKTRO;
+    }
+
+    public HBox getJONO_EPA() {
+        return JONO_EPA;
+    }
+
+    public HBox getJONO_PA() {
+        return JONO_PA;
+    }
+
+    public Rectangle getJONO_PALIKKA_ELEKTRO() {
+        return JONO_PALIKKA_ELEKTRO;
+    }
+
+    public Rectangle getJONO_PALIKKA_EPA() {
+        return JONO_PALIKKA_EPA;
+    }
+
+    public Rectangle getJONO_PALIKKA_PALAVA() {
+        return JONO_PALIKKA_PALAVA;
+    }
+
+    public Rectangle getJONO_PALIKKA_SAAPUMINEN() {
+        return JONO_PALIKKA_SAAPUMINEN;
+    }
+
+    public HBox getJONO_SAAPUMINEN() {
+        return JONO_SAAPUMINEN;
+    }
+
+    public AnchorPane getSTRATEGIA_MAINSOFTWARE_PANE() {
+        return STRATEGIA_MAINSOFTWARE_PANE;
+    }
+
+    public Pane getAnimationPane() {
+        return AnimationPane;
+    }
     ///STRATEGIA GETTERIT!
 
 

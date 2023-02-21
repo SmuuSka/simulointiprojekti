@@ -14,7 +14,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private IMoottori moottori;
     private IDAO tietokanta;
 
-
     public Kontrolleri(ISimulaattoriUI ui){
         this.ui = ui;
     }
@@ -64,6 +63,11 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void hidasta() {
         // Lisää viivettä 0.5s
         moottori.setViive(moottori.getViive() + 500);
+    }
+
+    @Override
+    public void lopetaSimulointi() {
+
     }
 
     @Override
