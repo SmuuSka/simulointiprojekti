@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public interface IDAO {
 
-    public abstract void luoData(Double aika, int[] vaihteluvali);
+    public abstract void luoData(Double aika, int[] vaihteluvali, int[] jateprosentit);
     public abstract void paivitaData();
     public abstract HashMap<Integer, SimulaatioData> haeData();
     public abstract void poistaTaulu();

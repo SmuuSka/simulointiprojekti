@@ -30,7 +30,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         System.out.println("Asetetaan simulointiaika: " + ui.getAika());
         moottori.setSimulointiaika(ui.getAika());
         moottori.setViive(ui.getViive());
-        tietokanta.luoData(ui.getAika(), ui.getVaihteluvali());
+        tietokanta.luoData(ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
 
         Asiakas.setJatemaara(ui.getVaihteluvali());
@@ -39,10 +39,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
         //Käynnistetään moottori
         ((Thread)moottori).start();
-        //System.out.println("Simulaatio: " +tietokanta.haeData() + " loppu.");
-        //tietokanta.haeData();
-        //Tällä voidaan poistaa taulu tietokannasta
-        //tietokanta.poistaTaulu();
     }
 
     @Override

@@ -17,31 +17,42 @@ public class DAO implements IDAO {
             "    AIKA DOUBLE DEFAULT NULL,\n" +
             "    VAIHTELUVALI_MIN INT DEFAULT NULL,\n" +
             "    VAIHTELUVALI_MAX INT DEFAULT NULL,\n" +
+            "    JATTEEN_TODENNAKOISYYS_ELEKTRONIIKKA INT DEFAULT NULL,\n" +
+            "    JATTEEN_TODENNAKOISYYS_PALAVA_JATE INT DEFAULT NULL,\n" +
+            "    JATTEEN_TODENNAKOISYYS_PALAMATON_JATE INT DEFAULT NULL,\n" +
             "    PRIMARY KEY (SIMULAATIOID))";
-    private static final String SQL_INSERT = "INSERT INTO SIMULAATIO (AIKA, VAIHTELUVALI_MIN, VAIHTELUVALI_MAX) VALUES (?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO SIMULAATIO (AIKA," +
+                                                                    " VAIHTELUVALI_MIN, " +
+                                                                    " VAIHTELUVALI_MAX," +
+                                                                    " JATTEEN_TODENNAKOISYYS_ELEKTRONIIKKA, " +
+                                                                    " JATTEEN_TODENNAKOISYYS_PALAVA_JATE," +
+                                                                    " JATTEEN_TODENNAKOISYYS_PALAMATON_JATE) VALUES (?,?,?,?,?,?)";
     private static final String SQL_SELECT = "SELECT SIMULAATIOID FROM SIMULAATIO";
     private static final String SQL_SELECT_ALL = "SELECT * FROM SIMULAATIO";
     private static Connection connection = null;
     private static PreparedStatement preparedStatement = null;
     private static ResultSet resultSet = null;
-    private static int ID;
+    private static int simulaatioID;
     private static final HashMap<Integer,SimulaatioData> simulaatioData = new HashMap<>();
 
 
     public static void main(String[] args){
+
         haeKaikkiTiedot();
         for (Map.Entry<Integer, SimulaatioData> kvp : simulaatioData.entrySet()){
             System.out.println("Key: " + kvp.getKey() +"\nValue: " + kvp.getValue());
         }
     }
 
-    private static void haeKaikkiTiedot(){
+    private synchronized static void haeKaikkiTiedot(){
         try{
             connection = avaaYhteysTietokantaan();
             preparedStatement = connection.prepareStatement(SQL_SELECT_ALL);
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
-                simulaatioData.put(resultSet.getInt(1),new SimulaatioData(resultSet.getInt(2), resultSet.getInt(3), resultSet.getInt(4)));
+                simulaatioData.put(resultSet.getInt(1),new SimulaatioData(
+                        resultSet.getInt(2), resultSet.getInt(3), resultSet.getInt(4),
+                        resultSet.getInt(5), resultSet.getInt(6), resultSet.getInt(7)));
 //                System.out.println("ID: " + resultSet.getInt(1) + ", AIKA: " + resultSet.getInt(2)+ ","
 //                        + " VMIN: " + resultSet.getInt(3)+", VMAX: " + resultSet.getInt(4));
             }
@@ -50,8 +61,7 @@ public class DAO implements IDAO {
         }
     }
 
-    private static int setID(){
-        int simulaatioID = 0;
+    private synchronized static int setID(){
         try{
             connection = avaaYhteysTietokantaan();
             preparedStatement = connection.prepareStatement(SQL_SELECT);
@@ -64,7 +74,7 @@ public class DAO implements IDAO {
         }
         return simulaatioID;
     }
-    private static Connection avaaYhteysTietokantaan(){
+    private synchronized static Connection avaaYhteysTietokantaan(){
         try{
             connection = (Connection) DriverManager.getConnection(url);
         }catch (SQLException e) {
@@ -74,22 +84,30 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public void luoData(Double aika, int[] vaihteluvali) {
+    public synchronized void luoData(Double aika, int[] vaihteluvali, int[] jateprosentit) {
         try {
-
-            System.out.println("Vaihe 1: Avataan yhteys tietokantaan");
+            //Vaihe 1. Yritetään avata yhteys tietokantaan.
             connection = avaaYhteysTietokantaan();
-            //Alustetaan taulu, jos ei ole ennestään
+            // Vaihe 2. Alustetaan taulu, jos ei ole ennestään olemassa.
+            //Muuten siirrytään vaiheeseen 3.
             preparedStatement = connection.prepareStatement(SQL_INIT);
             preparedStatement.executeUpdate();
-            System.out.println("Vaihe 2: Avattu yhteys, kirjoitetaan tiedot tietokantaan");
+            //Vaihe 3. Luodaan taulu tietokantaan.
             preparedStatement = connection.prepareStatement(SQL_INSERT);
+            //Simulaatioaika
             preparedStatement.setDouble(1, aika);
+            //Jätemäärä MIN
             preparedStatement.setInt(2, vaihteluvali[0]);
+            //Jätemäärä MAX
             preparedStatement.setInt(3, vaihteluvali[1]);
+            //Elektroniikan prosentit
+            preparedStatement.setInt(4,jateprosentit[0]);
+            //Palavan jätteen prosentit
+            preparedStatement.setInt(5,jateprosentit[1]);
+            //Palamattoman jätteen prosentit
+            preparedStatement.setInt(6,jateprosentit[2]);
             int rivi = preparedStatement.executeUpdate();
-            ID = setID();
-            System.out.println("Vaihe 3: Tiedot kirjattu tietokantaan\n rivi: " + rivi);
+            simulaatioID = setID();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -100,19 +118,20 @@ public class DAO implements IDAO {
             System.out.println("Vaihe 5: Tietokantayhteys suljettu");
         }
     }
-        @Override
-    public void paivitaData() {
-
+    @Override
+    public synchronized void paivitaData() {
+            System.out.println("Vaihe 1: Avataan yhteys tietokantaan");
+            connection = avaaYhteysTietokantaan();
     }
 
     @Override
-    public HashMap<Integer, SimulaatioData> haeData() {
+    public synchronized HashMap<Integer, SimulaatioData> haeData() {
         return simulaatioData;
     }
 
 
     @Override
-    public void poistaTaulu() {
+    public synchronized void poistaTaulu() {
         try {
             connection = avaaYhteysTietokantaan();
             preparedStatement = connection.prepareStatement(SQL_DROPTABLE);
