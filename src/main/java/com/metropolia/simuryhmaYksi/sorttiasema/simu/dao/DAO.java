@@ -20,13 +20,16 @@ public class DAO implements IDAO {
             "    JATTEEN_TODENNAKOISYYS_ELEKTRONIIKKA INT DEFAULT NULL,\n" +
             "    JATTEEN_TODENNAKOISYYS_PALAVA_JATE INT DEFAULT NULL,\n" +
             "    JATTEEN_TODENNAKOISYYS_PALAMATON_JATE INT DEFAULT NULL,\n" +
+            "    JATTEIDENKOKONAISMAARA DOUBLE DEFAULT NULL, \n" +
             "    PRIMARY KEY (SIMULAATIOID))";
-    private static final String SQL_INSERT = "INSERT INTO SIMULAATIO (AIKA," +
+    private static final String SQL_INSERT_SIMU_PARAMETRIT = "INSERT INTO SIMULAATIO (AIKA," +
                                                                     " VAIHTELUVALI_MIN, " +
                                                                     " VAIHTELUVALI_MAX," +
                                                                     " JATTEEN_TODENNAKOISYYS_ELEKTRONIIKKA, " +
                                                                     " JATTEEN_TODENNAKOISYYS_PALAVA_JATE," +
                                                                     " JATTEEN_TODENNAKOISYYS_PALAMATON_JATE) VALUES (?,?,?,?,?,?)";
+
+    private static final String SQL_UPDATE_TULOKSET = "UPDATE SIMULAATIO SET JATTEIDENKOKONAISMAARA = ? WHERE SIMULAATIOID = ?";
     private static final String SQL_SELECT = "SELECT SIMULAATIOID FROM SIMULAATIO";
     private static final String SQL_SELECT_ALL = "SELECT * FROM SIMULAATIO";
     private static Connection connection = null;
@@ -52,7 +55,8 @@ public class DAO implements IDAO {
             while(resultSet.next()) {
                 simulaatioData.put(resultSet.getInt(1),new SimulaatioData(
                         resultSet.getInt(2), resultSet.getInt(3), resultSet.getInt(4),
-                        resultSet.getInt(5), resultSet.getInt(6), resultSet.getInt(7)));
+                        resultSet.getInt(5), resultSet.getInt(6), resultSet.getInt(7),
+                        resultSet.getDouble(8)));
 //                System.out.println("ID: " + resultSet.getInt(1) + ", AIKA: " + resultSet.getInt(2)+ ","
 //                        + " VMIN: " + resultSet.getInt(3)+", VMAX: " + resultSet.getInt(4));
             }
@@ -84,7 +88,7 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public synchronized void luoData(Double aika, int[] vaihteluvali, int[] jateprosentit) {
+    public synchronized void luoData(double aika, int[] vaihteluvali, int[] jateprosentit) {
         try {
             //Vaihe 1. Yritetään avata yhteys tietokantaan.
             connection = avaaYhteysTietokantaan();
@@ -93,7 +97,7 @@ public class DAO implements IDAO {
             preparedStatement = connection.prepareStatement(SQL_INIT);
             preparedStatement.executeUpdate();
             //Vaihe 3. Luodaan taulu tietokantaan.
-            preparedStatement = connection.prepareStatement(SQL_INSERT);
+            preparedStatement = connection.prepareStatement(SQL_INSERT_SIMU_PARAMETRIT);
             //Simulaatioaika
             preparedStatement.setDouble(1, aika);
             //Jätemäärä MIN
@@ -106,22 +110,44 @@ public class DAO implements IDAO {
             preparedStatement.setInt(5,jateprosentit[1]);
             //Palamattoman jätteen prosentit
             preparedStatement.setInt(6,jateprosentit[2]);
-            int rivi = preparedStatement.executeUpdate();
+            //Vaihe 4. Suoritetaan tietokantakomento
+            preparedStatement.executeUpdate();
+            //Haetaan simulaation ID
             simulaatioID = setID();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            System.out.println("Vaihe 4: Suljetaan tietokantayhteys");
+            //Suljetaan tietokantayhteys
             try { resultSet.close(); } catch (Exception e) { /* Ignored */ }
             try { preparedStatement.close(); } catch (Exception e) { /* Ignored */ }
             try { connection.close(); } catch (Exception e) { /* Ignored */ }
-            System.out.println("Vaihe 5: Tietokantayhteys suljettu");
+            System.out.println("Tietokantayhteys suljettu: " + connection.isClosed());
         }
     }
     @Override
-    public synchronized void paivitaData() {
-            System.out.println("Vaihe 1: Avataan yhteys tietokantaan");
+    public synchronized void paivitaData(double jatteidenKokonaismaara) {
+        try {
             connection = avaaYhteysTietokantaan();
+            preparedStatement = connection.prepareStatement(SQL_UPDATE_TULOKSET);
+            preparedStatement.setDouble(1, jatteidenKokonaismaara);
+            preparedStatement.setInt(2, simulaatioID);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            //Suljetaan tietokantayhteys
+            try {
+                resultSet.close();
+            } catch (Exception e) { /* Ignored */ }
+            try {
+                preparedStatement.close();
+            } catch (Exception e) { /* Ignored */ }
+            try {
+                connection.close();
+            } catch (Exception e) { /* Ignored */ }
+            System.out.println("Tietokantayhteys suljettu: " + connection.isClosed());
+        }
     }
 
     @Override
