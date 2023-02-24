@@ -5,6 +5,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.OmaMoottori;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Palvelupiste;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 
@@ -25,23 +26,25 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         //Luodaan Gui:n aloitakäskyn perusteella uusi moottori ja tietokantaolio
         moottori = new OmaMoottori(this);
         tietokanta = new DAO();
+        //tietokanta.poistaTaulu();
         //Asetetaan simulointiaika ja viive moottorille
         //Tallennetaan simulointiparametrit tietokantaan
         System.out.println("Asetetaan simulointiaika: " + ui.getAika());
         moottori.setSimulointiaika(ui.getAika());
         moottori.setViive(ui.getViive());
-        tietokanta.luoData(ui.getAika(), ui.getVaihteluvali());
+        tietokanta.luoData(ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
 
         Asiakas.setJatemaara(ui.getVaihteluvali());
         Asiakas.setTJATELAJI(ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
 
+
         //Käynnistetään moottori
         ((Thread)moottori).start();
-        System.out.println("Simulaatio: " +tietokanta.haeData() + " loppu.");
-        //Tällä voidaan poistaa taulu tietokannasta
-        //tietokanta.poistaTaulu();
+
+        //Täällä on tietokannasta tuleva data
+        tietokanta.haeData();
     }
 
     @Override
@@ -73,6 +76,12 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void naytaLoppuaika(double aika) {
 
     }
+
+    @Override
+    public void tallennaTulokset(double jatteidenKokonaismaara, int asiakkaidenMaara, Palvelupiste[] palvelupisteet) {
+        tietokanta.paivitaData(jatteidenKokonaismaara);
+    }
+
 
     @Override
     public void visualisoiAsiakas() {

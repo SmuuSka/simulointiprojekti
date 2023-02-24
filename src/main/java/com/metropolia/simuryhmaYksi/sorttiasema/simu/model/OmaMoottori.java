@@ -45,6 +45,7 @@ public class OmaMoottori extends Moottori{
 			
 			case PALVELUTISKI_SAAPUMINEN:
 				a = new Asiakas();
+				//Palvetiskijono = tapahtumalista
 				palvelupisteet[0].lisaaJonoon(a);
 				saapumisprosessi.generoiSeuraava();
 				break;
@@ -78,7 +79,6 @@ public class OmaMoottori extends Moottori{
 	@Override
 	protected void tulokset() {	
 		double jatteenKokonaismaara = 0;
-
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		
 		System.out.println("Jätelavat: ");
@@ -89,6 +89,7 @@ public class OmaMoottori extends Moottori{
 		System.out.println("Asiakkaiden kokonaismäärä: " + Asiakas.getID());
 
 		System.out.println("Keskimääräinen jätemäärä per asiakas: " +  jatteenKokonaismaara/Asiakas.getID() + " kg");
+		kontrolleri.tallennaTulokset(jatteenKokonaismaara, Asiakas.getID(),palvelupisteet);
 		//System.out.println("Tulokset ... puuttuvat vielä");
 	}
 }
