@@ -42,6 +42,9 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
         //Käynnistetään moottori
         ((Thread)moottori).start();
+
+        //Täällä on tietokannasta tuleva data
+        tietokanta.haeData();
     }
 
     @Override
