@@ -34,9 +34,6 @@ public class FXML_CONTROLLER {
     private Button BUTTON_HITAAMMIN;
 
     @FXML
-    private Button BUTTON_KAIKKITULOKSET;
-
-    @FXML
     private Button BUTTON_LOPETA;
 
     @FXML
@@ -233,10 +230,6 @@ public class FXML_CONTROLLER {
 
     public Button getBUTTON_HITAAMMIN() {
         return BUTTON_HITAAMMIN;
-    }
-
-    public Button getBUTTON_KAIKKITULOKSET() {
-        return BUTTON_KAIKKITULOKSET;
     }
 
     public Button getBUTTON_LOPETA() {

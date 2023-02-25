@@ -16,14 +16,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static com.sun.javafx.scene.control.skin.Utils.getResource;
+
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private AnchorPane MainSoftwarePane_STRATEGIA;
 
-    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton,lopetaButton;
+    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton,lopetaButton,strategiaNaytaTuloksetButton;
 
     private TextField simulointiAikaInput,simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
             palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
@@ -77,7 +80,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             // (TÄÄLÄ ON KAIKKI STRATEGIA NÄKYMÄN ELEMENTIT)//
             //Strategia näkymän napit.
             strategiaButton = FXMLcontroller.getSTRATEGIA_SIIRY_SIMULAATIOON();
-
+            strategiaNaytaTuloksetButton = FXMLcontroller.getSTRATEGIA_NAYTATULOKSET();
             //Hae TextFields FXML CONTROLLERISTA//
 
             //SimulointiAika ja viive
@@ -123,7 +126,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(root);
-
+            strategiaNaytaTuloksetButton.setOnAction(event -> {
+                showTulokset(primaryStage);
+            });
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
             strategiaButton.setOnAction(event -> {
                 try{
@@ -265,6 +270,27 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 }
     //-------------------------------------------------------------------------------------------
 
+    //  TULOKSET IKKUNA
+    public void showTulokset(Stage stage) {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage tuloksetStage = new Stage();
+            tuloksetStage.setTitle("Tulokset");
+            tuloksetStage.initModality(Modality.WINDOW_MODAL);
+            tuloksetStage.initOwner(stage);
+            Scene scene = new Scene(page);
+            tuloksetStage.setScene(scene);
+
+            tuloksetStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+//------------------------------------------------------------------------------
 
     //INTERFACE METHOTID
     @Override

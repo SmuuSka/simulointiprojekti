@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -18,14 +19,13 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="135.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="623.0" prefWidth="221.0">
                <children>
-                  <TableView prefHeight="398.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView prefHeight="400.0" prefWidth="219.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
                         <TableColumn fx:id="ID_COLUMN_TULOKSET" prefWidth="75.0" text="#" />
                         <TableColumn fx:id="COLUMN_PAIVAMAARA_TULOKSET" prefWidth="75.0" text="Päivämäärä" />
@@ -60,42 +60,46 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane layoutY="47.0" prefHeight="499.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label text="Heitetty määrä yhteensä kiloina (kg):" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <Label text="Simulaation aika:" GridPane.halignment="CENTER" />
-                                          <Label text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                          <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                          <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                          <Label text="Elektroniikka Jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                          <Label text="Palavaa Jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                          <Label text="Palamatonta Jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                          <Label text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                          <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                          <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                          <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                          <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                       </children>
-                                    </GridPane>
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="243.0" text="- Tulokset -" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                        <font>
                                           <Font size="34.0" />
                                        </font>
                                     </Label>
+                                    <ScrollPane hbarPolicy="NEVER" layoutY="52.0" prefHeight="502.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
+                                       <content>
+                                          <GridPane prefHeight="585.0" prefWidth="522.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Heitetty määrä yhteensä kiloina (kg):" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label text="Simulaation aika:" GridPane.halignment="CENTER" />
+                                                <Label text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label text="Elektroniikka Jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label text="Palavaa Jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label text="Palamatonta Jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -104,54 +108,58 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane alignment="CENTER" layoutY="48.0" prefHeight="505.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Viive:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Simulaation aika:" GridPane.halignment="CENTER" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Asiakaan ajankesto per (kg):" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Min ja Max kg määrä per asiakas:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Elektroniikka jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Sortti-Aseman aktiivisuus:" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <GridPane.margin>
-                                                <Insets left="50.0" right="50.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Palava jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Palamaton jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                                             <GridPane.margin>
-                                                <Insets left="50.0" right="50.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                       </children>
-                                    </GridPane>
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="243.0" text="- Käyttäjän syötteet -" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font size="34.0" />
                                        </font>
                                     </Label>
+                                    <ScrollPane hbarPolicy="NEVER" layoutY="57.0" prefHeight="497.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
+                                       <content>
+                                          <GridPane alignment="CENTER" prefHeight="604.0" prefWidth="522.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Viive:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Simulaation aika:" GridPane.halignment="CENTER" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Asiakaan ajankesto per (kg):" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Min ja Max kg määrä per asiakas:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Elektroniikka jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Sortti-Aseman aktiivisuus:" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets left="50.0" right="50.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Palava jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Palamaton jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets left="50.0" right="50.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
                                  </children>
                               </AnchorPane>
                         </content>
