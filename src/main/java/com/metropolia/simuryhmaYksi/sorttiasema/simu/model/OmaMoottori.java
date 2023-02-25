@@ -55,14 +55,17 @@ public class OmaMoottori extends Moottori{
 				palvelupisteet[jono2].lisaaJonoon(a);
 				break;
 			case PALAMATONJATE_SAAPUMINEN:
+				kontrolleri.getVisualisointi().moveAsiakasELEKTRO_EPA();
 				a = palvelupisteet[jono1].otaJonosta();
 				palvelupisteet[jono2].lisaaJonoon(a);
 				break;
 			case PALAVAJATE_SAAPUMINEN:
+				kontrolleri.getVisualisointi().moveAsiakasEPA_PA();
 				a = palvelupisteet[jono1].otaJonosta();
 				palvelupisteet[jono2].lisaaJonoon(a);
 				break;
 			case POISTUMINEN:
+				kontrolleri.getVisualisointi().moveAsiakasPALAVA_POISTUMINEN();
 				a = palvelupisteet[jono1].otaJonosta();
 				a.setPoistumisaika(Kello.getInstance().getAika());
 				a.raportti();

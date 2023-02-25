@@ -29,6 +29,7 @@ import java.sql.Time;
 
 public class Visualisointi2 extends Canvas implements IVisualisointi {
     private int asiakasLkm = 0;
+    private int animationTimeinMillis = 2000;
     private ISimulaattoriUI ui;
     private IKontrolleriVtoM kontrolleri;
     private FXML_CONTROLLER FXML_controller;
@@ -141,7 +142,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_SAAPUMINEN_PALAVA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -166,7 +167,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_SAAPUMINEN_EPA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -191,7 +192,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_SAAPUMINEN_ELEKTRO);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -216,7 +217,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_PALAVA_POISTUMINEN);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -242,7 +243,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
 
             pathT.setPath(REITTI_EPA_POISTUMINEN);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -267,7 +268,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_ELEKTRO_POISTUMINEN);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -293,7 +294,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_ELEKTRO_TO_PA_BOTTOM_LINE);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -302,7 +303,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
                 PathTransition pathT2 = new PathTransition();
                 pathT2.setPath(REITTI_ELEKTRO_TO_PA_TOP_LINE);
                 pathT2.setNode(ASIAKAS_NODE);
-                pathT2.setDuration(Duration.millis(3000));
+                pathT2.setDuration(Duration.millis(animationTimeinMillis));
                 pathT2.setCycleCount(1);
                 pathT2.play();
                 pathT2.setOnFinished((event2) -> {
@@ -329,7 +330,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_PA_TO_ELEKTRO_TOP_LINE);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -364,7 +365,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_ELEKTRO_TO_EPA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -389,7 +390,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_EPA_TO_ELEKTRO);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -414,7 +415,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_PA_TO_EPA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -439,7 +440,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_EPA_TO_PA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
