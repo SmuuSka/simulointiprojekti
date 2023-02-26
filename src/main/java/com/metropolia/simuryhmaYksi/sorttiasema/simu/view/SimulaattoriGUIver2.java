@@ -292,7 +292,10 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
+
+        //Poista valittu dataNappi.
         tuloksetPoistaTulosButton.setOnAction(event ->{
             System.out.println("POISTETTU DATA");
         });

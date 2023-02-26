@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -84,6 +85,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     private Parent root;
     private Stage stage;
     private Scene scene;
+
 
     public Visualisointi2(PÄÄSIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller, IKontrolleriVtoM kontrolleri, ISimulaattoriUI ui) throws IOException {
         this.ui = ui;
