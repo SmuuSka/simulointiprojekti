@@ -4,34 +4,29 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import javafx.animation.*;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.IOException;
-import java.sql.Time;
 
 public class Visualisointi2 extends Canvas implements IVisualisointi {
     private int asiakasLkm = 0;
+    private int animationTimeinMillis = 2000;
     private ISimulaattoriUI ui;
     private IKontrolleriVtoM kontrolleri;
-    private FXML_CONTROLLER FXML_controller;
+    private PÄÄSIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller;
 
     private Pane AnimationPane;
     //----------------------------------ASIAKAS ELEMENTIT------------------------------------//
@@ -91,25 +86,26 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     private Stage stage;
     private Scene scene;
 
-    public Visualisointi2(FXML_CONTROLLER FXML_controller, IKontrolleriVtoM kontrolleri,ISimulaattoriUI ui) throws IOException {
+
+    public Visualisointi2(PÄÄSIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller, IKontrolleriVtoM kontrolleri, ISimulaattoriUI ui) throws IOException {
         this.ui = ui;
         this.kontrolleri = kontrolleri;
-        this.FXML_controller = FXML_controller;
-        FXML_controller = new FXML_CONTROLLER(kontrolleri);
+        this.PÄÄSIMULAATORIFXML_controller = PÄÄSIMULAATORIFXML_controller;
+        PÄÄSIMULAATORIFXML_controller = new PÄÄSIMULAATORI_FXML_CONTROLLER(kontrolleri);
         FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
-        loaderSIMU.setController(FXML_controller);
+        loaderSIMU.setController(PÄÄSIMULAATORIFXML_controller);
         root = loaderSIMU.load();
         //------------------------------------JONOT------------------------------------//
-        JONO_SAAPUMISPISTE = FXML_controller.getJONO_SAAPUMINEN();
-        JONO_PALAVA = FXML_controller.getJONO_PA();
-        JONO_EPA = FXML_controller.getJONO_EPA();
-        JONO_ELEKTRO = FXML_controller.getJONO_ELEKTRO();
+        JONO_SAAPUMISPISTE = PÄÄSIMULAATORIFXML_controller.getJONO_SAAPUMINEN();
+        JONO_PALAVA = PÄÄSIMULAATORIFXML_controller.getJONO_PA();
+        JONO_EPA = PÄÄSIMULAATORIFXML_controller.getJONO_EPA();
+        JONO_ELEKTRO = PÄÄSIMULAATORIFXML_controller.getJONO_ELEKTRO();
 
         //JONO PALIKAT("JONOSSA OLEVAT VISUAALISESTI")
-        JONOPALIKKA_SAAPUMINEN = FXML_controller.getJONO_PALIKKA_SAAPUMINEN();
-        JONOPALIKKA_PALAVA = FXML_controller.getJONO_PALIKKA_PALAVA();
-        JONOPALIKKA_EPA = FXML_controller.getJONO_PALIKKA_EPA();
-        JONOPALIKKA_ELEKTRO = FXML_controller.getJONO_PALIKKA_ELEKTRO();
+        JONOPALIKKA_SAAPUMINEN = PÄÄSIMULAATORIFXML_controller.getJONO_PALIKKA_SAAPUMINEN();
+        JONOPALIKKA_PALAVA = PÄÄSIMULAATORIFXML_controller.getJONO_PALIKKA_PALAVA();
+        JONOPALIKKA_EPA = PÄÄSIMULAATORIFXML_controller.getJONO_PALIKKA_EPA();
+        JONOPALIKKA_ELEKTRO = PÄÄSIMULAATORIFXML_controller.getJONO_PALIKKA_ELEKTRO();
         //---------------------------------------------------------------------------------------------
         tyhjennaNaytto();
     }
@@ -129,19 +125,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     // SAAPUMISPISTEELTÄ PALAVAAN ASIAKAS ANIMAATIO
     public void moveAsiakasPALAVA() {
         Platform.runLater(() -> {
-            REITTI_SAAPUMINEN_PALAVA = FXML_controller.getLINE_SIIRTYY_PALVELU_TO_PA();
+            REITTI_SAAPUMINEN_PALAVA = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_PALVELU_TO_PA();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_SAAPUMINEN_PALAVA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -154,19 +150,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //SAAPUMISPISTEELTÄ EPAAN ASIAKAS ANIMAATIO
     public void moveAsiakasEPA() {
         Platform.runLater(() -> {
-            REITTI_SAAPUMINEN_EPA = FXML_controller.getLINE_SIIRTYY_PALVELU_TO_EPA();
+            REITTI_SAAPUMINEN_EPA = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_PALVELU_TO_EPA();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_SAAPUMINEN_EPA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -179,19 +175,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //SAAPUMISPISTEELTÄ ELEKTROON ASIAKAS ANIMAATIO
     public void moveAsiakasELEKTRO() {
         Platform.runLater(() -> {
-            REITTI_SAAPUMINEN_ELEKTRO = FXML_controller.getLINE_SIIRTYY_PALVELU_TO_ELEKTRO();
+            REITTI_SAAPUMINEN_ELEKTRO = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_PALVELU_TO_ELEKTRO();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_SAAPUMINEN_ELEKTRO);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -204,19 +200,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //PALAVA TO POISTUMINEN ASIAKAS ANIMAATIO
     public void moveAsiakasPALAVA_POISTUMINEN() {
         Platform.runLater(() -> {
-            REITTI_PALAVA_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_PA();
+            REITTI_PALAVA_POISTUMINEN = PÄÄSIMULAATORIFXML_controller.getLINE_POISTUMINEN_PA();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_PALAVA_POISTUMINEN);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -229,20 +225,20 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //EPA TO POISTUMINEN ASIAKAS ANIMAATIO
     public void moveAsiakasEPA_POISTUMINEN() {
         Platform.runLater(() -> {
-            REITTI_EPA_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_EPA();
+            REITTI_EPA_POISTUMINEN = PÄÄSIMULAATORIFXML_controller.getLINE_POISTUMINEN_EPA();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
 
             pathT.setPath(REITTI_EPA_POISTUMINEN);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -255,19 +251,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //ELEKTRO TO POISTUMINEN ASIAKAS ANIMAATIO
     public void moveAsiakasELEKTRO_POISTUMINEN() {
         Platform.runLater(() -> {
-            REITTI_ELEKTRO_POISTUMINEN = FXML_controller.getLINE_POISTUMINEN_ELEKTRO();
+            REITTI_ELEKTRO_POISTUMINEN = PÄÄSIMULAATORIFXML_controller.getLINE_POISTUMINEN_ELEKTRO();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_ELEKTRO_POISTUMINEN);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -280,20 +276,20 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     // ELEKTRO TO PALAVA ASIAKAS ANIMAATIO
     public void moveAsiakasELEKTRO_PALAVA() {
         Platform.runLater(() -> {
-            REITTI_ELEKTRO_TO_PA_BOTTOM_LINE = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA1();
-            REITTI_ELEKTRO_TO_PA_TOP_LINE = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA2();
+            REITTI_ELEKTRO_TO_PA_BOTTOM_LINE = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA1();
+            REITTI_ELEKTRO_TO_PA_TOP_LINE = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA2();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_ELEKTRO_TO_PA_BOTTOM_LINE);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -302,7 +298,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
                 PathTransition pathT2 = new PathTransition();
                 pathT2.setPath(REITTI_ELEKTRO_TO_PA_TOP_LINE);
                 pathT2.setNode(ASIAKAS_NODE);
-                pathT2.setDuration(Duration.millis(3000));
+                pathT2.setDuration(Duration.millis(animationTimeinMillis));
                 pathT2.setCycleCount(1);
                 pathT2.play();
                 pathT2.setOnFinished((event2) -> {
@@ -316,20 +312,20 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //PALAVA TO ELEKTRO ASIAKAS ANIMAATIO
     public void moveAsiakasPALAVA_ELEKTRO() {
         Platform.runLater(() -> {
-            REITTI_PA_TO_ELEKTRO_BOTTOM_LINE = FXML_controller.getLINE_SIIRTYY_PA_TO_ELEKTRO2();
-            REITTI_PA_TO_ELEKTRO_TOP_LINE = FXML_controller.getLINE_SIIRTYY_PA_TO_ELEKTRO1();
+            REITTI_PA_TO_ELEKTRO_BOTTOM_LINE = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_PA_TO_ELEKTRO2();
+            REITTI_PA_TO_ELEKTRO_TOP_LINE = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_PA_TO_ELEKTRO1();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_PA_TO_ELEKTRO_TOP_LINE);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -352,19 +348,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //ELEKTRO TO EPA ASIAKAS ANIMAATIO
     public void moveAsiakasELEKTRO_EPA() {
         Platform.runLater(() -> {
-            REITTI_ELEKTRO_TO_EPA = FXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_EPA();
+            REITTI_ELEKTRO_TO_EPA = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_EPA();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_ELEKTRO_TO_EPA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -377,19 +373,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //EPA TO ELEKTRO ASIAKAS ANIMAATIO
     public void moveAsiakasEPA_ELEKTRO() {
         Platform.runLater(() -> {
-            REITTI_EPA_TO_ELEKTRO = FXML_controller.getLINE_SIIRTYY_EPA_TO_ELEKTRO();
+            REITTI_EPA_TO_ELEKTRO = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_EPA_TO_ELEKTRO();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_EPA_TO_ELEKTRO);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -402,19 +398,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //PA TO EPA ASIAKAS ANIMAATIO
     public void moveAsiakasPA_EPA() {
         Platform.runLater(() -> {
-            REITTI_PA_TO_EPA = FXML_controller.getLINE_SIIRTYY_PA_TO_EPA();
+            REITTI_PA_TO_EPA = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_PA_TO_EPA();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_PA_TO_EPA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -427,19 +423,19 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //EPA TO PA ASIAKAS ANIMAATIO
     public void moveAsiakasEPA_PA() {
         Platform.runLater(() -> {
-            REITTI_EPA_TO_PA = FXML_controller.getLINE_SIIRTYY_EPA_TO_PA();
+            REITTI_EPA_TO_PA = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_EPA_TO_PA();
             ImageView ASIAKAS_NODE = new ImageView();
             Image imageAsiakas = new Image("uifxml/Asiakas.png");
             ASIAKAS_NODE.setImage(imageAsiakas);
             ASIAKAS_NODE.setScaleX(0.1);
             ASIAKAS_NODE.setScaleY(0.1);
             ASIAKAS_NODE.setScaleZ(0.1);
-            AnimationPane = FXML_controller.getAnimationPane();
+            AnimationPane = PÄÄSIMULAATORIFXML_controller.getAnimationPane();
             AnimationPane.getChildren().add(ASIAKAS_NODE);
             PathTransition pathT = new PathTransition();
             pathT.setPath(REITTI_EPA_TO_PA);
             pathT.setNode(ASIAKAS_NODE);
-            pathT.setDuration(Duration.millis(3000));
+            pathT.setDuration(Duration.millis(animationTimeinMillis));
             pathT.setCycleCount(1);
             pathT.play();
             pathT.setOnFinished((event) -> {
@@ -452,7 +448,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //PALAVA PISTEEN VARATTU VALO
     public void setPALAVA_VARATTU(boolean onkovarattu) {
         Platform.runLater(() -> {
-            PA_PALVELUSSAINFO = FXML_controller.getPA_PALVELUSSAINFO();
+            PA_PALVELUSSAINFO = PÄÄSIMULAATORIFXML_controller.getPA_PALVELUSSAINFO();
             if (onkovarattu == true) {
                 PA_PALVELUSSAINFO.setFill(Color.RED);
                 System.out.println("VARATTUPA");
@@ -467,7 +463,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //EPA PISTEEN VARATTU VALO
     public void setEPA_VARATTU(boolean onkovarattu) {
         Platform.runLater(() -> {
-            EPA_PALVELUSSAINFO = FXML_controller.getEPA_PALVELUSSAINFO();
+            EPA_PALVELUSSAINFO = PÄÄSIMULAATORIFXML_controller.getEPA_PALVELUSSAINFO();
             if (onkovarattu == true) {
                 EPA_PALVELUSSAINFO.setFill(Color.RED);
                 System.out.println("VARATTUPA");
@@ -483,7 +479,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //ELEKTRO PISTEEN VARATTU VALO
     public void setELEKTRO_VARATTU(boolean onkovarattu) {
         Platform.runLater(() -> {
-            ELEKTRO_PALVELUSSAINFO = FXML_controller.getELEKTRO_PALVELUSSAINFO();
+            ELEKTRO_PALVELUSSAINFO = PÄÄSIMULAATORIFXML_controller.getELEKTRO_PALVELUSSAINFO();
             if (onkovarattu == true) {
                 ELEKTRO_PALVELUSSAINFO.setFill(Color.RED);
                 System.out.println("VARATTUPA");
@@ -499,7 +495,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     //SAAPUMIS PISTEEN VARATTU VALO
     public void setSAAPUMINEN_VARATTU(boolean onkovarattu) {
         Platform.runLater(() -> {
-            SAAPUMINEN_PALVELUSSAINFO = FXML_controller.getSAAPUMINEN_PALVELUSSAINFO();
+            SAAPUMINEN_PALVELUSSAINFO = PÄÄSIMULAATORIFXML_controller.getSAAPUMINEN_PALVELUSSAINFO();
             if (onkovarattu == true) {
                 SAAPUMINEN_PALVELUSSAINFO.setFill(Color.RED);
                 System.out.println("VARATTUPA");

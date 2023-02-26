@@ -6,6 +6,8 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Moottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 
+import java.util.Arrays;
+
 public class OmaMoottori extends Moottori{
 	
 	private Saapumisprosessi saapumisprosessi;
@@ -53,17 +55,61 @@ public class OmaMoottori extends Moottori{
 				kontrolleri.getVisualisointi().moveAsiakasELEKTRO();
 				a = palvelupisteet[jono1].otaJonosta();
 				palvelupisteet[jono2].lisaaJonoon(a);
+				switch(palvelupisteet[jono1].palvelupisteID & palvelupisteet[jono2].palvelupisteID) {
+					case 1 & 3:
+						kontrolleri.getVisualisointi().moveAsiakasELEKTRO_PALAVA();
+						break;
+					case 1 & 2:
+						kontrolleri.getVisualisointi().moveAsiakasELEKTRO_EPA();
+						break;
+				}
 				break;
 			case PALAMATONJATE_SAAPUMINEN:
+				kontrolleri.getVisualisointi().moveAsiakasEPA();
 				a = palvelupisteet[jono1].otaJonosta();
 				palvelupisteet[jono2].lisaaJonoon(a);
+				switch(palvelupisteet[jono1].palvelupisteID & palvelupisteet[jono2].palvelupisteID) {
+					case 2 & 1:
+						kontrolleri.getVisualisointi().moveAsiakasEPA_ELEKTRO();
+						break;
+					case 2 & 3:
+						kontrolleri.getVisualisointi().moveAsiakasEPA_PA();
+						break;
+				}
 				break;
 			case PALAVAJATE_SAAPUMINEN:
+				kontrolleri.getVisualisointi().moveAsiakasPALAVA();
 				a = palvelupisteet[jono1].otaJonosta();
 				palvelupisteet[jono2].lisaaJonoon(a);
+				switch(palvelupisteet[jono1].palvelupisteID & palvelupisteet[jono2].palvelupisteID) {
+					case 3 & 1:
+						kontrolleri.getVisualisointi().moveAsiakasPALAVA_ELEKTRO();
+						break;
+					case 3 & 2:
+						kontrolleri.getVisualisointi().moveAsiakasPA_EPA();
+						break;
+				}
 				break;
 			case POISTUMINEN:
 				a = palvelupisteet[jono1].otaJonosta();
+				switch (palvelupisteet[jono1].palvelupisteID) {
+
+					//ELEKTRONIIKKA
+					case 1:
+						kontrolleri.getVisualisointi().moveAsiakasELEKTRO_POISTUMINEN();
+						break;
+
+						//PALAMATONJATE
+					case 2:
+						kontrolleri.getVisualisointi().moveAsiakasEPA_POISTUMINEN();
+						break;
+						//PALAVAJATE
+					case 3:
+						kontrolleri.getVisualisointi().moveAsiakasPALAVA_POISTUMINEN();
+						break;
+					case 4:
+						break;
+				}
 				a.setPoistumisaika(Kello.getInstance().getAika());
 				a.raportti();
 				break;

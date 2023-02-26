@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.shape.Line?>
@@ -34,17 +35,11 @@
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button id="BUTTON_KAIKKITULOKSET" fx:id="BUTTON_KAIKKITULOKSET" alignment="CENTER" mnemonicParsing="false" prefHeight="65.0" prefWidth="187.0" text="Kaikki Tulokset" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                           <font>
-                              <Font name="System Bold" size="19.0" />
-                           </font>
-                        </Button>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <children>
                               <Button id="BUTTON_ALOITA" fx:id="BUTTON_ALOITA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #64E986;" text="Aloita" textAlignment="CENTER">
@@ -181,293 +176,314 @@
             </VBox>
          </left>
          <center>
-            <BorderPane prefHeight="620.0" prefWidth="767.0" BorderPane.alignment="CENTER">
-               <center>
-                  <AnchorPane id="SIMULAATIO_VIEWBOX" fx:id="SIMULAATIO_VIEWBOX" prefHeight="598.0" prefWidth="752.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER">
+            <AnchorPane id="SIMULAATIO_VIEWBOX" fx:id="SIMULAATIO_VIEWBOX" prefHeight="598.0" prefWidth="743.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane id="HEITETTYINFO_PANE" style="-fx-background-color: #DADBDD;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
                      <children>
-                        <Pane fx:id="AnimationPane" layoutX="102.0" layoutY="-6.0" prefHeight="620.0" prefWidth="518.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox id="INFO_SIMJÄTE_VBOX" fx:id="INFO_SIMJÄTE_VBOX" prefHeight="171.0" prefWidth="220.0">
                            <children>
-                              <Line id="LINE_POISTUMINEN_ELEKTRO" fx:id="LINE_POISTUMINEN_ELEKTRO" endX="124.5" endY="-115.5028076171875" layoutX="371.0" layoutY="403.0" startX="-82.0" startY="34.0" stroke="RED" />
-                              <Line id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" fx:id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" endX="-87.0" endY="35.0" layoutX="330.0" layoutY="411.0" startX="-270.0" startY="-107.0" />
-                              <Line id="LINE_SIIRTYY_PALVELU_TO_PA" fx:id="LINE_SIIRTYY_PALVELU_TO_PA" endX="-89.0" endY="-113.0" layoutX="339.0" layoutY="253.0" startX="-284.0" startY="28.0" />
-                              <Line id="LINE_POISTUMINEN_PA" fx:id="LINE_POISTUMINEN_PA" endX="141.0" endY="28.0" layoutX="346.0" layoutY="258.0" startX="-65.0" startY="-124.0" stroke="RED" />
-                              <Line id="LINE_POISTUMINEN_EPA" fx:id="LINE_POISTUMINEN_EPA" endX="229.7071533203125" endY="-48.2303466796875" layoutX="275.0" layoutY="334.0" startX="3.0" startY="-47.29290771484375" stroke="#ff0505" />
-                              <Line id="LINE_SIIRTYY_PALVELU_TO_EPA" fx:id="LINE_SIIRTYY_PALVELU_TO_EPA" endX="228.0" endY="-51.2303466796875" layoutX="30.0" layoutY="337.0" startX="16.0" startY="-51.2303466796875" />
-                              <Line id="LINE_SIIRTYY_PA_TO_ELEKTRO2" fx:id="LINE_SIIRTYY_PA_TO_ELEKTRO2" endX="214.0" endY="-295.0" layoutX="34.0" layoutY="774.0" startX="214.0" startY="-160.5" stroke="#d69002" />
-                              <Line id="LINE_SIIRTYY_EPA_TO_PA" fx:id="LINE_SIIRTYY_EPA_TO_PA" endX="212.0" endY="-358.2303466796875" layoutX="78.0" layoutY="470.0" startX="212.0" startY="-197.2303466796875" stroke="#3ae800" />
-                              <Line id="LINE_SIIRTYY_EPA_TO_ELEKTRO" fx:id="LINE_SIIRTYY_EPA_TO_ELEKTRO" endX="211.0" endY="-173.2303466796875" layoutX="39.0" layoutY="614.0" startX="212.0" startY="-331.0" stroke="#40eb1d" />
-                              <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA2" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA2" endX="197.0" endY="-197.0" layoutX="92.0" layoutY="322.0" startX="197.0" startY="-321.0" stroke="#17a9d1" />
-                              <Line id="LINE_SIIRTYY_ELEKTRO_TO_EPA" fx:id="LINE_SIIRTYY_ELEKTRO_TO_EPA" endX="211.0" endY="-331.0" layoutX="78.0" layoutY="627.0" startX="212.0" startY="-173.2303466796875" stroke="#1ea2d9" />
-                              <Line id="LINE_SIIRTYY_PA_TO_EPA" fx:id="LINE_SIIRTYY_PA_TO_EPA" endX="212.0" endY="-197.2303466796875" layoutX="38.0" layoutY="504.0" startX="212.0" startY="-358.2303466796875" stroke="#c47f00" />
-                              <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA1" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA1" endX="197.0" endY="-188.0" layoutX="92.0" layoutY="801.0" startX="197.0" startY="-331.0" stroke="#089ecc" />
-                              <Line id="LINE_SIIRTYY_PA_TO_ELEKTRO1" fx:id="LINE_SIIRTYY_PA_TO_ELEKTRO1" endX="197.0" endY="-321.0" layoutX="52.0" layoutY="322.0" startX="197.0" startY="-197.0" stroke="#ff8100" />
-                           </children>
-                        </Pane>
-                        <ImageView id="PALVELUPISTE_ELEKTRO" fx:id="PALVELUPISTE_ELEKTRO" fitHeight="82.0" fitWidth="70.0" layoutX="337.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Elektroniikkajäte.png" />
-                           </image>
-                           <effect>
-                              <Lighting diffuseConstant="1.34" specularConstant="0.94">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </ImageView>
-                        <ImageView id="PALVELUPISTE_PA" fx:id="PALVELUPISTE_PA" fitHeight="82.0" fitWidth="70.0" layoutX="337.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="450.4606704711914" AnchorPane.leftAnchor="337.0" AnchorPane.rightAnchor="339.0" AnchorPane.topAnchor="90.0">
-                           <image>
-                              <Image url="@PalavaJäte.png" />
-                           </image>
-                           <effect>
-                              <Lighting diffuseConstant="1.34" specularConstant="0.94">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </ImageView>
-                        <ImageView id="PALVELUPISTE_EPA" fx:id="PALVELUPISTE_EPA" fitHeight="82.0" fitWidth="70.0" layoutX="337.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@EiPalavaJäte.png" />
-                           </image>
-                           <effect>
-                              <Lighting diffuseConstant="1.34" specularConstant="0.94">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </ImageView>
-                        <ImageView id="PALVELUPISTE_SAAPUMINEN" fx:id="PALVELUPISTE_SAAPUMINEN" fitHeight="90.0" fitWidth="79.0" layoutX="109.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@palvelupiste.png" />
-                           </image>
-                           <effect>
-                              <Lighting diffuseConstant="1.34" specularConstant="0.94">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </ImageView>
-                        <ImageView id="PALVELUPISTE_POISTUMINEN" fx:id="PALVELUPISTE_POISTUMINEN" fitHeight="90.0" fitWidth="79.0" layoutX="558.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@poistuminen.png" />
-                           </image>
-                           <effect>
-                              <Lighting diffuseConstant="1.28" specularConstant="0.62">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </ImageView>
-                        <HBox id="JONO_EPA" fx:id="JONO_EPA" alignment="CENTER_RIGHT" layoutX="259.0" layoutY="268.0" prefHeight="32.0" prefWidth="79.0">
-                           <children>
-                              <Rectangle id="ASIAKAS_EPA_JONOSSA" fx:id="JONO_PALIKKA_EPA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                           </children>
-                        </HBox>
-                        <HBox id="JONO_PA" fx:id="JONO_PA" alignment="CENTER_RIGHT" layoutX="280.0" layoutY="155.0" prefHeight="29.0" prefWidth="70.0" rotate="-38.2">
-                           <children>
-                              <Rectangle id="ASIAKAS_PA_JONOSSA" fx:id="JONO_PALIKKA_PALAVA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
-                           </children>
-                        </HBox>
-                        <HBox id="JONO_ELEKTRO" fx:id="JONO_ELEKTRO" alignment="CENTER_RIGHT" layoutX="278.0" layoutY="403.0" prefHeight="29.0" prefWidth="70.0" rotate="37.6">
-                           <children>
-                              <Rectangle id="ASIAKAS_ELEKTRO_JONOSSA" fx:id="JONO_PALIKKA_ELEKTRO" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
-                           </children>
-                        </HBox>
-                        <HBox id="JONO_SAAPUMINEN" fx:id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="19.0" layoutY="267.0" prefHeight="40.0" prefWidth="90.0">
-                           <children>
-                              <Rectangle id="ASIAKAS_JONOSSA" fx:id="JONO_PALIKKA_SAAPUMINEN" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                           </children>
-                        </HBox>
-                        <Label layoutX="19.0" layoutY="251.0" text="Jonossa:" />
-                        <Label id="JONOSSA_SAAPUMINEN" fx:id="JONOSSA_SAAPUMINEN" layoutX="72.0" layoutY="251.0" text="0" />
-                        <Label layoutX="250.0" layoutY="251.0" text="Jonossa:" />
-                        <Label id="JONOSSAINFO_EPA" fx:id="JONOSSAINFO_EPA" layoutX="301.0" layoutY="251.0" text="0" />
-                        <Label layoutX="244.0" layoutY="127.0" text="Jonossa:" />
-                        <Label id="JONOSSAINFO_PA" fx:id="JONOSSAINFO_PA" layoutX="295.0" layoutY="127.0" text="0" />
-                        <Label layoutX="250.0" layoutY="459.0" text="Jonossa:" />
-                        <Label id="JONOSSAINFO_ELEKTRO" fx:id="JONOSSAINFO_ELEKTRO" layoutX="301.0" layoutY="459.0" text="0" />
-                        <Label layoutX="565.0" layoutY="211.0" text="Poistunut:" />
-                        <Label id="POISTUNUTINFO" fx:id="POISTUNUTINFO" layoutX="624.0" layoutY="211.0" text="0" />
-                        <Ellipse id="PA_PALVELUSSAINFO" fx:id="PA_PALVELUSSAINFO" fill="RED" layoutX="373.0" layoutY="90.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
-                           <effect>
-                              <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </Ellipse>
-                        <Ellipse id="EPA_PALVELUSSAINFO" fx:id="EPA_PALVELUSSAINFO" fill="RED" layoutX="371.0" layoutY="251.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
-                           <effect>
-                              <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </Ellipse>
-                        <Ellipse id="ELEKTRO_PALVELUSSAINFO" fx:id="ELEKTRO_PALVELUSSAINFO" fill="RED" layoutX="371.0" layoutY="417.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
-                           <effect>
-                              <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </Ellipse>
-                        <Ellipse id="SAAPUMINEN_PALVELUSSAINFO" fx:id="SAAPUMINEN_PALVELUSSAINFO" fill="RED" layoutX="149.0" layoutY="247.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
-                           <effect>
-                              <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">
-                                 <bumpInput>
-                                    <Shadow />
-                                 </bumpInput>
-                                 <light>
-                                    <Light.Distant />
-                                 </light>
-                              </Lighting>
-                           </effect>
-                        </Ellipse>
-                        <Pane id="HEITETTYINFO_PANE" layoutX="522.0" layoutY="3.0" prefHeight="178.0" prefWidth="220.0" style="-fx-background-color: #DADBDD;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                           <children>
-                              <VBox id="INFO_SIMJÄTE_VBOX" fx:id="INFO_SIMJÄTE_VBOX" prefHeight="171.0" prefWidth="220.0">
+                              <Label alignment="CENTER" prefHeight="33.0" prefWidth="220.0" text="Pois Heitetty Jätteiden määrä" />
+                              <Pane id="INFO_ELEKTRONIIKKA_SOLU" prefHeight="75.0" prefWidth="249.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="33.0" prefWidth="220.0" text="Pois Heitetty Jätteiden määrä" />
-                                    <Pane id="INFO_ELEKTRONIIKKA_SOLU" prefHeight="75.0" prefWidth="249.0">
-                                       <children>
-                                          <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@Elektroniikkajäte.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label layoutX="52.0" layoutY="10.0" prefHeight="32.0" prefWidth="25.0" text="= ">
-                                             <font>
-                                                <Font size="19.0" />
-                                             </font>
-                                          </Label>
-                                          <Label id="ELEKTRO_POISHEITETTY_NUM" fx:id="ELEKTRO_POISHEITETTY_NUM" alignment="CENTER" layoutX="68.0" layoutY="10.0" prefHeight="32.0" prefWidth="127.0" text="0">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <VBox.margin>
-                                          <Insets top="5.0" />
-                                       </VBox.margin>
-                                    </Pane>
-                                    <Pane id="INFO_PALAVA_SOLU" prefHeight="76.0" prefWidth="251.0">
-                                       <children>
-                                          <ImageView fitHeight="46.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@PalavaJäte.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label layoutX="50.0" layoutY="7.0" prefHeight="32.0" prefWidth="24.0" text="= ">
-                                             <font>
-                                                <Font size="19.0" />
-                                             </font>
-                                          </Label>
-                                          <Label id="PA_POISHEITETTY_NUM" fx:id="PA_POISHEITETTY_NUM" alignment="CENTER" layoutX="66.0" layoutY="10.0" prefHeight="32.0" prefWidth="127.0" text="0">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <opaqueInsets>
-                                          <Insets top="50.0" />
-                                       </opaqueInsets>
-                                       <VBox.margin>
-                                          <Insets top="5.0" />
-                                       </VBox.margin>
-                                    </Pane>
-                                    <Pane id="INFO_PALAMATON_SOLU" prefHeight="76.0" prefWidth="250.0">
-                                       <children>
-                                          <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@EiPalavaJäte.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label layoutX="50.0" layoutY="7.0" prefHeight="32.0" prefWidth="24.0" text="= ">
-                                             <font>
-                                                <Font size="19.0" />
-                                             </font>
-                                          </Label>
-                                          <Label id="EPA_POISHEITETTY_NUM" fx:id="EPA_POISHEITETTY_NUM" alignment="CENTER" layoutX="66.0" layoutY="7.0" prefHeight="32.0" prefWidth="127.0" text="0">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <VBox.margin>
-                                          <Insets top="5.0" />
-                                       </VBox.margin>
-                                    </Pane>
+                                    <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Elektroniikkajäte.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="52.0" layoutY="10.0" prefHeight="32.0" prefWidth="25.0" text="= ">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="ELEKTRO_POISHEITETTY_NUM" fx:id="ELEKTRO_POISHEITETTY_NUM" alignment="CENTER" layoutX="68.0" layoutY="10.0" prefHeight="32.0" prefWidth="127.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
                                  </children>
-                                 <effect>
-                                    <Lighting diffuseConstant="1.21" specularConstant="0.62" specularExponent="40.0" surfaceScale="2.53">
-                                       <bumpInput>
-                                          <Shadow />
-                                       </bumpInput>
-                                       <light>
-                                          <Light.Distant />
-                                       </light>
-                                    </Lighting>
-                                 </effect>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
-                              </VBox>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Pane>
+                              <Pane id="INFO_PALAVA_SOLU" prefHeight="76.0" prefWidth="251.0">
+                                 <children>
+                                    <ImageView fitHeight="46.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@PalavaJäte.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="50.0" layoutY="7.0" prefHeight="32.0" prefWidth="24.0" text="= ">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="PA_POISHEITETTY_NUM" fx:id="PA_POISHEITETTY_NUM" alignment="CENTER" layoutX="66.0" layoutY="10.0" prefHeight="32.0" prefWidth="127.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets top="50.0" />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Pane>
+                              <Pane id="INFO_PALAMATON_SOLU" prefHeight="76.0" prefWidth="250.0">
+                                 <children>
+                                    <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@EiPalavaJäte.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="50.0" layoutY="7.0" prefHeight="32.0" prefWidth="24.0" text="= ">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="EPA_POISHEITETTY_NUM" fx:id="EPA_POISHEITETTY_NUM" alignment="CENTER" layoutX="66.0" layoutY="7.0" prefHeight="32.0" prefWidth="127.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Pane>
                            </children>
-                        </Pane>
-                        <Label layoutX="10.0" layoutY="234.0" text="Saapumisia:" />
-                        <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="76.0" layoutY="234.0" text="0" />
+                           <effect>
+                              <Lighting diffuseConstant="1.21" specularConstant="0.62" specularExponent="40.0" surfaceScale="2.53">
+                                 <bumpInput>
+                                    <Shadow />
+                                 </bumpInput>
+                                 <light>
+                                    <Light.Distant />
+                                 </light>
+                              </Lighting>
+                           </effect>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
                      </children>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                     <BorderPane.margin>
-                        <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                     </BorderPane.margin>
-                  </AnchorPane>
-               </center>
-            </BorderPane>
+                  </Pane>
+                  <TilePane alignment="CENTER" prefHeight="612.0" prefWidth="752.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="612.0" prefWidth="752.0" TilePane.alignment="CENTER">
+                           <children>
+                              <Pane fx:id="AnimationPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Line id="LINE_POISTUMINEN_ELEKTRO" fx:id="LINE_POISTUMINEN_ELEKTRO" endX="124.5" endY="-115.5028076171875" layoutX="471.0" layoutY="402.0" startX="-82.0" startY="34.0" stroke="RED" />
+                                    <Line id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" fx:id="LINE_SIIRTYY_PALVELU_TO_ELEKTRO" endX="-87.0" endY="35.0" layoutX="430.0" layoutY="410.0" startX="-270.0" startY="-107.0" />
+                                    <Line id="LINE_SIIRTYY_PALVELU_TO_PA" fx:id="LINE_SIIRTYY_PALVELU_TO_PA" endX="-89.0" endY="-113.0" layoutX="439.0" layoutY="252.0" startX="-284.0" startY="28.0" />
+                                    <Line id="LINE_POISTUMINEN_PA" fx:id="LINE_POISTUMINEN_PA" endX="141.0" endY="28.0" layoutX="446.0" layoutY="257.0" startX="-65.0" startY="-124.0" stroke="RED" />
+                                    <Line id="LINE_POISTUMINEN_EPA" fx:id="LINE_POISTUMINEN_EPA" endX="229.7071533203125" endY="-48.2303466796875" layoutX="375.0" layoutY="333.0" startX="3.0" startY="-47.29290771484375" stroke="#ff0505" />
+                                    <Line id="LINE_SIIRTYY_PALVELU_TO_EPA" fx:id="LINE_SIIRTYY_PALVELU_TO_EPA" endX="228.0" endY="-51.2303466796875" layoutX="130.0" layoutY="336.0" startX="16.0" startY="-51.2303466796875" />
+                                    <Line id="LINE_SIIRTYY_PA_TO_ELEKTRO2" fx:id="LINE_SIIRTYY_PA_TO_ELEKTRO2" endX="214.0" endY="-310.0" layoutX="134.0" layoutY="773.0" startX="214.0" startY="-221.5" stroke="#d69002" />
+                                    <Line id="LINE_SIIRTYY_EPA_TO_PA" fx:id="LINE_SIIRTYY_EPA_TO_PA" endX="212.0" endY="-358.2303466796875" layoutX="178.0" layoutY="469.0" startX="212.0" startY="-197.2303466796875" stroke="#3ae800" />
+                                    <Line id="LINE_SIIRTYY_EPA_TO_ELEKTRO" fx:id="LINE_SIIRTYY_EPA_TO_ELEKTRO" endX="211.0" endY="-173.2303466796875" layoutX="139.0" layoutY="613.0" startX="212.0" startY="-331.0" stroke="#40eb1d" />
+                                    <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA2" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA2" endX="197.0" endY="-211.0" layoutX="192.0" layoutY="321.0" startX="197.0" startY="-290.0" stroke="#17a9d1" />
+                                    <Line id="LINE_SIIRTYY_ELEKTRO_TO_EPA" fx:id="LINE_SIIRTYY_ELEKTRO_TO_EPA" endX="211.0" endY="-331.0" layoutX="178.0" layoutY="626.0" startX="212.0" startY="-173.2303466796875" stroke="#1ea2d9" />
+                                    <Line id="LINE_SIIRTYY_PA_TO_EPA" fx:id="LINE_SIIRTYY_PA_TO_EPA" endX="212.0" endY="-197.2303466796875" layoutX="138.0" layoutY="503.0" startX="212.0" startY="-358.2303466796875" stroke="#c47f00" />
+                                    <Line id="LINE_SIIRTYY_ELEKTRO_TO_PA1" fx:id="LINE_SIIRTYY_ELEKTRO_TO_PA1" endX="197.0" endY="-249.0" layoutX="192.0" layoutY="800.0" startX="197.0" startY="-341.0" stroke="#089ecc" />
+                                    <Line id="LINE_SIIRTYY_PA_TO_ELEKTRO1" fx:id="LINE_SIIRTYY_PA_TO_ELEKTRO1" endX="197.0" endY="-291.0" layoutX="152.0" layoutY="321.0" startX="197.0" startY="-197.0" stroke="#ff8100" />
+                                 </children>
+                              </Pane>
+                              <Pane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView id="PALVELUPISTE_ELEKTRO" fx:id="PALVELUPISTE_ELEKTRO" fitHeight="82.0" fitWidth="70.0" layoutX="335.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Elektroniikkajäte.png" />
+                                       </image>
+                                       <effect>
+                                          <Lighting diffuseConstant="1.34" specularConstant="0.94">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </ImageView>
+                                    <ImageView id="PALVELUPISTE_PA" fx:id="PALVELUPISTE_PA" fitHeight="82.0" fitWidth="70.0" layoutX="335.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@PalavaJäte.png" />
+                                       </image>
+                                       <effect>
+                                          <Lighting diffuseConstant="1.34" specularConstant="0.94">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </ImageView>
+                                    <ImageView id="PALVELUPISTE_EPA" fx:id="PALVELUPISTE_EPA" fitHeight="82.0" fitWidth="70.0" layoutX="335.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@EiPalavaJäte.png" />
+                                       </image>
+                                       <effect>
+                                          <Lighting diffuseConstant="1.34" specularConstant="0.94">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </ImageView>
+                                    <ImageView id="PALVELUPISTE_SAAPUMINEN" fx:id="PALVELUPISTE_SAAPUMINEN" fitHeight="90.0" fitWidth="79.0" layoutX="109.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@palvelupiste.png" />
+                                       </image>
+                                       <effect>
+                                          <Lighting diffuseConstant="1.34" specularConstant="0.94">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </ImageView>
+                                    <ImageView id="PALVELUPISTE_POISTUMINEN" fx:id="PALVELUPISTE_POISTUMINEN" fitHeight="90.0" fitWidth="79.0" layoutX="558.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@poistuminen.png" />
+                                       </image>
+                                       <effect>
+                                          <Lighting diffuseConstant="1.28" specularConstant="0.62">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </ImageView>
+                                    <Label layoutX="29.0" layoutY="230.0" text="Jonossa:" />
+                                    <Label id="JONOSSA_SAAPUMINEN" fx:id="JONOSSA_SAAPUMINEN" layoutX="110.0" layoutY="204.0" text="0" />
+                                    <Label layoutX="37.0" layoutY="204.0" text="Saapumisia:" />
+                                    <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="81.0" layoutY="230.0" text="0" />
+                                    <Label layoutX="260.0" layoutY="239.0" text="Jonossa:" />
+                                    <Label id="JONOSSAINFO_EPA" fx:id="JONOSSAINFO_EPA" layoutX="309.0" layoutY="239.0" text="0" />
+                                    <Label layoutX="265.0" layoutY="88.0" text="Jonossa:" />
+                                    <Label id="JONOSSAINFO_PA" fx:id="JONOSSAINFO_PA" layoutX="319.0" layoutY="88.0" text="0" />
+                                    <Label layoutX="259.0" layoutY="455.0" text="Jonossa:" />
+                                    <Label id="JONOSSAINFO_ELEKTRO" fx:id="JONOSSAINFO_ELEKTRO" layoutX="308.0" layoutY="455.0" text="0" />
+                                    <Label layoutX="565.0" layoutY="222.0" text="Poistunut:" />
+                                    <Label id="POISTUNUTINFO" fx:id="POISTUNUTINFO" layoutX="624.0" layoutY="222.0" text="0" />
+                                    <HBox id="JONO_SAAPUMINEN" fx:id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="28.0" layoutY="264.0" prefHeight="40.0" prefWidth="90.0">
+                                       <children>
+                                          <Rectangle id="ASIAKAS_JONOSSA" fx:id="JONO_PALIKKA_SAAPUMINEN" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox id="JONO_PA" fx:id="JONO_PA" alignment="CENTER_RIGHT" layoutX="284.0" layoutY="147.0" prefHeight="29.0" prefWidth="70.0" rotate="-40.1">
+                                       <children>
+                                          <Rectangle id="ASIAKAS_PA_JONOSSA" fx:id="JONO_PALIKKA_PALAVA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox id="JONO_EPA" fx:id="JONO_EPA" alignment="CENTER_RIGHT" layoutX="256.0" layoutY="264.0" prefHeight="32.0" prefWidth="79.0">
+                                       <children>
+                                          <Rectangle id="ASIAKAS_EPA_JONOSSA" fx:id="JONO_PALIKKA_EPA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox id="JONO_ELEKTRO" fx:id="JONO_ELEKTRO" alignment="CENTER_RIGHT" layoutX="274.0" layoutY="407.0" prefHeight="29.0" prefWidth="70.0" rotate="36.9">
+                                       <children>
+                                          <Rectangle id="ASIAKAS_ELEKTRO_JONOSSA" fx:id="JONO_PALIKKA_ELEKTRO" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
+                                       </children>
+                                    </HBox>
+                                    <Ellipse id="PA_PALVELUSSAINFO" fx:id="PA_PALVELUSSAINFO" fill="RED" layoutX="370.0" layoutY="88.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
+                                       <effect>
+                                          <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </Ellipse>
+                                    <Ellipse id="EPA_PALVELUSSAINFO" fx:id="EPA_PALVELUSSAINFO" fill="RED" layoutX="370.0" layoutY="248.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
+                                       <effect>
+                                          <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </Ellipse>
+                                    <Ellipse id="ELEKTRO_PALVELUSSAINFO" fx:id="ELEKTRO_PALVELUSSAINFO" fill="RED" layoutX="370.0" layoutY="412.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
+                                       <effect>
+                                          <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </Ellipse>
+                                    <Ellipse id="SAAPUMINEN_PALVELUSSAINFO" fx:id="SAAPUMINEN_PALVELUSSAINFO" fill="RED" layoutX="149.0" layoutY="243.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
+                                       <effect>
+                                          <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">
+                                             <bumpInput>
+                                                <Shadow />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </Ellipse>
+                                    <ImageView fitHeight="52.0" fitWidth="78.0" layoutX="331.0">
+                                       <image>
+                                          <Image url="@tunnel-296442_640.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="52.0" fitWidth="78.0" layoutX="331.0" layoutY="537.0" rotate="180.0">
+                                       <image>
+                                          <Image url="@tunnel-296442_640.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                           </children>
+                           <TilePane.margin>
+                              <Insets />
+                           </TilePane.margin>
+                        </AnchorPane>
+                     </children>
+                  </TilePane>
+               </children>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <BorderPane.margin>
+                  <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+            </AnchorPane>
          </center>
       </BorderPane>
    </children>

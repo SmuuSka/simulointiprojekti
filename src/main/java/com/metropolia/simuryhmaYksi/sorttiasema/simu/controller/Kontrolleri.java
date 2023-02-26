@@ -39,7 +39,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         Asiakas.setTJATELAJI(ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
 
-
         //Käynnistetään moottori
         ((Thread)moottori).start();
 
