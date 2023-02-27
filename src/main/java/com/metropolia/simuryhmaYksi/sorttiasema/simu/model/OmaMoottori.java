@@ -48,12 +48,14 @@ public class OmaMoottori extends Moottori {
         switch (t.getTyyppi()) {
 
             case PALVELUTISKI_SAAPUMINEN:
-                saapumistenMaara++;
-                kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
-                a = new Asiakas();
-                //Palvetiskijono = tapahtumalista
-                palvelupisteet[0].lisaaJonoon(a);
-                saapumisprosessi.generoiSeuraava();
+                if(Kello.getInstance().getAika() < getSimulointiaika()){
+                    saapumistenMaara++;
+                    kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
+                    a = new Asiakas();
+                    //Palvetiskijono = tapahtumalista
+                    palvelupisteet[0].lisaaJonoon(a);
+                    saapumisprosessi.generoiSeuraava();
+                }
                 break;
 
             case ELEKTRONIIKKA_SAAPUMINEN:

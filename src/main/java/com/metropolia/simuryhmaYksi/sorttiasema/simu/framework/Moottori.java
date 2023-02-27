@@ -28,10 +28,14 @@ public abstract class Moottori extends Thread implements IMoottori {
 	public void setSimulointiaika(double aika) {
 		simulointiaika = aika;
 	}
-	
-	
+
+	public double getSimulointiaika() {
+		return simulointiaika;
+	}
+
 	public void run(){
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
+		//Kunnes viimeinen asiakas on poistunut
 		while (simuloidaan()){
 			viive();
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
@@ -68,7 +72,8 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 	
 	private boolean simuloidaan(){
-		return kello.getAika() < simulointiaika;
+
+		return tapahtumalista.getLista().peek() != null;
 	}
 	
 

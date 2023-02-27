@@ -18,10 +18,26 @@ public class Tapahtumalista {
 		Trace.out(Trace.Level.INFO,"Tapahtumalistaan lisätään uusi " + t.getTyyppi() + " " + t.getAika());
 		lista.add(t);
 	}
-	
-	public double getSeuraavanAika(){
-		return lista.peek().getAika();
+
+	public PriorityQueue<Tapahtuma> getLista() {
+		return lista;
 	}
-	
-	
+
+
+	public double getSeuraavanAika() {
+		double aika = 0;
+		if(!lista.isEmpty()){
+			aika = lista.peek().getAika();
+		}
+		return aika;
+	}
+//	public double getSeuraavanAika() {
+//		double aika = 0;
+//		try {
+//			aika = lista.peek().getAika();
+//		}catch (NullPointerException e){
+//			e.printStackTrace();
+//		}
+//		return aika;
+//	}
 }
