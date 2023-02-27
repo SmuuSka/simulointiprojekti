@@ -13,8 +13,8 @@ import java.util.Arrays;
 public class OmaMoottori extends Moottori {
 
     private Saapumisprosessi saapumisprosessi;
-
-
+    private int poistunutMaara = 0;
+    private int saapumistenMaara = 0;
     public OmaMoottori(IKontrolleriMtoV kontrolleri) {
         super(kontrolleri);
         palvelupisteet = new Palvelupiste[4];
@@ -48,6 +48,8 @@ public class OmaMoottori extends Moottori {
         switch (t.getTyyppi()) {
 
             case PALVELUTISKI_SAAPUMINEN:
+                saapumistenMaara++;
+                kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
                 a = new Asiakas();
                 //Palvetiskijono = tapahtumalista
                 palvelupisteet[0].lisaaJonoon(a);
@@ -83,19 +85,26 @@ public class OmaMoottori extends Moottori {
                 a = palvelupisteet[jono1].otaJonosta();
                 switch (palvelupisteet[jono1].palvelupisteID){
                     case 1:
+                        poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasELEKTRO_POISTUMINEN();
+                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                     case 2:
+                        poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasEPA_POISTUMINEN();
+                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                     case 3:
+                        poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasPALAVA_POISTUMINEN();
+                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                 }
                 a.setPoistumisaika(Kello.getInstance().getAika());
                 a.raportti();
                 break;
         }
+        kontrolleri.setSAAPUMISJononPituus(palvelupisteet[0].getJono().size());
         // Asetetaan elektroniikka jätelavan jonon pituus
         kontrolleri.setEJononPituus(palvelupisteet[1].getJono().size());
 
@@ -163,7 +172,8 @@ public class OmaMoottori extends Moottori {
     }
 
     @Override
-    protected void tulokset() {
+    protected void tulokset(){
+        poistunutMaara = 0;
         double jatteenKokonaismaara = 0;
         System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 

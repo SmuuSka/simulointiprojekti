@@ -24,6 +24,16 @@ public class Visualisointi extends Canvas implements IVisualisointi{
         gc.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
 
+    @Override
+    public void lisaaSaapumistenMaara(int maara) {
+
+    }
+
+    @Override
+    public void lisaaPoistunutMaara(int maara) {
+
+    }
+
     public void uusiAsiakas() {
         gc.setFill(Color.RED);
         gc.fillOval(i,j,10,10);

@@ -12,4 +12,5 @@ public interface IKontrolleriMtoV {
     public void setEJononPituus(int pituus);
     public void setPTJononPituus(int size);
     public void setPJononPituus(int size);
+    public void setSAAPUMISJononPituus(int size);
 }

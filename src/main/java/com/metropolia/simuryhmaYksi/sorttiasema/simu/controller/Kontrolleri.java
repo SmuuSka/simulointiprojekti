@@ -107,4 +107,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void setPJononPituus(int pituus) {
         ui.setPJateJonossa(pituus);
     }
+    @Override
+    public void setSAAPUMISJononPituus(int pituus) {
+        ui.setSAAPUMINENJonossa(pituus);
+    }
 }

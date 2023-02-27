@@ -244,4 +244,9 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public void setSAAPUMINENJonossa(int pituus) {
+
+    }
 }

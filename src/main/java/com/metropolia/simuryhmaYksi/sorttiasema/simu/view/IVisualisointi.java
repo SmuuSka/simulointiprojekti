@@ -5,6 +5,11 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 public interface IVisualisointi {
     public void tyhjennaNaytto();
+
+    void lisaaSaapumistenMaara(int maara);
+
+    void lisaaPoistunutMaara(int maara);
+
     public void uusiAsiakas();
     // Asiakaan liikumisen methodit (kutsutaan kun asiakas siirtyy johonkin jätelava pisteelle tai poistuu sieltä)
     public void moveAsiakasPALAVA();

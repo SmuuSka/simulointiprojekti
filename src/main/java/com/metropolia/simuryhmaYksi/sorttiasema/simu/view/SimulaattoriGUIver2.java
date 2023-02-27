@@ -389,6 +389,14 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
+    public void setSAAPUMINENJonossa(int pituus) {
+        Platform.runLater(
+                () -> {
+                    paaSim_SAAPUMISIAYHT_COUNTER.setText(String.valueOf(pituus));
+                });
+    }
+
+    @Override
     public int getPalamatonJateCounter() {
         return Integer.parseInt(paaSim_PALAMATON_JateCounter.getText());
     }
