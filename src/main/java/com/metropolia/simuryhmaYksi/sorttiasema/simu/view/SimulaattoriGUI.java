@@ -2,6 +2,7 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.Kontrolleri;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -20,7 +21,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
@@ -167,6 +170,11 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     @Override
     public int[] getJateLaijenProsentit() {
         return new int[0];
+    }
+
+    @Override
+    public void showTulokset(ArrayList<SimulaatioData> tieto) {
+
     }
 
     @Override

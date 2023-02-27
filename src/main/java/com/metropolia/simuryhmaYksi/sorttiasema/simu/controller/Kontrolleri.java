@@ -2,6 +2,7 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.controller;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.DAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.OmaMoottori;
@@ -10,6 +11,8 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private ISimulaattoriUI ui;
@@ -43,7 +46,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         ((Thread)moottori).start();
 
         //Täällä on tietokannasta tuleva data
-        tietokanta.haeData();
+
     }
 
     @Override
@@ -79,6 +82,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     @Override
     public void tallennaTulokset(double jatteidenKokonaismaara, int asiakkaidenMaara, Palvelupiste[] palvelupisteet) {
         tietokanta.paivitaData(jatteidenKokonaismaara);
+        ui.showTulokset(tietokanta.haeData());
     }
 
 
@@ -111,4 +115,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void setSAAPUMISJononPituus(int pituus) {
         ui.setSAAPUMINENJonossa(pituus);
     }
+
+
+
 }

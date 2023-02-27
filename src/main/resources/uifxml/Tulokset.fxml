@@ -7,7 +7,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.SepiaTone?>
@@ -25,11 +24,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="623.0" prefWidth="221.0">
                <children>
-                  <TableView prefHeight="400.0" prefWidth="219.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <columns>
-                        <TableColumn fx:id="ID_COLUMN_TULOKSET" prefWidth="75.0" text="#" />
-                        <TableColumn fx:id="COLUMN_PAIVAMAARA_TULOKSET" prefWidth="75.0" text="Päivämäärä" />
-                     </columns>
+                  <TableView fx:id="TABLE_VIEW_DATA" prefHeight="400.0" prefWidth="219.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
@@ -85,7 +80,7 @@
                                                 <Label text="Heitetty määrä yhteensä kiloina (kg):" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                                 <Label text="Simulaation aika:" GridPane.halignment="CENTER" />
                                                 <Label text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                                <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label fx:id="TULOKSET_HEITETTY_YHT" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                                 <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                                 <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                                                 <Label text="Elektroniikka Jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
