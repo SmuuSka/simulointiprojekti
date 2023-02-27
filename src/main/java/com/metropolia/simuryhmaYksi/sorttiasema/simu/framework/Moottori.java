@@ -38,11 +38,14 @@ public abstract class Moottori extends Thread implements IMoottori {
 		//Kunnes viimeinen asiakas on poistunut
 		while (simuloidaan()){
 			viive();
+			
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 			
 			Trace.out(Trace.Level.INFO, "\nB-vaihe:" );
 			suoritaBTapahtumat();
+
+			setJonojenPituudet();
 			
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:" );
 			yritaCTapahtumat();
@@ -102,5 +105,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	protected abstract void suoritaTapahtuma(Tapahtuma t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 	
 	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+	protected abstract void setJonojenPituudet();
 	
 }

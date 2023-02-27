@@ -106,16 +106,7 @@ public class OmaMoottori extends Moottori {
                 a.raportti();
                 break;
         }
-        kontrolleri.setSAAPUMISJononPituus(palvelupisteet[0].getJono().size());
-        // Asetetaan elektroniikka jätelavan jonon pituus
-        kontrolleri.setEJononPituus(palvelupisteet[1].getJono().size());
-
-        // Asetetaan palamattoman jätteen jätelavan jonon pituss
-        kontrolleri.setPTJononPituus(palvelupisteet[2].getJono().size());
-
-        // Asetetaan palavan jätteen jätelavan jonon pituss
-        kontrolleri.setPJononPituus(palvelupisteet[3].getJono().size());
-
+		
         //PALAVAJÄTE REITTI ANIMOINTI
         try {
                 //PALAVA REITTI ANIMOINTI
@@ -172,6 +163,20 @@ public class OmaMoottori extends Moottori {
                 break;
         }
     }
+
+	public void setJonojenPituudet(){
+		
+		// Asetetaan saapumisjonon pituus 
+        kontrolleri.setSAAPUMISJononPituus(palvelupisteet[0].getJono().size());
+        // Asetetaan elektroniikka jätelavan jonon pituus
+        kontrolleri.setEJononPituus(palvelupisteet[1].getJono().size());
+
+        // Asetetaan palamattoman jätteen jätelavan jonon pituss
+        kontrolleri.setPTJononPituus(palvelupisteet[2].getJono().size());
+
+        // Asetetaan palavan jätteen jätelavan jonon pituss
+        kontrolleri.setPJononPituus(palvelupisteet[3].getJono().size());
+	}
 
     @Override
     protected void tulokset(){

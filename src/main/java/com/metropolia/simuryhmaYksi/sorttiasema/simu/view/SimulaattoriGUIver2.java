@@ -432,7 +432,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     public int[] getJateLaijenProsentit() {
     int[] prosenttiLista = new int[0];
         if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti == 100) {
-            prosenttiLista = new int[]{elektroJateProsentti, palavaJateProsentti, palamatonJateProsentti};
+            prosenttiLista = new int[]{elektroJateProsentti, palamatonJateProsentti, palavaJateProsentti};
             System.out.println("Prosentit on tasan 100% yhteensä, se on hyvä!");
             return prosenttiLista;
         }
