@@ -378,17 +378,17 @@
                                        </effect>
                                     </ImageView>
                                     <Label layoutX="29.0" layoutY="230.0" text="Jonossa:" />
-                                    <Label id="JONOSSA_SAAPUMINEN" fx:id="JONOSSA_SAAPUMINEN" layoutX="110.0" layoutY="204.0" text="0" />
-                                    <Label layoutX="37.0" layoutY="204.0" text="Saapumisia:" />
-                                    <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="81.0" layoutY="230.0" text="0" />
+                                    <Label id="JONOSSA_SAAPUMINEN" fx:id="JONOSSA_SAAPUMINEN" layoutX="124.0" layoutY="204.0" prefHeight="17.0" prefWidth="37.0" text="0" />
+                                    <Label layoutX="3.0" layoutY="204.0" prefHeight="17.0" prefWidth="114.0" text="Saapumisia Yhteensä:" />
+                                    <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="81.0" layoutY="230.0" prefHeight="17.0" prefWidth="24.0" text="0" />
                                     <Label layoutX="260.0" layoutY="239.0" text="Jonossa:" />
                                     <Label id="JONOSSAINFO_EPA" fx:id="JONOSSAINFO_EPA" layoutX="309.0" layoutY="239.0" text="0" />
                                     <Label layoutX="265.0" layoutY="88.0" text="Jonossa:" />
                                     <Label id="JONOSSAINFO_PA" fx:id="JONOSSAINFO_PA" layoutX="319.0" layoutY="88.0" text="0" />
                                     <Label layoutX="259.0" layoutY="455.0" text="Jonossa:" />
                                     <Label id="JONOSSAINFO_ELEKTRO" fx:id="JONOSSAINFO_ELEKTRO" layoutX="308.0" layoutY="455.0" text="0" />
-                                    <Label layoutX="565.0" layoutY="222.0" text="Poistunut:" />
-                                    <Label id="POISTUNUTINFO" fx:id="POISTUNUTINFO" layoutX="624.0" layoutY="222.0" text="0" />
+                                    <Label layoutX="540.0" layoutY="222.0" prefHeight="17.0" prefWidth="129.0" text="Poistumisia Yhteensä:" />
+                                    <Label id="POISTUNUTINFO" fx:id="POISTUNUTINFO" layoutX="660.0" layoutY="222.0" prefHeight="17.0" prefWidth="25.0" text="0" />
                                     <HBox id="JONO_SAAPUMINEN" fx:id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="28.0" layoutY="264.0" prefHeight="40.0" prefWidth="90.0">
                                        <children>
                                           <Rectangle id="ASIAKAS_JONOSSA" fx:id="JONO_PALIKKA_SAAPUMINEN" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />

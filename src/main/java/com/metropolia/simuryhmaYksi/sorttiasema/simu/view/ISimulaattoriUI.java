@@ -32,4 +32,5 @@ public interface ISimulaattoriUI {
     public void setEJateJonossa(int pituus);
     public void setPTJateJonossa(int pituus);
     public void setPJateJonossa(int pituus);
+    public void setSAAPUMINENJonossa(int pituus);
 }

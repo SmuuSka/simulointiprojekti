@@ -74,7 +74,8 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     private Line REITTI_ELEKTRO_TO_EPA;
 
     //---------------------------------------------------------------------------------------------
-
+    private Label POISTUNUT_INFO;
+    private Label SAAPUMISETYHT_INFO;
     //----------------------------------ONKO PALVELUSSA "VALOT" ----------------------------
     private Ellipse PA_PALVELUSSAINFO;
     private Ellipse EPA_PALVELUSSAINFO;
@@ -116,7 +117,20 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         ui.setPJateJonossa(0);
         ui.setPTJateJonossa(0);
     }
-
+    @Override
+    public void lisaaSaapumistenMaara(int maara){
+        SAAPUMISETYHT_INFO = PÄÄSIMULAATORIFXML_controller.getJONOSSA_SAAPUMINEN();
+        Platform.runLater(() -> {
+            SAAPUMISETYHT_INFO.setText(Integer.toString(maara));
+        });
+    }
+    @Override
+    public void lisaaPoistunutMaara(int maara){
+        POISTUNUT_INFO = PÄÄSIMULAATORIFXML_controller.getPOISTUNUTINFO();
+        Platform.runLater(() -> {
+            POISTUNUT_INFO.setText(Integer.toString(maara));
+        });
+    }
     public void uusiAsiakas() {
         asiakasLkm++;
     }
