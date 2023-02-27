@@ -10,6 +10,8 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import com.sun.jna.platform.win32.WinDef;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -285,20 +287,18 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     //  TULOKSET IKKUNA
     @Override
     public void showTulokset(ArrayList<SimulaatioData> tietokanta) {
-
         Platform.runLater(
                 () -> {
                     try {
+                        TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
                         ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(tietokanta);
                         for (SimulaatioData data: dataob) {
                             System.out.println(data.getId() + "TÄÄ TULEE GUI ");
                         }
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
-                        TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
                         loader.setController(TULOKSET_FXML_CONTROLLER);
                         AnchorPane page = (AnchorPane) loader.load();
-                        Label tekstidata = new Label();
 
                         TableView TABLE_VIEW_DATA = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA();
                         TableColumn<SimulaatioData,Integer> idCOLUMN = new TableColumn<SimulaatioData,Integer>("#");
@@ -314,20 +314,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 cellData -> cellData.getValue().idProperty().asObject());
 
                         TABLE_VIEW_DATA.setItems(dataob);
-                        Label HEITETTY_YHT_TULOS = TULOKSET_FXML_CONTROLLER.getTULOKSET_HEITETTY_YHT();
                         Stage tuloksetStage = new Stage();
                         tuloksetStage.setTitle("Tulokset");
                         tuloksetStage.initModality(Modality.WINDOW_MODAL);
                         tuloksetStage.initOwner(primaryStagePara);
                         Scene scene = new Scene(page);
                         tuloksetStage.setScene(scene);
-
-                        try {
-//                            HEITETTY_YHT_TULOS.setText(tietokanta.get(tietokanta.size()).getJatteidenKokonaismaara());
-                        }catch(NullPointerException e){
-                            e.printStackTrace();
-                        }
                         tuloksetStage.show();
+                        TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                            valittuData(obs,newSelection,TULOKSET_FXML_CONTROLLER);
+                        });
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -338,10 +334,27 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     tuloksetPoistaTulosButton.setOnAction(event -> {
                         System.out.println("POISTETTU DATA");
                     });
+
                 });
     }
 
+    public void poistaValittuData(){
+
+    }
+    public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
+        if (newSelection != null) {
+            SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+
+            //SIMUAIKA TULOS
+            TULOKSET_FXML_CONTROLLER.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
+            //ROSKEN KOKONAIS MÄÄRÄ
+            TULOKSET_FXML_CONTROLLER.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
+        } else {
+            System.out.println("Ei mitään valittuna ROW");
+        }
+    }
     //------------------------------------------------------------------------------
+
     @Override
     public double getAika() {
         return Double.parseDouble(simulointiAikaInput.getText());
