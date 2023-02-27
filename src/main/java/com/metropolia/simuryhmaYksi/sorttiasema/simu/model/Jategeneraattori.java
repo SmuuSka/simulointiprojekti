@@ -24,13 +24,22 @@ public class Jategeneraattori {
         int[][] valit = new int[3][2];
         int i = 0;
         int a = 0;
+        int max = 0;
+        for (int n: arr) if (n != 0) max++;
+       
         for (int j = 0; j <arr.length; j++){
-            valit[j][0] = a;
-            valit[j][1] = a+arr[j];
-            //System.err.println("Alaraja: " + valit[j][0] + ", Yläraja: " + valit[j][1]);
-            a+=arr[j]+1;
+            if (arr[j] == 0){
+                valit[j][0] = valit[j][1] = -1;
+            } else {
+                valit[j][0] = a;
+                valit[j][1] = a+arr[j];
+                a+=arr[j]+1;
+            }
+            System.err.println("Alaraja: " + valit[j][0] + ", Yläraja: " + valit[j][1]);
         }
-        int arvottu = (int)(Math.random() * valit[arr.length-1][1]);
+        max += arr[0] + arr[1] + arr[2] - 1;
+        System.out.println("MAX: " + max);
+        int arvottu = (int)(Math.random() * max);
         while (arvottu > valit[i][1]) i++;
         return i; 
     }
@@ -57,3 +66,12 @@ public class Jategeneraattori {
         return jatteet;
     }
 }
+
+/*
+ * 
+ * for (int j = 0; j <arr.length; j++){
+                if (arvottu <= valit[j][1] && arvottu >= valit[j][0]){
+                    i = j;
+                }
+            } 
+ */
