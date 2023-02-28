@@ -467,10 +467,8 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             PA_PALVELUSSAINFO = PÄÄSIMULAATORIFXML_controller.getPA_PALVELUSSAINFO();
             if (onkovarattu == true) {
                 PA_PALVELUSSAINFO.setFill(Color.RED);
-                System.out.println("VARATTUPA");
             } else if (!onkovarattu) {
                 PA_PALVELUSSAINFO.setFill(Color.LIMEGREEN);
-                System.out.println("VAPAAPA");
             }
         });
     }
@@ -482,10 +480,8 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             EPA_PALVELUSSAINFO = PÄÄSIMULAATORIFXML_controller.getEPA_PALVELUSSAINFO();
             if (onkovarattu == true) {
                 EPA_PALVELUSSAINFO.setFill(Color.RED);
-                System.out.println("VARATTUPA");
             } else if (!onkovarattu) {
                 EPA_PALVELUSSAINFO.setFill(Color.LIMEGREEN);
-                System.out.println("VAPAAPA");
             }
         });
 
@@ -498,10 +494,8 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             ELEKTRO_PALVELUSSAINFO = PÄÄSIMULAATORIFXML_controller.getELEKTRO_PALVELUSSAINFO();
             if (onkovarattu == true) {
                 ELEKTRO_PALVELUSSAINFO.setFill(Color.RED);
-                System.out.println("VARATTUPA");
             } else if (!onkovarattu) {
                 ELEKTRO_PALVELUSSAINFO.setFill(Color.LIMEGREEN);
-                System.out.println("VAPAAPA");
             }
         });
     }
@@ -514,10 +508,8 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             SAAPUMINEN_PALVELUSSAINFO = PÄÄSIMULAATORIFXML_controller.getSAAPUMINEN_PALVELUSSAINFO();
             if (onkovarattu == true) {
                 SAAPUMINEN_PALVELUSSAINFO.setFill(Color.RED);
-                System.out.println("VARATTUPA");
             } else if (!onkovarattu) {
                 SAAPUMINEN_PALVELUSSAINFO.setFill(Color.LIMEGREEN);
-                System.out.println("VAPAAPA");
             }
         });
     }

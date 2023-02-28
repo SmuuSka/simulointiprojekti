@@ -171,5 +171,6 @@ public class OmaMoottori extends Moottori {
         System.out.println("Keskimääräinen jätemäärä per asiakas: " + jatteenKokonaismaara / (Asiakas.getID()-1) + " kg");
         kontrolleri.tallennaTulokset(jatteenKokonaismaara, Asiakas.getID(), palvelupisteet);
         //System.out.println("Tulokset ... puuttuvat vielä");
+
     }
 }

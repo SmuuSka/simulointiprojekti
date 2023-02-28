@@ -5,9 +5,13 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.Kontrolleri;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
+import com.sun.jna.platform.win32.WinDef;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,19 +19,24 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.*;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private TULOKSET_FXML_CONTROLLER TULOKSET_FXML_CONTROLLER;
     private AnchorPane MainSoftwarePane_STRATEGIA;
 
-    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton,lopetaButton,strategiaNaytaTuloksetButton,tuloksetPoistaTulosButton;
+    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton;
 
-    private TextField simulointiAikaInput,simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
+    private TextField simulointiAikaInput, simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
             palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
 
     private RadioButton RauhallinenAktiivisuus, NormaaliAktiivisuus, RuuhkainenAktiivisuus;
@@ -37,12 +46,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private Label paaSim_ELEKTRO_JateCounter, paaSim_PALAVA_JateCounter, paaSim_PALAMATON_JateCounter,
             paaSim_JONOINFO_SAAPUMINEN, paaSim_SAAPUMISIAYHT_COUNTER, paaSim_JONOINFO_PALAVAJATE,
             paaSim_JONOINFO_ELEKTRONIIKKAJATE, paaSim_JONOINFO_PALAMATONJATE, paaSim_POISTUNUT_COUNTER;
-   private int elektroJateProsentti = 0;
+    private int elektroJateProsentti = 0;
     private int palavaJateProsentti = 0;
-   private int palamatonJateProsentti = 0;
-   private int simulaatioAika = 0;
+    private int palamatonJateProsentti = 0;
+    private int simulaatioAika = 0;
 
-   private int simulaatioViive = 0;
+    private int simulaatioViive = 0;
     private ToggleGroup aktiivisuusRadioGroup;
     private Scene scene;
 
@@ -50,7 +59,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private STRATEGIA_FXML_CONTROLLER strategiaFXML_Controller;
     private Parent root;
     private IKontrolleriVtoM kontrolleri;
-
+    private Stage primaryStagePara;
     private IVisualisointi naytto;
     //-------------------------------------------------------------------------------------------
 
@@ -69,6 +78,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     public void start(Stage primaryStage) {
 
         try {
+            primaryStagePara = primaryStage;
+            primaryStage.getIcons().add(new Image("/uifxml/LOGO.png"));
             FXMLLoader loaderStrategia = new FXMLLoader(getClass().getResource("/uifxml/Strategia.fxml"));
             FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
             strategiaFXML_Controller = new STRATEGIA_FXML_CONTROLLER(kontrolleri);
@@ -128,17 +139,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(root);
             strategiaNaytaTuloksetButton.setOnAction(event -> {
-                showTulokset(primaryStage);
             });
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
             strategiaButton.setOnAction(event -> {
-                try{
+                try {
                     simulaatioAika = Integer.parseInt(simulointiAikaInput.getText());
                     simulaatioViive = Integer.parseInt(simulointiAikaViiveInput.getText());
                     elektroJateProsentti = Integer.parseInt(elektroniikkaJatePROSENTTI.getText());
                     palavaJateProsentti = Integer.parseInt(palavaJatePROSENTTI.getText());
                     palamatonJateProsentti = Integer.parseInt(palamatonJatePROSENTTI.getText());
-                }catch(NumberFormatException numberex){
+                } catch (NumberFormatException numberex) {
                     System.out.println("Kaikkiin kenttiin pitää syöttää numero arvoja.");
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Varoitus");
@@ -147,117 +157,117 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     alert.show();
                 }
 
-                if(elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti != 100){
-                   int summa = elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti;
-                    System.out.println("Jäteprosentti luvut pitää olla yhteensä 100%, sinulla on " + summa + "%" );
+                if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti != 100) {
+                    int summa = elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti;
+                    System.out.println("Jäteprosentti luvut pitää olla yhteensä 100%, sinulla on " + summa + "%");
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Varoitus");
                     alert.setHeaderText("Varoitus:");
                     alert.setContentText("Prosentit pitää olla tasan 100% yhteensä, sinulla on " + summa + "%");
                     alert.show();
-                }else{
-                        //Asiakaan MIN/MAX kg määrä tarkistus.
-                        int asiakasMin = 0;
-                        int asiakasMax = 0;
-                        try {
-                            asiakasMin = Integer.parseInt(asiakasJateMIN_INPUT.getText());
-                            asiakasMax = Integer.parseInt(asiakasJateMAX_INPUT.getText());
-                        } catch (NumberFormatException numberex) {
-                            System.out.println("Et ole Syöttänyt mitää arvoja asiakkaan min ja max kilo määriin!");
-                        } finally {
+                } else {
+                    //Asiakaan MIN/MAX kg määrä tarkistus.
+                    int asiakasMin = 0;
+                    int asiakasMax = 0;
+                    try {
+                        asiakasMin = Integer.parseInt(asiakasJateMIN_INPUT.getText());
+                        asiakasMax = Integer.parseInt(asiakasJateMAX_INPUT.getText());
+                    } catch (NumberFormatException numberex) {
+                        System.out.println("Et ole Syöttänyt mitää arvoja asiakkaan min ja max kilo määriin!");
+                    } finally {
 
-                            if (asiakasMin < 0 || asiakasMax < 0 || asiakasMin == asiakasMax) {
-                                Alert alert = new Alert(Alert.AlertType.WARNING);
-                                alert.setTitle("Varoitus");
-                                alert.setHeaderText("Varoitus:");
-                                alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä. Tai et ole antanut mitään arvoja.");
-                                alert.show();
-                            } else {
+                        if (asiakasMin < 0 || asiakasMax < 0 || asiakasMin == asiakasMax) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Varoitus");
+                            alert.setHeaderText("Varoitus:");
+                            alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä. Tai et ole antanut mitään arvoja.");
+                            alert.show();
+                        } else {
 
+                            try {
+                                loaderSIMU.setController(mainFXML_Controller);
+                                root = loaderSIMU.load();
+                                scene = new Scene(root);
+
+                                primaryStage.setScene(scene);
+
+                                primaryStage.setTitle("Sortti-Asema Simu");
+
+                            } catch (IOException er) {
+                                System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
+                                er.printStackTrace();
+
+                            }
+                            primaryStage.show();
+
+                            //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
+                            if (primaryStage.isShowing() == true) {
+
+                                //PÄÄSIMULAATORIN NAPIT.
+                                aloitaButton = mainFXML_Controller.getBUTTON_ALOITA();
+                                hidastaButton = mainFXML_Controller.getBUTTON_HITAAMMIN();
+                                nopeutaButton = mainFXML_Controller.getBUTTON_NOPEAMMIN();
+                                lopetaButton = mainFXML_Controller.getBUTTON_LOPETA();
+
+                                ///PÄÄSIMULAAATORI Teksti/Label elementit
+
+                                //POISHEITETTYJATE COUNTERIT
+                                paaSim_ELEKTRO_JateCounter = mainFXML_Controller.getELEKTRO_POISHEITETTY_NUM();
+                                paaSim_PALAVA_JateCounter = mainFXML_Controller.getPA_POISHEITETTY_NUM();
+                                paaSim_PALAMATON_JateCounter = mainFXML_Controller.getEPA_POISHEITETTY_NUM();
+
+                                ///JONOSSA COUNTER LABEL/TEXT
+
+                                //PALAVAJÄTE JONO
+                                paaSim_JONOINFO_PALAVAJATE = mainFXML_Controller.getJONOSSAINFO_PA();
+
+                                //ELEKTRONIIKA JONO
+                                paaSim_JONOINFO_ELEKTRONIIKKAJATE = mainFXML_Controller.getJONOSSAINFO_ELEKTRO();
+
+                                //PALAMATONJÄTE JONO
+                                paaSim_JONOINFO_PALAMATONJATE = mainFXML_Controller.getJONOSSAINFO_EPA();
+
+                                //SAAPUMISEN JONO
+                                paaSim_JONOINFO_SAAPUMINEN = mainFXML_Controller.getJONOSSA_SAAPUMINEN();
+
+                                //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
+                                paaSim_SAAPUMISIAYHT_COUNTER = mainFXML_Controller.getJONOSSAINFO_SAAPUMINEN();
+
+                                //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
+                                paaSim_POISTUNUT_COUNTER = mainFXML_Controller.getPOISTUNUTINFO();
+
+
+                                System.out.println("Siirytään Pääsimulaatorille.");
                                 try {
-                                    loaderSIMU.setController(mainFXML_Controller);
-                                    root = loaderSIMU.load();
-                                    scene = new Scene(root);
+                                    aloitaButton.setOnAction(event1 -> {
+                                        kontrolleri.setVisualisointi(getVisualisointi());
+                                        kontrolleri.kaynnistaSimulointi();
+                                    });
 
-                                    primaryStage.setScene(scene);
+                                    hidastaButton.setOnAction(event2 -> {
+                                        kontrolleri.hidasta();
+                                    });
 
-                                    primaryStage.setTitle("Sortti-Asema Simu");
-
-                                } catch (IOException er) {
-                                    System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
-                                    er.printStackTrace();
-
+                                    nopeutaButton.setOnAction(event3 -> {
+                                        kontrolleri.nopeuta();
+                                    });
+                                    lopetaButton.setOnAction(event4 -> {
+                                        naytto.setPALAVA_VARATTU(false);
+                                        naytto.setELEKTRO_VARATTU(false);
+                                        naytto.setSAAPUMINEN_VARATTU(false);
+                                        naytto.setEPA_VARATTU(false);
+                                        kontrolleri.lopetaSimulointi();
+                                    });
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
                                 }
-                                primaryStage.show();
-
-                                //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
-                                if (primaryStage.isShowing() == true) {
-
-                                    //PÄÄSIMULAATORIN NAPIT.
-                                    aloitaButton = mainFXML_Controller.getBUTTON_ALOITA();
-                                    hidastaButton = mainFXML_Controller.getBUTTON_HITAAMMIN();
-                                    nopeutaButton = mainFXML_Controller.getBUTTON_NOPEAMMIN();
-                                    lopetaButton = mainFXML_Controller.getBUTTON_LOPETA();
-
-                                    ///PÄÄSIMULAAATORI Teksti/Label elementit
-
-                                    //POISHEITETTYJATE COUNTERIT
-                                    paaSim_ELEKTRO_JateCounter = mainFXML_Controller.getELEKTRO_POISHEITETTY_NUM();
-                                    paaSim_PALAVA_JateCounter = mainFXML_Controller.getPA_POISHEITETTY_NUM();
-                                    paaSim_PALAMATON_JateCounter = mainFXML_Controller.getEPA_POISHEITETTY_NUM();
-
-                                    ///JONOSSA COUNTER LABEL/TEXT
-
-                                    //PALAVAJÄTE JONO
-                                    paaSim_JONOINFO_PALAVAJATE = mainFXML_Controller.getJONOSSAINFO_PA();
-
-                                    //ELEKTRONIIKA JONO
-                                    paaSim_JONOINFO_ELEKTRONIIKKAJATE = mainFXML_Controller.getJONOSSAINFO_ELEKTRO();
-
-                                    //PALAMATONJÄTE JONO
-                                    paaSim_JONOINFO_PALAMATONJATE = mainFXML_Controller.getJONOSSAINFO_EPA();
-
-                                    //SAAPUMISEN JONO
-                                    paaSim_JONOINFO_SAAPUMINEN = mainFXML_Controller.getJONOSSA_SAAPUMINEN();
-
-                                    //SAAPUMISTEN MÄÄRÄ TÄLLÄ HETKELLÄ LABLE
-                                    paaSim_SAAPUMISIAYHT_COUNTER = mainFXML_Controller.getJONOSSAINFO_SAAPUMINEN();
-
-                                    //POISTUNUT ASIAKKAAT YHTEENSÄ TÄLLÄ HETKELLÄ LABLE
-                                    paaSim_POISTUNUT_COUNTER = mainFXML_Controller.getPOISTUNUTINFO();
-
-
-                                    System.out.println("Siirytään Pääsimulaatorille.");
-                                    try {
-                                        aloitaButton.setOnAction(event1 -> {
-                                            kontrolleri.setVisualisointi(getVisualisointi());
-                                            kontrolleri.kaynnistaSimulointi();
-                                        });
-
-                                        hidastaButton.setOnAction(event2 -> {
-                                            kontrolleri.hidasta();
-                                        });
-
-                                        nopeutaButton.setOnAction(event3 -> {
-                                            kontrolleri.nopeuta();
-                                        });
-                                        lopetaButton.setOnAction(event4 -> {
-                                            naytto.setPALAVA_VARATTU(false);
-                                            naytto.setELEKTRO_VARATTU(false);
-                                            naytto.setSAAPUMINEN_VARATTU(false);
-                                            naytto.setEPA_VARATTU(false);
-                                            kontrolleri.lopetaSimulointi();
-                                        });
-                                    } catch (NullPointerException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    System.out.println("Pääsimulaatori ei ole vielä päälä.");
-                                }
+                            } else {
+                                System.out.println("Pääsimulaatori ei ole vielä päälä.");
                             }
                         }
                     }
-                });
+                }
+            });
 
             primaryStage.setScene(scene);
 
@@ -268,41 +278,70 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         } catch (Exception e) {
             e.printStackTrace();
         }
-}
+    }
     //-------------------------------------------------------------------------------------------
 
-    //  TULOKSET IKKUNA
-    public void showTulokset(Stage stage) {
-        try {
-            // Load the fxml file and create a new stage for the popup.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
-            TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
-            loader.setController(TULOKSET_FXML_CONTROLLER);
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage tuloksetStage = new Stage();
-            tuloksetStage.setTitle("Tulokset");
-            tuloksetStage.initModality(Modality.WINDOW_MODAL);
-            tuloksetStage.initOwner(stage);
-            Scene scene = new Scene(page);
-            tuloksetStage.setScene(scene);
-
-            tuloksetStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
-
-        //Poista valittu dataNappi.
-        tuloksetPoistaTulosButton.setOnAction(event ->{
-            System.out.println("POISTETTU DATA");
-        });
-    }
-//------------------------------------------------------------------------------
-
     //INTERFACE METHOTID
+    //  TULOKSET IKKUNA
+    @Override
+    public void showTulokset(ArrayList<SimulaatioData> tietokanta) {
+
+        Platform.runLater(
+                () -> {
+                    try {
+                        ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(tietokanta);
+                        for (SimulaatioData data: dataob) {
+                            System.out.println(data.getId() + "TÄÄ TULEE GUI ");
+                        }
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
+                        TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
+                        loader.setController(TULOKSET_FXML_CONTROLLER);
+                        AnchorPane page = (AnchorPane) loader.load();
+                        Label tekstidata = new Label();
+
+                        TableView TABLE_VIEW_DATA = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA();
+                        TableColumn<SimulaatioData,Integer> idCOLUMN = new TableColumn<SimulaatioData,Integer>("#");
+                        idCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData,Integer>("id"));
+                        TableColumn<SimulaatioData,LocalDate> aikaCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Päivämäärä");
+                        aikaCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData,LocalDate>("paivamaara"));
+
+                        TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN,aikaCOLUMN);
+
+                        aikaCOLUMN.setCellValueFactory(
+                                cellData -> cellData.getValue().paivamaaraProperty());
+                        idCOLUMN.setCellValueFactory(
+                                cellData -> cellData.getValue().idProperty().asObject());
+
+                        TABLE_VIEW_DATA.setItems(dataob);
+                        Label HEITETTY_YHT_TULOS = TULOKSET_FXML_CONTROLLER.getTULOKSET_HEITETTY_YHT();
+                        Stage tuloksetStage = new Stage();
+                        tuloksetStage.setTitle("Tulokset");
+                        tuloksetStage.initModality(Modality.WINDOW_MODAL);
+                        tuloksetStage.initOwner(primaryStagePara);
+                        Scene scene = new Scene(page);
+                        tuloksetStage.setScene(scene);
+
+                        try {
+//                            HEITETTY_YHT_TULOS.setText(tietokanta.get(tietokanta.size()).getJatteidenKokonaismaara());
+                        }catch(NullPointerException e){
+                            e.printStackTrace();
+                        }
+                        tuloksetStage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
+
+                    //Poista valittu dataNappi.
+                    tuloksetPoistaTulosButton.setOnAction(event -> {
+                        System.out.println("POISTETTU DATA");
+                    });
+                });
+    }
+
+    //------------------------------------------------------------------------------
     @Override
     public double getAika() {
         return Double.parseDouble(simulointiAikaInput.getText());
@@ -368,11 +407,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     // Elektroniikka jonon pituus tekstin setteri
-    public void setEJateJonossa(int pituus){
+    public void setEJateJonossa(int pituus) {
         Platform.runLater(
-  		() -> {
-            paaSim_JONOINFO_ELEKTRONIIKKAJATE.setText(String.valueOf(pituus)); 
-        });
+                () -> {
+                    paaSim_JONOINFO_ELEKTRONIIKKAJATE.setText(String.valueOf(pituus));
+                });
     }
 
     @Override
@@ -383,9 +422,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     @Override
     public void setPJateJonossa(int pituus) {
         Platform.runLater(
-            () -> {
-              paaSim_JONOINFO_PALAVAJATE.setText(String.valueOf(pituus)); 
-          });
+                () -> {
+                    paaSim_JONOINFO_PALAVAJATE.setText(String.valueOf(pituus));
+                });
     }
 
     @Override
@@ -404,10 +443,10 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     @Override
     public void setPTJateJonossa(int pituus) {
         Platform.runLater(
-  		() -> {
-            paaSim_JONOINFO_PALAMATONJATE.setText(String.valueOf(pituus)); 
-        });
-        
+                () -> {
+                    paaSim_JONOINFO_PALAMATONJATE.setText(String.valueOf(pituus));
+                });
+
     }
 
     @Override
@@ -430,19 +469,19 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public int[] getJateLaijenProsentit() {
-    int[] prosenttiLista = new int[0];
+        int[] prosenttiLista = new int[0];
         if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti == 100) {
             prosenttiLista = new int[]{elektroJateProsentti, palamatonJateProsentti, palavaJateProsentti};
             System.out.println("Prosentit on tasan 100% yhteensä, se on hyvä!");
             return prosenttiLista;
         }
-            return prosenttiLista;
+        return prosenttiLista;
     }
 
     @Override
     public IVisualisointi getVisualisointi() {
         try {
-            naytto = new Visualisointi2(mainFXML_Controller,kontrolleri,this);
+            naytto = new Visualisointi2(mainFXML_Controller, kontrolleri, this);
             return naytto;
         } catch (IOException e) {
             System.out.println("Visualisointia ei saadu kiini");
@@ -456,6 +495,10 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         naytto.setAnimaationViive(viive);
     }
 
-    
+    @Override
+    public void setAnimaationViive(int viive) {
+        naytto.setAnimaationViive(viive);
+    }
+
 
 }

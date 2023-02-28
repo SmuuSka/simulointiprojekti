@@ -1,9 +1,23 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
+
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * @Author Kaspar Tullus,Samu Aikio, Joel Tikkanen
  */
 
 public interface ISimulaattoriUI {
+
+    //INTERFACE METHOTID
+    //  TULOKSET IKKUNA
+
+    //INTERFACE METHOTID
+    //  TULOKSET IKKUNA
+    void showTulokset(ArrayList<SimulaatioData> datatulokset);
 
     public double getAika();
     public long getViive();
