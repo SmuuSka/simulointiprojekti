@@ -92,6 +92,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         this.ui = ui;
         this.kontrolleri = kontrolleri;
         this.PÄÄSIMULAATORIFXML_controller = PÄÄSIMULAATORIFXML_controller;
+        this.animationTimeinMillis = (int)ui.getViive();
         PÄÄSIMULAATORIFXML_controller = new PÄÄSIMULAATORI_FXML_CONTROLLER(kontrolleri);
         FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
         loaderSIMU.setController(PÄÄSIMULAATORIFXML_controller);
@@ -290,6 +291,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     // ELEKTRO TO PALAVA ASIAKAS ANIMAATIO
     public void moveAsiakasELEKTRO_PALAVA() {
         Platform.runLater(() -> {
+            System.out.println("ANIMAATION KESTO: " + animationTimeinMillis);
             REITTI_ELEKTRO_TO_PA_BOTTOM_LINE = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA1();
             REITTI_ELEKTRO_TO_PA_TOP_LINE = PÄÄSIMULAATORIFXML_controller.getLINE_SIIRTYY_ELEKTRO_TO_PA2();
             ImageView ASIAKAS_NODE = new ImageView();
@@ -520,5 +522,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         });
     }
 
-
+    public void setAnimaationViive(int viive){
+        this.animationTimeinMillis = viive;
+    }
 }

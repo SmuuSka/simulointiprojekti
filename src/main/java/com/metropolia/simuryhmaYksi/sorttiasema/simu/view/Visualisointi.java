@@ -123,4 +123,11 @@ public class Visualisointi extends Canvas implements IVisualisointi{
 
     }
 
+
+    @Override
+    public void setAnimaationViive(int viive) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setAnimaationViive'");
+    }
+
 }

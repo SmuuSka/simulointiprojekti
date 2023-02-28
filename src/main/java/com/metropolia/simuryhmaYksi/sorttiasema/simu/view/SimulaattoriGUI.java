@@ -249,4 +249,10 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     public void setSAAPUMINENJonossa(int pituus) {
 
     }
+
+    @Override
+    public void setAnimaationViive(int viive) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setAnimaationViive'");
+    }
 }

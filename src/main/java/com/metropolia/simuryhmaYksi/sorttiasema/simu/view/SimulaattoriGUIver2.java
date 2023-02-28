@@ -451,6 +451,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         }
     }
 
+    @Override
+    public void setAnimaationViive(int viive) {
+        naytto.setAnimaationViive(viive);
+    }
+
     
 
 }

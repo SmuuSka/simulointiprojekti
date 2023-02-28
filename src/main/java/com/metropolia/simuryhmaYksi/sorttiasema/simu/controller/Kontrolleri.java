@@ -53,6 +53,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         // Vähentää viivettä 0.5s
         if (moottori.getViive() - viive >= 0){
             moottori.setViive(moottori.getViive() - viive);
+            ui.setAnimaationViive((int)(moottori.getViive() - viive));
         }
     }
 
@@ -60,6 +61,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void hidasta() {
         // Lisää viivettä 0.5s
         moottori.setViive(moottori.getViive() + 500);
+        ui.setAnimaationViive((int)(moottori.getViive() + 500));
     }
 
     @Override
@@ -111,4 +113,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void setSAAPUMISJononPituus(int pituus) {
         ui.setSAAPUMINENJonossa(pituus);
     }
+
+   public void setAnimaationViive(int viive){
+        ui.setAnimaationViive(viive);
+   }
 }

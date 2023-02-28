@@ -45,10 +45,12 @@ public abstract class Moottori extends Thread implements IMoottori {
 			Trace.out(Trace.Level.INFO, "\nB-vaihe:" );
 			suoritaBTapahtumat();
 
-			setJonojenPituudet();
+			setTekstit();
 			
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:" );
 			yritaCTapahtumat();
+
+			setVarattu();
 
 		}
 		tulokset();
@@ -106,6 +108,8 @@ public abstract class Moottori extends Thread implements IMoottori {
 	
 	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
-	protected abstract void setJonojenPituudet();
+	protected abstract void setTekstit();
+
+	protected abstract void setVarattu();
 	
 }
