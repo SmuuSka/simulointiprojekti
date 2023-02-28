@@ -346,9 +346,26 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
 
             //SIMUAIKA TULOS
-            TULOKSET_FXML_CONTROLLER.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
+            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
             //ROSKEN KOKONAIS MÄÄRÄ
-            TULOKSET_FXML_CONTROLLER.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
+            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
+            //ELEKTROJÄTE
+            //PALAVAJÄTE
+            //PALAMATONJÄTE
+
+            //INPUTS
+            //INPUT_AIKA
+            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
+            //INPUT_VIIVE
+
+            //INPUT_PROSENTTI_ELEKTRO
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getJateTE()) + "%");
+            //INPUT_PROSENTTI_PALAMATON
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getJateTPJ())+"%");
+            //INPUT_PROSENTTI_PALAVA
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getJateTPNJ())+"%");
+
+
         } else {
             System.out.println("Ei mitään valittuna ROW");
         }
