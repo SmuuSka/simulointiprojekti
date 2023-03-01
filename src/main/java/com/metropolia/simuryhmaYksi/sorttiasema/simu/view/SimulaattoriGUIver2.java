@@ -292,8 +292,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     try {
                         TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
                         ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(tietokanta);
-                        for (SimulaatioData data: dataob) {
-                        }
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
                         loader.setController(TULOKSET_FXML_CONTROLLER);
