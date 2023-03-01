@@ -7,7 +7,6 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -31,7 +30,7 @@
          <bottom>
             <AnchorPane prefHeight="118.0" prefWidth="1019.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane id="NAPPI_LAATIKKO" fx:id="NAPPI_LAATIKKO" alignment="CENTER" gridLinesVisible="true" prefHeight="99.0" prefWidth="1019.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane id="NAPPI_LAATIKKO" fx:id="NAPPI_LAATIKKO" alignment="CENTER" prefHeight="99.0" prefWidth="1019.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -40,7 +39,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: a2d4c2; -fx-background-color: a5e8cd;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <children>
                               <Button id="BUTTON_ALOITA" fx:id="BUTTON_ALOITA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #64E986;" text="Aloita" textAlignment="CENTER">
                                  <font>
@@ -49,6 +48,9 @@
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </HBox.margin>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
                               </Button>
                               <Button id="BUTTON_LOPETA" fx:id="BUTTON_LOPETA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #E41B17;" text="Lopeta" textAlignment="CENTER">
                                  <font>
@@ -57,15 +59,24 @@
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </HBox.margin>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
                               </Button>
                            </children>
+                           <effect>
+                              <InnerShadow height="31.02" radius="7.255" width="0.0" />
+                           </effect>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: a5e8cd; -fx-background-color: a2d4c2;" GridPane.columnIndex="1">
                            <children>
                               <Button id="BUTTON_NOPEAMMIN" fx:id="BUTTON_NOPEAMMIN" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" text="Nopeammin" textAlignment="CENTER">
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </HBox.margin>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
                               </Button>
                               <Button id="BUTTON_HITAAMMIN" fx:id="BUTTON_HITAAMMIN" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" text="Hitaammin" textAlignment="CENTER">
                                  <opaqueInsets>
@@ -74,13 +85,16 @@
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" />
                                  </HBox.margin>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
                               </Button>
                            </children>
+                           <effect>
+                              <InnerShadow height="31.02" radius="7.255" width="0.0" />
+                           </effect>
                         </HBox>
                      </children>
-                     <effect>
-                        <SepiaTone level="0.14" />
-                     </effect>
                   </GridPane>
                </children>
             </AnchorPane>
@@ -97,7 +111,10 @@
                                     <Image url="@Asiakas.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="32.0" prefWidth="142.0" text="= Asiakas" />
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= Asiakas">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="68.0" prefWidth="251.0">
@@ -107,7 +124,10 @@
                                     <Image url="@palvelupiste.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="32.0" prefWidth="142.0" text="= PalveluPiste" />
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= PalveluPiste">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="62.0" prefWidth="251.0">
@@ -117,7 +137,10 @@
                                     <Image url="@jonotikku.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="32.0" prefWidth="142.0" text="= Jono" />
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= Jono">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="63.0" prefWidth="251.0">
@@ -127,7 +150,10 @@
                                     <Image url="@poistuminen.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="32.0" prefWidth="142.0" text="= Poistuminen" />
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= Poistuminen">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -137,7 +163,10 @@
                                     <Image url="@Elektroniikkajäte.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="32.0" prefWidth="142.0" text="= ElektoniikkaJäte" />
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= ElektoniikkaJäte">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -147,7 +176,10 @@
                                     <Image url="@PalavaJäte.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="32.0" prefWidth="142.0" text="= PalavaJäte" />
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= PalavaJäte">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -157,7 +189,10 @@
                                     <Image url="@EiPalavaJäte.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="32.0" prefWidth="142.0" text="= PalamatonJäte" />
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= PalamatonJäte">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                      </children>
@@ -461,11 +496,17 @@
                                        <image>
                                           <Image url="@tunnel-296442_640.png" />
                                        </image>
+                                       <effect>
+                                          <DropShadow height="12.21" radius="9.2675" width="26.86" />
+                                       </effect>
                                     </ImageView>
                                     <ImageView fitHeight="52.0" fitWidth="78.0" layoutX="331.0" layoutY="537.0" rotate="180.0">
                                        <image>
                                           <Image url="@tunnel-296442_640.png" />
                                        </image>
+                                       <effect>
+                                          <DropShadow height="12.21" radius="9.2675" width="26.86" />
+                                       </effect>
                                     </ImageView>
                                  </children>
                               </Pane>

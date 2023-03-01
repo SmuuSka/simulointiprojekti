@@ -163,6 +163,7 @@ public class PÄÄSIMULAATORI_FXML_CONTROLLER {
 
     @FXML
     private AnchorPane SIMULAATIO_VIEWBOX;
+
     ///////////
 
     /// PÄÄSIMULAATORIN GETTERIT
@@ -356,4 +357,5 @@ public class PÄÄSIMULAATORI_FXML_CONTROLLER {
     public HBox getJONO_SAAPUMINEN() {
         return JONO_SAAPUMINEN;
     }
+
 }

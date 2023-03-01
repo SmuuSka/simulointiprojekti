@@ -7,10 +7,8 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.Kontrolleri;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
-import com.sun.jna.platform.win32.WinDef;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +24,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -140,8 +137,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(root);
+
             strategiaNaytaTuloksetButton.setOnAction(event -> {
+
             });
+
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
             strategiaButton.setOnAction(event -> {
                 try {
@@ -293,7 +293,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                         TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
                         ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(tietokanta);
                         for (SimulaatioData data: dataob) {
-                            System.out.println(data.getId() + "TÄÄ TULEE GUI ");
                         }
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
@@ -338,9 +337,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 });
     }
 
-    public void poistaValittuData(){
-
-    }
     public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
         if (newSelection != null) {
             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
