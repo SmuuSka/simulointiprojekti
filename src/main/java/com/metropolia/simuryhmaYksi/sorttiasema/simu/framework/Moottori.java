@@ -7,7 +7,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	private double simulointiaika = 0;
 	protected IKontrolleriMtoV kontrolleri;
 	
-	private Kello kello;
+	protected Kello kello;
 	
 	protected Tapahtumalista tapahtumalista;
 	protected Palvelupiste[] palvelupisteet;

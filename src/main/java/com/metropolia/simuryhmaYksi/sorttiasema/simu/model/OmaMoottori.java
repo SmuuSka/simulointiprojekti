@@ -13,6 +13,7 @@ public class OmaMoottori extends Moottori {
     private Saapumisprosessi saapumisprosessi;
     private int poistunutMaara = 0;
     private int saapumistenMaara = 0;
+    
     public OmaMoottori(IKontrolleriMtoV kontrolleri) {
         super(kontrolleri);
         palvelupisteet = new Palvelupiste[4];
@@ -49,8 +50,7 @@ public class OmaMoottori extends Moottori {
                 if(Kello.getInstance().getAika() < getSimulointiaika()){
                     saapumistenMaara++;
                     kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
-                    a = new Asiakas();
-                    //Palvetiskijono = tapahtumalista
+                    a = new Asiakas();              
                     palvelupisteet[0].lisaaJonoon(a);
                     saapumisprosessi.generoiSeuraava();
                 }
@@ -62,6 +62,7 @@ public class OmaMoottori extends Moottori {
                         kontrolleri.getVisualisointi().moveAsiakasELEKTRO();
                 }
                 a = palvelupisteet[jono1].otaJonosta();
+                a.setSaapumisaika(kello.getAika());
                 palvelupisteet[jono2].lisaaJonoon(a);
                 break;
             case PALAMATONJATE_SAAPUMINEN:
@@ -70,6 +71,7 @@ public class OmaMoottori extends Moottori {
                         kontrolleri.getVisualisointi().moveAsiakasEPA();
                 }
                 a = palvelupisteet[jono1].otaJonosta();
+                a.setSaapumisaika(kello.getAika());
                 palvelupisteet[jono2].lisaaJonoon(a);
                 break;
 
@@ -79,6 +81,7 @@ public class OmaMoottori extends Moottori {
                         kontrolleri.getVisualisointi().moveAsiakasPALAVA();
                 }
                 a = palvelupisteet[jono1].otaJonosta();
+                a.setSaapumisaika(kello.getAika());
                 palvelupisteet[jono2].lisaaJonoon(a);
                 break;
             case POISTUMINEN:
@@ -95,7 +98,7 @@ public class OmaMoottori extends Moottori {
                         kontrolleri.getVisualisointi().moveAsiakasPALAVA_POISTUMINEN();
                         break;
                 }
-                a.setPoistumisaika(Kello.getInstance().getAika());
+                
                 a.raportti();
                 break;
         }
@@ -157,20 +160,35 @@ public class OmaMoottori extends Moottori {
 
     @Override
     protected void tulokset(){
-        poistunutMaara = 0;
+
         double jatteenKokonaismaara = 0;
+        long[] koleskelu = new long[4];
+        double[] aa = new double[4];
+        int[] palveltujenLkm = new int[4];
+
         System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 
         System.out.println("Jätelavat: ");
-        for (int i = 1; i < palvelupisteet.length; i++) System.out.println(palvelupisteet[i]);
-        for (int i = 1; i < palvelupisteet.length; i++)
+        for (int i = 0; i < palvelupisteet.length; i++) {
+            long oa = palvelupisteet[i].getKokonaisoleskeluaika();
+            koleskelu[i] = oa;
+            aa[i] = palvelupisteet[i].getAktiiviaika();
+            palveltujenLkm[i] = palvelupisteet[i].getPalveltujenLkm();
+            System.out.printf("Kokonaisoleskelu aika palvelupisteellä %d: %d\n", i, oa);
+
+        };
+
+ 
+        for (int i = 1; i < palvelupisteet.length; i++){
             jatteenKokonaismaara += ((Jatelava) (palvelupisteet[i])).getMaara();
+        }
 
         System.out.println("Jatteen kokonaismäärä: " + jatteenKokonaismaara);
-        System.out.println("Asiakkaiden kokonaismäärä: " + (Asiakas.getID()-1));
-        System.out.println("Keskimääräinen jätemäärä per asiakas: " + jatteenKokonaismaara / (Asiakas.getID()-1) + " kg");
+        System.out.println("Asiakkaiden kokonaismäärä: " + (Asiakas.getID()));
+        System.out.println("Keskimääräinen jätemäärä per asiakas: " + jatteenKokonaismaara / (Asiakas.getID()) + " kg");
+        Laskenta l = new Laskenta(saapumistenMaara, palveltujenLkm , aa, koleskelu, jatteenKokonaismaara);
+        l.laske();
+        System.out.println(l);
         kontrolleri.tallennaTulokset(jatteenKokonaismaara, Asiakas.getID(), palvelupisteet);
-        //System.out.println("Tulokset ... puuttuvat vielä");
-
     }
 }
