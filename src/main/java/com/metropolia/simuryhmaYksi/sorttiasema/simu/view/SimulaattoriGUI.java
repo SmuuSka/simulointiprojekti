@@ -173,7 +173,7 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
-    public void showTulokset(ArrayList<SimulaatioData> tieto) {
+    public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
 
     }
 
@@ -257,4 +257,5 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     public void setSAAPUMINENJonossa(int pituus) {
 
     }
+
 }

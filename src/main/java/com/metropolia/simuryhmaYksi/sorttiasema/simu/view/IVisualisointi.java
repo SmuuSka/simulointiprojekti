@@ -33,4 +33,9 @@ public interface IVisualisointi {
     public void setELEKTRO_VARATTU(boolean onkovarattu);
     public void setSAAPUMINEN_VARATTU(boolean onkovarattu);
 
+    void setELEKTRO_COUNTER(double value);
+
+    void setPALAVA_COUNTER(double value);
+
+    void setPALAMATON_COUNTER(double value);
 }

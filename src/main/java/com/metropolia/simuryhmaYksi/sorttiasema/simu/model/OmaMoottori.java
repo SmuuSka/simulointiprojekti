@@ -15,6 +15,9 @@ public class OmaMoottori extends Moottori {
     private Saapumisprosessi saapumisprosessi;
     private int poistunutMaara = 0;
     private int saapumistenMaara = 0;
+    private double ELEKTROjatteidenmaara = 0;
+    private double PALAVAjatteidenmaara = 0;
+    private double PALAMATONjatteidenmaara = 0;
     public OmaMoottori(IKontrolleriMtoV kontrolleri) {
         super(kontrolleri);
         palvelupisteet = new Palvelupiste[4];
@@ -109,6 +112,16 @@ public class OmaMoottori extends Moottori {
 		
         //PALAVAJÄTE REITTI ANIMOINTI
         try {
+            if(palvelupisteet[jono1].palvelupisteID == 3){
+                PALAVAjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setPALAVA_COUNTER(PALAVAjatteidenmaara);
+            } else if(palvelupisteet[jono1].palvelupisteID == 2){
+                PALAMATONjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setPALAMATON_COUNTER(PALAMATONjatteidenmaara);
+            }else if(palvelupisteet[jono1].palvelupisteID == 1){
+                ELEKTROjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setELEKTRO_COUNTER(ELEKTROjatteidenmaara);
+            }
                 //PALAVA REITTI ANIMOINTI
             if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 2) {
                 kontrolleri.getVisualisointi().moveAsiakasPA_EPA();
