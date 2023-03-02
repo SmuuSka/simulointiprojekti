@@ -56,6 +56,7 @@ public class OmaMoottori extends Moottori {
                     saapumistenMaara++;
                     kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
                     a = new Asiakas();
+                    //Palvetiskijono = tapahtumalista
                     palvelupisteet[0].lisaaJonoon(a);
                     saapumisprosessi.generoiSeuraava();
                 }
@@ -91,7 +92,6 @@ public class OmaMoottori extends Moottori {
                 break;
             case POISTUMINEN:
                 a = palvelupisteet[jono1].otaJonosta();
-                poistunutMaara++;
                 switch (palvelupisteet[jono1].palvelupisteID){
                     case 1:
                         poistunutMaara++;
@@ -115,6 +115,16 @@ public class OmaMoottori extends Moottori {
 		
         //PALAVAJÄTE REITTI ANIMOINTI
         try {
+            if(palvelupisteet[jono1].palvelupisteID == 3){
+                PALAVAjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setPALAVA_COUNTER(PALAVAjatteidenmaara);
+            } else if(palvelupisteet[jono1].palvelupisteID == 2){
+                PALAMATONjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setPALAMATON_COUNTER(PALAMATONjatteidenmaara);
+            }else if(palvelupisteet[jono1].palvelupisteID == 1){
+                ELEKTROjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setELEKTRO_COUNTER(ELEKTROjatteidenmaara);
+            }
                 //PALAVA REITTI ANIMOINTI
             if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 2) {
                 kontrolleri.getVisualisointi().moveAsiakasPA_EPA();

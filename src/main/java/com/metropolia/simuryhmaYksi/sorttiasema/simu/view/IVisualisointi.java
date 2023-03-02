@@ -40,4 +40,9 @@ public interface IVisualisointi {
     void setPALAMATON_COUNTER(double value);
     public void setAnimaationViive(int viive);
 
+    void setELEKTRO_COUNTER(double value);
+
+    void setPALAVA_COUNTER(double value);
+
+    void setPALAMATON_COUNTER(double value);
 }
