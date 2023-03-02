@@ -31,8 +31,14 @@ public class Jatelava extends Palvelupiste {
 
         // Jätelavalle jätetty jäte
         Jate poistettuJate = jatteet.removeFirst();
-
+        
         double palveluaika = generator.sample() * poistettuJate.getPaino() * 0.1;
+
+        double poistumisaika = Kello.getInstance().getAika()+palveluaika;
+        palveltava.setPoistumisaika(poistumisaika);
+        aktiiviaika += palveluaika;
+
+		kokonaisoleskeluaika += (poistumisaika-palveltava.getSaapumisaika());
 
         // Tulostuksia
         System.out.println("Poistettu jäte: " + poistettuJate);
@@ -42,7 +48,7 @@ public class Jatelava extends Palvelupiste {
         maara += poistettuJate.getPaino();
 
         TapahtumanTyyppi seuraavaTapahtuma = jatteet.size() == 0 ? TapahtumanTyyppi.POISTUMINEN : seuraavaPalvelu(jatteet);
-		tapahtumalista.lisaa(new Tapahtuma(seuraavaTapahtuma,Kello.getInstance().getAika()+palveluaika, palvelupisteID));
+		tapahtumalista.lisaa(new Tapahtuma(seuraavaTapahtuma, poistumisaika, palvelupisteID));
 	}
 
     public double getMaara(){
@@ -52,6 +58,8 @@ public class Jatelava extends Palvelupiste {
     public Jatelaji getLavanTyyppi() {
         return lavanTyyppi;
     }
+
+    
 
     public String toString(){
         return "Lava: "+getLavanTyyppi()+", Jätteen määrä lavalla: "+getMaara()+" kg"; 
