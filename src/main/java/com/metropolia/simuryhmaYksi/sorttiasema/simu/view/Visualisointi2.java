@@ -29,6 +29,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     private PÄÄSIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller;
 
     private Pane AnimationPane;
+    private Label ELEKTRO_COUNTER,PALAVA_COUNTER,PALAMATON_COUNTER;
     //----------------------------------ASIAKAS ELEMENTIT------------------------------------//
 
     //------------------------------------JONOT------------------------------------//
@@ -513,6 +514,28 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
             }
         });
     }
+
+    @Override
+    public void setELEKTRO_COUNTER(double value) {
+        Platform.runLater(() -> {
+            PÄÄSIMULAATORIFXML_controller.getELEKTRO_POISHEITETTY_NUM().setText(Double.toString(Math.round(value)) + " kg");
+        });
+    }
+
+    @Override
+    public void setPALAVA_COUNTER(double value) {
+        Platform.runLater(() -> {
+            PÄÄSIMULAATORIFXML_controller.getPA_POISHEITETTY_NUM().setText(Double.toString(Math.round(value)) + " kg");
+        });
+    }
+
+    @Override
+    public void setPALAMATON_COUNTER(double value) {
+        Platform.runLater(() -> {
+            PÄÄSIMULAATORIFXML_controller.getEPA_POISHEITETTY_NUM().setText(Double.toString(Math.round(value)) + " kg");
+        });
+    }
+
 
     public void setAnimaationViive(int viive){
         this.animationTimeinMillis = viive;

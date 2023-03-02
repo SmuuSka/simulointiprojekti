@@ -74,6 +74,7 @@ public class DAO implements IDAO {
         }
         return simulaatioID;
     }
+
     private synchronized static Connection avaaYhteysTietokantaan(){
         try{
             connection = (Connection) DriverManager.getConnection(url);
@@ -153,7 +154,6 @@ public class DAO implements IDAO {
         haeKaikkiTiedot();
         return simulaatioData;
     }
-
 
     @Override
     public synchronized void poistaTaulu() {

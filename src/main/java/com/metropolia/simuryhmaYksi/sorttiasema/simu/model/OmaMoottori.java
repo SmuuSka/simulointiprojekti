@@ -6,14 +6,19 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Moottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
+import org.xml.sax.Parser;
 
+import java.util.Arrays;
 
 public class OmaMoottori extends Moottori {
 
     private Saapumisprosessi saapumisprosessi;
     private int poistunutMaara = 0;
     private int saapumistenMaara = 0;
-    
+    private double ELEKTROjatteidenmaara = 0;
+    private double PALAVAjatteidenmaara = 0;
+    private double PALAMATONjatteidenmaara = 0;
+
     public OmaMoottori(IKontrolleriMtoV kontrolleri) {
         super(kontrolleri);
         palvelupisteet = new Palvelupiste[4];
@@ -50,7 +55,8 @@ public class OmaMoottori extends Moottori {
                 if(Kello.getInstance().getAika() < getSimulointiaika()){
                     saapumistenMaara++;
                     kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
-                    a = new Asiakas();              
+                    a = new Asiakas();
+                    //Palvetiskijono = tapahtumalista
                     palvelupisteet[0].lisaaJonoon(a);
                     saapumisprosessi.generoiSeuraava();
                 }
@@ -86,25 +92,39 @@ public class OmaMoottori extends Moottori {
                 break;
             case POISTUMINEN:
                 a = palvelupisteet[jono1].otaJonosta();
-                poistunutMaara++;
                 switch (palvelupisteet[jono1].palvelupisteID){
                     case 1:
+                        poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasELEKTRO_POISTUMINEN();
+                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                     case 2:
+                        poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasEPA_POISTUMINEN();
+                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                     case 3:
+                        poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasPALAVA_POISTUMINEN();
+                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                 }
-                
                 a.raportti();
                 break;
         }
 		
         //PALAVAJÄTE REITTI ANIMOINTI
         try {
+            if(palvelupisteet[jono1].palvelupisteID == 3){
+                PALAVAjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setPALAVA_COUNTER(PALAVAjatteidenmaara);
+            } else if(palvelupisteet[jono1].palvelupisteID == 2){
+                PALAMATONjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setPALAMATON_COUNTER(PALAMATONjatteidenmaara);
+            }else if(palvelupisteet[jono1].palvelupisteID == 1){
+                ELEKTROjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                kontrolleri.getVisualisointi().setELEKTRO_COUNTER(ELEKTROjatteidenmaara);
+            }
                 //PALAVA REITTI ANIMOINTI
             if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 2) {
                 kontrolleri.getVisualisointi().moveAsiakasPA_EPA();
@@ -148,10 +168,10 @@ public class OmaMoottori extends Moottori {
         // Asetetaan elektroniikka jätelavan jonon pituus
         kontrolleri.setEJononPituus(palvelupisteet[1].getJono().size());
 
-        // Asetetaan palamattoman jätteen jätelavan jonon pituus
+        // Asetetaan palamattoman jätteen jätelavan jonon pituss
         kontrolleri.setPTJononPituus(palvelupisteet[2].getJono().size());
 
-        // Asetetaan palavan jätteen jätelavan jonon pituus
+        // Asetetaan palavan jätteen jätelavan jonon pituss
         kontrolleri.setPJononPituus(palvelupisteet[3].getJono().size());
 
         // Asetetaan poistuneet teksti
@@ -160,7 +180,7 @@ public class OmaMoottori extends Moottori {
 
     @Override
     protected void tulokset(){
-
+        poistunutMaara = 0;
         double jatteenKokonaismaara = 0;
         long[] koleskelu = new long[4];
         double[] aa = new double[4];
@@ -178,7 +198,7 @@ public class OmaMoottori extends Moottori {
 
         };
 
- 
+
         for (int i = 1; i < palvelupisteet.length; i++){
             jatteenKokonaismaara += ((Jatelava) (palvelupisteet[i])).getMaara();
         }

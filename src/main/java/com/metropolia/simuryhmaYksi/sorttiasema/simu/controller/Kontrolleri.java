@@ -5,6 +5,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Jatelava;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.OmaMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Palvelupiste;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
@@ -73,7 +74,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
     @Override
     public void lopetaSimulointi() {
-
     }
 
     @Override
