@@ -12,8 +12,14 @@ public class Palvelutiski extends Palvelupiste {
 
     public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		super.aloitaPalvelu();
+		Asiakas a = jono.peek();
 		double palveluaika = generator.sample();
-		TapahtumanTyyppi seuraavaTapahtuma = jono.peek().getJatteet().size() == 0 ? TapahtumanTyyppi.POISTUMINEN : seuraavaPalvelu( jono.peek().getJatteet());
-		tapahtumalista.lisaa(new Tapahtuma(seuraavaTapahtuma,Kello.getInstance().getAika()+palveluaika, palvelupisteID));
+		double poistumisaika = Kello.getInstance().getAika()+palveluaika;
+		aktiiviaika += palveluaika;
+		a.setPoistumisaika(poistumisaika);
+	
+		kokonaisoleskeluaika += (a.getPoistumisaika()-a.getSaapumisaika());
+		TapahtumanTyyppi seuraavaTapahtuma = a.getJatteet().size() == 0 ? TapahtumanTyyppi.POISTUMINEN : seuraavaPalvelu(a.getJatteet());
+		tapahtumalista.lisaa(new Tapahtuma(seuraavaTapahtuma, poistumisaika, palvelupisteID));
 	}
 }

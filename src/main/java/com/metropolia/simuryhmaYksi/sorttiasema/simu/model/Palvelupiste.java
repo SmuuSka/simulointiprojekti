@@ -19,6 +19,9 @@ public class Palvelupiste {
 	protected int palvelupisteID = 0;
 	protected static int i = 0; 	
 	protected boolean varattu = false;
+	protected double aktiiviaika = 0;
+	protected long kokonaisoleskeluaika = 0;
+	protected int palveltujenLkm = 0;
 
 
 	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista){
@@ -40,6 +43,7 @@ public class Palvelupiste {
 
 	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
+		palveltujenLkm++;
 		varattu = true;
 	}
 
@@ -66,9 +70,21 @@ public class Palvelupiste {
 		return varattu;
 	}
 
+	public int getPalveltujenLkm(){
+		return palveltujenLkm;
+	}
+
 
 	public boolean onJonossa(){
 		return jono.size() != 0;
+	}
+
+	public long getKokonaisoleskeluaika(){
+        return kokonaisoleskeluaika;
+    }
+
+	public double getAktiiviaika(){
+		return aktiiviaika;
 	}
 
 	public LinkedList<Asiakas> getJono(){

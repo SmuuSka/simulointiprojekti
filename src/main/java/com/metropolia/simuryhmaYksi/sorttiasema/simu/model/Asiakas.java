@@ -14,7 +14,7 @@ public class Asiakas {
 	private double poistumisaika;
 	private int id;
 	private static int[] JATEMAARAN_VAIHTELUVALI;
-	private static int i = 1;
+	private static int i = 0;
 	private static long sum = 0;
 	private LinkedList<Jate> jatteet = new LinkedList<>();
 	private Jategeneraattori jategeneraattori;
@@ -68,15 +68,14 @@ public class Asiakas {
 	public int getId() {
 		return id;
 	}
-	
+
+	public static long getSum(){
+		return sum;
+	}
+
 	public void raportti(){
 		Trace.out(Trace.Level.INFO, "\nAsiakas "+id+ " valmis! ");
-		Trace.out(Trace.Level.INFO, "Asiakas "+id+ " saapui: " +saapumisaika);
-		Trace.out(Trace.Level.INFO,"Asiakas "+id+ " poistui: " +poistumisaika);
-		Trace.out(Trace.Level.INFO,"Asiakas "+id+ " viipyi: " +(poistumisaika-saapumisaika));
-		sum += (poistumisaika-saapumisaika);
-		double keskiarvo = sum/id;
-		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti "+ keskiarvo);
+		Trace.out(Trace.Level.INFO,"Asiakas "+id+ " poistui" +poistumisaika);
 	}
 
 	public LinkedList<Jate> getJatteet() {
