@@ -72,21 +72,33 @@ public class Laskenta {
     }
 
     public void setKeskmPalveluajat(){
-        for (int i = 0; i < LKM; i++){
-            keskmPalveluajat[i] = aktiiviajat[i]/palveltujenLkm[i];
+        try {
+            for (int i = 0; i < LKM; i++){
+               keskmPalveluajat[i] = aktiiviajat[i]/palveltujenLkm[i];
+            }
+        } catch (Exception e) {
+
         }
     }
 
     public void setKeskimaaraisetLapimenoajat(){
+        try {
         for (int i = 0; i < LKM; i++){
             keskmLapimenoajat[i] = kokonaisoleskeluajat[i]/palveltujenLkm[i];
+        }
+        } catch (Exception e) {
+
         }
     }
 
     public void keskmJononpituudet(){
-        for (int i = 0; i < LKM; i++){
-            keskmJononpituudet[i] = kokonaisoleskeluajat[i]/kokonaisaika;
-        }
+        try {
+            for (int i = 0; i < LKM; i++){
+                keskmJononpituudet[i] = kokonaisoleskeluajat[i]/kokonaisaika;
+            }
+        } catch (Exception e){}
+            
+        
     }
 
     public int getSaapuneidenLkm() {
