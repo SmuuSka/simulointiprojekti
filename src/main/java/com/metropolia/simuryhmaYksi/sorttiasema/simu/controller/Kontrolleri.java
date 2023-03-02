@@ -83,6 +83,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void tallennaTulokset(double jatteidenKokonaismaara, int asiakkaidenMaara, Palvelupiste[] palvelupisteet) {
         tietokanta.paivitaData(jatteidenKokonaismaara);
         ui.showTulokset(tietokanta.haeData());
+        System.out.println("Poistettu ID 1: " + tietokanta.poistaTiettyTulos(2));
     }
 
 

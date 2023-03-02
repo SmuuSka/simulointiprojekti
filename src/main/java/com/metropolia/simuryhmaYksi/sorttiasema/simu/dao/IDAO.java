@@ -9,4 +9,5 @@ public interface IDAO {
     public abstract void paivitaData(double jatteidenKokonaismaara);
     public abstract ArrayList<SimulaatioData> haeData();
     public abstract void poistaTaulu();
+    public abstract boolean poistaTiettyTulos(int ID);
 }

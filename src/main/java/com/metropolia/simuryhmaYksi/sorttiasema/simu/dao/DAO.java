@@ -33,6 +33,7 @@ public class DAO implements IDAO {
     private static final String SQL_UPDATE_TULOKSET = "UPDATE SIMULAATIO SET JATTEIDENKOKONAISMAARA = ? WHERE SIMULAATIOID = ?";
     private static final String SQL_SELECT = "SELECT SIMULAATIOID FROM SIMULAATIO";
     private static final String SQL_SELECT_ALL = "SELECT * FROM SIMULAATIO";
+    private static final String SQL_DELETE_TULOS = "DELETE FROM SIMULAATIO WHERE SIMULAATIOID =?";
     private static Connection connection = null;
     private static PreparedStatement preparedStatement = null;
     private static ResultSet resultSet = null;
@@ -170,5 +171,22 @@ public class DAO implements IDAO {
             try { connection.close(); } catch (Exception e) { /* Ignored */ }
             System.out.println("Vaihe 5: Tietokantayhteys suljettu");
         }
+    }
+
+    @Override
+    public synchronized boolean poistaTiettyTulos(int ID) {
+        boolean poistettu = false;
+        try {
+            connection = avaaYhteysTietokantaan();
+            preparedStatement = connection.prepareStatement(SQL_DELETE_TULOS);
+            preparedStatement.setInt(1,ID);
+           if(preparedStatement.executeUpdate() == 1){
+               poistettu = true;
+           }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return poistettu;
     }
 }
