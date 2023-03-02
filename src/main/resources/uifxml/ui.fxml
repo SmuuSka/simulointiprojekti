@@ -218,9 +218,9 @@
                         <InnerShadow />
                      </effect>
                      <children>
-                        <VBox id="INFO_SIMJÄTE_VBOX" fx:id="INFO_SIMJÄTE_VBOX" prefHeight="171.0" prefWidth="220.0">
+                        <VBox id="INFO_SIMJÄTE_VBOX" fx:id="INFO_SIMJÄTE_VBOX" alignment="CENTER" prefHeight="171.0" prefWidth="220.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="33.0" prefWidth="220.0" text="Pois Heitetty Jätteiden määrä" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="220.0" text="Pois Heitetty Jätteiden määrä" />
                               <Pane id="INFO_ELEKTRONIIKKA_SOLU" prefHeight="75.0" prefWidth="249.0">
                                  <children>
                                     <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
@@ -233,7 +233,7 @@
                                           <Font size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label id="ELEKTRO_POISHEITETTY_NUM" fx:id="ELEKTRO_POISHEITETTY_NUM" alignment="CENTER" layoutX="68.0" layoutY="10.0" prefHeight="32.0" prefWidth="127.0" text="0">
+                                    <Label id="ELEKTRO_POISHEITETTY_NUM" fx:id="ELEKTRO_POISHEITETTY_NUM" alignment="CENTER" layoutX="68.0" layoutY="10.0" prefHeight="32.0" text="0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -258,7 +258,7 @@
                                           <Font size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label id="PA_POISHEITETTY_NUM" fx:id="PA_POISHEITETTY_NUM" alignment="CENTER" layoutX="66.0" layoutY="10.0" prefHeight="32.0" prefWidth="127.0" text="0">
+                                    <Label id="PA_POISHEITETTY_NUM" fx:id="PA_POISHEITETTY_NUM" alignment="CENTER" layoutX="66.0" layoutY="10.0" prefHeight="32.0" text="0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -283,7 +283,7 @@
                                           <Font size="19.0" />
                                        </font>
                                     </Label>
-                                    <Label id="EPA_POISHEITETTY_NUM" fx:id="EPA_POISHEITETTY_NUM" alignment="CENTER" layoutX="66.0" layoutY="7.0" prefHeight="32.0" prefWidth="127.0" text="0">
+                                    <Label id="EPA_POISHEITETTY_NUM" fx:id="EPA_POISHEITETTY_NUM" alignment="CENTER" layoutX="66.0" layoutY="7.0" prefHeight="32.0" text="0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -413,9 +413,9 @@
                                        </effect>
                                     </ImageView>
                                     <Label layoutX="29.0" layoutY="230.0" text="Jonossa:" />
-                                    <Label id="JONOSSA_SAAPUMINEN" fx:id="JONOSSA_SAAPUMINEN" layoutX="124.0" layoutY="204.0" prefHeight="17.0" prefWidth="37.0" text="0" />
+                                    <Label id="JONOSSA_SAAPUMINEN" fx:id="JONOSSA_SAAPUMINEN" layoutX="124.0" layoutY="204.0" prefHeight="17.0" text="0" />
                                     <Label layoutX="3.0" layoutY="204.0" prefHeight="17.0" prefWidth="114.0" text="Saapumisia Yhteensä:" />
-                                    <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="81.0" layoutY="230.0" prefHeight="17.0" prefWidth="24.0" text="0" />
+                                    <Label id="JONOSSAINFO_SAAPUMINEN" fx:id="JONOSSAINFO_SAAPUMINEN" layoutX="81.0" layoutY="230.0" prefHeight="17.0" text="0" />
                                     <Label layoutX="260.0" layoutY="239.0" text="Jonossa:" />
                                     <Label id="JONOSSAINFO_EPA" fx:id="JONOSSAINFO_EPA" layoutX="309.0" layoutY="239.0" text="0" />
                                     <Label layoutX="265.0" layoutY="88.0" text="Jonossa:" />
@@ -423,7 +423,7 @@
                                     <Label layoutX="259.0" layoutY="455.0" text="Jonossa:" />
                                     <Label id="JONOSSAINFO_ELEKTRO" fx:id="JONOSSAINFO_ELEKTRO" layoutX="308.0" layoutY="455.0" text="0" />
                                     <Label layoutX="540.0" layoutY="222.0" prefHeight="17.0" prefWidth="129.0" text="Poistumisia Yhteensä:" />
-                                    <Label id="POISTUNUTINFO" fx:id="POISTUNUTINFO" layoutX="660.0" layoutY="222.0" prefHeight="17.0" prefWidth="25.0" text="0" />
+                                    <Label id="POISTUNUTINFO" fx:id="POISTUNUTINFO" layoutX="660.0" layoutY="222.0" prefHeight="17.0" text="0" />
                                     <HBox id="JONO_SAAPUMINEN" fx:id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="28.0" layoutY="264.0" prefHeight="40.0" prefWidth="90.0">
                                        <children>
                                           <Rectangle id="ASIAKAS_JONOSSA" fx:id="JONO_PALIKKA_SAAPUMINEN" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
