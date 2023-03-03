@@ -3,46 +3,40 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.dao;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SimulaatioData{
-    private final DoubleProperty aika, jatteidenKokonaismaara;
-    private final IntegerProperty id,vmin, vmax, jateTE, jateTPJ, jateTPNJ;
+    private final IntegerProperty id;
+    private final BooleanProperty simulaatioTyhjaksi;
     private final ObjectProperty<LocalDate> paivamaara;
+    private SimulaationParametrit parametrit;
+    private SimulaattorinTulokset tulokset;
 
-    public SimulaatioData(int id,LocalDate paivamaara,double aika, int vmin, int vmax, int jateTE, int jateTPJ, int jateTPNJ ,double jatteidenKokonaismaara){
+    public SimulaatioData(int id,LocalDate paivamaara, int simulaatioTyhjaksi){
         this.id = new SimpleIntegerProperty(id);
         this.paivamaara = new SimpleObjectProperty<LocalDate>(paivamaara);
-        this.aika = new SimpleDoubleProperty(aika);
-        this.vmin = new SimpleIntegerProperty(vmin);
-        this.vmax = new SimpleIntegerProperty(vmax);
-        this.jateTE = new SimpleIntegerProperty(jateTE);
-        this.jateTPJ = new SimpleIntegerProperty(jateTPJ);
-        this.jateTPNJ = new SimpleIntegerProperty(jateTPNJ);
-        this.jatteidenKokonaismaara = new SimpleDoubleProperty(jatteidenKokonaismaara);
+        if(simulaatioTyhjaksi == 0){
+            this.simulaatioTyhjaksi = new SimpleBooleanProperty(false);
+        }else {
+            this.simulaatioTyhjaksi = new SimpleBooleanProperty(true);
+        }
     }
 
-    public DoubleProperty getAika() {
-        return aika;
+    public SimulaationParametrit getParametrit() {
+        return parametrit;
     }
 
-    public DoubleProperty aikaProperty() {
-        return aika;
+    public void setParametrit(SimulaationParametrit parametrit) {
+        this.parametrit = parametrit;
     }
 
-    public LocalDate getPaivamaara() {
-        return paivamaara.get();
+    public SimulaattorinTulokset getTulokset() {
+        return tulokset;
     }
 
-    public ObjectProperty<LocalDate> paivamaaraProperty() {
-        return paivamaara;
-    }
-
-    public double getJatteidenKokonaismaara() {
-        return jatteidenKokonaismaara.get();
-    }
-
-    public DoubleProperty jatteidenKokonaismaaraProperty() {
-        return jatteidenKokonaismaara;
+    public void setTulokset(SimulaattorinTulokset tulokset) {
+        this.tulokset = tulokset;
     }
 
     public int getId() {
@@ -53,43 +47,134 @@ public class SimulaatioData{
         return id;
     }
 
-    public int getVmin() {
-        return vmin.get();
+    public boolean isSimulaatioTyhjaksi() {
+        return simulaatioTyhjaksi.get();
     }
 
-    public IntegerProperty vminProperty() {
-        return vmin;
+    public BooleanProperty simulaatioTyhjaksiProperty() {
+        return simulaatioTyhjaksi;
     }
 
-    public int getVmax() {
-        return vmax.get();
+    public LocalDate getPaivamaara() {
+        return paivamaara.get();
     }
 
-    public IntegerProperty vmaxProperty() {
-        return vmax;
+    public ObjectProperty<LocalDate> paivamaaraProperty() {
+        return paivamaara;
     }
 
-    public int getJateTE() {
-        return jateTE.get();
+    @Override
+    public String toString() {
+        return "SimulaatioData{" +
+                "id=" + id +
+                ", simulaatioTyhjaksi=" + simulaatioTyhjaksi +
+                ", paivamaara=" + paivamaara +
+                ", parametrit=" + parametrit +
+                ", tulokset=" + tulokset +
+                '}';
     }
 
-    public IntegerProperty jateTEProperty() {
-        return jateTE;
+    public class SimulaationParametrit{
+
+        private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ, viive;
+        private final DoubleProperty aika, purkunopeus;
+
+        public SimulaationParametrit(double aika,int viive, double purkunopeus, int vmin, int vmax,int jateTE, int jateTPJ, int jateTPNJ){
+            this.aika = new SimpleDoubleProperty(aika);
+            this.viive = new SimpleIntegerProperty(viive);
+            this.purkunopeus = new SimpleDoubleProperty(purkunopeus);
+            this.vmin = new SimpleIntegerProperty(vmin);
+            this.vmax = new SimpleIntegerProperty(vmax);
+            this.jateTE = new SimpleIntegerProperty(jateTE);
+            this.jateTPJ = new SimpleIntegerProperty(jateTPJ);
+            this.jateTPNJ = new SimpleIntegerProperty(jateTPNJ);
+
+        }
+
+         @Override
+         public String toString() {
+             return "SimulaationParametrit{" +
+                     "vmin=" + vmin +
+                     ", vmax=" + vmax +
+                     ", jateTE=" + jateTE +
+                     ", jateTPJ=" + jateTPJ +
+                     ", jateTPNJ=" + jateTPNJ +
+                     ", aika=" + aika +
+                     '}';
+         }
+
+        public int getVmin() {
+            return vmin.get();
+        }
+
+        public IntegerProperty vminProperty() {
+            return vmin;
+        }
+
+        public int getVmax() {
+            return vmax.get();
+        }
+
+        public IntegerProperty vmaxProperty() {
+            return vmax;
+        }
+
+        public int getJateTE() {
+            return jateTE.get();
+        }
+
+        public IntegerProperty jateTEProperty() {
+            return jateTE;
+        }
+
+        public int getJateTPJ() {
+            return jateTPJ.get();
+        }
+
+        public IntegerProperty jateTPJProperty() {
+            return jateTPJ;
+        }
+
+        public int getJateTPNJ() {
+            return jateTPNJ.get();
+        }
+
+        public IntegerProperty jateTPNJProperty() {
+            return jateTPNJ;
+        }
+
+        public double getAika() {
+            return aika.get();
+        }
+
+        public DoubleProperty aikaProperty() {
+            return aika;
+        }
+    }
+    public class SimulaattorinTulokset{
+        private ArrayList<SimpleIntegerProperty> tuloksetINT;
+        private ArrayList<SimpleDoubleProperty> tuloksetDOUBLE;
+
+        SimulaattorinTulokset(ArrayList<SimpleIntegerProperty> tuloksetINT,ArrayList<SimpleDoubleProperty> tuloksetDOUBLE ){
+            this.tuloksetINT = tuloksetINT;
+            this.tuloksetDOUBLE = tuloksetDOUBLE;
+        }
+
+        public ArrayList<SimpleIntegerProperty> getTuloksetINT() {
+            return tuloksetINT;
+        }
+
+        public ArrayList<SimpleDoubleProperty> getTuloksetDOUBLE() {
+            return tuloksetDOUBLE;
+        }
+
+        @Override
+        public String toString() {
+            return "SimulaattorinTulokset{" +
+                    "tuloksetINT=" + tuloksetINT +
+                    ", tuloksetDOUBLE=" + tuloksetDOUBLE +
+                    '}';
+        }
     }
 
-    public int getJateTPJ() {
-        return jateTPJ.get();
-    }
-
-    public IntegerProperty jateTPJProperty() {
-        return jateTPJ;
-    }
-
-    public int getJateTPNJ() {
-        return jateTPNJ.get();
-    }
-
-    public IntegerProperty jateTPNJProperty() {
-        return jateTPNJ;
-    }
 }

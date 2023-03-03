@@ -1,11 +1,9 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @Author Kaspar Tullus,Samu Aikio, Joel Tikkanen
@@ -18,7 +16,13 @@ public interface ISimulaattoriUI {
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
-    public void showTulokset(ArrayList<SimulaatioData> datatulokset);
+    public void showTulokset(ArrayList<SimulaatioData> dataColumn);
+    public void poistaData(int ID) throws SQLException;
+
+    //INTERFACE METHOTID
+    //  TULOKSET IKKUNA
+
+
     public double getAika();
     public long getViive();
     public void setLoppuaika();
@@ -39,6 +43,9 @@ public interface ISimulaattoriUI {
     public int getElektro_JateCounter();
     public int getPalavaJateCounter();
     public int getPalamatonJateCounter();
+
+    public boolean getAjeetaankoLoppuun();
+    public STRATEGIA_FXML_CONTROLLER getStrategiaController();
 
 
 

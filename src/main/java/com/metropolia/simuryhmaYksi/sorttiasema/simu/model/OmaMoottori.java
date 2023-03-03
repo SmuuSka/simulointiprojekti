@@ -8,6 +8,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 import org.xml.sax.Parser;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class OmaMoottori extends Moottori {
@@ -96,16 +97,19 @@ public class OmaMoottori extends Moottori {
                     case 1:
                         poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasELEKTRO_POISTUMINEN();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
                         kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                     case 2:
                         poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasEPA_POISTUMINEN();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[2].getJono().size());
                         kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                     case 3:
                         poistunutMaara++;
                         kontrolleri.getVisualisointi().moveAsiakasPALAVA_POISTUMINEN();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_PALAVA(palvelupisteet[3].getJono().size());
                         kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
                         break;
                 }
@@ -125,23 +129,46 @@ public class OmaMoottori extends Moottori {
                 ELEKTROjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
                 kontrolleri.getVisualisointi().setELEKTRO_COUNTER(ELEKTROjatteidenmaara);
             }
+            //SAAPUMISPISTE JONO/REITTI ANIMOINTI
+            if (palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 0){
+                kontrolleri.getVisualisointi().addJONOPALIKKA_SAAPUMINEN();
+            } else if (palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 1){
+                kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
                 //PALAVA REITTI ANIMOINTI
-            if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 2) {
+            }else if(palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 2){
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
+                kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
+            }else if(palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 3){
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
+                kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
+            }
+            else if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 2) {
                 kontrolleri.getVisualisointi().moveAsiakasPA_EPA();
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_PALAVA(palvelupisteet[3].getJono().size());
+                kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
             } else if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 1) {
                 kontrolleri.getVisualisointi().moveAsiakasPALAVA_ELEKTRO();
-
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_PALAVA(palvelupisteet[3].getJono().size());
+                kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
                 //EPA REITTI ANIMOINTI
             }else if(palvelupisteet[jono1].palvelupisteID == 2 && palvelupisteet[jono2].palvelupisteID == 3) {
                 kontrolleri.getVisualisointi().moveAsiakasEPA_PA();
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[jono1].getJono().size());
+                kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
             }else if(palvelupisteet[jono1].palvelupisteID == 2 && palvelupisteet[jono2].palvelupisteID == 1){
                 kontrolleri.getVisualisointi().moveAsiakasEPA_ELEKTRO();
-
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[jono1].getJono().size());
+                kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
                 //ELEKTRO REITTI ANIMOINTI
             }else if (palvelupisteet[jono1].palvelupisteID == 1 && palvelupisteet[jono2].palvelupisteID == 2){
                 kontrolleri.getVisualisointi().moveAsiakasELEKTRO_EPA();
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
+                kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
             }else if (palvelupisteet[jono1].palvelupisteID == 1 && palvelupisteet[jono2].palvelupisteID == 3){
                 kontrolleri.getVisualisointi().moveAsiakasELEKTRO_PALAVA();
+                kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
+                kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
             }
         }catch(ArrayIndexOutOfBoundsException e){
         }
@@ -153,18 +180,23 @@ public class OmaMoottori extends Moottori {
         int elektroniikkaPituus = palvelupisteet[1].getJono().size();
         int palamatonPituus = palvelupisteet[2].getJono().size();
         int palavaPituus = palvelupisteet[3].getJono().size();
+        kontrolleri.getVisualisointi().setSAAPUMINEN_VARATTU(palvelutiskiPituus !=0);
 
-        kontrolleri.getVisualisointi().setSAAPUMINEN_VARATTU(palvelutiskiPituus != 0);
-        kontrolleri.getVisualisointi().setEPA_VARATTU(palamatonPituus != 0);
-        kontrolleri.getVisualisointi().setELEKTRO_VARATTU(elektroniikkaPituus != 0);
-        kontrolleri.getVisualisointi().setPALAVA_VARATTU(palavaPituus != 0);
+        kontrolleri.getVisualisointi().setEPA_VARATTU(palamatonPituus !=0);
+
+        kontrolleri.getVisualisointi().setELEKTRO_VARATTU(elektroniikkaPituus !=0);
+
+        kontrolleri.getVisualisointi().setPALAVA_VARATTU(palavaPituus !=0);
+
+
     }
 
 
 	public void setTekstit(){
-		
-		// Asetetaan saapumisjonon pituus 
+
+        // Asetetaan saapumisjonon pituus
         kontrolleri.setSAAPUMISJononPituus(palvelupisteet[0].getJono().size());
+
         // Asetetaan elektroniikka jätelavan jonon pituus
         kontrolleri.setEJononPituus(palvelupisteet[1].getJono().size());
 
@@ -179,7 +211,7 @@ public class OmaMoottori extends Moottori {
 	}
 
     @Override
-    protected void tulokset(){
+    protected void tulokset() throws SQLException {
         poistunutMaara = 0;
         double jatteenKokonaismaara = 0;
         long[] koleskelu = new long[4];
@@ -207,9 +239,9 @@ public class OmaMoottori extends Moottori {
         System.out.println("Asiakkaiden kokonaismäärä: " + (Asiakas.getID()));
         System.out.println("Keskimääräinen jätemäärä per asiakas: " + jatteenKokonaismaara / (Asiakas.getID()) + " kg");
         */
-        Laskenta l = new Laskenta(saapumistenMaara, palveltujenLkm , aa, koleskelu, jatteenKokonaismaara);
-        l.laske();
-        System.out.println(l);
-        kontrolleri.tallennaTulokset(jatteenKokonaismaara, Asiakas.getID(), palvelupisteet);
+        Laskenta laskenta = new Laskenta(saapumistenMaara, palveltujenLkm , aa, koleskelu, jatteenKokonaismaara);
+        laskenta.laske();
+        System.out.println(laskenta);
+        kontrolleri.tallennaTulokset(laskenta);
     }
 }

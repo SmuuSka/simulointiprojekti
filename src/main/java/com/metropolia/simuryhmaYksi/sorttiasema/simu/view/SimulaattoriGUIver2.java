@@ -26,21 +26,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private TULOKSET_FXML_CONTROLLER TULOKSET_FXML_CONTROLLER;
-    private AnchorPane MainSoftwarePane_STRATEGIA;
-
     private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton;
 
     private TextField simulointiAikaInput, simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
             palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
 
-    private RadioButton RauhallinenAktiivisuus, NormaaliAktiivisuus, RuuhkainenAktiivisuus;
+    private RadioButton rauhallinenAktiivisuus, normaaliAktiivisuus, ruuhkainenAktiivisuus;
 
-    private CheckBox AsiakasAuto_Hajioa, SaapumispisteOnglema;
+    private CheckBox asiakasAuto_Hajioa, saapumispisteOnglema,ajetaanLoppuun;
 
     private Label paaSim_ELEKTRO_JateCounter, paaSim_PALAVA_JateCounter, paaSim_PALAMATON_JateCounter,
             paaSim_JONOINFO_SAAPUMINEN, paaSim_SAAPUMISIAYHT_COUNTER, paaSim_JONOINFO_PALAVAJATE,
@@ -117,29 +116,36 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //Hae Checkboxit/RadioButtonit FXML CONTROLLERISTA//
 
             //Aktiivisuus
-            RauhallinenAktiivisuus = strategiaFXML_Controller.getSTRATEGIA_RUUHKA_RAUHALLINEN_CHECK();
-            RauhallinenAktiivisuus.setId("1");
+            rauhallinenAktiivisuus = strategiaFXML_Controller.getSTRATEGIA_RUUHKA_RAUHALLINEN_CHECK();
+            rauhallinenAktiivisuus.setId("1");
 
-            NormaaliAktiivisuus = strategiaFXML_Controller.getSTRATEGIA_RUUHKA_NORMAALIA_CHECK();
-            NormaaliAktiivisuus.setId("2");
+            normaaliAktiivisuus = strategiaFXML_Controller.getSTRATEGIA_RUUHKA_NORMAALIA_CHECK();
+            normaaliAktiivisuus.setId("2");
 
-            RuuhkainenAktiivisuus = strategiaFXML_Controller.getSTRATEGIA_RUUHKA_RUUHKA_CHECK();
-            RuuhkainenAktiivisuus.setId("3");
+            ruuhkainenAktiivisuus = strategiaFXML_Controller.getSTRATEGIA_RUUHKA_RUUHKA_CHECK();
+            ruuhkainenAktiivisuus.setId("3");
 
             //Tapahtumat
-            AsiakasAuto_Hajioa = strategiaFXML_Controller.getSTRATEGIA_TAPAHTUMAT_ASIAKASAUTO();
-            AsiakasAuto_Hajioa.setId("4");
+            asiakasAuto_Hajioa = strategiaFXML_Controller.getSTRATEGIA_TAPAHTUMAT_ASIAKASAUTO();
+            asiakasAuto_Hajioa.setId("4");
 
-            SaapumispisteOnglema = strategiaFXML_Controller.getSTRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA();
-            SaapumispisteOnglema.setId("5");
+            saapumispisteOnglema = strategiaFXML_Controller.getSTRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA();
+            saapumispisteOnglema.setId("5");
+
+            //Ajetaanko Tyhjäksi?
+            ajetaanLoppuun = strategiaFXML_Controller.getSTRATEGIA_JONOT_AJALOPPUUN();
+            ajetaanLoppuun.setId("6");
 
             //-------------------------------------------------------------------------------------------
 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(root);
-
-            strategiaNaytaTuloksetButton.setOnAction(event -> {
-
+            strategiaNaytaTuloksetButton.setOnAction(actionEvent -> {
+                try {
+                    kontrolleri.showTuloksetAction();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             });
 
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
@@ -204,7 +210,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
                             //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
                             if (primaryStage.isShowing() == true) {
-
                                 //PÄÄSIMULAATORIN NAPIT.
                                 aloitaButton = mainFXML_Controller.getBUTTON_ALOITA();
                                 hidastaButton = mainFXML_Controller.getBUTTON_HITAAMMIN();
@@ -243,7 +248,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 try {
                                     aloitaButton.setOnAction(event1 -> {
                                         kontrolleri.setVisualisointi(getVisualisointi());
-                                        kontrolleri.kaynnistaSimulointi();
+                                        try {
+                                            kontrolleri.kaynnistaSimulointi();
+                                        } catch (SQLException e) {
+                                            throw new RuntimeException(e);
+                                        }
                                     });
 
                                     hidastaButton.setOnAction(event2 -> {
@@ -286,78 +295,96 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
     @Override
-    public void showTulokset(ArrayList<SimulaatioData> tietokanta) {
+    public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
         Platform.runLater(
                 () -> {
                     try {
                         TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
-                        ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(tietokanta);
+                        ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(datatulokset);
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
                         loader.setController(TULOKSET_FXML_CONTROLLER);
                         AnchorPane page = (AnchorPane) loader.load();
-
-                        TableView TABLE_VIEW_DATA = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA();
-                        TableColumn<SimulaatioData,Integer> idCOLUMN = new TableColumn<SimulaatioData,Integer>("#");
-                        idCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData,Integer>("id"));
-                        TableColumn<SimulaatioData,LocalDate> aikaCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Päivämäärä");
-                        aikaCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData,LocalDate>("paivamaara"));
-
-                        TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN,aikaCOLUMN);
-
-                        aikaCOLUMN.setCellValueFactory(
-                                cellData -> cellData.getValue().paivamaaraProperty());
-                        idCOLUMN.setCellValueFactory(
-                                cellData -> cellData.getValue().idProperty().asObject());
-
-                        TABLE_VIEW_DATA.setItems(dataob);
                         Stage tuloksetStage = new Stage();
                         tuloksetStage.setTitle("Tulokset");
                         tuloksetStage.initModality(Modality.WINDOW_MODAL);
                         tuloksetStage.initOwner(primaryStagePara);
                         Scene scene = new Scene(page);
                         tuloksetStage.setScene(scene);
-                        tuloksetStage.show();
-                        TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                            valittuData(obs,newSelection,TULOKSET_FXML_CONTROLLER);
+
+                        TableView TABLE_VIEW_DATA = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA();
+                            TableColumn<SimulaatioData, Integer> idCOLUMN = new TableColumn<SimulaatioData, Integer>("#");
+                            idCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, Integer>("id"));
+                            TableColumn<SimulaatioData, LocalDate> aikaCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Päivämäärä");
+                            aikaCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("paivamaara"));
+                            TableColumn<SimulaatioData, LocalDate> ajetaankoTyhjaksiCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Ajetaanko Tyhjäksi");
+                            ajetaankoTyhjaksiCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("ajetaanTyhjaksi"));
+
+                            TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN, aikaCOLUMN);
+                            aikaCOLUMN.setCellValueFactory(
+                                    cellData -> cellData.getValue().paivamaaraProperty());
+                            idCOLUMN.setCellValueFactory(
+                                    cellData -> cellData.getValue().idProperty().asObject());
+                            TABLE_VIEW_DATA.setItems(dataob);
+
+                        tuloksetStage.setOnCloseRequest(event -> {
+                            datatulokset.clear();
                         });
+
+                            tuloksetStage.show();
+
+                            TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                                System.out.println(obs.getValue());
+                                valittuData(obs, newSelection, TULOKSET_FXML_CONTROLLER);
+                                SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+                                //Poista valittu dataNappi.
+                                tuloksetPoistaTulosButton.setOnAction(event -> {
+                                    try {
+                                        poistaData(selectedItem.getId());
+                                        TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+                                    } catch (SQLException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    System.out.println("POISTETTU DATA");
+                                });
+                            });
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                     tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
 
-                    //Poista valittu dataNappi.
-                    tuloksetPoistaTulosButton.setOnAction(event -> {
-                        System.out.println("POISTETTU DATA");
-                    });
 
                 });
+    }
+
+    @Override
+    public void poistaData(int ID) throws SQLException {
+        kontrolleri.poistaTulos(ID);
     }
 
     public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
         if (newSelection != null) {
             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
-
             //SIMUAIKA TULOS
-            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
-            //ROSKEN KOKONAIS MÄÄRÄ
-            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
+            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getParametrit().aikaProperty().doubleValue()) + "/Simulaattoriin syötetty aika");
+//            //ROSKEN KOKONAIS MÄÄRÄ
+          //tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(1).doubleValue()) + " Kg");
             //ELEKTROJÄTE
             //PALAVAJÄTE
             //PALAMATONJÄTE
 
             //INPUTS
             //INPUT_AIKA
-            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
+            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/AikaYksikköä");
             //INPUT_VIIVE
 
             //INPUT_PROSENTTI_ELEKTRO
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getJateTE()) + "%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getParametrit().getJateTE()) + "%");
             //INPUT_PROSENTTI_PALAMATON
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getJateTPJ())+"%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getParametrit().getJateTPJ())+"%");
             //INPUT_PROSENTTI_PALAVA
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getJateTPNJ())+"%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getParametrit().getJateTPNJ())+"%");
 
 
         } else {
@@ -411,13 +438,13 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     public int getStrategiaTapahtumat() {
 
         //Palautaa Valitun TAPAHTUMAN
-        if (AsiakasAuto_Hajioa.isSelected() == true && SaapumispisteOnglema.isSelected() == false) {
+        if (asiakasAuto_Hajioa.isSelected() == true && saapumispisteOnglema.isSelected() == false) {
             System.out.println("TAPAHTUMA MAHDOLLISUUS : ASIAKKAAN AUTO HAJOOA");
             return 1;
-        } else if (SaapumispisteOnglema.isSelected() == true && AsiakasAuto_Hajioa.isSelected() == false) {
+        } else if (saapumispisteOnglema.isSelected() == true && asiakasAuto_Hajioa.isSelected() == false) {
             System.out.println("TAPAHTUMA MAHDOLLISUUS : SAAPUMISPISTEESSÄ VOI OLLA ONGELMIA");
             return 2;
-        } else if (SaapumispisteOnglema.isSelected() == true && AsiakasAuto_Hajioa.isSelected() == true) {
+        } else if (saapumispisteOnglema.isSelected() == true && asiakasAuto_Hajioa.isSelected() == true) {
             System.out.println("TAPAHTUMA MAHDOLLISUUS : SAAPUMISPISTEESSÄ VOI OLLA ONGELMIA JA ASIAKKAAN AUTO HAJOOA");
             return 3;
         }
@@ -462,6 +489,20 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     @Override
     public int getPalamatonJateCounter() {
         return Integer.parseInt(paaSim_PALAMATON_JateCounter.getText());
+    }
+
+    @Override
+    public boolean getAjeetaankoLoppuun() {
+        if(strategiaFXML_Controller.getSTRATEGIA_JONOT_AJALOPPUUN().isSelected() == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public STRATEGIA_FXML_CONTROLLER getStrategiaController() {
+        return strategiaFXML_Controller;
     }
 
     @Override

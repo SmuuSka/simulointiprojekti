@@ -2,6 +2,8 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.framework;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriMtoV;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Palvelupiste;
 
+import java.sql.SQLException;
+
 public abstract class Moottori extends Thread implements IMoottori {
 	
 	private double simulointiaika = 0;
@@ -39,13 +41,12 @@ public abstract class Moottori extends Thread implements IMoottori {
 		//Kunnes viimeinen asiakas on poistunut
 		while (simuloidaan()){
 			viive();
-			
+
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 			
 			Trace.out(Trace.Level.INFO, "\nB-vaihe:" );
 			suoritaBTapahtumat();
-
 			setTekstit();
 			
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:" );
@@ -54,8 +55,11 @@ public abstract class Moottori extends Thread implements IMoottori {
 			setVarattu();
 
 		}
-		tulokset();
-		
+		try {
+			tulokset();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	private void suoritaBTapahtumat(){
@@ -90,12 +94,16 @@ public abstract class Moottori extends Thread implements IMoottori {
 		try {
 			sleep(viive);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			System.out.println("Viive keskeytetty.");
 		}
 	}
-
+	public void lopeta(){
+		interrupt();
+		setSimulointiaika(0);
+	}
 	@Override
 	public void setViive(long viive) {
+		interrupt();
 		this.viive = viive;
 	}
 
@@ -119,7 +127,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	
 	protected abstract void suoritaTapahtuma(Tapahtuma t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 	
-	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void tulokset() throws SQLException; // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void setTekstit();
 
