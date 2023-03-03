@@ -21,7 +21,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="RootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
@@ -424,26 +423,10 @@
                                     <Label id="JONOSSAINFO_ELEKTRO" fx:id="JONOSSAINFO_ELEKTRO" layoutX="308.0" layoutY="455.0" text="0" />
                                     <Label layoutX="540.0" layoutY="222.0" prefHeight="17.0" prefWidth="129.0" text="Poistumisia Yhteensä:" />
                                     <Label id="POISTUNUTINFO" fx:id="POISTUNUTINFO" layoutX="660.0" layoutY="222.0" prefHeight="17.0" text="0" />
-                                    <HBox id="JONO_SAAPUMINEN" fx:id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="28.0" layoutY="264.0" prefHeight="40.0" prefWidth="90.0">
-                                       <children>
-                                          <Rectangle id="ASIAKAS_JONOSSA" fx:id="JONO_PALIKKA_SAAPUMINEN" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                                       </children>
-                                    </HBox>
-                                    <HBox id="JONO_PA" fx:id="JONO_PA" alignment="CENTER_RIGHT" layoutX="284.0" layoutY="147.0" prefHeight="29.0" prefWidth="70.0" rotate="-40.1">
-                                       <children>
-                                          <Rectangle id="ASIAKAS_PA_JONOSSA" fx:id="JONO_PALIKKA_PALAVA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
-                                       </children>
-                                    </HBox>
-                                    <HBox id="JONO_EPA" fx:id="JONO_EPA" alignment="CENTER_RIGHT" layoutX="256.0" layoutY="264.0" prefHeight="32.0" prefWidth="79.0">
-                                       <children>
-                                          <Rectangle id="ASIAKAS_EPA_JONOSSA" fx:id="JONO_PALIKKA_EPA" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="40.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-                                       </children>
-                                    </HBox>
-                                    <HBox id="JONO_ELEKTRO" fx:id="JONO_ELEKTRO" alignment="CENTER_RIGHT" layoutX="274.0" layoutY="407.0" prefHeight="29.0" prefWidth="70.0" rotate="36.9">
-                                       <children>
-                                          <Rectangle id="ASIAKAS_ELEKTRO_JONOSSA" fx:id="JONO_PALIKKA_ELEKTRO" arcHeight="5.0" arcWidth="5.0" fill="#c96c15" height="29.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
-                                       </children>
-                                    </HBox>
+                                    <HBox id="JONO_SAAPUMINEN" fx:id="JONO_SAAPUMINEN" alignment="CENTER_RIGHT" layoutX="28.0" layoutY="264.0" prefHeight="40.0" prefWidth="90.0" />
+                                    <HBox id="JONO_PA" fx:id="JONO_PA" alignment="CENTER_RIGHT" layoutX="284.0" layoutY="147.0" prefHeight="29.0" prefWidth="70.0" rotate="-40.1" />
+                                    <HBox id="JONO_EPA" fx:id="JONO_EPA" alignment="CENTER_RIGHT" layoutX="256.0" layoutY="264.0" prefHeight="32.0" prefWidth="79.0" />
+                                    <HBox id="JONO_ELEKTRO" fx:id="JONO_ELEKTRO" alignment="CENTER_RIGHT" layoutX="274.0" layoutY="407.0" prefHeight="29.0" prefWidth="70.0" rotate="36.9" />
                                     <Ellipse id="PA_PALVELUSSAINFO" fx:id="PA_PALVELUSSAINFO" fill="RED" layoutX="370.0" layoutY="88.0" radiusX="12.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE">
                                        <effect>
                                           <Lighting diffuseConstant="2.0" specularConstant="0.55" specularExponent="25.52" surfaceScale="2.65">

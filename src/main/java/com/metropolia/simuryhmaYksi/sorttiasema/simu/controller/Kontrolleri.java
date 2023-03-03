@@ -52,9 +52,9 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         // placeholder
         long viive = 500;
         // Vähentää viivettä 0.5s
-        if (moottori.getViive() - viive >= 0){
+        if (moottori.getViive() - viive >= 1){
             moottori.setViive(moottori.getViive() - viive);
-            ui.setAnimaationViive((int)(moottori.getViive() - viive));
+            ui.setAnimaationViive((int)(moottori.getViive()));
         }
     }
 
