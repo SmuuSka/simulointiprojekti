@@ -38,6 +38,23 @@ public interface IVisualisointi {
     void setPALAVA_COUNTER(double value);
 
     void setPALAMATON_COUNTER(double value);
+
+    void addJONOPALIKKA_PALAVA();
+
+    void addJONOPALIKKA_EPA();
+
+    void addJONOPALIKKA_SAAPUMINEN();
+
+    void addJONOPALIKKA_ELEKTRO();
+
+    void removeJONOPALIKKA_PALAVA(int sizenow);
+
+    void removeJONOPALIKKA_EPA(int sizenow);
+
+    void removeJONOPALIKKA_ELEKTRO(int sizenow);
+
+    void removeJONOPALIKKA_SAAPUMINEN(int sizenow);
+
     public void setAnimaationViive(int viive);
 
 }

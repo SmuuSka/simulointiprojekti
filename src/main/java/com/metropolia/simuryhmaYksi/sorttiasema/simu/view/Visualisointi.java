@@ -138,6 +138,46 @@ public class Visualisointi extends Canvas implements IVisualisointi{
 
     }
 
+    @Override
+    public void addJONOPALIKKA_PALAVA() {
+
+    }
+
+    @Override
+    public void addJONOPALIKKA_EPA() {
+
+    }
+
+    @Override
+    public void addJONOPALIKKA_SAAPUMINEN() {
+
+    }
+
+    @Override
+    public void addJONOPALIKKA_ELEKTRO() {
+
+    }
+
+    @Override
+    public void removeJONOPALIKKA_PALAVA(int sizenow) {
+
+    }
+
+    @Override
+    public void removeJONOPALIKKA_EPA(int sizenow) {
+
+    }
+
+    @Override
+    public void removeJONOPALIKKA_ELEKTRO(int sizenow) {
+
+    }
+
+    @Override
+    public void removeJONOPALIKKA_SAAPUMINEN(int sizenow) {
+
+    }
+
 
     @Override
     public void setAnimaationViive(int viive) {

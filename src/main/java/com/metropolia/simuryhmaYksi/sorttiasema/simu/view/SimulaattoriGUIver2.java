@@ -324,6 +324,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                         tuloksetStage.setOnCloseRequest(event -> {
                             tietokanta.clear();
                         });
+
                             tuloksetStage.show();
 
                             TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
