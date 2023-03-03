@@ -9,4 +9,6 @@ public interface IKontrolleriVtoM {
     public void hidasta();
     public IVisualisointi setVisualisointi(IVisualisointi visualisointi);
     public void lopetaSimulointi();
+
+  void showTuloksetAction();
 }

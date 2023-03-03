@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -22,8 +21,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 
 public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
@@ -221,6 +218,17 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     @Override
     public int getPalamatonJateCounter() {
         return 0;
+    }
+
+    @Override
+    public boolean getAjeetaankoLoppuun() {
+        return false;
+    }
+
+    @Override
+    public STRATEGIA_FXML_CONTROLLER getStrategiaController() {
+
+        return null;
     }
 
     @Override
