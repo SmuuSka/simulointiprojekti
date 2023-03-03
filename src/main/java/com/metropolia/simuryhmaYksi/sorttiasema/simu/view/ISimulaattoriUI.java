@@ -1,11 +1,8 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @Author Kaspar Tullus,Samu Aikio, Joel Tikkanen
@@ -44,6 +41,9 @@ public interface ISimulaattoriUI {
     public int getElektro_JateCounter();
     public int getPalavaJateCounter();
     public int getPalamatonJateCounter();
+
+    public boolean getAjeetaankoLoppuun();
+    public STRATEGIA_FXML_CONTROLLER getStrategiaController();
 
 
 

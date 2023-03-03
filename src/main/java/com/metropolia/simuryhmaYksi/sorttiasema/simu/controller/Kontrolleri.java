@@ -17,6 +17,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private IMoottori moottori;
     private IDAO tietokanta;
     private IVisualisointi nayttoVisual;
+    private int counter = 0;
 
     public Kontrolleri(ISimulaattoriUI ui){
         this.ui = ui;
@@ -27,6 +28,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         //Luodaan Gui:n aloitakäskyn perusteella uusi moottori ja tietokantaolio
         moottori = new OmaMoottori(this);
         tietokanta = new DAO();
+        moottori.setAjetaanTyhjaksi(ui.getAjeetaankoLoppuun());
         //tietokanta.poistaTaulu();
         //Asetetaan simulointiaika ja viive moottorille
         //Tallennetaan simulointiparametrit tietokantaan
@@ -40,7 +42,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         Asiakas.setJatemaara(ui.getVaihteluvali());
         Asiakas.setTJATELAJI(ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
-
         //Käynnistetään moottori
         ((Thread)moottori).start();
 
@@ -99,7 +100,19 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         return visualisointi;
     }
 
-
+    @Override
+    public void showTuloksetAction(){
+        switch (counter){
+            case 0:
+                counter = 1;
+                tietokanta = new DAO();
+                ui.showTulokset(tietokanta.haeData());
+                break;
+            case 1:
+                ui.showTulokset(tietokanta.haeData());
+                break;
+        }
+    }
     public void setEJononPituus(int pituus){
         ui.setEJateJonossa(pituus);
     }
