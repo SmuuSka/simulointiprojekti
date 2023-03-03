@@ -103,6 +103,16 @@ public abstract class Moottori extends Thread implements IMoottori {
 	public long getViive() {
 		return viive;
 	}
+
+	@Override
+	public void setAjetaanTyhjaksi(boolean ajetaanTyhjaksi){
+		this.ajetaanTyhjaksi = ajetaanTyhjaksi;
+	}
+	
+	@Override
+	public boolean getAjetaanTyhjaksi(){
+		return ajetaanTyhjaksi;
+	}
 			
 
 	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
