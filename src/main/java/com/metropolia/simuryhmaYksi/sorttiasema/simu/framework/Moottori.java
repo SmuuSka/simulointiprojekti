@@ -11,6 +11,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	
 	protected Tapahtumalista tapahtumalista;
 	protected Palvelupiste[] palvelupisteet;
+	protected boolean ajetaanTyhjaksi = true;
 
 	private long viive;
 
@@ -77,8 +78,10 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 	
 	private boolean simuloidaan(){
-
-		return tapahtumalista.getLista().peek() != null;
+		if (ajetaanTyhjaksi){
+			return !tapahtumalista.getLista().isEmpty();
+		}
+		return simulointiaika > Kello.getInstance().getAika();
 	}
 	
 
