@@ -1,6 +1,7 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -17,8 +18,7 @@ public interface ISimulaattoriUI {
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
-    void showTulokset(ArrayList<SimulaatioData> datatulokset);
-
+    public void showTulokset(ArrayList<SimulaatioData> datatulokset);
     public double getAika();
     public long getViive();
     public void setLoppuaika();

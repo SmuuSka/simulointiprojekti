@@ -123,6 +123,21 @@ public class Visualisointi extends Canvas implements IVisualisointi{
 
     }
 
+    @Override
+    public void setELEKTRO_COUNTER(double value) {
+
+    }
+
+    @Override
+    public void setPALAVA_COUNTER(double value) {
+
+    }
+
+    @Override
+    public void setPALAMATON_COUNTER(double value) {
+
+    }
+
 
     @Override
     public void setAnimaationViive(int viive) {
