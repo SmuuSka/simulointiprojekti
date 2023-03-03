@@ -328,7 +328,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             TABLE_VIEW_DATA.setItems(dataob);
 
                         tuloksetStage.setOnCloseRequest(event -> {
-                            datatulokset.clear();
+                            tietokanta.clear();
                         });
 
                             tuloksetStage.show();
