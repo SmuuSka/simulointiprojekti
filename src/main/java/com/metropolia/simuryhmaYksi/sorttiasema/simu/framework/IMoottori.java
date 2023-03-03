@@ -5,4 +5,6 @@ public interface IMoottori {
     public void setViive(long viive);
     public long getViive();
     public void viive();
+    public void setAjetaanTyhjaksi(boolean ajetaanTyhjaksi);
+    public boolean getAjetaanTyhjaksi();
 }
