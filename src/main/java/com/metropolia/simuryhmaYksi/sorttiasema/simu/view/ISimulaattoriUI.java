@@ -15,7 +15,7 @@ public interface ISimulaattoriUI {
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
-    public void showTulokset(ArrayList<SimulaatioData> dataColumn, ArrayList<SimulaatioData.SimulaationParametrit> dataparametrit, ArrayList<SimulaatioData.SimulaattorinTulokset> datatulokset);
+    public void showTulokset(ArrayList<SimulaatioData> dataColumn);
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA

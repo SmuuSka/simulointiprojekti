@@ -9,6 +9,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -140,7 +141,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(root);
             strategiaNaytaTuloksetButton.setOnAction(actionEvent -> {
-                kontrolleri.showTuloksetAction();
+                try {
+                    kontrolleri.showTuloksetAction();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             });
 
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
@@ -290,12 +295,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
     @Override
-    public void showTulokset(ArrayList<SimulaatioData> datatulokset, ArrayList<SimulaatioData.SimulaationParametrit> dataparametrit, ArrayList<SimulaatioData.SimulaattorinTulokset> datatulokset2) {
+    public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
         Platform.runLater(
                 () -> {
                     try {
                         TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
                         ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(datatulokset);
+                        for(int i = 0; i < datatulokset.size(); i++) {
+                            System.out.println("DATATULOKSET" + datatulokset.get(i).getId());
+                            System.out.println("DATAOB" + dataob.get(i).getId());
+                        }
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
                         loader.setController(TULOKSET_FXML_CONTROLLER);
@@ -318,10 +327,10 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                     cellData -> cellData.getValue().paivamaaraProperty());
                             idCOLUMN.setCellValueFactory(
                                     cellData -> cellData.getValue().idProperty().asObject());
-
                             TABLE_VIEW_DATA.setItems(dataob);
+
                         tuloksetStage.setOnCloseRequest(event -> {
-                            tietokanta.clear();
+                            datatulokset.clear();
                         });
 
                             tuloksetStage.show();
@@ -346,26 +355,25 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
         if (newSelection != null) {
             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
-
             //SIMUAIKA TULOS
-            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
-            //ROSKEN KOKONAIS MÄÄRÄ
-            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
+            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/AikaYksikköä");
+//            //ROSKEN KOKONAIS MÄÄRÄ
+//            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
             //ELEKTROJÄTE
             //PALAVAJÄTE
             //PALAMATONJÄTE
 
             //INPUTS
             //INPUT_AIKA
-            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
+            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/AikaYksikköä");
             //INPUT_VIIVE
 
             //INPUT_PROSENTTI_ELEKTRO
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getJateTE()) + "%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getParametrit().getJateTE()) + "%");
             //INPUT_PROSENTTI_PALAMATON
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getJateTPJ())+"%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getParametrit().getJateTPJ())+"%");
             //INPUT_PROSENTTI_PALAVA
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getJateTPNJ())+"%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getParametrit().getJateTPNJ())+"%");
 
 
         } else {

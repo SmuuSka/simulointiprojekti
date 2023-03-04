@@ -12,5 +12,5 @@ public interface IKontrolleriVtoM {
     public IVisualisointi setVisualisointi(IVisualisointi visualisointi);
     public void lopetaSimulointi();
 
-  void showTuloksetAction();
+  void showTuloksetAction() throws SQLException;
 }
