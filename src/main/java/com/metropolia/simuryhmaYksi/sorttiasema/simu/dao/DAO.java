@@ -16,7 +16,7 @@ public class DAO implements IDAO {
     private static final String url1 = rb.getString("url1") + rb.getString("username1") + rb.getString("password1");
     private static Connection connection = null;
     private static int simuID;
-    private static ArrayList<SimulaatioData> simulaatioDataObjektiLista = new ArrayList<>();
+    private static final ArrayList<SimulaatioData> simulaatioDataObjekti = new ArrayList<>();
 
 
     private synchronized void haeKaikkiTiedot() throws SQLException {
@@ -45,11 +45,16 @@ public class DAO implements IDAO {
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
-                rs.first();
-                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
-                simulaatioDataOlio.setParametrit(simulaationParametrit);
+                while (rs.next()) {
+                    simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2),
+                            rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+                        simulaatioDataOlio.setParametrit(simulaationParametrit);
+                        //simulaatioParametritLista.add(simulaationParametrit);
+                    //System.out.println("Simu parametrit: " + simulaationParametrit.aikaProperty());
+                }
             }
         }
+
     }
 
     private void haeSimulaattorinTulokset() throws SQLException {
@@ -74,6 +79,8 @@ public class DAO implements IDAO {
                     simulaatioDataOlio.setTulokset(simulaattorinTulokset);
             }
         }
+        simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tulosIntAvainArvoParit, tuloksetDoubleAvainArvoParit);
+
     }
 
     private int setID() throws SQLException {
@@ -313,7 +320,7 @@ public class DAO implements IDAO {
     @Override
     public synchronized ArrayList<SimulaatioData> simulaatioColumnData() throws SQLException {
         haeKaikkiTiedot();
-        return simulaatioDataObjektiLista;
+        return simulaatioDataObjekti;
     }
 
     @Override

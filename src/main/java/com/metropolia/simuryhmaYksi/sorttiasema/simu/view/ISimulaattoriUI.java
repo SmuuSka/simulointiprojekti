@@ -17,7 +17,6 @@ public interface ISimulaattoriUI {
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
     public void showTulokset(ArrayList<SimulaatioData> dataColumn);
-    public void poistaData(int ID) throws SQLException;
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA

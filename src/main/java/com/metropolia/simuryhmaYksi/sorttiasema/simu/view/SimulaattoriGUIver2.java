@@ -10,6 +10,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -141,6 +142,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(root);
             strategiaNaytaTuloksetButton.setOnAction(actionEvent -> {
+                try {
+                    kontrolleri.showTuloksetAction();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 try {
                     kontrolleri.showTuloksetAction();
                 } catch (SQLException e) {
@@ -296,11 +302,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     //  TULOKSET IKKUNA
     @Override
     public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
+    public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
         Platform.runLater(
                 () -> {
                     try {
                         TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
                         ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(datatulokset);
+                        for(int i = 0; i < datatulokset.size(); i++) {
+                            System.out.println("DATATULOKSET" + datatulokset.get(i).getId());
+                            System.out.println("DATAOB" + dataob.get(i).getId());
+                        }
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
                         loader.setController(TULOKSET_FXML_CONTROLLER);
@@ -327,8 +338,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                     cellData -> cellData.getValue().idProperty().asObject());
                             TABLE_VIEW_DATA.setItems(dataob);
 
+
                         tuloksetStage.setOnCloseRequest(event -> {
-                            tietokanta.clear();
+                            datatulokset.clear();
                         });
 
                             tuloksetStage.show();
@@ -367,9 +379,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         if (newSelection != null) {
             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
             //SIMUAIKA TULOS
-            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getParametrit().aikaProperty().doubleValue()) + "/Simulaattoriin syötetty aika");
+            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/AikaYksikköä");
 //            //ROSKEN KOKONAIS MÄÄRÄ
-          //tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(1).doubleValue()) + " Kg");
+//            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
             //ELEKTROJÄTE
             //PALAVAJÄTE
             //PALAMATONJÄTE
@@ -377,13 +389,17 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //INPUTS
             //INPUT_AIKA
             tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/AikaYksikköä");
+            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/AikaYksikköä");
             //INPUT_VIIVE
 
             //INPUT_PROSENTTI_ELEKTRO
             tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getParametrit().getJateTE()) + "%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getParametrit().getJateTE()) + "%");
             //INPUT_PROSENTTI_PALAMATON
             tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getParametrit().getJateTPJ())+"%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getParametrit().getJateTPJ())+"%");
             //INPUT_PROSENTTI_PALAVA
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getParametrit().getJateTPNJ())+"%");
             tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getParametrit().getJateTPNJ())+"%");
 
 
