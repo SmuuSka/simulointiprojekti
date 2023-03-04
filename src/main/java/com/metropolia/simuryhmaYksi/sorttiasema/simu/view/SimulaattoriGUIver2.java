@@ -26,6 +26,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -243,7 +244,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 try {
                                     aloitaButton.setOnAction(event1 -> {
                                         kontrolleri.setVisualisointi(getVisualisointi());
-                                        kontrolleri.kaynnistaSimulointi();
+                                        try {
+                                            kontrolleri.kaynnistaSimulointi();
+                                        } catch (SQLException e) {
+                                            throw new RuntimeException(e);
+                                        }
                                     });
 
                                     hidastaButton.setOnAction(event2 -> {
@@ -319,7 +324,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                         tuloksetStage.setScene(scene);
                         tuloksetStage.show();
                         TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                            valittuData(obs,newSelection,TULOKSET_FXML_CONTROLLER);
+                            //Tämän joutuu muuttamaan @Samu
+                            //valittuData(obs,newSelection,TULOKSET_FXML_CONTROLLER);
                         });
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -334,36 +340,36 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
                 });
     }
-
-    public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
-        if (newSelection != null) {
-            SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
-
-            //SIMUAIKA TULOS
-            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
-            //ROSKEN KOKONAIS MÄÄRÄ
-            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
-            //ELEKTROJÄTE
-            //PALAVAJÄTE
-            //PALAMATONJÄTE
-
-            //INPUTS
-            //INPUT_AIKA
-            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
-            //INPUT_VIIVE
-
-            //INPUT_PROSENTTI_ELEKTRO
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getJateTE()) + "%");
-            //INPUT_PROSENTTI_PALAMATON
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getJateTPJ())+"%");
-            //INPUT_PROSENTTI_PALAVA
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getJateTPNJ())+"%");
-
-
-        } else {
-            System.out.println("Ei mitään valittuna ROW");
-        }
-    }
+//Tämän joutuu muuttamaan @Samu
+//    public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
+//        if (newSelection != null) {
+//            SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+//
+//            //SIMUAIKA TULOS
+//            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
+//            //ROSKEN KOKONAIS MÄÄRÄ
+//            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
+//            //ELEKTROJÄTE
+//            //PALAVAJÄTE
+//            //PALAMATONJÄTE
+//
+//            //INPUTS
+//            //INPUT_AIKA
+//            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getAika().getValue()) + "/AikaYksikköä");
+//            //INPUT_VIIVE
+//
+//            //INPUT_PROSENTTI_ELEKTRO
+//            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getJateTE()) + "%");
+//            //INPUT_PROSENTTI_PALAMATON
+//            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getJateTPJ())+"%");
+//            //INPUT_PROSENTTI_PALAVA
+//            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getJateTPNJ())+"%");
+//
+//
+//        } else {
+//            System.out.println("Ei mitään valittuna ROW");
+//        }
+//    }
     //------------------------------------------------------------------------------
 
     @Override

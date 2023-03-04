@@ -8,6 +8,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 import org.xml.sax.Parser;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class OmaMoottori extends Moottori {
@@ -179,7 +180,7 @@ public class OmaMoottori extends Moottori {
 	}
 
     @Override
-    protected void tulokset(){
+    protected void tulokset() throws SQLException {
         poistunutMaara = 0;
         double jatteenKokonaismaara = 0;
         long[] koleskelu = new long[4];
@@ -207,9 +208,9 @@ public class OmaMoottori extends Moottori {
         System.out.println("Asiakkaiden kokonaismäärä: " + (Asiakas.getID()));
         System.out.println("Keskimääräinen jätemäärä per asiakas: " + jatteenKokonaismaara / (Asiakas.getID()) + " kg");
         */
-        Laskenta l = new Laskenta(saapumistenMaara, palveltujenLkm , aa, koleskelu, jatteenKokonaismaara);
-        l.laske();
-        System.out.println(l);
-        kontrolleri.tallennaTulokset(jatteenKokonaismaara, Asiakas.getID(), palvelupisteet);
+        Laskenta laskenta = new Laskenta(saapumistenMaara, palveltujenLkm , aa, koleskelu, jatteenKokonaismaara);
+        laskenta.laske();
+        System.out.println(laskenta);
+        kontrolleri.tallennaTulokset(laskenta);
     }
 }

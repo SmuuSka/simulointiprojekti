@@ -21,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -69,7 +70,11 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
                     //Kun "Käynnistä simulointi"-näppäintä on painettu,
                     //Kutsutaan Kontrolli-luokan metodia kaynnistaSimulointi()
                     //moottori käynnistyy
-                    kontrolleri.kaynnistaSimulointi();
+                    try {
+                        kontrolleri.kaynnistaSimulointi();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     kaynnistaButton.setDisable(true);
                 }
             });
