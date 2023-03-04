@@ -2,87 +2,60 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.dao;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Laskenta;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import org.mariadb.jdbc.Connection;
 import org.mariadb.jdbc.client.result.ResultSetMetaData;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DAO implements IDAO {
-    private int indexTulokset_1 = 1,indexTulokset_2 = 1;
+    private int indexTulokset_1 = 1, indexTulokset_2 = 1;
     private static SimulaatioData simulaatioDataOlio;
-    private static SimulaatioData.SimulaattorinTulokset simulaattorinTulokset;
+    private  static SimulaatioData.SimulaattorinTulokset simulaattorinTulokset;
     private static SimulaatioData.SimulaationParametrit simulaationParametrit;
     private static final ResourceBundle rb = ResourceBundle.getBundle("System");
-    //private static final String url = rb.getString("url") +rb.getString("username") +rb.getString("password");
-    private static final String url1 = rb.getString("url1") +rb.getString("username1") +rb.getString("password1");
-    //private static final String SQL_DROPTABLE = "DROP TABLE SIMULAATIO";
+    private static final String url1 = rb.getString("url1") + rb.getString("username1") + rb.getString("password1");
     private static final String SQL_DROPTABLE = "DROP TABLE parametrit,tulokset, simulaatio";
-    private static final String SQL_INIT_SIMULAATIO = "CREATE TABLE IF NOT EXISTS SIMULAATIO(\n" +
-            "    SIMULAATIOID INT(10) NOT NULL AUTO_INCREMENT,\n" +
-            "    PAIVAMAARA DATE NOT NULL," +
-            "    AIKA DOUBLE DEFAULT NULL,\n" +
-            "    VAIHTELUVALI_MIN INT DEFAULT NULL,\n" +
-            "    VAIHTELUVALI_MAX INT DEFAULT NULL,\n" +
-            "    JATTEEN_TODENNAKOISYYS_ELEKTRONIIKKA INT DEFAULT NULL,\n" +
-            "    JATTEEN_TODENNAKOISYYS_PALAVA_JATE INT DEFAULT NULL,\n" +
-            "    JATTEEN_TODENNAKOISYYS_PALAMATON_JATE INT DEFAULT NULL,\n" +
-            "    JATTEIDENKOKONAISMAARA DOUBLE DEFAULT NULL, \n" +
-            "    PRIMARY KEY (SIMULAATIOID))";
-    private static final String SQL_INSERT_SIMU_PARAMETRIT = "INSERT INTO SIMULAATIO (PAIVAMAARA,AIKA," +
-                                                                    " VAIHTELUVALI_MIN, " +
-                                                                    " VAIHTELUVALI_MAX," +
-                                                                    " JATTEEN_TODENNAKOISYYS_ELEKTRONIIKKA, " +
-                                                                    " JATTEEN_TODENNAKOISYYS_PALAVA_JATE," +
-                                                                    " JATTEEN_TODENNAKOISYYS_PALAMATON_JATE) VALUES (?,?,?,?,?,?,?)";
-
-    private static final String SQL_UPDATE_TULOKSET = "UPDATE SIMULAATIO SET JATTEIDENKOKONAISMAARA = ? WHERE SIMULAATIOID = ?";
-    private static final String SQL_SELECT = "SELECT SIMULAATIOID FROM SIMULAATIO";
-    private static final String SQL_SELECT_ALL = "SELECT simulaatio.simulaatioID, simulaatio. s FROM SIMULAATIO";
-    private static final String SQL_DELETE_TULOS = "DELETE FROM SIMULAATIO WHERE SIMULAATIOID =?";
     private static Connection connection = null;
-
     private static int simuID;
     private static final ArrayList<SimulaatioData> simulaatioDataObjekti = new ArrayList<>();
 
 
-    private synchronized static void haeKaikkiTiedot() throws SQLException {
+    private synchronized void haeKaikkiTiedot() throws SQLException {
         haeSimulaationTiedot();
         haeSimulaationParametrit();
         haeSimulaattorinTulokset();
     }
+
     private static void haeSimulaationTiedot() throws SQLException {
         String id = Integer.toString(simuID);
-        String query = "SELECT * FROM simulaatio WHERE simulaatioID = " + id;
+        String query = "SELECT * FROM simulaatio";
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     simulaatioDataOlio = new SimulaatioData(rs.getInt(1), rs.getDate(2).toLocalDate(), rs.getByte(3));
-                    System.out.println("Simulaatio Data: " + simulaatioDataOlio.idProperty() + " " + simulaatioDataOlio.getPaivamaara() + " " + simulaatioDataOlio.simulaatioTyhjaksiProperty());
+                    simulaatioDataObjekti.add(simulaatioDataOlio);
+                    //System.out.println("Simulaatio Data: " + simulaatioDataOlio.idProperty() + " " + simulaatioDataOlio.getPaivamaara() + " " + simulaatioDataOlio.simulaatioTyhjaksiProperty());
                 }
             }
         }
-        simulaatioDataObjekti.add(simulaatioDataOlio);
+
     }
+
     private static void haeSimulaationParametrit() throws SQLException {
         String id = Integer.toString(simuID);
-        String query = "SELECT simulointiaika, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate,jatteenTodennakoisyysPalamatonJate FROM parametrit WHERE parametriID="+id;
+        String query = "SELECT simulointiaika, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate,jatteenTodennakoisyysPalamatonJate FROM parametrit";
         connection = avaaYhteysTietokantaan();
-        try(PreparedStatement ps = connection.prepareStatement(query)){
-            try(ResultSet rs = ps.executeQuery()){
-                while (rs.next()){
-                    //System.out.println("Simu parametrit: " + rs.getDouble(1) + "\n" + rs.getInt(2) + "\n" + rs.getInt(3)+" "+
-                      //                 rs.getInt(4) + "\n" + rs.getInt(5) + "\n" + rs.getInt(6));
-                    simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1) ,rs.getInt(2),
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2),
                             rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
-                    System.out.println("Simu parametrit: " + simulaationParametrit.aikaProperty());
+                    //System.out.println("Simu parametrit: " + simulaationParametrit.aikaProperty());
                 }
             }
         }
@@ -90,69 +63,68 @@ public class DAO implements IDAO {
 
     private static void haeSimulaattorinTulokset() throws SQLException {
         String id = Integer.toString(simuID);
-        String query = "SELECT * FROM tulokset WHERE tuloksetID=" + id;
-//        String query = "SELECT saapuneidenLKM,palveltujenLKM,kokonaisoleskeluaikaSaapuva,kokonaisoleskeluaikaElektroniikka,kokonaisoleskeluaikaPalavaJate,kokonaisoleskeluaikaPalamatonJate," +
-//                "palveltujenLkmSaapuva,palveltujenLkmElektroniikka,palveltujenLkmPalavaJate,palveltujenLkmPalamatonJate FROM tulokset WHERE tuloksetID=" + id;
-        HashMap<SimpleStringProperty,SimpleIntegerProperty> tulosIntAvainArvoParit = new HashMap<>();
-        HashMap<SimpleStringProperty,SimpleDoubleProperty> tuloksetDoubleAvainArvoParit = new HashMap<>();
+        String query = "SELECT * FROM tulokset";
+        HashMap<SimpleStringProperty, SimpleIntegerProperty> tulosIntAvainArvoParit = new HashMap<>();
+        HashMap<SimpleStringProperty, SimpleDoubleProperty> tuloksetDoubleAvainArvoParit = new HashMap<>();
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 ResultSetMetaData resultSetMetaData = (ResultSetMetaData) rs.getMetaData();
                 while (rs.next()) {
-                    for(int i = 3; i < 13; i++){
+                    for (int i = 3; i < 13; i++) {
                         String columnName = resultSetMetaData.getColumnName(i);
-                        tulosIntAvainArvoParit.put(new SimpleStringProperty(columnName),new SimpleIntegerProperty(rs.getInt(i)));
+                        tulosIntAvainArvoParit.put(new SimpleStringProperty(columnName), new SimpleIntegerProperty(rs.getInt(i)));
                     }
-                    for(int j = 13; j < resultSetMetaData.getColumnCount(); j++){
+                    for (int j = 13; j < resultSetMetaData.getColumnCount(); j++) {
                         String columnName = resultSetMetaData.getColumnName(j);
-                        tuloksetDoubleAvainArvoParit.put(new SimpleStringProperty(columnName),new SimpleDoubleProperty(rs.getDouble(j)));
+                        tuloksetDoubleAvainArvoParit.put(new SimpleStringProperty(columnName), new SimpleDoubleProperty(rs.getDouble(j)));
                     }
                 }
             }
         }
-        simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tulosIntAvainArvoParit,tuloksetDoubleAvainArvoParit);
+        simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tulosIntAvainArvoParit, tuloksetDoubleAvainArvoParit);
     }
 
-private static int setID() throws SQLException {
+    private int setID() throws SQLException {
         String query = "SELECT simulaatioID FROM simulaatio";
-    try (PreparedStatement ps = connection.prepareStatement(query)) {
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            simuID = rs.getInt(1);
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                simuID = rs.getInt(1);
+            }
         }
+        return simuID;
     }
-    return simuID;
-}
 
-    private synchronized static Connection avaaYhteysTietokantaan(){
-        try{
-            //connection = (Connection) DriverManager.getConnection(url);
+    private static Connection avaaYhteysTietokantaan() {
+        try {
             connection = (Connection) DriverManager.getConnection(url1);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
     }
 
     @Override
-    public synchronized void luoData(int tyhjaksi,double aika, int[] vaihteluvali, int[] jateprosentit) throws SQLException {
+    public synchronized void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit) throws SQLException {
         lisaaSimulaatioTaulu();
         lisaaTuloksetTaulu();
         lisaaParametritTaulu();
         lisaaSimulaatio(tyhjaksi);
-        lisaaParametrit(aika,vaihteluvali,jateprosentit);
+        lisaaParametrit(aika, vaihteluvali, jateprosentit);
     }
+
     private void lisaaSimulaatioTaulu() throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS simulaatio (" +
                 "simulaatioID INT PRIMARY KEY AUTO_INCREMENT," +
                 "paivamaara DATE," +
                 "ajetaanTyhjaksi BIT(1))";
         connection = avaaYhteysTietokantaan();
-        try (PreparedStatement ps = connection.prepareStatement(query)){
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             System.out.println("Tulos: " + ps.executeUpdate());
         }
     }
+
     private void lisaaParametritTaulu() throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS parametrit (parametriID INT PRIMARY KEY AUTO_INCREMENT, simulaatioID INT, simulointiaika DECIMAL," +
                 "\tvaihteluvaliMin INT,\n" +
@@ -164,7 +136,7 @@ private static int setID() throws SQLException {
                 "    FOREIGN KEY (simulaatioID)\n" +
                 "    REFERENCES simulaatio(simulaatioID))";
         connection = avaaYhteysTietokantaan();
-        try (PreparedStatement ps = connection.prepareStatement(query)){
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             System.out.println("Tulos: " + ps.executeUpdate());
         }
     }
@@ -211,7 +183,7 @@ private static int setID() throws SQLException {
                 "\tFOREIGN KEY (simulaatioID)\n" +
                 "\tREFERENCES simulaatio(simulaatioID))";
         connection = avaaYhteysTietokantaan();
-        try (PreparedStatement ps = connection.prepareStatement(query)){
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.executeUpdate();
         }
     }
@@ -219,43 +191,44 @@ private static int setID() throws SQLException {
     private void lisaaSimulaatio(int ajaTyhjaksiSimulaattori) throws SQLException {
         String query = "INSERT INTO simulaatio (paivamaara,ajetaanTyhjaksi) VALUES (?,?)";
         connection = avaaYhteysTietokantaan();
-        try (PreparedStatement ps = connection.prepareStatement(query)){
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setDate(1, Date.valueOf(LocalDate.now()));
-            ps.setInt(2,ajaTyhjaksiSimulaattori);
+            ps.setInt(2, ajaTyhjaksiSimulaattori);
             ps.executeUpdate();
             simuID = setID();
         }
     }
-    private void lisaaParametrit(double simulointiaika,int[] vaihteluvali, int[] jateprosentit) throws SQLException {
+
+    private void lisaaParametrit(double simulointiaika, int[] vaihteluvali, int[] jateprosentit) throws SQLException {
         String query = "INSERT INTO parametrit (parametriID,simulaatioID, simulointiaika,vaihteluvaliMin," +
-                                                "vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate," +
-                                                "jatteenTodennakoisyysPalamatonJate  ) VALUES (?,?,?,?,?,?,?,?)";
+                "vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate," +
+                "jatteenTodennakoisyysPalamatonJate  ) VALUES (?,?,?,?,?,?,?,?)";
         connection = avaaYhteysTietokantaan();
-        try (PreparedStatement ps = connection.prepareStatement(query)){
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             //ParametriID
             ps.setInt(1, simuID);
             //SimulointiID
             ps.setInt(2, simuID);
             //Simulaatioaika
-            ps.setDouble(3,simulointiaika);
+            ps.setDouble(3, simulointiaika);
             //Jätemäärä MIN
             ps.setInt(4, vaihteluvali[0]);
             //Jätemäärä MAX
             ps.setInt(5, vaihteluvali[1]);
             //Elektroniikan prosentit
-            ps.setInt(6,jateprosentit[0]);
+            ps.setInt(6, jateprosentit[0]);
             //Palavan jätteen prosentit
-            ps.setInt(7,jateprosentit[1]);
+            ps.setInt(7, jateprosentit[1]);
             //Palamattoman jätteen prosentit
-            ps.setInt(8,jateprosentit[2]);
+            ps.setInt(8, jateprosentit[2]);
             ps.executeUpdate();
         }
     }
 
-    private void tuloksetINT(Laskenta suureet) throws SQLException{
+    private void tuloksetINT(Laskenta suureet) throws SQLException {
         String query = "INSERT INTO tulokset (" +
                 "                tuloksetID," +
-                "                simulaatioID,"+
+                "                simulaatioID," +
                 "                saapuneidenLKM,\n" +
                 "                palveltujenLKM,\n" +
                 "                kokonaisoleskeluaikaSaapuva,\n" +
@@ -267,72 +240,73 @@ private static int setID() throws SQLException {
                 "                palveltujenLkmPalavaJate,\n" +
                 "                palveltujenLkmPalamatonJate) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         connection = avaaYhteysTietokantaan();
-        try(PreparedStatement ps = connection.prepareStatement(query)){
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             //ParametriID
             ps.setInt(indexTulokset_1++, simuID);
             //SimulointiID
             ps.setInt(indexTulokset_1++, simuID);
             //SaapuneidenLKM
-            ps.setInt(indexTulokset_1++,suureet.getSaapuneidenLkm());
+            ps.setInt(indexTulokset_1++, suureet.getSaapuneidenLkm());
             //PalveltujenLKM
-            ps.setInt(indexTulokset_1++,suureet.getPalveltujenMaara());
+            ps.setInt(indexTulokset_1++, suureet.getPalveltujenMaara());
             //Kokonaisoleskeluaika Palvelupisteellä, Saapuminen,Elektroniikka,Palava Jäte,Palava Jäte
             long[] kOAjat = suureet.getKokonaisoleskeluajat();
-            for(long i:kOAjat){
-                ps.setInt(indexTulokset_1++,(int)i);
+            for (long i : kOAjat) {
+                ps.setInt(indexTulokset_1++, (int) i);
             }
 
             int[] pLKM = suureet.getPalveltujenLkm();
-            for(int i:pLKM){
-                ps.setInt(indexTulokset_1++,i);
+            for (int i : pLKM) {
+                ps.setInt(indexTulokset_1++, i);
             }
 
             ps.executeUpdate();
         }
     }
 
-    private void tuloksetDouble(Laskenta suureet) throws SQLException{
+    private void tuloksetDouble(Laskenta suureet) throws SQLException {
         String query = "UPDATE tulokset SET aktiiviaikaSaapuva = ?, aktiiviaikaElektroniikka = ?, aktiiviaikaPalavaJate = ?, aktiiviaikaPalamatonJate = ?, kokonaisaika= ?, jatteenKokonaismaara= ?, suoritusteho= ?, avgJononPituusSaapuva= ?, avgJononPituusElektroniikka= ?, avgJononPituusPalavaJate= ?, avgJononPituusPalamatonJate= ?, avgLapimenoSaapuva= ?, avgLapimenoElektroniikka= ?, avgLapimenoPalavaJate= ?, avgLapimenoPalamatonJate= ?, kayttoasteSaapuva= ?, kayttoasteElektroniikka= ?, kayttoastePalavaJate= ?, kayttoastePalamatonJate= ?, avgPalveluaikaSaapuva= ?, avgPalveluaikaElektroniikka= ?, avgPalveluaikaPalavaJate= ?, avgPalveluaikaPalamatonJate= ?, avgJatteenmaara = ? WHERE tuloksetID=?";
         connection = avaaYhteysTietokantaan();
-        try(PreparedStatement ps = connection.prepareStatement(query)){
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             //Palvelupisteiden aktiiviajat,Saapuminen Elektroniikka,Palava Jäte,Palamaton Jäte
             double[] aktiiviaika = suureet.getAktiiviajat();
-            for(double d:aktiiviaika){
+            for (double d : aktiiviaika) {
                 ps.setDouble(indexTulokset_2++, d);
             }
             //Simulaation kokonaisaika
-            ps.setDouble(indexTulokset_2++,suureet.getKokonaisaika());
+            ps.setDouble(indexTulokset_2++, suureet.getKokonaisaika());
             //Jätteiden kokonaismäärä
-            ps.setDouble(indexTulokset_2++,suureet.getJatteenKokonaismaara());
+            ps.setDouble(indexTulokset_2++, suureet.getJatteenKokonaismaara());
             //Suoritusteho
-            ps.setDouble(indexTulokset_2++,suureet.getSuoritusteho());
+            ps.setDouble(indexTulokset_2++, suureet.getSuoritusteho());
             //Keskimääräinen Jonon Pituus, Saapuminen,Elektroniikka,Palava Jäte,Palamaton Jäte
             double[] avgJPS = suureet.getKeskmJononpituudet();
-            for(double d:avgJPS){
-                ps.setDouble(indexTulokset_2++,d);
+            for (double d : avgJPS) {
+                ps.setDouble(indexTulokset_2++, d);
             }
-           //Keskimääräinen läpimenoaika, Saapuminen, Elektroniikka,  Palava Jäte, Palamaton Jäte
+            //Keskimääräinen läpimenoaika, Saapuminen, Elektroniikka,  Palava Jäte, Palamaton Jäte
             double[] avgLapimeno = suureet.getKeskmLapimenoajat();
-            for(double d:avgLapimeno){
-                ps.setDouble(indexTulokset_2++,d);
+            for (double d : avgLapimeno) {
+                ps.setDouble(indexTulokset_2++, d);
             }
-           //Palvelupisteiden Kayttoasteet, Saapuminen, Elektroniikka, Palava Jäte, Palamaton Jäte
+            //Palvelupisteiden Kayttoasteet, Saapuminen, Elektroniikka, Palava Jäte, Palamaton Jäte
             double[] avgKayttoasteet = suureet.getKayttoasteet();
-            for (double d:avgKayttoasteet){
-                ps.setDouble(indexTulokset_2++,d);
+            for (double d : avgKayttoasteet) {
+                ps.setDouble(indexTulokset_2++, d);
             }
             //Palvelupisteiden Palveluajat, Saapuminen, Elektroniikka, Palava Jäte, Palamaton Jäte
-            double[] palveluajat  = suureet.getKeskmPalveluajat();
-            for (double d:palveluajat){
-                ps.setDouble(indexTulokset_2++,d);
+            double[] palveluajat = suureet.getKeskmPalveluajat();
+            for (double d : palveluajat) {
+                ps.setDouble(indexTulokset_2++, d);
             }
             //Jätemäärän keskiarvo
-            ps.setDouble(indexTulokset_2++,suureet.getKeskmJatteenmaara());
+            ps.setDouble(indexTulokset_2++, suureet.getKeskmJatteenmaara());
             //Tulokset-taulun avain
             ps.setInt(indexTulokset_2++, simuID);
             ps.executeQuery();
         }
     }
+
     @Override
     public synchronized void paivitaData(Laskenta suureet) throws SQLException {
         System.out.println("Tallennetaan tulokset");
@@ -348,27 +322,23 @@ private static int setID() throws SQLException {
 
     @Override
     public synchronized void poistaTaulu() throws SQLException {
-           connection = avaaYhteysTietokantaan();
-           try(PreparedStatement ps = connection.prepareStatement(SQL_DROPTABLE)){
-               ps.executeUpdate();
-           }
+        connection = avaaYhteysTietokantaan();
+        try (PreparedStatement ps = connection.prepareStatement(SQL_DROPTABLE)) {
+            ps.executeUpdate();
+        }
     }
 
     @Override
-    public synchronized boolean poistaTiettyTulos(int ID) {
-//        boolean poistettu = false;
-//        try {
-//            connection = avaaYhteysTietokantaan();
-//            //preparedStatement = connection.prepareStatement(SQL_DELETE_TULOS);
-//            //preparedStatement.setInt(1,ID);
-//           //if(preparedStatement.executeUpdate() == 1){
-//              // poistettu = true;
-//           //}
-//
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//        }
-//        return poistettu;
+    public synchronized boolean poistaTiettyTulos(int ID) throws SQLException {
+        String query = "DELETE FROM simulaatio WHERE simulaatio.simulaatioID="+Integer.toString(ID);
+        connection = avaaYhteysTietokantaan();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            int poistettu = ps.executeUpdate();
+            if(poistettu == 1){
+                return true;
+            }
+        }
         return false;
     }
 }
+

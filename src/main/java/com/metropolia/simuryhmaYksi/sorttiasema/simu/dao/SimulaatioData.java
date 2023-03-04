@@ -22,7 +22,31 @@ public class SimulaatioData{
         }
     }
 
-     public class SimulaationParametrit{
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public boolean isSimulaatioTyhjaksi() {
+        return simulaatioTyhjaksi.get();
+    }
+
+    public BooleanProperty simulaatioTyhjaksiProperty() {
+        return simulaatioTyhjaksi;
+    }
+
+    public LocalDate getPaivamaara() {
+        return paivamaara.get();
+    }
+
+    public ObjectProperty<LocalDate> paivamaaraProperty() {
+        return paivamaara;
+    }
+
+    public class SimulaationParametrit{
         private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ;
         private final DoubleProperty aika;
         public SimulaationParametrit(double aika, int vmin, int vmax,int jateTE, int jateTPJ, int jateTPNJ){
@@ -46,54 +70,54 @@ public class SimulaatioData{
                      '}';
          }
 
-         public int getVmin() {
-             return vmin.get();
-         }
+        public int getVmin() {
+            return vmin.get();
+        }
 
-         public IntegerProperty vminProperty() {
-             return vmin;
-         }
+        public IntegerProperty vminProperty() {
+            return vmin;
+        }
 
-         public int getVmax() {
-             return vmax.get();
-         }
+        public int getVmax() {
+            return vmax.get();
+        }
 
-         public IntegerProperty vmaxProperty() {
-             return vmax;
-         }
+        public IntegerProperty vmaxProperty() {
+            return vmax;
+        }
 
-         public int getJateTE() {
-             return jateTE.get();
-         }
+        public int getJateTE() {
+            return jateTE.get();
+        }
 
-         public IntegerProperty jateTEProperty() {
-             return jateTE;
-         }
+        public IntegerProperty jateTEProperty() {
+            return jateTE;
+        }
 
-         public int getJateTPJ() {
-             return jateTPJ.get();
-         }
+        public int getJateTPJ() {
+            return jateTPJ.get();
+        }
 
-         public IntegerProperty jateTPJProperty() {
-             return jateTPJ;
-         }
+        public IntegerProperty jateTPJProperty() {
+            return jateTPJ;
+        }
 
-         public int getJateTPNJ() {
-             return jateTPNJ.get();
-         }
+        public int getJateTPNJ() {
+            return jateTPNJ.get();
+        }
 
-         public IntegerProperty jateTPNJProperty() {
-             return jateTPNJ;
-         }
+        public IntegerProperty jateTPNJProperty() {
+            return jateTPNJ;
+        }
 
-         public double getAika() {
-             return aika.get();
-         }
+        public double getAika() {
+            return aika.get();
+        }
 
-         public DoubleProperty aikaProperty() {
-             return aika;
-         }
-     }
+        public DoubleProperty aikaProperty() {
+            return aika;
+        }
+    }
     class SimulaattorinTulokset{
         private HashMap<SimpleStringProperty, SimpleIntegerProperty> tuloksetInt;
         private HashMap<SimpleStringProperty, SimpleDoubleProperty> tuloksetDouble;
@@ -111,27 +135,4 @@ public class SimulaatioData{
         }
     }
 
-    public LocalDate getPaivamaara() {
-        return paivamaara.get();
-    }
-
-    public ObjectProperty<LocalDate> paivamaaraProperty() {
-        return paivamaara;
-    }
-
-    public int getId() {
-        return id.get();
-    }
-
-    public IntegerProperty idProperty() {
-        return id;
-    }
-
-    public boolean isSimulaatioTyhjaksi() {
-        return simulaatioTyhjaksi.get();
-    }
-
-    public BooleanProperty simulaatioTyhjaksiProperty() {
-        return simulaatioTyhjaksi;
-    }
 }

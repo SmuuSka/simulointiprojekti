@@ -32,7 +32,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         //Luodaan Gui:n aloitakäskyn perusteella uusi moottori ja tietokantaolio
         moottori = new OmaMoottori(this);
         tietokanta = new DAO();
-        tietokanta.poistaTaulu();
+        //tietokanta.poistaTaulu();
         //Asetetaan simulointiaika ja viive moottorille
         //Tallennetaan simulointiparametrit tietokantaan
         System.out.println("Asetetaan simulointiaika: " + ui.getAika());
@@ -88,6 +88,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void tallennaTulokset(Laskenta suureet) throws SQLException {
         tietokanta.paivitaData(suureet);
         ui.showTulokset(tietokanta.haeData());
+        //tietokanta.poistaTiettyTulos(1);
     }
 
     @Override

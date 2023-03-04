@@ -12,5 +12,5 @@ public interface IDAO {
     public abstract void paivitaData(Laskenta suureet) throws SQLException;
     public abstract ArrayList<SimulaatioData> haeData() throws SQLException;
     public abstract void poistaTaulu() throws SQLException;
-    public abstract boolean poistaTiettyTulos(int ID);
+    public abstract boolean poistaTiettyTulos(int ID) throws SQLException;
 }
