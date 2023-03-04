@@ -22,6 +22,8 @@ public class DAO implements IDAO {
     private static Connection connection = null;
     private static int simuID;
     private static final ArrayList<SimulaatioData> simulaatioDataObjekti = new ArrayList<>();
+    private static final ArrayList<SimulaatioData.SimulaationParametrit> simulaatioParametritLista = new ArrayList<>();
+    private static final ArrayList<SimulaatioData.SimulaattorinTulokset> simulaatioTuloksetLista = new ArrayList<>();
 
 
     private synchronized void haeKaikkiTiedot() throws SQLException {
@@ -55,6 +57,7 @@ public class DAO implements IDAO {
                 while (rs.next()) {
                     simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2),
                             rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+                    simulaatioParametritLista.add(simulaationParametrit);
                     //System.out.println("Simu parametrit: " + simulaationParametrit.aikaProperty());
                 }
             }
@@ -83,6 +86,8 @@ public class DAO implements IDAO {
             }
         }
         simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tulosIntAvainArvoParit, tuloksetDoubleAvainArvoParit);
+        simulaatioTuloksetLista.add(simulaattorinTulokset);
+
     }
 
     private int setID() throws SQLException {
@@ -315,9 +320,21 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public synchronized ArrayList<SimulaatioData> haeData() throws SQLException {
+    public synchronized ArrayList<SimulaatioData> simulaatioColumnData() throws SQLException {
         haeKaikkiTiedot();
         return simulaatioDataObjekti;
+    }
+
+    @Override
+    public ArrayList<SimulaatioData.SimulaationParametrit> simulaatioParametrit() throws SQLException {
+        haeKaikkiTiedot();
+        return simulaatioParametritLista;
+    }
+
+    @Override
+    public ArrayList<SimulaatioData.SimulaattorinTulokset> simulaatioTulokset() throws SQLException {
+        haeKaikkiTiedot();
+        return simulaatioTuloksetLista;
     }
 
     @Override
