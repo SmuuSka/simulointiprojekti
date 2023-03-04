@@ -72,12 +72,12 @@ public class Laskenta {
     }
 
     public void setKeskmPalveluajat(){
-        try {
-            for (int i = 0; i < LKM; i++){
-               keskmPalveluajat[i] = aktiiviajat[i]/palveltujenLkm[i];
+        for (int i = 0; i < LKM; i++) {
+            if (palveltujenLkm[i] == 0) {
+                keskmPalveluajat[i] = 0;
+            } else {
+                keskmPalveluajat[i] = aktiiviajat[i] / palveltujenLkm[i];
             }
-        } catch (Exception e) {
-
         }
     }
 

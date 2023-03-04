@@ -5,12 +5,14 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Laskenta;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Jatelava;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.OmaMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Palvelupiste;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,17 +28,18 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
-    public void kaynnistaSimulointi(){
+    public void kaynnistaSimulointi() throws SQLException {
         //Luodaan Gui:n aloitakäskyn perusteella uusi moottori ja tietokantaolio
         moottori = new OmaMoottori(this);
         tietokanta = new DAO();
-        //tietokanta.poistaTaulu();
+        tietokanta.poistaTaulu();
         //Asetetaan simulointiaika ja viive moottorille
         //Tallennetaan simulointiparametrit tietokantaan
         System.out.println("Asetetaan simulointiaika: " + ui.getAika());
         moottori.setSimulointiaika(ui.getAika());
         moottori.setViive(ui.getViive());
-        tietokanta.luoData(ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit());
+        //tietokanta.luoData(ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit());
+        tietokanta.luoData(0,ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
 
         Asiakas.setJatemaara(ui.getVaihteluvali());
@@ -82,12 +85,10 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
-    public void tallennaTulokset(double jatteidenKokonaismaara, int asiakkaidenMaara, Palvelupiste[] palvelupisteet) {
-        tietokanta.paivitaData(jatteidenKokonaismaara);
+    public void tallennaTulokset(Laskenta suureet) throws SQLException {
+        tietokanta.paivitaData(suureet);
         ui.showTulokset(tietokanta.haeData());
-        System.out.println("Poistettu ID 1: " + tietokanta.poistaTiettyTulos(2));
     }
-
 
     @Override
     public void visualisoiAsiakas() {
