@@ -138,7 +138,7 @@ public class DAO implements IDAO {
                 "\tjatteenTodennakoisyysPalamatonJate INT,\n" +
                 "    CONSTRAINT fk_parametrit_simulaatioID\n" +
                 "    FOREIGN KEY (simulaatioID)\n" +
-                "    REFERENCES simulaatio(simulaatioID))";
+                "    REFERENCES simulaatio(simulaatioID) ON DELETE CASCADE)";
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             System.out.println("Tulos: " + ps.executeUpdate());
@@ -185,7 +185,7 @@ public class DAO implements IDAO {
                 "\tavgJatteenmaara DECIMAL(10,1),\n" +
                 "\tCONSTRAINT fk_simulaatioID\n" +
                 "\tFOREIGN KEY (simulaatioID)\n" +
-                "\tREFERENCES simulaatio(simulaatioID))";
+                "\tREFERENCES simulaatio(simulaatioID) ON DELETE CASCADE)";
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.executeUpdate();

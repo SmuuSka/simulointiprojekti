@@ -181,6 +181,11 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
+    public void poistaData(int ID) throws SQLException {
+
+    }
+
+    @Override
     public double getAika() {
 
         return Double.parseDouble(aika.getText());

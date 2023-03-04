@@ -2,6 +2,7 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +17,7 @@ public interface ISimulaattoriUI {
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
     public void showTulokset(ArrayList<SimulaatioData> dataColumn);
+    public void poistaData(int ID) throws SQLException;
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
