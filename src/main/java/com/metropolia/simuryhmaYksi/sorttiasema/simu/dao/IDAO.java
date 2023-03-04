@@ -10,8 +10,6 @@ public interface IDAO {
      void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit) throws SQLException;
      void paivitaData(Laskenta suureet) throws SQLException;
      ArrayList<SimulaatioData> simulaatioColumnData() throws SQLException;
-     ArrayList<SimulaatioData.SimulaationParametrit> simulaatioParametrit() throws SQLException;
-     ArrayList<SimulaatioData.SimulaattorinTulokset> simulaatioTulokset() throws SQLException;
      void poistaTaulu() throws SQLException;
      boolean poistaTiettyTulos(int ID) throws SQLException;
 }

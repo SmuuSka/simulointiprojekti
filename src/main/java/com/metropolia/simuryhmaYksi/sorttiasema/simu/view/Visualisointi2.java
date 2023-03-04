@@ -14,12 +14,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Visualisointi2 extends Canvas implements IVisualisointi {
     private int asiakasLkm = 0;
@@ -29,7 +32,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     private PÄÄSIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller;
 
     private Pane AnimationPane;
-    private Label ELEKTRO_COUNTER,PALAVA_COUNTER,PALAMATON_COUNTER;
+    private Label ELEKTRO_COUNTER, PALAVA_COUNTER, PALAMATON_COUNTER;
     //----------------------------------ASIAKAS ELEMENTIT------------------------------------//
 
     //------------------------------------JONOT------------------------------------//
@@ -87,13 +90,16 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     private Parent root;
     private Stage stage;
     private Scene scene;
-
+    List<Rectangle> JONO_PALAVA_LIST;
+    List<Rectangle> JONO_ELEKTRO_LIST;
+    List<Rectangle> JONO_EPA_LIST;
+    List<Rectangle> JONO_SAAPU_LIST;
 
     public Visualisointi2(PÄÄSIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller, IKontrolleriVtoM kontrolleri, ISimulaattoriUI ui) throws IOException {
         this.ui = ui;
         this.kontrolleri = kontrolleri;
         this.PÄÄSIMULAATORIFXML_controller = PÄÄSIMULAATORIFXML_controller;
-        this.animationTimeinMillis = (int)ui.getViive();
+        this.animationTimeinMillis = (int) ui.getViive();
         PÄÄSIMULAATORIFXML_controller = new PÄÄSIMULAATORI_FXML_CONTROLLER(kontrolleri);
         FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
         loaderSIMU.setController(PÄÄSIMULAATORIFXML_controller);
@@ -119,20 +125,23 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         ui.setPJateJonossa(0);
         ui.setPTJateJonossa(0);
     }
+
     @Override
-    public void lisaaSaapumistenMaara(int maara){
+    public void lisaaSaapumistenMaara(int maara) {
         SAAPUMISETYHT_INFO = PÄÄSIMULAATORIFXML_controller.getJONOSSA_SAAPUMINEN();
         Platform.runLater(() -> {
             SAAPUMISETYHT_INFO.setText(Integer.toString(maara));
         });
     }
+
     @Override
-    public void lisaaPoistunutMaara(int maara){
+    public void lisaaPoistunutMaara(int maara) {
         POISTUNUT_INFO = PÄÄSIMULAATORIFXML_controller.getPOISTUNUTINFO();
         Platform.runLater(() -> {
             POISTUNUT_INFO.setText(Integer.toString(maara));
         });
     }
+
     public void uusiAsiakas() {
         asiakasLkm++;
     }
@@ -351,7 +360,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
                 PathTransition pathT2 = new PathTransition();
                 pathT2.setPath(REITTI_PA_TO_ELEKTRO_BOTTOM_LINE);
                 pathT2.setNode(ASIAKAS_NODE);
-                pathT2.setDuration(Duration.millis(3000));
+                pathT2.setDuration(Duration.millis(animationTimeinMillis));
                 pathT2.setCycleCount(1);
                 pathT2.play();
                 pathT2.setOnFinished((event2) -> {
@@ -536,8 +545,148 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         });
     }
 
+    @Override
+    public void addJONOPALIKKA_PALAVA() {
+        Platform.runLater(() -> {
+            if (JONO_PALAVA_LIST == null) {
+                JONO_PALAVA_LIST = new ArrayList<>();
+            }
+            JONO_PALAVA = PÄÄSIMULAATORIFXML_controller.getJONO_PA();
+            JONO_PALAVA.setSpacing(0.1);
+            JONOPALIKKA_PALAVA = new Rectangle(10, 30, Color.rgb(201, 108, 21));
+            JONOPALIKKA_PALAVA.setStroke(Paint.valueOf("#000000"));
+            JONOPALIKKA_PALAVA.setStrokeWidth(1);
+            if (JONO_PALAVA_LIST.size() != 5) {
+                JONO_PALAVA_LIST.add(JONOPALIKKA_PALAVA);
+                JONO_PALAVA.getChildren().add(JONOPALIKKA_PALAVA);
+            }
 
-    public void setAnimaationViive(int viive){
+        });
+    }
+
+    @Override
+    public void addJONOPALIKKA_EPA() {
+        Platform.runLater(() -> {
+            if (JONO_EPA_LIST == null) {
+                JONO_EPA_LIST = new ArrayList<>();
+            }
+            JONO_EPA = PÄÄSIMULAATORIFXML_controller.getJONO_EPA();
+            JONO_EPA.setSpacing(0.1);
+            JONOPALIKKA_EPA = new Rectangle(10, 30, Color.rgb(201, 108, 21));
+            JONOPALIKKA_EPA.setStroke(Paint.valueOf("#000000"));
+            JONOPALIKKA_EPA.setStrokeWidth(1);
+            if (JONO_EPA_LIST.size() != 5) {
+                JONO_EPA_LIST.add(JONOPALIKKA_EPA);
+                JONO_EPA.getChildren().add(JONOPALIKKA_EPA);
+            }
+
+        });
+    }
+
+    @Override
+    public void addJONOPALIKKA_SAAPUMINEN() {
+        Platform.runLater(() -> {
+            if (JONO_SAAPU_LIST == null) {
+                JONO_SAAPU_LIST = new ArrayList<>();
+            }
+            JONO_SAAPUMISPISTE = PÄÄSIMULAATORIFXML_controller.getJONO_SAAPUMINEN();
+            JONO_SAAPUMISPISTE.setSpacing(0.1);
+            JONOPALIKKA_SAAPUMINEN = new Rectangle(10, 30, Color.rgb(201, 108, 21));
+            JONOPALIKKA_SAAPUMINEN.setStroke(Paint.valueOf("#000000"));
+            JONOPALIKKA_SAAPUMINEN.setStrokeWidth(1);
+            if (JONO_SAAPU_LIST.size() != 5) {
+                JONO_SAAPU_LIST.add(JONOPALIKKA_SAAPUMINEN);
+                JONO_SAAPUMISPISTE.getChildren().add(JONOPALIKKA_SAAPUMINEN);
+            }
+
+        });
+    }
+
+    @Override
+    public void addJONOPALIKKA_ELEKTRO() {
+        Platform.runLater(() -> {
+            if (JONO_ELEKTRO_LIST == null) {
+                JONO_ELEKTRO_LIST = new ArrayList<>();
+            }
+            JONO_ELEKTRO = PÄÄSIMULAATORIFXML_controller.getJONO_ELEKTRO();
+            JONO_ELEKTRO.setSpacing(0.1);
+            JONOPALIKKA_ELEKTRO = new Rectangle(10, 30, Color.rgb(201, 108, 21));
+            JONOPALIKKA_ELEKTRO.setStroke(Paint.valueOf("#000000"));
+            JONOPALIKKA_ELEKTRO.setStrokeWidth(1);
+            if (JONO_ELEKTRO_LIST.size() != 5) {
+                JONO_ELEKTRO_LIST.add(JONOPALIKKA_ELEKTRO);
+                JONO_ELEKTRO.getChildren().add(JONOPALIKKA_ELEKTRO);
+            }
+
+        });
+    }
+
+    @Override
+    public void removeJONOPALIKKA_PALAVA(int sizenow) {
+        Platform.runLater(() -> {
+            JONO_PALAVA = PÄÄSIMULAATORIFXML_controller.getJONO_PA();
+                try {
+                    if (sizenow < 5) {
+                        JONO_PALAVA.getChildren().remove(0);
+                        JONO_PALAVA_LIST.remove(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("EPA jonolista tyhjä(ei palikoita)");
+                }
+
+        });
+    }
+
+    @Override
+    public void removeJONOPALIKKA_EPA(int sizenow) {
+        Platform.runLater(() -> {
+            JONO_EPA = PÄÄSIMULAATORIFXML_controller.getJONO_EPA();
+                try {
+                    if (sizenow < 5){
+                        JONO_EPA_LIST.remove(0);
+                        JONO_EPA.getChildren().remove(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("EPA jonolista tyhjä(ei palikoita)");
+                }
+
+
+        });
+    }
+
+    @Override
+    public void removeJONOPALIKKA_ELEKTRO(int sizenow) {
+        Platform.runLater(() -> {
+            JONO_ELEKTRO = PÄÄSIMULAATORIFXML_controller.getJONO_ELEKTRO();
+                try {
+                    if (sizenow < 5) {
+                        JONO_ELEKTRO_LIST.remove(0);
+                        JONO_ELEKTRO.getChildren().remove(0);
+                        System.out.println("ELEKTROLISTA" + JONO_ELEKTRO_LIST.toString());
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("EPA jonolista tyhjä(ei palikoita)");
+                }
+
+        });
+    }
+
+    @Override
+    public void removeJONOPALIKKA_SAAPUMINEN(int sizenow) {
+        Platform.runLater(() -> {
+            JONO_SAAPUMISPISTE = PÄÄSIMULAATORIFXML_controller.getJONO_SAAPUMINEN();
+                try {
+                    if (sizenow < 5){
+                        JONO_SAAPU_LIST.remove(0);
+                        JONO_SAAPUMISPISTE.getChildren().remove(0);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("EPA jonolista tyhjä(ei palikoita)");
+                }
+        });
+    }
+
+    public void setAnimaationViive(int viive) {
         this.animationTimeinMillis = viive;
     }
 }

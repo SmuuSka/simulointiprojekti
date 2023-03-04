@@ -41,13 +41,12 @@ public abstract class Moottori extends Thread implements IMoottori {
 		//Kunnes viimeinen asiakas on poistunut
 		while (simuloidaan()){
 			viive();
-			
+
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 			
 			Trace.out(Trace.Level.INFO, "\nB-vaihe:" );
 			suoritaBTapahtumat();
-
 			setTekstit();
 			
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:" );

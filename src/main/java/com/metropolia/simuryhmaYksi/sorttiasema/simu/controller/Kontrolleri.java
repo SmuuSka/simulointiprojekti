@@ -2,6 +2,7 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.controller;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.DAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Laskenta;
@@ -17,6 +18,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private IMoottori moottori;
     private IDAO tietokanta;
     private IVisualisointi nayttoVisual;
+    private int counter = 0;
 
     public Kontrolleri(ISimulaattoriUI ui){
         this.ui = ui;
@@ -27,6 +29,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         //Luodaan Gui:n aloitakäskyn perusteella uusi moottori ja tietokantaolio
         moottori = new OmaMoottori(this);
         tietokanta = new DAO();
+        moottori.setAjetaanTyhjaksi(ui.getAjeetaankoLoppuun());
         //tietokanta.poistaTaulu();
         //Asetetaan simulointiaika ja viive moottorille
         //Tallennetaan simulointiparametrit tietokantaan
@@ -40,7 +43,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         Asiakas.setJatemaara(ui.getVaihteluvali());
         Asiakas.setTJATELAJI(ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
-
         //Käynnistetään moottori
         ((Thread)moottori).start();
 
@@ -53,9 +55,9 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         // placeholder
         long viive = 500;
         // Vähentää viivettä 0.5s
-        if (moottori.getViive() - viive >= 0){
+        if (moottori.getViive() - viive >= 1){
             moottori.setViive(moottori.getViive() - viive);
-            ui.setAnimaationViive((int)(moottori.getViive() - viive));
+            ui.setAnimaationViive((int)(moottori.getViive()));
         }
     }
 
@@ -82,9 +84,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     @Override
     public void tallennaTulokset(Laskenta suureet) throws SQLException {
         tietokanta.paivitaData(suureet);
-        ui.showTulokset(tietokanta.simulaatioColumnData(), tietokanta.simulaatioParametrit(),tietokanta.simulaatioTulokset());
-        tietokanta.simulaatioParametrit();
-        tietokanta.simulaatioTulokset();
+        ui.showTulokset(tietokanta.simulaatioColumnData());
         //tietokanta.poistaTiettyTulos(1);
     }
 
@@ -99,7 +99,19 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         return visualisointi;
     }
 
-
+    @Override
+    public void showTuloksetAction() throws SQLException {
+        switch (counter){
+            case 0:
+                counter = 1;
+                tietokanta = new DAO();
+                ui.showTulokset(tietokanta.simulaatioColumnData());
+                break;
+            case 1:
+                ui.showTulokset(tietokanta.simulaatioColumnData());
+                break;
+        }
+    }
     public void setEJononPituus(int pituus){
         ui.setEJateJonossa(pituus);
     }

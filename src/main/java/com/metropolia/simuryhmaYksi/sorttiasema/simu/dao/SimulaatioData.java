@@ -10,7 +10,7 @@ public class SimulaatioData{
     private final IntegerProperty id;
     private final BooleanProperty simulaatioTyhjaksi;
     private final ObjectProperty<LocalDate> paivamaara;
-
+    private static SimulaationParametrit parametrit;
 
     public SimulaatioData(int id,LocalDate paivamaara, int simulaatioTyhjaksi){
         this.id = new SimpleIntegerProperty(id);
@@ -20,6 +20,14 @@ public class SimulaatioData{
         }else {
             this.simulaatioTyhjaksi = new SimpleBooleanProperty(true);
         }
+    }
+
+    public static SimulaationParametrit getParametrit() {
+        return parametrit;
+    }
+
+    public static void setParametrit(SimulaationParametrit parametrit) {
+        SimulaatioData.parametrit = parametrit;
     }
 
     public int getId() {
@@ -47,8 +55,10 @@ public class SimulaatioData{
     }
 
     public class SimulaationParametrit{
+
         private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ;
         private final DoubleProperty aika;
+
         public SimulaationParametrit(double aika, int vmin, int vmax,int jateTE, int jateTPJ, int jateTPNJ){
             this.aika = new SimpleDoubleProperty(aika);
             this.vmin = new SimpleIntegerProperty(vmin);
