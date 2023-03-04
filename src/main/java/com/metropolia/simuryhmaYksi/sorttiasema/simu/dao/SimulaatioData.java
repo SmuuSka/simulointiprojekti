@@ -118,7 +118,7 @@ public class SimulaatioData{
             return aika;
         }
     }
-    class SimulaattorinTulokset{
+    public class SimulaattorinTulokset{
         private HashMap<SimpleStringProperty, SimpleIntegerProperty> tuloksetInt;
         private HashMap<SimpleStringProperty, SimpleDoubleProperty> tuloksetDouble;
         public SimulaattorinTulokset(HashMap<SimpleStringProperty, SimpleIntegerProperty> tuloksetInt, HashMap<SimpleStringProperty, SimpleDoubleProperty> tuloksetDouble){

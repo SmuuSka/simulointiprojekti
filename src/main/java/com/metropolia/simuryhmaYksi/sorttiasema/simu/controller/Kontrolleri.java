@@ -2,20 +2,15 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.controller;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.DAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Laskenta;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Jatelava;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.OmaMoottori;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Palvelupiste;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private ISimulaattoriUI ui;
@@ -87,7 +82,9 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     @Override
     public void tallennaTulokset(Laskenta suureet) throws SQLException {
         tietokanta.paivitaData(suureet);
-        ui.showTulokset(tietokanta.haeData());
+        ui.showTulokset(tietokanta.simulaatioColumnData(), tietokanta.simulaatioParametrit(),tietokanta.simulaatioTulokset());
+        tietokanta.simulaatioParametrit();
+        tietokanta.simulaatioTulokset();
         //tietokanta.poistaTiettyTulos(1);
     }
 

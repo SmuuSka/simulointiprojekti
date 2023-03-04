@@ -18,7 +18,12 @@ public interface ISimulaattoriUI {
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
-    public void showTulokset(ArrayList<SimulaatioData> datatulokset);
+    public void showTulokset(ArrayList<SimulaatioData> dataColumn, ArrayList<SimulaatioData.SimulaationParametrit> dataparametrit, ArrayList<SimulaatioData.SimulaattorinTulokset> datatulokset);
+
+    //INTERFACE METHOTID
+    //  TULOKSET IKKUNA
+
+
     public double getAika();
     public long getViive();
     public void setLoppuaika();

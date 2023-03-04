@@ -9,7 +9,6 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -288,15 +287,13 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
     //-------------------------------------------------------------------------------------------
 
-    //INTERFACE METHOTID
-    //  TULOKSET IKKUNA
     @Override
-    public void showTulokset(ArrayList<SimulaatioData> tietokanta) {
+    public void showTulokset(ArrayList<SimulaatioData> datatulokset, ArrayList<SimulaatioData.SimulaationParametrit> dataparametrit, ArrayList<SimulaatioData.SimulaattorinTulokset> datatulokset2) {
         Platform.runLater(
                 () -> {
                     try {
                         TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
-                        ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(tietokanta);
+                        ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(datatulokset);
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
                         loader.setController(TULOKSET_FXML_CONTROLLER);
@@ -340,6 +337,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
                 });
     }
+
+    //INTERFACE METHOTID
+    //  TULOKSET IKKUNA
 //Tämän joutuu muuttamaan @Samu
 //    public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
 //        if (newSelection != null) {

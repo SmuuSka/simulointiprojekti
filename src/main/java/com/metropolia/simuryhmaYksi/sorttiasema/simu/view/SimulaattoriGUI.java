@@ -177,8 +177,9 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
         return new int[0];
     }
 
+
     @Override
-    public void showTulokset(ArrayList<SimulaatioData> tieto) {
+    public void showTulokset(ArrayList<SimulaatioData> datatulokset, ArrayList<SimulaatioData.SimulaationParametrit> dataparametrit, ArrayList<SimulaatioData.SimulaattorinTulokset> datatulokset2) {
 
     }
 
