@@ -125,13 +125,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             ruuhkainenAktiivisuus = strategiaFXML_Controller.getSTRATEGIA_RUUHKA_RUUHKA_CHECK();
             ruuhkainenAktiivisuus.setId("3");
 
-            //Tapahtumat
-            asiakasAuto_Hajioa = strategiaFXML_Controller.getSTRATEGIA_TAPAHTUMAT_ASIAKASAUTO();
-            asiakasAuto_Hajioa.setId("4");
-
-            saapumispisteOnglema = strategiaFXML_Controller.getSTRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA();
-            saapumispisteOnglema.setId("5");
-
             //Ajetaanko Tyhjäksi?
             ajetaanLoppuun = strategiaFXML_Controller.getSTRATEGIA_JONOT_AJALOPPUUN();
             ajetaanLoppuun.setId("6");
@@ -263,11 +256,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                         kontrolleri.nopeuta();
                                     });
                                     lopetaButton.setOnAction(event4 -> {
-                                        naytto.setPALAVA_VARATTU(false);
-                                        naytto.setELEKTRO_VARATTU(false);
-                                        naytto.setSAAPUMINEN_VARATTU(false);
-                                        naytto.setEPA_VARATTU(false);
-                                        kontrolleri.lopetaSimulointi();
+                                        try {
+                                            kontrolleri.lopetaSimulointi();
+                                        } catch (SQLException e) {
+                                            throw new RuntimeException(e);
+                                        }
                                     });
                                 } catch (NullPointerException e) {
                                     e.printStackTrace();
@@ -317,14 +310,17 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             idCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, Integer>("id"));
                             TableColumn<SimulaatioData, LocalDate> aikaCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Päivämäärä");
                             aikaCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("paivamaara"));
-                            TableColumn<SimulaatioData, LocalDate> ajetaankoTyhjaksiCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Ajetaanko Tyhjäksi");
-                            ajetaankoTyhjaksiCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("ajetaanTyhjaksi"));
+                            TableColumn<SimulaatioData, Boolean> ajetaankoTyhjaksiCOLUMN = new TableColumn<SimulaatioData, Boolean>("Ajetaanko Tyhjäksi");
+                            ajetaankoTyhjaksiCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData,Boolean>("ajetaanTyhjaksi"));
 
-                            TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN, aikaCOLUMN);
+                            TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN, aikaCOLUMN,ajetaankoTyhjaksiCOLUMN);
                             aikaCOLUMN.setCellValueFactory(
                                     cellData -> cellData.getValue().paivamaaraProperty());
                             idCOLUMN.setCellValueFactory(
                                     cellData -> cellData.getValue().idProperty().asObject());
+                            TABLE_VIEW_DATA.setItems(dataob);
+                            ajetaankoTyhjaksiCOLUMN.setCellValueFactory(
+                                cellData -> cellData.getValue().simulaatioTyhjaksiProperty());
                             TABLE_VIEW_DATA.setItems(dataob);
 
                         tuloksetStage.setOnCloseRequest(event -> {
@@ -337,6 +333,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 System.out.println(obs.getValue());
                                 valittuData(obs, newSelection, TULOKSET_FXML_CONTROLLER);
                                 SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+
                                 //Poista valittu dataNappi.
                                 tuloksetPoistaTulosButton.setOnAction(event -> {
                                     try {
@@ -351,8 +348,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                     tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
+
 
 
                 });
@@ -493,11 +490,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     @Override
     public boolean getAjeetaankoLoppuun() {
-        if(strategiaFXML_Controller.getSTRATEGIA_JONOT_AJALOPPUUN().isSelected() == true){
-            return true;
-        }else{
-            return false;
-        }
+        return (strategiaFXML_Controller.getSTRATEGIA_JONOT_AJALOPPUUN().isSelected() ? true : false);
     }
 
     @Override
