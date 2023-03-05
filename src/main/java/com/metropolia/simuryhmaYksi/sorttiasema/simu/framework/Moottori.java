@@ -41,7 +41,6 @@ public abstract class Moottori extends Thread implements IMoottori {
 		//Kunnes viimeinen asiakas on poistunut
 		while (simuloidaan()){
 			viive();
-
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 			
@@ -89,20 +88,20 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 	
 
-	public void viive() {
+	public synchronized void viive() {
 		Trace.out(Trace.Level.INFO, "Viive " + viive);
 		try {
 			sleep(viive);
 		} catch (InterruptedException e) {
-			System.out.println("Viive keskeytetään.");
+			e.printStackTrace();
 		}
 	}
-
 	@Override
 	public void lopeta(){
 		interrupt();
 		setSimulointiaika(0);
 	}
+
 
 	@Override
 	public void setViive(long viive) {
