@@ -37,9 +37,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         moottori.setViive(ui.getViive());
         //tietokanta.luoData(ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit());
         //@Kaspar tässä luodaan data, muista boolean eli int
-        tietokanta.luoData(0,ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit(),40,1.5);
+        //tietokanta.luoData(0,ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit(),40,1.5);
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
-
         Asiakas.setJatemaara(ui.getVaihteluvali());
         Asiakas.setTJATELAJI(ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
@@ -85,6 +84,11 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
     @Override
     public void tallennaTulokset(Laskenta suureet) throws SQLException {
+        int onkoAjetaanloppuun = 0;
+        if (ui.getAjeetaankoLoppuun()){
+            onkoAjetaanloppuun = 1;
+        }
+        tietokanta.luoData(onkoAjetaanloppuun,ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit(),40,1.5);
         tietokanta.paivitaData(suureet);
         ui.showTulokset(tietokanta.simulaatioColumnData());
     }
