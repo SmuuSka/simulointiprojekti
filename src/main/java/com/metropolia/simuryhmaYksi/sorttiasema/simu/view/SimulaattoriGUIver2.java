@@ -321,6 +321,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             idCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, Integer>("id"));
                             TableColumn<SimulaatioData, LocalDate> aikaCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Päivämäärä");
                             aikaCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("paivamaara"));
+                            TableColumn<SimulaatioData, LocalDate> ajetaankoTyhjaksiCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Ajetaanko Tyhjäksi");
+                            ajetaankoTyhjaksiCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("ajetaanTyhjaksi"));
 
                             TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN, aikaCOLUMN);
                             aikaCOLUMN.setCellValueFactory(
