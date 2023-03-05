@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 public class DAO implements IDAO {
     private int indexTulokset_1 = 1, indexTulokset_2 = 1;
     private  SimulaatioData simulaatioDataOlio;
-    private  SimulaatioData simulaatioDataOlio;
     private static final ResourceBundle rb = ResourceBundle.getBundle("System");
     private static final String url1 = rb.getString("url1") + rb.getString("username1") + rb.getString("password1");
     private static Connection connection = null;
@@ -24,7 +23,6 @@ public class DAO implements IDAO {
         haeSimulaationTiedot();
     }
 
-    private void haeSimulaationTiedot() throws SQLException {
     private void haeSimulaationTiedot() throws SQLException {
         String id = Integer.toString(simuID);
         String query = "SELECT * FROM simulaatio";
@@ -62,11 +60,6 @@ public class DAO implements IDAO {
         String query = "SELECT * FROM tulokset WHERE tulokset.tuloksetID="+id;
         ArrayList<SimpleIntegerProperty> tuloksetINT = new ArrayList<>();
         ArrayList<SimpleDoubleProperty> tuloksetDouble = new ArrayList<>();
-    private void haeSimulaattorinTulokset() throws SQLException {
-        String id = Integer.toString(simulaatioDataOlio.getId());
-        String query = "SELECT * FROM tulokset WHERE tulokset.tuloksetID="+id;
-        ArrayList<SimpleIntegerProperty> tuloksetINT = new ArrayList<>();
-        ArrayList<SimpleDoubleProperty> tuloksetDouble = new ArrayList<>();
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -83,8 +76,6 @@ public class DAO implements IDAO {
                         tuloksetDouble.add((new SimpleDoubleProperty(rs.getDouble(j))));
                         tuloksetDouble.add((new SimpleDoubleProperty(rs.getDouble(j))));
                     }
-                    SimulaatioData.SimulaattorinTulokset simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tuloksetINT, tuloksetDouble);
-                    simulaatioDataOlio.setTulokset(simulaattorinTulokset);
                     SimulaatioData.SimulaattorinTulokset simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tuloksetINT, tuloksetDouble);
                     simulaatioDataOlio.setTulokset(simulaattorinTulokset);
             }
@@ -334,9 +325,7 @@ public class DAO implements IDAO {
     @Override
     public synchronized void poistaTaulu() throws SQLException {
         String query = "DROP TABLE parametrit,tulokset, simulaatio";
-        String query = "DROP TABLE parametrit,tulokset, simulaatio";
         connection = avaaYhteysTietokantaan();
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.executeUpdate();
         }

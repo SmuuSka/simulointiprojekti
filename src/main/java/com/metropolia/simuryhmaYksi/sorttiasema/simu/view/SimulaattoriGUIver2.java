@@ -302,7 +302,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     //  TULOKSET IKKUNA
     @Override
     public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
-    public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
         Platform.runLater(
                 () -> {
                     try {

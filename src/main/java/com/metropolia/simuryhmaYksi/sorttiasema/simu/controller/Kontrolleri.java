@@ -108,7 +108,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
     @Override
     public void showTuloksetAction() throws SQLException {
-    public void showTuloksetAction() throws SQLException {
         switch (counter){
             case 0:
                 counter = 1;
