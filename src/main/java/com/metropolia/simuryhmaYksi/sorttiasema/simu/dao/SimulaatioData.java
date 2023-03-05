@@ -10,7 +10,8 @@ public class SimulaatioData{
     private final IntegerProperty id;
     private final BooleanProperty simulaatioTyhjaksi;
     private final ObjectProperty<LocalDate> paivamaara;
-    private static SimulaationParametrit parametrit;
+    private SimulaationParametrit parametrit;
+    private SimulaattorinTulokset tulokset;
 
     public SimulaatioData(int id,LocalDate paivamaara, int simulaatioTyhjaksi){
         this.id = new SimpleIntegerProperty(id);
@@ -22,12 +23,20 @@ public class SimulaatioData{
         }
     }
 
-    public static SimulaationParametrit getParametrit() {
+    public SimulaationParametrit getParametrit() {
         return parametrit;
     }
 
-    public static void setParametrit(SimulaationParametrit parametrit) {
-        SimulaatioData.parametrit = parametrit;
+    public void setParametrit(SimulaationParametrit parametrit) {
+        this.parametrit = parametrit;
+    }
+
+    public SimulaattorinTulokset getTulokset() {
+        return tulokset;
+    }
+
+    public void setTulokset(SimulaattorinTulokset tulokset) {
+        this.tulokset = tulokset;
     }
 
     public int getId() {

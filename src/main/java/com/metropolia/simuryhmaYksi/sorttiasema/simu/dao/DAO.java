@@ -12,17 +12,19 @@ import java.util.ResourceBundle;
 public class DAO implements IDAO {
     private int indexTulokset_1 = 1, indexTulokset_2 = 1;
     private  SimulaatioData simulaatioDataOlio;
+    private  SimulaatioData simulaatioDataOlio;
     private static final ResourceBundle rb = ResourceBundle.getBundle("System");
     private static final String url1 = rb.getString("url1") + rb.getString("username1") + rb.getString("password1");
     private static Connection connection = null;
     private static int simuID;
-    private static final ArrayList<SimulaatioData> simulaatioDataObjekti = new ArrayList<>();
+    private static ArrayList<SimulaatioData> simulaatioDataObjektiLista = new ArrayList<>();
 
 
     private synchronized void haeKaikkiTiedot() throws SQLException {
         haeSimulaationTiedot();
     }
 
+    private void haeSimulaationTiedot() throws SQLException {
     private void haeSimulaationTiedot() throws SQLException {
         String id = Integer.toString(simuID);
         String query = "SELECT * FROM simulaatio";
@@ -34,6 +36,9 @@ public class DAO implements IDAO {
                     haeSimulaationParametrit();
                     haeSimulaattorinTulokset();
                     simulaatioDataObjektiLista.add(simulaatioDataOlio);
+                    haeSimulaationParametrit();
+                    haeSimulaattorinTulokset();
+                    simulaatioDataObjektiLista.add(simulaatioDataOlio);
                 }
             }
         }
@@ -41,22 +46,22 @@ public class DAO implements IDAO {
 
     private void haeSimulaationParametrit() throws SQLException {
         String id = Integer.toString(simulaatioDataOlio.getId());
-        String query = "SELECT simulointiaika,viive, purkunopeusPerSek, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate,jatteenTodennakoisyysPalamatonJate FROM parametrit WHERE parametrit.parametriID="+id;
+        String query = "SELECT simulointiaika, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate,jatteenTodennakoisyysPalamatonJate FROM parametrit WHERE parametrit.parametriID="+id;
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2),
-                            rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
-                        simulaatioDataOlio.setParametrit(simulaationParametrit);
-                        //simulaatioParametritLista.add(simulaationParametrit);
-                    //System.out.println("Simu parametrit: " + simulaationParametrit.aikaProperty());
-                }
+                rs.first();
+                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+                simulaatioDataOlio.setParametrit(simulaationParametrit);
             }
         }
-
     }
 
+    private void haeSimulaattorinTulokset() throws SQLException {
+        String id = Integer.toString(simulaatioDataOlio.getId());
+        String query = "SELECT * FROM tulokset WHERE tulokset.tuloksetID="+id;
+        ArrayList<SimpleIntegerProperty> tuloksetINT = new ArrayList<>();
+        ArrayList<SimpleDoubleProperty> tuloksetDouble = new ArrayList<>();
     private void haeSimulaattorinTulokset() throws SQLException {
         String id = Integer.toString(simulaatioDataOlio.getId());
         String query = "SELECT * FROM tulokset WHERE tulokset.tuloksetID="+id;
@@ -66,21 +71,24 @@ public class DAO implements IDAO {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 rs.first();
+                rs.first();
                 ResultSetMetaData resultSetMetaData = (ResultSetMetaData) rs.getMetaData();
                     for (int i = 3; i < 13; i++) {
                         String columnName = resultSetMetaData.getColumnName(i);
+                        tuloksetINT.add(new SimpleIntegerProperty(rs.getInt(i)));
                         tuloksetINT.add(new SimpleIntegerProperty(rs.getInt(i)));
                     }
                     for (int j = 13; j < resultSetMetaData.getColumnCount(); j++) {
                         String columnName = resultSetMetaData.getColumnName(j);
                         tuloksetDouble.add((new SimpleDoubleProperty(rs.getDouble(j))));
+                        tuloksetDouble.add((new SimpleDoubleProperty(rs.getDouble(j))));
                     }
+                    SimulaatioData.SimulaattorinTulokset simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tuloksetINT, tuloksetDouble);
+                    simulaatioDataOlio.setTulokset(simulaattorinTulokset);
                     SimulaatioData.SimulaattorinTulokset simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tuloksetINT, tuloksetDouble);
                     simulaatioDataOlio.setTulokset(simulaattorinTulokset);
             }
         }
-        simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tulosIntAvainArvoParit, tuloksetDoubleAvainArvoParit);
-
     }
 
     private int setID() throws SQLException {
@@ -320,13 +328,15 @@ public class DAO implements IDAO {
     @Override
     public synchronized ArrayList<SimulaatioData> simulaatioColumnData() throws SQLException {
         haeKaikkiTiedot();
-        return simulaatioDataObjekti;
+        return simulaatioDataObjektiLista;
     }
 
     @Override
     public synchronized void poistaTaulu() throws SQLException {
         String query = "DROP TABLE parametrit,tulokset, simulaatio";
+        String query = "DROP TABLE parametrit,tulokset, simulaatio";
         connection = avaaYhteysTietokantaan();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.executeUpdate();
         }

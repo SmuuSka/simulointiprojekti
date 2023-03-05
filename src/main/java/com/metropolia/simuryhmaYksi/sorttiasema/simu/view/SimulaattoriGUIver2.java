@@ -308,10 +308,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     try {
                         TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
                         ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(datatulokset);
-                        for(int i = 0; i < datatulokset.size(); i++) {
-                            System.out.println("DATATULOKSET" + datatulokset.get(i).getId());
-                            System.out.println("DATAOB" + dataob.get(i).getId());
-                        }
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(SimulaattoriGUIver2.class.getResource("/uifxml/Tulokset.fxml"));
                         loader.setController(TULOKSET_FXML_CONTROLLER);
@@ -379,9 +375,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         if (newSelection != null) {
             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
             //SIMUAIKA TULOS
-            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/AikaYksikköä");
+            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getParametrit().aikaProperty().doubleValue()) + "/Simulaattoriin syötetty aika");
 //            //ROSKEN KOKONAIS MÄÄRÄ
-//            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getJatteidenKokonaismaara()) + " Kg");
+          //tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(1).doubleValue()) + " Kg");
             //ELEKTROJÄTE
             //PALAVAJÄTE
             //PALAMATONJÄTE
