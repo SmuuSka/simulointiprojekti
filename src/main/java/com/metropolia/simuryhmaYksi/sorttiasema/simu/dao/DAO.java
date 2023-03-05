@@ -41,12 +41,12 @@ public class DAO implements IDAO {
 
     private void haeSimulaationParametrit() throws SQLException {
         String id = Integer.toString(simulaatioDataOlio.getId());
-        String query = "SELECT simulointiaika, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate,jatteenTodennakoisyysPalamatonJate FROM parametrit WHERE parametrit.parametriID="+id;
+        String query = "SELECT simulointiaika,viive, purkunopeusPerSek, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate,jatteenTodennakoisyysPalamatonJate FROM parametrit WHERE parametrit.parametriID="+id;
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 rs.first();
-                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
                 simulaatioDataOlio.setParametrit(simulaationParametrit);
             }
         }
@@ -97,12 +97,12 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public synchronized void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit) throws SQLException {
+    public synchronized void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit, int viive, double purkuaika) throws SQLException {
         lisaaSimulaatioTaulu();
         lisaaTuloksetTaulu();
         lisaaParametritTaulu();
         lisaaSimulaatio(tyhjaksi);
-        lisaaParametrit(aika, vaihteluvali, jateprosentit);
+        lisaaParametrit(aika, vaihteluvali, jateprosentit, viive,purkuaika);
     }
 
     private void lisaaSimulaatioTaulu() throws SQLException {
@@ -117,7 +117,7 @@ public class DAO implements IDAO {
     }
 
     private void lisaaParametritTaulu() throws SQLException {
-        String query = "CREATE TABLE IF NOT EXISTS parametrit (parametriID INT PRIMARY KEY AUTO_INCREMENT, simulaatioID INT, simulointiaika DECIMAL," +
+        String query = "CREATE TABLE IF NOT EXISTS parametrit (parametriID INT PRIMARY KEY AUTO_INCREMENT, simulaatioID INT, simulointiaika DECIMAL,viive INT,purkunopeusPerSek DECIMAL(10,1)," +
                 "\tvaihteluvaliMin INT,\n" +
                 "\tvaihteluvaliMax INT ,\n" +
                 "\tjatteenTodennakoisyysElektroniikka INT,\n" +
@@ -190,10 +190,10 @@ public class DAO implements IDAO {
         }
     }
 
-    private void lisaaParametrit(double simulointiaika, int[] vaihteluvali, int[] jateprosentit) throws SQLException {
-        String query = "INSERT INTO parametrit (parametriID,simulaatioID, simulointiaika,vaihteluvaliMin," +
+    private void lisaaParametrit(double simulointiaika, int[] vaihteluvali, int[] jateprosentit, int viive, double purkunopeus) throws SQLException {
+        String query = "INSERT INTO parametrit (parametriID,simulaatioID,simulointiaika,viive,purkunopeusPerSek,vaihteluvaliMin," +
                 "vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate," +
-                "jatteenTodennakoisyysPalamatonJate  ) VALUES (?,?,?,?,?,?,?,?)";
+                "jatteenTodennakoisyysPalamatonJate) VALUES (?,?,?,?,?,?,?,?,?,?)";
         connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             //ParametriID
@@ -202,16 +202,21 @@ public class DAO implements IDAO {
             ps.setInt(2, simuID);
             //Simulaatioaika
             ps.setDouble(3, simulointiaika);
+            //Simulaation viive
+            ps.setInt(4,viive);
+            //Purkunopeus per sekuntti
+            ps.setDouble(5,purkunopeus);
             //Jätemäärä MIN
-            ps.setInt(4, vaihteluvali[0]);
+            ps.setInt(6, vaihteluvali[0]);
             //Jätemäärä MAX
-            ps.setInt(5, vaihteluvali[1]);
+            ps.setInt(7, vaihteluvali[1]);
             //Elektroniikan prosentit
-            ps.setInt(6, jateprosentit[0]);
+            ps.setInt(8, jateprosentit[0]);
             //Palavan jätteen prosentit
-            ps.setInt(7, jateprosentit[1]);
+            ps.setInt(9, jateprosentit[1]);
             //Palamattoman jätteen prosentit
-            ps.setInt(8, jateprosentit[2]);
+            ps.setInt(10, jateprosentit[2]);
+
             ps.executeUpdate();
         }
     }

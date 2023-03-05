@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface IDAO {
-     void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit) throws SQLException;
+     void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit, int viive, double purkunopeus) throws SQLException;
      void paivitaData(Laskenta suureet) throws SQLException;
      ArrayList<SimulaatioData> simulaatioColumnData() throws SQLException;
      void poistaTaulu() throws SQLException;

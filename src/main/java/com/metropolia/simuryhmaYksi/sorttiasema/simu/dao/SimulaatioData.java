@@ -76,16 +76,19 @@ public class SimulaatioData{
 
     public class SimulaationParametrit{
 
-        private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ;
-        private final DoubleProperty aika;
+        private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ, viive;
+        private final DoubleProperty aika, purkunopeus;
 
-        public SimulaationParametrit(double aika, int vmin, int vmax,int jateTE, int jateTPJ, int jateTPNJ){
+        public SimulaationParametrit(double aika,int viive, double purkunopeus, int vmin, int vmax,int jateTE, int jateTPJ, int jateTPNJ){
             this.aika = new SimpleDoubleProperty(aika);
+            this.viive = new SimpleIntegerProperty(viive);
+            this.purkunopeus = new SimpleDoubleProperty(purkunopeus);
             this.vmin = new SimpleIntegerProperty(vmin);
             this.vmax = new SimpleIntegerProperty(vmax);
             this.jateTE = new SimpleIntegerProperty(jateTE);
             this.jateTPJ = new SimpleIntegerProperty(jateTPJ);
             this.jateTPNJ = new SimpleIntegerProperty(jateTPNJ);
+
         }
 
          @Override
