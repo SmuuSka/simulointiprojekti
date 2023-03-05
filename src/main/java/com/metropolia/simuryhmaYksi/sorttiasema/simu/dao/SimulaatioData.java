@@ -10,7 +10,8 @@ public class SimulaatioData{
     private final IntegerProperty id;
     private final BooleanProperty simulaatioTyhjaksi;
     private final ObjectProperty<LocalDate> paivamaara;
-    private static SimulaationParametrit parametrit;
+    private SimulaationParametrit parametrit;
+    private SimulaattorinTulokset tulokset;
 
     public SimulaatioData(int id,LocalDate paivamaara, int simulaatioTyhjaksi){
         this.id = new SimpleIntegerProperty(id);
@@ -22,12 +23,20 @@ public class SimulaatioData{
         }
     }
 
-    public static SimulaationParametrit getParametrit() {
+    public SimulaationParametrit getParametrit() {
         return parametrit;
     }
 
-    public static void setParametrit(SimulaationParametrit parametrit) {
-        SimulaatioData.parametrit = parametrit;
+    public void setParametrit(SimulaationParametrit parametrit) {
+        this.parametrit = parametrit;
+    }
+
+    public SimulaattorinTulokset getTulokset() {
+        return tulokset;
+    }
+
+    public void setTulokset(SimulaattorinTulokset tulokset) {
+        this.tulokset = tulokset;
     }
 
     public int getId() {
@@ -52,6 +61,17 @@ public class SimulaatioData{
 
     public ObjectProperty<LocalDate> paivamaaraProperty() {
         return paivamaara;
+    }
+
+    @Override
+    public String toString() {
+        return "SimulaatioData{" +
+                "id=" + id +
+                ", simulaatioTyhjaksi=" + simulaatioTyhjaksi +
+                ", paivamaara=" + paivamaara +
+                ", parametrit=" + parametrit +
+                ", tulokset=" + tulokset +
+                '}';
     }
 
     public class SimulaationParametrit{
@@ -129,19 +149,28 @@ public class SimulaatioData{
         }
     }
     public class SimulaattorinTulokset{
-        private HashMap<SimpleStringProperty, SimpleIntegerProperty> tuloksetInt;
-        private HashMap<SimpleStringProperty, SimpleDoubleProperty> tuloksetDouble;
-        public SimulaattorinTulokset(HashMap<SimpleStringProperty, SimpleIntegerProperty> tuloksetInt, HashMap<SimpleStringProperty, SimpleDoubleProperty> tuloksetDouble){
-            this.tuloksetInt = tuloksetInt;
-            this.tuloksetDouble = tuloksetDouble;
+        private ArrayList<SimpleIntegerProperty> tuloksetINT;
+        private ArrayList<SimpleDoubleProperty> tuloksetDOUBLE;
+
+        SimulaattorinTulokset(ArrayList<SimpleIntegerProperty> tuloksetINT,ArrayList<SimpleDoubleProperty> tuloksetDOUBLE ){
+            this.tuloksetINT = tuloksetINT;
+            this.tuloksetDOUBLE = tuloksetDOUBLE;
         }
 
-        public HashMap<SimpleStringProperty, SimpleIntegerProperty> getTuloksetInt() {
-            return tuloksetInt;
+        public ArrayList<SimpleIntegerProperty> getTuloksetINT() {
+            return tuloksetINT;
         }
 
-        public HashMap<SimpleStringProperty, SimpleDoubleProperty> getTuloksetDouble() {
-            return tuloksetDouble;
+        public ArrayList<SimpleDoubleProperty> getTuloksetDOUBLE() {
+            return tuloksetDOUBLE;
+        }
+
+        @Override
+        public String toString() {
+            return "SimulaattorinTulokset{" +
+                    "tuloksetINT=" + tuloksetINT +
+                    ", tuloksetDOUBLE=" + tuloksetDOUBLE +
+                    '}';
         }
     }
 
