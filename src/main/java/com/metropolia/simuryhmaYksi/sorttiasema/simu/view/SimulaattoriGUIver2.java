@@ -125,13 +125,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             ruuhkainenAktiivisuus = strategiaFXML_Controller.getSTRATEGIA_RUUHKA_RUUHKA_CHECK();
             ruuhkainenAktiivisuus.setId("3");
 
-            //Tapahtumat
-            asiakasAuto_Hajioa = strategiaFXML_Controller.getSTRATEGIA_TAPAHTUMAT_ASIAKASAUTO();
-            asiakasAuto_Hajioa.setId("4");
-
-            saapumispisteOnglema = strategiaFXML_Controller.getSTRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA();
-            saapumispisteOnglema.setId("5");
-
             //Ajetaanko Tyhjäksi?
             ajetaanLoppuun = strategiaFXML_Controller.getSTRATEGIA_JONOT_AJALOPPUUN();
             ajetaanLoppuun.setId("6");

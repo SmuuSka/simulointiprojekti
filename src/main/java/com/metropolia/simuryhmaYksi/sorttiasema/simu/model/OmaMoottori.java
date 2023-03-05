@@ -244,4 +244,9 @@ public class OmaMoottori extends Moottori {
         System.out.println(laskenta);
         kontrolleri.tallennaTulokset(laskenta);
     }
+
+    @Override
+    public void lopeta() {
+
+    }
 }
