@@ -7,4 +7,5 @@ public interface IMoottori {
     public void viive();
     public void setAjetaanTyhjaksi(boolean ajetaanTyhjaksi);
     public boolean getAjetaanTyhjaksi();
+    public void lopeta();
 }

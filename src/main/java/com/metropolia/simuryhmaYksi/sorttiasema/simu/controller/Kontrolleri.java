@@ -75,6 +75,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
     @Override
     public void lopetaSimulointi() {
+        moottori.lopeta();
     }
 
     @Override
