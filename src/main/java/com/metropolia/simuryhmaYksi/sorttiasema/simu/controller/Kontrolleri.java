@@ -89,6 +89,11 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
+    public void poistaTulos(int ID) throws SQLException {
+    tietokanta.poistaTiettyTulos(ID);
+    }
+
+    @Override
     public void visualisoiAsiakas() {
 
     }

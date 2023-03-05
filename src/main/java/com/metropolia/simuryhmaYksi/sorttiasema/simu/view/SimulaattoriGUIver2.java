@@ -321,6 +321,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             idCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, Integer>("id"));
                             TableColumn<SimulaatioData, LocalDate> aikaCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Päivämäärä");
                             aikaCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("paivamaara"));
+                            TableColumn<SimulaatioData, LocalDate> ajetaankoTyhjaksiCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Ajetaanko Tyhjäksi");
+                            ajetaankoTyhjaksiCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("ajetaanTyhjaksi"));
 
                             TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN, aikaCOLUMN);
                             aikaCOLUMN.setCellValueFactory(
@@ -337,6 +339,17 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
                             TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                                 valittuData(obs, newSelection, TULOKSET_FXML_CONTROLLER);
+                                SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+                                //Poista valittu dataNappi.
+                                tuloksetPoistaTulosButton.setOnAction(event -> {
+                                    try {
+                                        poistaData(selectedItem.getId());
+                                        TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+                                    } catch (SQLException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    System.out.println("POISTETTU DATA");
+                                });
                             });
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -344,12 +357,13 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
                     tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
 
-                    //Poista valittu dataNappi.
-                    tuloksetPoistaTulosButton.setOnAction(event -> {
-                        System.out.println("POISTETTU DATA");
-                    });
 
                 });
+    }
+
+    @Override
+    public void poistaData(int ID) throws SQLException {
+        kontrolleri.poistaTulos(ID);
     }
 
     public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
