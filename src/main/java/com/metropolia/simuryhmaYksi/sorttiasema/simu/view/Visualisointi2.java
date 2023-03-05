@@ -538,6 +538,8 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
 
 
     public void setAnimaationViive(int viive){
-        this.animationTimeinMillis = viive;
+        if (this.animationTimeinMillis - viive > 0){
+            this.animationTimeinMillis=-viive;
+        }
     }
 }
