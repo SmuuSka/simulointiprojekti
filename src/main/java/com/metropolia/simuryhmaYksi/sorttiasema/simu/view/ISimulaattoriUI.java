@@ -16,43 +16,43 @@ public interface ISimulaattoriUI {
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
-    public void showTulokset(ArrayList<SimulaatioData> dataColumn);
-    public void poistaData(int ID) throws SQLException;
+     void showTulokset(ArrayList<SimulaatioData> dataColumn);
+    void poistaData(int ID) throws SQLException;
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
 
 
-    public double getAika();
-    public long getViive();
-    public void setLoppuaika();
+    double getAika();
+     long getViive();
+     void setLoppuaika();
     //Asiakaan Jäte MIN ja MAX määrä getteri.
-    public int[] getVaihteluvali();
-    public int[] getJateLaijenProsentit();
+     int[] getVaihteluvali();
+     int[] getJateLaijenProsentit();
     //Asiakaan kesto 1 kilon heittämisessä getter.
-    public double getAsiakasKgPerSekunti();
+     double getAsiakasKgPerSekunti();
 
     //Simulaattorin Mitä jätettä tuotaan "prosentti int"
-    public int[] getJatelajiProsentit();
+     int[] getJatelajiProsentit();
 
     //Simulaattorin Aktiivisuus input arvot.
-    public int getRuuhkaAika();
-    public int getStrategiaTapahtumat();
+    int getRuuhkaAika();
+    int getStrategiaTapahtumat();
 
     //Simulaatorin pois heitetty Jätteen lable elementin arvot.
-    public int getElektro_JateCounter();
-    public int getPalavaJateCounter();
-    public int getPalamatonJateCounter();
+     int getElektro_JateCounter();
+     int getPalavaJateCounter();
+     int getPalamatonJateCounter();
 
-    public boolean getAjeetaankoLoppuun();
-    public STRATEGIA_FXML_CONTROLLER getStrategiaController();
+     boolean getAjeetaankoLoppuun();
+     STRATEGIA_FXML_CONTROLLER getStrategiaController();
 
 
 
-    public IVisualisointi getVisualisointi();
-    public void setEJateJonossa(int pituus);
-    public void setPTJateJonossa(int pituus);
-    public void setPJateJonossa(int pituus);
-    public void setSAAPUMINENJonossa(int pituus);
-    public void setAnimaationViive(int viive);
+     IVisualisointi getVisualisointi();
+     void setEJateJonossa(int pituus);
+     void setPTJateJonossa(int pituus);
+     void setPJateJonossa(int pituus);
+     void setSAAPUMINENJonossa(int pituus);
+     void setAnimaationViive(int viive);
 }

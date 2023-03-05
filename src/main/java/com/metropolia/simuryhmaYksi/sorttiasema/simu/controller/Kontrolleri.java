@@ -2,7 +2,6 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.controller;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.DAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Laskenta;
@@ -52,21 +51,23 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
-    public void nopeuta() {
+    public synchronized void nopeuta() {
         // placeholder
         long viive = 500;
         // Vähentää viivettä 0.5s
         if (moottori.getViive() - viive >= 1){
             moottori.setViive(moottori.getViive() - viive);
             ui.setAnimaationViive((int)(moottori.getViive()));
+            notifyAll();
         }
     }
 
     @Override
-    public void hidasta() {
+    public synchronized void hidasta() {
         // Lisää viivettä 0.5s
         moottori.setViive(moottori.getViive() + 500);
         ui.setAnimaationViive((int)(moottori.getViive() + 500));
+
     }
 
     @Override
@@ -74,7 +75,9 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         return nayttoVisual;
     }
     @Override
-    public void lopetaSimulointi() {
+    public void lopetaSimulointi(Laskenta suureet) throws SQLException {
+        ((Thread)moottori).stop();
+        tallennaTulokset(suureet);
     }
 
     @Override
@@ -87,6 +90,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         tietokanta.paivitaData(suureet);
         ui.showTulokset(tietokanta.simulaatioColumnData());
     }
+
 
     @Override
     public void poistaTulos(int ID) throws SQLException {
