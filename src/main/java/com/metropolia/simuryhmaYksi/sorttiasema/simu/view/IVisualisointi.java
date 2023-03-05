@@ -10,28 +10,28 @@ public interface IVisualisointi {
 
     void lisaaPoistunutMaara(int maara);
 
-    public void uusiAsiakas();
+    void uusiAsiakas();
     // Asiakaan liikumisen methodit (kutsutaan kun asiakas siirtyy johonkin jätelava pisteelle tai poistuu sieltä)
-    public void moveAsiakasPALAVA();
-    public void moveAsiakasEPA();
-    public void moveAsiakasELEKTRO();
+    void moveAsiakasPALAVA();
+    void moveAsiakasEPA();
+    void moveAsiakasELEKTRO();
 
-    public void moveAsiakasPALAVA_POISTUMINEN();
-    public void moveAsiakasEPA_POISTUMINEN();
-    public  void moveAsiakasELEKTRO_POISTUMINEN();
+    void moveAsiakasPALAVA_POISTUMINEN();
+    void moveAsiakasEPA_POISTUMINEN();
+    void moveAsiakasELEKTRO_POISTUMINEN();
 
-    public void moveAsiakasELEKTRO_PALAVA();
-    public void moveAsiakasPALAVA_ELEKTRO();
-    public void moveAsiakasELEKTRO_EPA();
-    public void moveAsiakasEPA_ELEKTRO();
-    public void moveAsiakasPA_EPA();
-    public void moveAsiakasEPA_PA();
+    void moveAsiakasELEKTRO_PALAVA();
+    void moveAsiakasPALAVA_ELEKTRO();
+    void moveAsiakasELEKTRO_EPA();
+    void moveAsiakasEPA_ELEKTRO();
+    void moveAsiakasPA_EPA();
+    void moveAsiakasEPA_PA();
 
     //Palvelupisteen valo menee punaiseksi kun asiakas on kyseisessä pisteessä.
-    public void setPALAVA_VARATTU(boolean onkovarattu);
-    public void setEPA_VARATTU(boolean onkovarattu);
-    public void setELEKTRO_VARATTU(boolean onkovarattu);
-    public void setSAAPUMINEN_VARATTU(boolean onkovarattu);
+    void setPALAVA_VARATTU(boolean onkovarattu);
+    void setEPA_VARATTU(boolean onkovarattu);
+    void setELEKTRO_VARATTU(boolean onkovarattu);
+    void setSAAPUMINEN_VARATTU(boolean onkovarattu);
 
     void setELEKTRO_COUNTER(double value);
 
@@ -55,6 +55,6 @@ public interface IVisualisointi {
 
     void removeJONOPALIKKA_SAAPUMINEN(int sizenow);
 
-    public void setAnimaationViive(int viive);
+    void setAnimaationViive(int viive);
 
 }

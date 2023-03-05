@@ -263,11 +263,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                         kontrolleri.nopeuta();
                                     });
                                     lopetaButton.setOnAction(event4 -> {
-                                        naytto.setPALAVA_VARATTU(false);
-                                        naytto.setELEKTRO_VARATTU(false);
-                                        naytto.setSAAPUMINEN_VARATTU(false);
-                                        naytto.setEPA_VARATTU(false);
-                                        kontrolleri.lopetaSimulointi();
                                     });
                                 } catch (NullPointerException e) {
                                     e.printStackTrace();

@@ -2,7 +2,6 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.controller;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.DAO;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.IDAO;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.IMoottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Asiakas;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Laskenta;
@@ -67,6 +66,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         // Lisää viivettä 0.5s
         moottori.setViive(moottori.getViive() + 500);
         ui.setAnimaationViive((int)(moottori.getViive() + 500));
+
     }
 
     @Override
@@ -88,6 +88,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         tietokanta.paivitaData(suureet);
         ui.showTulokset(tietokanta.simulaatioColumnData());
     }
+
 
     @Override
     public void poistaTulos(int ID) throws SQLException {
