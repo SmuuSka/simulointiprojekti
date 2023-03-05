@@ -94,12 +94,19 @@ public abstract class Moottori extends Thread implements IMoottori {
 		try {
 			sleep(viive);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			System.out.println("Viive keskeytetään.");
 		}
 	}
 
 	@Override
+	public void lopeta(){
+		interrupt();
+		setSimulointiaika(0);
+	}
+
+	@Override
 	public void setViive(long viive) {
+		interrupt();
 		this.viive = viive;
 	}
 
