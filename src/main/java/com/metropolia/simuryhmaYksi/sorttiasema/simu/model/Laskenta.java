@@ -20,6 +20,7 @@ public class Laskenta {
     private double kokonaisaika = Kello.getInstance().getAika();
     private long[] kokonaisoleskeluajat;
     private double jatteenKokonaismaara;
+    private double[] jatteenMaarat;
     
 
     // Johdettuja suureita
@@ -33,12 +34,14 @@ public class Laskenta {
   
     
 
-    public Laskenta(int saapuneidenLkm, int[] palveltujenLkm, double[] aktiiviajat, long[] kokonaisoleskeluajat, double jatteenKokonaismaara) {
+    public Laskenta(int saapuneidenLkm, int[] palveltujenLkm, double[] aktiiviajat, long[] kokonaisoleskeluajat, double jatteenKokonaismaara, double[] jatteenMaarat) {
         this.saapuneidenLkm = saapuneidenLkm;
         this.palveltujenLkm = palveltujenLkm;
         this.aktiiviajat = aktiiviajat;
         this.kokonaisoleskeluajat = kokonaisoleskeluajat;
         this.jatteenKokonaismaara = jatteenKokonaismaara;
+        this.jatteenMaarat = jatteenMaarat;
+        System.out.println(Arrays.toString(jatteenMaarat));
     }
 
     public void laske(){
@@ -160,17 +163,24 @@ public class Laskenta {
         return keskmPalveluajat;
     }
 
+    public double[] jatteenMaarat(){
+        return jatteenMaarat;
+    }
+
     @Override
     public String toString() {
-        return "Laskenta [saapuneidenLkm=" + saapuneidenLkm + ", palveltujenLkm=" + Arrays.toString(palveltujenLkm)
-                + ", palveltujenSumma=" + palveltujenMaara + ", aktiiviajat=" + Arrays.toString(aktiiviajat)
-                + ", kokonaisaika=" + kokonaisaika + ", kokonaisoleskeluajat=" + Arrays.toString(kokonaisoleskeluajat)
-                + ", jatteenKokonaismaara=" + jatteenKokonaismaara + ", suoritusteho=" + suoritusteho
+        return "Laskenta [LKM=" + LKM + ", saapuneidenLkm=" + saapuneidenLkm + ", palveltujenLkm="
+                + Arrays.toString(palveltujenLkm) + ", palveltujenMaara=" + palveltujenMaara + ", aktiiviajat="
+                + Arrays.toString(aktiiviajat) + ", kokonaisaika=" + kokonaisaika + ", kokonaisoleskeluajat="
+                + Arrays.toString(kokonaisoleskeluajat) + ", jatteenKokonaismaara=" + jatteenKokonaismaara
+                + ", jatteenMaarat=" + Arrays.toString(jatteenMaarat) + ", suoritusteho=" + suoritusteho
                 + ", keskmJononpituudet=" + Arrays.toString(keskmJononpituudet) + ", keskmLapimenoajat="
                 + Arrays.toString(keskmLapimenoajat) + ", kayttoasteet=" + Arrays.toString(kayttoasteet)
                 + ", keskmPalveluajat=" + Arrays.toString(keskmPalveluajat) + ", keskmJatteenmaara=" + keskmJatteenmaara
                 + "]";
     }
+
+    
 
     
 }

@@ -19,11 +19,12 @@ public class LaskentaTest {
     private int[] palveltujenLkm = {50,50,50,50};
     private double[] aktiiviajat = {2000, 300, 200, 100};
     private long[] kokonaisoleskeluajat = {300, 200, 100, 500};
-    private double jatteenKokonaismaara = 4200.2;
+    private double jatteenKokonaismaara = 900;
     private double kokonaisaika = 20;
+    private double[] jatteenMaarat = {200, 300, 400};
     
 
-    Laskenta l = new Laskenta(saapuneidenLkm, palveltujenLkm, aktiiviajat, kokonaisoleskeluajat, jatteenKokonaismaara);
+    Laskenta l = new Laskenta(saapuneidenLkm, palveltujenLkm, aktiiviajat, kokonaisoleskeluajat, jatteenKokonaismaara, jatteenMaarat);
 
     @Test
     void testGetAktiiviajat() {
