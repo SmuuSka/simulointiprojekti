@@ -79,12 +79,12 @@ public class SimulaatioData{
 
     public class SimulaationParametrit{
 
-        private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ, viive;
-        private final DoubleProperty aika, purkunopeus;
+        private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ;
+        private final DoubleProperty aika, purkunopeus, viive;
 
-        public SimulaationParametrit(double aika,int viive, double purkunopeus, int vmin, int vmax,int jateTE, int jateTPNJ,int jateTPJ){
+        public SimulaationParametrit(double aika,double viive, double purkunopeus, int vmin, int vmax,int jateTE, int jateTPNJ,int jateTPJ){
             this.aika = new SimpleDoubleProperty(aika);
-            this.viive = new SimpleIntegerProperty(viive);
+            this.viive = new SimpleDoubleProperty(viive);
             this.purkunopeus = new SimpleDoubleProperty(purkunopeus);
             this.vmin = new SimpleIntegerProperty(vmin);
             this.vmax = new SimpleIntegerProperty(vmax);
@@ -94,17 +94,19 @@ public class SimulaatioData{
 
         }
 
-         @Override
-         public String toString() {
-             return "SimulaationParametrit{" +
-                     "vmin=" + vmin +
-                     ", vmax=" + vmax +
-                     ", jateTE=" + jateTE +
-                     ", jateTPJ=" + jateTPJ +
-                     ", jateTPNJ=" + jateTPNJ +
-                     ", aika=" + aika +
-                     '}';
-         }
+        @Override
+        public String toString() {
+            return "SimulaationParametrit{" +
+                    "vmin=" + vmin +
+                    ", vmax=" + vmax +
+                    ", jateTE=" + jateTE +
+                    ", jateTPJ=" + jateTPJ +
+                    ", jateTPNJ=" + jateTPNJ +
+                    ", aika=" + aika +
+                    ", purkunopeus=" + purkunopeus +
+                    ", viive=" + viive +
+                    '}';
+        }
 
         public int getVmin() {
             return vmin.get();
@@ -153,7 +155,25 @@ public class SimulaatioData{
         public DoubleProperty aikaProperty() {
             return aika;
         }
+
+        public double getPurkunopeus() {
+            return purkunopeus.get();
+        }
+
+        public DoubleProperty purkunopeusProperty() {
+            return purkunopeus;
+        }
+
+        public double getViive() {
+            return viive.get();
+        }
+
+        public DoubleProperty viiveProperty() {
+            return viive;
+        }
     }
+
+
     public class SimulaattorinTulokset{
         private ArrayList<SimpleIntegerProperty> tuloksetINT;
         private ArrayList<SimpleDoubleProperty> tuloksetDOUBLE;

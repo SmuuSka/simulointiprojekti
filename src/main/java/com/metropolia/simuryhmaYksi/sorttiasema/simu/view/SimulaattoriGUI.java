@@ -235,6 +235,11 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
+    public Double getPurkuNopeus() {
+        return null;
+    }
+
+    @Override
     public boolean getAjeetaankoLoppuun() {
         return false;
     }

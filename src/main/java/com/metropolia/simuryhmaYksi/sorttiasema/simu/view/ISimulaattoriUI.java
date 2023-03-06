@@ -37,13 +37,13 @@ public interface ISimulaattoriUI {
 
     //Simulaattorin Aktiivisuus input arvot.
     int getRuuhkaAika();
-    int getStrategiaTapahtumat();
 
     //Simulaatorin pois heitetty Jätteen lable elementin arvot.
      int getElektro_JateCounter();
      int getPalavaJateCounter();
      int getPalamatonJateCounter();
 
+     Double getPurkuNopeus();
      boolean getAjeetaankoLoppuun();
      STRATEGIA_FXML_CONTROLLER getStrategiaController();
 

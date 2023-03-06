@@ -26,7 +26,6 @@ public class OmaMoottori extends Moottori {
         palvelupisteet = new Palvelupiste[4];
         //Palvelutiski
         palvelupisteet[0] = new Palvelutiski(new Normal(10, 6), tapahtumalista);
-
         //Jätelavat
         palvelupisteet[1] = new Jatelava(new Normal(10, 6), tapahtumalista, Jatelaji.ELEKTRONIIKKA);
         palvelupisteet[2] = new Jatelava(new Normal(10, 10), tapahtumalista, Jatelaji.PALAMATONAJATE);
