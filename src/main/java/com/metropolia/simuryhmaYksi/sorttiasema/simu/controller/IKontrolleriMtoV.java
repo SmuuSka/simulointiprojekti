@@ -9,10 +9,10 @@ public interface IKontrolleriMtoV {
      void naytaLoppuaika(double aika);
     void tallennaTulokset(Laskenta suureet) throws SQLException;
 
-    void visualisoiAsiakas();
     IVisualisointi getVisualisointi();
     void setEJononPituus(int pituus);
     void setPTJononPituus(int size);
     void setPJononPituus(int size);
      void setSAAPUMISJononPituus(int size);
+
 }

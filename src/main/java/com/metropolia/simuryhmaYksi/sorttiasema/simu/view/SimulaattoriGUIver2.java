@@ -26,9 +26,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private TULOKSET_FXML_CONTROLLER TULOKSET_FXML_CONTROLLER;
@@ -49,6 +51,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private int palamatonJateProsentti = 0;
     private int simulaatioAika = 0;
 
+    private boolean onkoSimuloitu = false;
     private int simulaatioViive = 0;
     private ToggleGroup aktiivisuusRadioGroup;
     private Scene scene;
@@ -56,13 +59,21 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private PÄÄSIMULAATORI_FXML_CONTROLLER mainFXML_Controller;
     private STRATEGIA_FXML_CONTROLLER strategiaFXML_Controller;
     private Parent root;
+    private Parent rootPaaSimu;
+    private Parent rootStrategia;
     private IKontrolleriVtoM kontrolleri;
     private Stage primaryStagePara;
     private IVisualisointi naytto;
+    private static String[] mainArgs;
     //-------------------------------------------------------------------------------------------
 
     public static void main(String[] args) {
         launch(args);
+        setMainArgs(args);
+    }
+
+    private static void setMainArgs(String[] args) {
+        mainArgs = args;
     }
 
     @Override
@@ -83,7 +94,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             strategiaFXML_Controller = new STRATEGIA_FXML_CONTROLLER(kontrolleri);
             mainFXML_Controller = new PÄÄSIMULAATORI_FXML_CONTROLLER(kontrolleri);
             loaderStrategia.setController(strategiaFXML_Controller);
-            root = loaderStrategia.load();
+            loaderSIMU.setController(mainFXML_Controller);
+            rootStrategia = loaderStrategia.load();
+            rootPaaSimu = loaderSIMU.load();
 
             //Hae STRATEGIA Napit FXML CONTROLLERISTA
 
@@ -132,7 +145,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //-------------------------------------------------------------------------------------------
 
             //-ASETETAAN STRATEGIA SCENE-//
-            scene = new Scene(root);
+            scene = new Scene(loaderStrategia.getRoot());
             strategiaNaytaTuloksetButton.setOnAction(actionEvent -> {
                 try {
                     kontrolleri.showTuloksetAction();
@@ -184,22 +197,17 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä. Tai et ole antanut mitään arvoja.");
                             alert.show();
                         } else {
+                                if (rootPaaSimu.getScene() != null){
+                                    primaryStage.setScene(scene);
+                                    primaryStage.setTitle("Sortti-Asema Simu");
+                                    primaryStage.show();
+                                }else{
+                                    scene = new Scene(loaderSIMU.getRoot());
+                                    primaryStage.setScene(scene);
+                                    primaryStage.setTitle("Sortti-Asema Simu");
+                                    primaryStage.show();
+                                }
 
-                            try {
-                                loaderSIMU.setController(mainFXML_Controller);
-                                root = loaderSIMU.load();
-                                scene = new Scene(root);
-
-                                primaryStage.setScene(scene);
-
-                                primaryStage.setTitle("Sortti-Asema Simu");
-
-                            } catch (IOException er) {
-                                System.out.println("PÄÄSIMULAATIO ei ladannut oikein.");
-                                er.printStackTrace();
-
-                            }
-                            primaryStage.show();
 
                             //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
                             if (primaryStage.isShowing() == true) {
@@ -238,15 +246,26 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
 
                                 System.out.println("Siirytään Pääsimulaatorille.");
+
                                 try {
                                     aloitaButton.setOnAction(event1 -> {
-                                        kontrolleri.setVisualisointi(getVisualisointi());
-                                        try {
-                                            kontrolleri.kaynnistaSimulointi();
-
-                                        } catch (SQLException e) {
-                                            throw new RuntimeException(e);
+                                        if (onkoSimuloitu) {
+                                            onkoSimuloitu = false;
+                                            Parent root2 = loaderStrategia.getRoot();
+                                            System.out.println(scene.getRoot().toString());
+                                            primaryStage.setScene(root2.getScene());
+                                            restartProgram(primaryStage,loaderStrategia);
+                                        }else {
+                                            kontrolleri.setVisualisointi(getVisualisointi());
+                                            try {
+                                                kontrolleri.kaynnistaSimulointi();
+                                                onkoSimuloitu = true;
+                                            } catch (SQLException e) {
+                                                throw new RuntimeException(e);
+                                            }
                                         }
+
+
                                     });
 
                                     hidastaButton.setOnAction(event2 -> {
@@ -274,7 +293,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 }
             });
 
-            primaryStage.setScene(scene);
+            primaryStage.setScene(rootStrategia.getScene());
 
             primaryStage.setTitle("Sortti-Asema Simu");
 
@@ -285,6 +304,26 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         }
     }
     //-------------------------------------------------------------------------------------------
+    public void restartProgram(Stage primaryStage,FXMLLoader strategialoader) {
+        onkoSimuloitu = false;
+        Platform.runLater(() -> {
+            try {
+                primaryStage.close();
+                FXMLLoader loaderStrategia = new FXMLLoader(getClass().getResource("/uifxml/Strategia.fxml"));
+                strategiaFXML_Controller = new STRATEGIA_FXML_CONTROLLER(kontrolleri);
+                loaderStrategia.setController(strategiaFXML_Controller);
+                rootStrategia = loaderStrategia.load();
+                    Stage newPrimaryStage = new Stage();
+                    Parent root = loaderStrategia.getRoot();
+                    Scene scene = new Scene(root);
+                    primaryStage.setScene(scene);
+                    primaryStage.show();
+                    start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
