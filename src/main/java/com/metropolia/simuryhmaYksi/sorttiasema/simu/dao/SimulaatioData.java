@@ -82,7 +82,7 @@ public class SimulaatioData{
         private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ;
         private final DoubleProperty aika, purkunopeus, viive;
 
-        public SimulaationParametrit(double aika,double viive, double purkunopeus, int vmin, int vmax,int jateTE, int jateTPNJ,int jateTPJ){
+        public SimulaationParametrit(double aika,double viive, double purkunopeus, int vmin, int vmax,int jateTE, int jateTPJ, int jateTPNJ){
             this.aika = new SimpleDoubleProperty(aika);
             this.viive = new SimpleDoubleProperty(viive);
             this.purkunopeus = new SimpleDoubleProperty(purkunopeus);
