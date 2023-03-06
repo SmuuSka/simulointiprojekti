@@ -91,12 +91,15 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         tietokanta.luoData(onkoAjetaanloppuun,ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit(),40,1.5);
         tietokanta.paivitaData(suureet);
         ui.showTulokset(tietokanta.simulaatioColumnData());
+        tietokanta.suljeYhteys();
     }
 
 
     @Override
     public void poistaTulos(int ID) throws SQLException {
-    tietokanta.poistaTiettyTulos(ID);
+        tietokanta = new DAO();
+        tietokanta.poistaTiettyTulos(ID);
+        tietokanta.suljeYhteys();
     }
 
     @Override
@@ -112,14 +115,16 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
     @Override
     public void showTuloksetAction() throws SQLException {
+        tietokanta = new DAO();
         switch (counter){
             case 0:
                 counter = 1;
-                tietokanta = new DAO();
                 ui.showTulokset(tietokanta.simulaatioColumnData());
+                tietokanta.suljeYhteys();
                 break;
             case 1:
                 ui.showTulokset(tietokanta.simulaatioColumnData());
+                tietokanta.suljeYhteys();
                 break;
         }
     }
