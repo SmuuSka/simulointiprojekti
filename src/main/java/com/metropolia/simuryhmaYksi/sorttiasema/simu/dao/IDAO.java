@@ -12,4 +12,5 @@ public interface IDAO {
      ArrayList<SimulaatioData> simulaatioColumnData() throws SQLException;
      void poistaTaulu() throws SQLException;
      boolean poistaTiettyTulos(int ID) throws SQLException;
+     void suljeYhteys();
 }

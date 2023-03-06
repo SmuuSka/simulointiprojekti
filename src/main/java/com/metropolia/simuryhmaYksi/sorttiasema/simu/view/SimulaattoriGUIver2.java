@@ -243,6 +243,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                         kontrolleri.setVisualisointi(getVisualisointi());
                                         try {
                                             kontrolleri.kaynnistaSimulointi();
+
                                         } catch (SQLException e) {
                                             throw new RuntimeException(e);
                                         }
