@@ -4,22 +4,44 @@ import java.util.LinkedList;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.ContinuousGenerator;
 
-
+/**
+ * @author Samu Aikio, Joel Tikkanen, Kaspar Tullus
+ */
 public class Jategeneraattori {
 
- 
-    private int[] todT; // {30, 60, 10}
+    private int[] todT;
     private LinkedList<Jate> jatteet = new LinkedList<>();
     private final static int ERIJATTEIDENLKM = 3;
 
     // Jakauman mukainen satunnaisluku generaattori
     private ContinuousGenerator generaattori;
 
+    /**
+     * 
+     * @param todT
+     * @param generaattori
+     */
     public Jategeneraattori(int[] todT, ContinuousGenerator generaattori) {
         this.todT = todT;
         this.generaattori = generaattori;
     }
 
+    /**
+     * Toteutus perustuu jotenkuten aikasemmin toteutettuun ikäjakauma tehtävään.
+     * 
+     * Metodille annetaan parametrina taulukko, joka sisältää eri jätteiden todennäköisyydet.
+     * Taulukon ensimmäinen indeksi, merkitsee todennäköisyyttä elektroniikkajätteelle, toinen palamattomalle ja kolmas
+     * palavalle.
+     * Todennakoisyydet jaetaan kaksiuloitteiseen taulukkoon osaväleiksi, 
+     * jos todennäköisyys on nolla, niin osaväli on [-1, -1].
+     * Sitten arvotaan satunnaisluku väliltä [0, suurin yläraja] (max).
+     * Lopuksi metodi palauttaa arvon i, joka kertoo mihin osaväliin satunnaisluku sijoittui (0,1,2).
+     * 
+     * Kun arvottu luku on väliltä [0, 2], niin voimme hyödyntää sitä helposti Jätelaji enumin käsittelyssä.
+     * 
+     * @param arr
+     * @return arvottu numero väliltä [0,2]
+     */
     public int arvoArvo(int[] arr){
         int[][] valit = new int[3][2];
         int i = 0;
@@ -42,6 +64,10 @@ public class Jategeneraattori {
         return i; 
     }
 
+    /**
+     * Generoi asiakkaalle kolme jätettä arvoArvo metodia käyttäen.
+     * Huom. Generoidut jätteet voivat olla samoja.
+     */
     public void generoiJatteet(){
 
         for (int i=0;i<ERIJATTEIDENLKM;i++){
@@ -60,6 +86,10 @@ public class Jategeneraattori {
         }
     }
 
+    /**
+     * 
+     * @return jatteet
+     */
     public LinkedList<Jate> getJatteet(){
         return jatteet;
     }

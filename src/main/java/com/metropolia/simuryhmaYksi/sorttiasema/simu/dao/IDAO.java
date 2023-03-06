@@ -5,6 +5,9 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Laskenta;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
 
 public interface IDAO {
      void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit, int viive, double purkunopeus) throws SQLException;

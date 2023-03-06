@@ -5,6 +5,9 @@ import javafx.beans.property.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
 
 public class SimulaatioData{
     private final IntegerProperty id;

@@ -9,6 +9,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class DAO implements IDAO {
     private int indexTulokset_1 = 1, indexTulokset_2 = 1;
     private  SimulaatioData simulaatioDataOlio;

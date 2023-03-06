@@ -24,6 +24,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class Visualisointi2 extends Canvas implements IVisualisointi {
     private int asiakasLkm = 0;
     private int animationTimeinMillis = 2000;

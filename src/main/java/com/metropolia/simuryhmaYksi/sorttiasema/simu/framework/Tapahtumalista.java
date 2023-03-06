@@ -1,6 +1,9 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.framework;
 
 import java.util.PriorityQueue;
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
 
 public class Tapahtumalista {
 	private PriorityQueue<Tapahtuma> lista = new PriorityQueue<Tapahtuma>();

@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class Yhteys {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("System");

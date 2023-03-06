@@ -23,6 +23,9 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
 
 public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     private IKontrolleriVtoM kontrolleri;
