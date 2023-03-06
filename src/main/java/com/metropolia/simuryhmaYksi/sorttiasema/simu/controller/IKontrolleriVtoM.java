@@ -5,6 +5,10 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 
 import java.sql.SQLException;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public interface IKontrolleriVtoM {
   void kaynnistaSimulointi() throws SQLException;
     void nopeuta();

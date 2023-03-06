@@ -4,22 +4,33 @@ import java.util.LinkedList;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.ContinuousGenerator;
 
-
+/**
+ * @author Samu Aikio, Joel Tikkanen, Kaspar Tullus
+ */
 public class Jategeneraattori {
 
- 
-    private int[] todT; // {30, 60, 10}
+    private int[] todT;
     private LinkedList<Jate> jatteet = new LinkedList<>();
     private final static int ERIJATTEIDENLKM = 3;
 
     // Jakauman mukainen satunnaisluku generaattori
     private ContinuousGenerator generaattori;
 
+    /**
+     * 
+     * @param todT
+     * @param generaattori
+     */
     public Jategeneraattori(int[] todT, ContinuousGenerator generaattori) {
         this.todT = todT;
         this.generaattori = generaattori;
     }
 
+    /**
+     * 
+     * @param arr
+     * @return i
+     */
     public int arvoArvo(int[] arr){
         int[][] valit = new int[3][2];
         int i = 0;
@@ -60,6 +71,10 @@ public class Jategeneraattori {
         }
     }
 
+    /**
+     * 
+     * @return jatteet
+     */
     public LinkedList<Jate> getJatteet(){
         return jatteet;
     }

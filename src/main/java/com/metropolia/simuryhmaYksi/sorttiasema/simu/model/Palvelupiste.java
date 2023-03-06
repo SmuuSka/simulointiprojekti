@@ -5,8 +5,10 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 
 import java.util.LinkedList;
 
-// TODO:
-// Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class Palvelupiste {
 
 	protected LinkedList<Asiakas> jono = new LinkedList<Asiakas>(); // Tietorakennetoteutus

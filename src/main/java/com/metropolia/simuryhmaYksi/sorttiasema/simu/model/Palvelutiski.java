@@ -4,6 +4,10 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtumalista;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class Palvelutiski extends Palvelupiste {
     
     public Palvelutiski(ContinuousGenerator generator, Tapahtumalista tapahtumalista) {

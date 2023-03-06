@@ -10,6 +10,11 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class OmaMoottori extends Moottori {
 
     private Saapumisprosessi saapumisprosessi;
@@ -57,7 +62,6 @@ public class OmaMoottori extends Moottori {
                     saapumistenMaara++;
                     kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
                     a = new Asiakas();
-                    //Palvetiskijono = tapahtumalista
                     palvelupisteet[0].lisaaJonoon(a);
                     saapumisprosessi.generoiSeuraava();
                 }
@@ -256,6 +260,6 @@ public class OmaMoottori extends Moottori {
 
     @Override
     public void lopeta() {
-
+        
     }
 }

@@ -96,12 +96,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 			e.printStackTrace();
 		}
 	}
-	@Override
-	public void lopeta(){
-		interrupt();
-		setSimulointiaika(0);
-	}
-
+	
 
 	@Override
 	public void setViive(long viive) {

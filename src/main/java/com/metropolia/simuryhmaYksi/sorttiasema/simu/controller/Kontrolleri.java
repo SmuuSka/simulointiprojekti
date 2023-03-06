@@ -12,6 +12,10 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private ISimulaattoriUI ui;
     private IMoottori moottori;

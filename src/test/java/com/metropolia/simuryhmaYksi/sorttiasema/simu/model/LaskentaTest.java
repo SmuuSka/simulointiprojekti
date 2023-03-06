@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class LaskentaTest {
 
     private final double DELTA = 0.001;

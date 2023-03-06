@@ -6,6 +6,9 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
 
 // TODO:
 // Asiakas koodataan simulointimallin edellyttämällä tavalla (data!)

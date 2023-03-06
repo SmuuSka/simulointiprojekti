@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 
+/**
+ * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
 public class Laskenta {
 
     private final int LKM = 4;
