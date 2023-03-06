@@ -300,7 +300,13 @@ public class DAO implements IDAO {
                 ps.setDouble(indexTulokset_2++, d);
             }
             //Jätemäärän keskiarvo
-            ps.setDouble(indexTulokset_2++, suureet.getKeskmJatteenmaara());
+            if (Double.isNaN(suureet.getKeskmJatteenmaara())) {
+                // Jos keskmJatteenmaara on NAN anna NULL sitten ei ole erroreja
+                ps.setNull(indexTulokset_2++, Types.DOUBLE);
+            } else {
+                // Anna normi value
+                ps.setDouble(indexTulokset_2++, suureet.getKeskmJatteenmaara());
+            }
             //Tulokset-taulun avain
             ps.setInt(indexTulokset_2++, simuID);
             ps.executeQuery();

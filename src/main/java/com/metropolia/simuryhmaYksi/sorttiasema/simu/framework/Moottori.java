@@ -14,7 +14,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	protected Tapahtumalista tapahtumalista;
 	protected Palvelupiste[] palvelupisteet;
 	protected boolean ajetaanTyhjaksi = true;
-
+	protected boolean lopetaSimu = false;
 	private long viive;
 
 	public Moottori(IKontrolleriMtoV kontrolleri){
@@ -37,34 +37,36 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 
 	public void run(){
-		alustukset(); // luodaan mm. ensimmäinen tapahtuma
-		//Kunnes viimeinen asiakas on poistunut
-		while (simuloidaan()){
-			viive();
-			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
-			kello.setAika(nykyaika());
-			
-			Trace.out(Trace.Level.INFO, "\nB-vaihe:" );
-			suoritaBTapahtumat();
-			setTekstit();
-			
-			Trace.out(Trace.Level.INFO, "\nC-vaihe:" );
-			yritaCTapahtumat();
+				kello.setAika(0);
+				alustukset(); // luodaan mm. ensimmäinen tapahtuma
+				//Kunnes viimeinen asiakas on poistunut
+				while (simuloidaan()) {
+					viive();
+					Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
+					kello.setAika(nykyaika());
 
-			setVarattu();
+					Trace.out(Trace.Level.INFO, "\nB-vaihe:");
+					suoritaBTapahtumat();
+					setTekstit();
 
-		}
-		try {
-			tulokset();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+					Trace.out(Trace.Level.INFO, "\nC-vaihe:");
+					yritaCTapahtumat();
+
+					setVarattu();
+
+				}
+				try {
+					tulokset();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
 	}
 	
 	private void suoritaBTapahtumat(){
 		while (tapahtumalista.getSeuraavanAika() == kello.getAika()){
 			suoritaTapahtuma(tapahtumalista.poista());
-		}
+			}
+
 	}
 
 	private void yritaCTapahtumat(){
@@ -81,6 +83,9 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 	
 	private boolean simuloidaan(){
+		if (lopetaSimu){
+			return lopetaSimu;
+		}
 		if (ajetaanTyhjaksi){
 			return !tapahtumalista.getLista().isEmpty();
 		}
@@ -96,7 +101,6 @@ public abstract class Moottori extends Thread implements IMoottori {
 			e.printStackTrace();
 		}
 	}
-	
 
 	@Override
 	public void setViive(long viive) {
@@ -118,8 +122,10 @@ public abstract class Moottori extends Thread implements IMoottori {
 	public boolean getAjetaanTyhjaksi(){
 		return ajetaanTyhjaksi;
 	}
-			
-
+	public void lopetaSimuMootori(){
+		interrupt();
+		setSimulointiaika(0);
+	}
 	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 	
 	protected abstract void suoritaTapahtuma(Tapahtuma t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa

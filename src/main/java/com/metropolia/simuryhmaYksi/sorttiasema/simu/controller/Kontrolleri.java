@@ -22,7 +22,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private IDAO tietokanta;
     private IVisualisointi nayttoVisual;
     private int counter = 0;
-
     public Kontrolleri(ISimulaattoriUI ui){
         this.ui = ui;
     }
@@ -52,7 +51,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         //Käynnistetään moottori
         ((Thread)moottori).start();
 
-        //Täällä on tietokannasta tuleva data
+                //Täällä on tietokannasta tuleva data
 
     }
 
@@ -81,7 +80,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
     @Override
     public void lopetaSimulointi() {
-        moottori.lopeta();
+        moottori.lopetasimulaatio();
     }
 
     @Override
@@ -110,8 +109,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
-    public void visualisoiAsiakas() {
-
+    public boolean onkoSimulointiPaalla() {
+    return ((Thread)moottori).isAlive();
     }
 
     @Override
@@ -126,6 +125,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         switch (counter){
             case 0:
                 counter = 1;
+
                 ui.showTulokset(tietokanta.simulaatioColumnData());
                 tietokanta.suljeYhteys();
                 break;
