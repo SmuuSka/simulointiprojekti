@@ -12,9 +12,10 @@ import java.util.ResourceBundle;
 public class DAO implements IDAO {
     private int indexTulokset_1 = 1, indexTulokset_2 = 1;
     private  SimulaatioData simulaatioDataOlio;
+    private PreparedStatement pstesti;
+    private final Connection connection;
     private static final ResourceBundle rb = ResourceBundle.getBundle("System");
     private static final String url1 = rb.getString("url1") + rb.getString("username1") + rb.getString("password1");
-    private static Connection connection = null;
     private static int simuID;
     private static ArrayList<SimulaatioData> simulaatioDataObjektiLista = new ArrayList<>();
 
@@ -26,7 +27,6 @@ public class DAO implements IDAO {
     private void haeSimulaationTiedot() throws SQLException {
         String id = Integer.toString(simuID);
         String query = "SELECT * FROM simulaatio";
-        connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -42,7 +42,7 @@ public class DAO implements IDAO {
     private void haeSimulaationParametrit() throws SQLException {
         String id = Integer.toString(simulaatioDataOlio.getId());
         String query = "SELECT simulointiaika,viive, purkunopeusPerSek, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate,jatteenTodennakoisyysPalamatonJate FROM parametrit WHERE parametrit.parametriID="+id;
-        connection = avaaYhteysTietokantaan();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 rs.first();
@@ -57,7 +57,7 @@ public class DAO implements IDAO {
         String query = "SELECT * FROM tulokset WHERE tulokset.tuloksetID="+id;
         ArrayList<SimpleIntegerProperty> tuloksetINT = new ArrayList<>();
         ArrayList<SimpleDoubleProperty> tuloksetDouble = new ArrayList<>();
-        connection = avaaYhteysTietokantaan();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 rs.first();
@@ -87,13 +87,12 @@ public class DAO implements IDAO {
         return simuID;
     }
 
-    private static Connection avaaYhteysTietokantaan() {
+    public DAO() {
         try {
             connection = (Connection) DriverManager.getConnection(url1);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return connection;
     }
 
     @Override
@@ -110,9 +109,9 @@ public class DAO implements IDAO {
                 "simulaatioID INT PRIMARY KEY AUTO_INCREMENT," +
                 "paivamaara DATE," +
                 "ajetaanTyhjaksi BIT(1))";
-        connection = avaaYhteysTietokantaan();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            System.out.println("Tulos: " + ps.executeUpdate());
+            ps.executeUpdate();
         }
     }
 
@@ -126,10 +125,12 @@ public class DAO implements IDAO {
                 "    CONSTRAINT fk_parametrit_simulaatioID\n" +
                 "    FOREIGN KEY (simulaatioID)\n" +
                 "    REFERENCES simulaatio(simulaatioID) ON DELETE CASCADE)";
-        connection = avaaYhteysTietokantaan();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            System.out.println("Tulos: " + ps.executeUpdate());
+            pstesti = ps;
+            ps.executeUpdate();
         }
+        System.out.println("Suljettu yhteys: " + pstesti.isClosed());
     }
 
     private void lisaaTuloksetTaulu() throws SQLException {
@@ -173,7 +174,7 @@ public class DAO implements IDAO {
                 "\tCONSTRAINT fk_simulaatioID\n" +
                 "\tFOREIGN KEY (simulaatioID)\n" +
                 "\tREFERENCES simulaatio(simulaatioID) ON DELETE CASCADE)";
-        connection = avaaYhteysTietokantaan();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.executeUpdate();
         }
@@ -181,7 +182,7 @@ public class DAO implements IDAO {
 
     private void lisaaSimulaatio(int ajaTyhjaksiSimulaattori) throws SQLException {
         String query = "INSERT INTO simulaatio (paivamaara,ajetaanTyhjaksi) VALUES (?,?)";
-        connection = avaaYhteysTietokantaan();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setDate(1, Date.valueOf(LocalDate.now()));
             ps.setInt(2, ajaTyhjaksiSimulaattori);
@@ -194,7 +195,7 @@ public class DAO implements IDAO {
         String query = "INSERT INTO parametrit (parametriID,simulaatioID,simulointiaika,viive,purkunopeusPerSek,vaihteluvaliMin," +
                 "vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate," +
                 "jatteenTodennakoisyysPalamatonJate) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        connection = avaaYhteysTietokantaan();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             //ParametriID
             ps.setInt(1, simuID);
@@ -235,7 +236,7 @@ public class DAO implements IDAO {
                 "                palveltujenLkmElektroniikka,\n" +
                 "                palveltujenLkmPalavaJate,\n" +
                 "                palveltujenLkmPalamatonJate) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-        connection = avaaYhteysTietokantaan();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             //ParametriID
             ps.setInt(indexTulokset_1++, simuID);
@@ -262,7 +263,6 @@ public class DAO implements IDAO {
 
     private void tuloksetDouble(Laskenta suureet) throws SQLException {
         String query = "UPDATE tulokset SET aktiiviaikaSaapuva = ?, aktiiviaikaElektroniikka = ?, aktiiviaikaPalavaJate = ?, aktiiviaikaPalamatonJate = ?, kokonaisaika= ?, jatteenKokonaismaara= ?, suoritusteho= ?, avgJononPituusSaapuva= ?, avgJononPituusElektroniikka= ?, avgJononPituusPalavaJate= ?, avgJononPituusPalamatonJate= ?, avgLapimenoSaapuva= ?, avgLapimenoElektroniikka= ?, avgLapimenoPalavaJate= ?, avgLapimenoPalamatonJate= ?, kayttoasteSaapuva= ?, kayttoasteElektroniikka= ?, kayttoastePalavaJate= ?, kayttoastePalamatonJate= ?, avgPalveluaikaSaapuva= ?, avgPalveluaikaElektroniikka= ?, avgPalveluaikaPalavaJate= ?, avgPalveluaikaPalamatonJate= ?, avgJatteenmaara = ? WHERE tuloksetID=?";
-        connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             //Palvelupisteiden aktiiviajat,Saapuminen Elektroniikka,Palava Jäte,Palamaton Jäte
             double[] aktiiviaika = suureet.getAktiiviajat();
@@ -319,7 +319,6 @@ public class DAO implements IDAO {
     @Override
     public synchronized void poistaTaulu() throws SQLException {
         String query = "DROP TABLE parametrit,tulokset, simulaatio";
-        connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.executeUpdate();
         }
@@ -328,7 +327,6 @@ public class DAO implements IDAO {
     @Override
     public synchronized boolean poistaTiettyTulos(int ID) throws SQLException {
         String query = "DELETE FROM simulaatio WHERE simulaatio.simulaatioID="+Integer.toString(ID);
-        connection = avaaYhteysTietokantaan();
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             int poistettu = ps.executeUpdate();
             if(poistettu == 1){
@@ -336,6 +334,15 @@ public class DAO implements IDAO {
             }
         }
         return false;
+    }
+
+    @Override
+    public void suljeYhteys() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
