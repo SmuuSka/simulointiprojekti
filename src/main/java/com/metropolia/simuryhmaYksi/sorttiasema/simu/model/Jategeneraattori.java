@@ -27,9 +27,20 @@ public class Jategeneraattori {
     }
 
     /**
+     * Toteutus perustuu jotenkuten aikasemmin toteutettuun ikäjakauma tehtävään.
+     * 
+     * Metodille annetaan parametrina taulukko, joka sisältää eri jätteiden todennäköisyydet.
+     * Taulukon ensimmäinen indeksi, merkitsee todennäköisyyttä elektroniikkajätteelle, toinen palamattomalle ja kolmas
+     * palavalle.
+     * Todennakoisyydet jaetaan kaksiuloitteiseen taulukkoon osaväleiksi, 
+     * jos todennäköisyys on nolla, niin osaväli on [-1, -1].
+     * Sitten arvotaan satunnaisluku väliltä [0, suurin yläraja] (max).
+     * Lopuksi metodi palauttaa arvon i, joka kertoo mihin osaväliin satunnaisluku sijoittui (0,1,2).
+     * 
+     * Kun arvottu luku on väliltä [0, 2], niin voimme hyödyntää sitä helposti Jätelaji enumin käsittelyssä.
      * 
      * @param arr
-     * @return i
+     * @return arvottu numero väliltä [0,2]
      */
     public int arvoArvo(int[] arr){
         int[][] valit = new int[3][2];
@@ -53,6 +64,10 @@ public class Jategeneraattori {
         return i; 
     }
 
+    /**
+     * Generoi asiakkaalle kolme jätettä arvoArvo metodia käyttäen.
+     * Huom. Generoidut jätteet voivat olla samoja.
+     */
     public void generoiJatteet(){
 
         for (int i=0;i<ERIJATTEIDENLKM;i++){

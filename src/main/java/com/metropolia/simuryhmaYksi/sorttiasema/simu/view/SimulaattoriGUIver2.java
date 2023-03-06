@@ -350,6 +350,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                         e.printStackTrace();
                     }
                     tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
+                    TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().selectLast();
 
 
 
