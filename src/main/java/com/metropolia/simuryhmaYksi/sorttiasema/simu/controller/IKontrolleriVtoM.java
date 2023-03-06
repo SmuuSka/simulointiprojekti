@@ -1,7 +1,6 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.controller;
 
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.model.Laskenta;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
+
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 
 import java.sql.SQLException;

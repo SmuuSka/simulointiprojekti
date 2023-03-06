@@ -282,4 +282,10 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setAnimaationViive'");
     }
+
+    @Override
+    public void setAloitaButtonText() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setAloitaButtonText'");
+    }
 }

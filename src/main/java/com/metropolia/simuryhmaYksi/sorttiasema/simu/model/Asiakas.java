@@ -14,7 +14,7 @@ public class Asiakas {
 	private double poistumisaika;
 	private int id;
 	private static int[] JATEMAARAN_VAIHTELUVALI;
-	private static int i = 0;
+	public static int i = 0;
 	private static long sum = 0;
 	private LinkedList<Jate> jatteet = new LinkedList<>();
 	private Jategeneraattori jategeneraattori;
@@ -81,5 +81,4 @@ public class Asiakas {
 	public LinkedList<Jate> getJatteet() {
 		return jatteet;
 	}
-
 }

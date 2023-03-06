@@ -31,13 +31,4 @@ public class Tapahtumalista {
 		}
 		return aika;
 	}
-//	public double getSeuraavanAika() {
-//		double aika = 0;
-//		try {
-//			aika = lista.peek().getAika();
-//		}catch (NullPointerException e){
-//			e.printStackTrace();
-//		}
-//		return aika;
-//	}
 }

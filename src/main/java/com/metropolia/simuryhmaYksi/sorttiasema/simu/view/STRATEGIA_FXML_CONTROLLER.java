@@ -4,7 +4,7 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+
 
 public class STRATEGIA_FXML_CONTROLLER {
     private IKontrolleriVtoM kontrolleri;

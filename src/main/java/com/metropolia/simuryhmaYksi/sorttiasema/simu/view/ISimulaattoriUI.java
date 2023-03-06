@@ -55,4 +55,7 @@ public interface ISimulaattoriUI {
      void setPJateJonossa(int pituus);
      void setSAAPUMINENJonossa(int pituus);
      void setAnimaationViive(int viive);
+
+     // Käynnistä button teksti
+     public void setAloitaButtonText();
 }

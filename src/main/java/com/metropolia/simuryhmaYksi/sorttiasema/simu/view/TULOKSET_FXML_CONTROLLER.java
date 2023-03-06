@@ -2,11 +2,9 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.dao.SimulaatioData;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class TULOKSET_FXML_CONTROLLER {
