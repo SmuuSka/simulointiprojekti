@@ -41,7 +41,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     private RadioButton rauhallinenAktiivisuus, normaaliAktiivisuus, ruuhkainenAktiivisuus;
 
-    private CheckBox asiakasAuto_Hajioa, saapumispisteOnglema,ajetaanLoppuun;
+    private CheckBox ajetaanLoppuun;
 
     private Label paaSim_ELEKTRO_JateCounter, paaSim_PALAVA_JateCounter, paaSim_PALAMATON_JateCounter,
             paaSim_JONOINFO_SAAPUMINEN, paaSim_SAAPUMISIAYHT_COUNTER, paaSim_JONOINFO_PALAVAJATE,
@@ -50,6 +50,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private int palavaJateProsentti = 0;
     private int palamatonJateProsentti = 0;
     private int simulaatioAika = 0;
+    private int asiakasPerKg = 0;
 
     private boolean onkoSimuloitu = false;
     private int simulaatioViive = 0;
@@ -158,6 +159,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             strategiaButton.setOnAction(event -> {
                 try {
                     simulaatioAika = Integer.parseInt(simulointiAikaInput.getText());
+                    asiakasPerKg = Integer.parseInt(asiakasPurku_KG_Sekunti.getText());
                     simulaatioViive = Integer.parseInt(simulointiAikaViiveInput.getText());
                     elektroJateProsentti = Integer.parseInt(elektroniikkaJatePROSENTTI.getText());
                     palavaJateProsentti = Integer.parseInt(palavaJatePROSENTTI.getText());
@@ -170,8 +172,15 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     alert.setContentText("Syöte kenttiin ei voi syötää kirjaimia arvona!");
                     alert.show();
                 }
-
-                if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti != 100) {
+                if (simulaatioAika <= 0 || simulaatioViive <= 0 || asiakasPerKg <= 0){
+                    System.out.println("Kaikkiin kenttiin pitää syöttää numero arvoja.");
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Varoitus");
+                    alert.setHeaderText("Varoitus:");
+                    alert.setContentText("Siulaatioaika,Viive ja Asiakas kilo per sekunti ei voi olla Nollia!");
+                    alert.show();
+                }
+                else if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti != 100) {
                     int summa = elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti;
                     System.out.println("Jäteprosentti luvut pitää olla yhteensä 100%, sinulla on " + summa + "%");
                     Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -254,7 +263,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                             Parent root2 = loaderStrategia.getRoot();
                                             System.out.println(scene.getRoot().toString());
                                             primaryStage.setScene(root2.getScene());
-                                            restartProgram(primaryStage,loaderStrategia);
+                                            restartProgram(primaryStage);
                                         }else {
                                             kontrolleri.setVisualisointi(getVisualisointi());
                                             try {
@@ -304,7 +313,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         }
     }
     //-------------------------------------------------------------------------------------------
-    public void restartProgram(Stage primaryStage,FXMLLoader strategialoader) {
+    public void restartProgram(Stage primaryStage) {
         onkoSimuloitu = false;
         Platform.runLater(() -> {
             try {
@@ -313,7 +322,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 strategiaFXML_Controller = new STRATEGIA_FXML_CONTROLLER(kontrolleri);
                 loaderStrategia.setController(strategiaFXML_Controller);
                 rootStrategia = loaderStrategia.load();
-                    Stage newPrimaryStage = new Stage();
                     Parent root = loaderStrategia.getRoot();
                     Scene scene = new Scene(root);
                     primaryStage.setScene(scene);
@@ -378,7 +386,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 tuloksetPoistaTulosButton.setOnAction(event -> {
                                     try {
                                         poistaData(selectedItem.getId());
-                                        TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+                                        dataob.remove(selectedItem);
+
                                     } catch (SQLException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -390,7 +399,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     }
                     tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
                     TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().selectLast();
-
 
 
                 });
@@ -407,14 +415,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //SIMUAIKA TULOS
             tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getParametrit().aikaProperty().doubleValue()) + "/Simulaattoriin syötetty aika");
 //            //ROSKEN KOKONAIS MÄÄRÄ
-          //tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(1).doubleValue()) + " Kg");
+            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(5).doubleValue()) + " Kg");
             //ELEKTROJÄTE
             //PALAVAJÄTE
             //PALAMATONJÄTE
 
             //INPUTS
+            //INPUT VIIVE
+            tuloksetkontrolleri.getTULOKSET_INPUT_VIIVE().setText(Double.toString(selectedItem.getParametrit().getViive()/1000) + "/ Sekuntia");
             //INPUT_AIKA
-            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/AikaYksikköä");
+            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/ AikaYksikköä");
             //INPUT_VIIVE
 
             //INPUT_PROSENTTI_ELEKTRO
@@ -473,24 +483,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    public int getStrategiaTapahtumat() {
-
-        //Palautaa Valitun TAPAHTUMAN
-        if (asiakasAuto_Hajioa.isSelected() == true && saapumispisteOnglema.isSelected() == false) {
-            System.out.println("TAPAHTUMA MAHDOLLISUUS : ASIAKKAAN AUTO HAJOOA");
-            return 1;
-        } else if (saapumispisteOnglema.isSelected() == true && asiakasAuto_Hajioa.isSelected() == false) {
-            System.out.println("TAPAHTUMA MAHDOLLISUUS : SAAPUMISPISTEESSÄ VOI OLLA ONGELMIA");
-            return 2;
-        } else if (saapumispisteOnglema.isSelected() == true && asiakasAuto_Hajioa.isSelected() == true) {
-            System.out.println("TAPAHTUMA MAHDOLLISUUS : SAAPUMISPISTEESSÄ VOI OLLA ONGELMIA JA ASIAKKAAN AUTO HAJOOA");
-            return 3;
-        }
-        System.out.println("TAPAHTUMA MAHDOLLISUUS : EI VALITTU MITÄÄN");
-        return 0;
-    }
-
-    @Override
     public int getElektro_JateCounter() {
         return Integer.parseInt(paaSim_ELEKTRO_JateCounter.getText());
     }
@@ -532,6 +524,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     @Override
     public int getPalamatonJateCounter() {
         return Integer.parseInt(paaSim_PALAMATON_JateCounter.getText());
+    }
+
+    @Override
+    public Double getPurkuNopeus() {
+        Double kgPerSec = Double.parseDouble(strategiaFXML_Controller.getSTRATEGIA_KGMAARA_SEKUNTEJA().getText());
+        return kgPerSec;
     }
 
     @Override

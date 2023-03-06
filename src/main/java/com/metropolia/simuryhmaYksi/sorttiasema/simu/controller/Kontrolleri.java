@@ -94,7 +94,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         if (ui.getAjeetaankoLoppuun()){
             onkoAjetaanloppuun = 1;
         }
-        tietokanta.luoData(onkoAjetaanloppuun,ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit(),40,1.5);
+        tietokanta.luoData(onkoAjetaanloppuun,ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit(),(int)ui.getViive(),ui.getPurkuNopeus());
         tietokanta.paivitaData(suureet);
         ui.showTulokset(tietokanta.simulaatioColumnData());
         tietokanta.suljeYhteys();
