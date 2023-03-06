@@ -58,6 +58,9 @@ public class Laskenta {
 
     public void setKeskmJatteenmaara(){
         keskmJatteenmaara = jatteenKokonaismaara/palveltujenMaara;
+        if (jatteenKokonaismaara == 0){
+            keskmJatteenmaara = 0;
+        }
     }
 
 

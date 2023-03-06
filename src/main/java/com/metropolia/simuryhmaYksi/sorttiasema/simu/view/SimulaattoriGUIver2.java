@@ -477,6 +477,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
+    public void setAloitaButtonText(){
+        aloitaButton.setText("Käynnistä uudelleen");
+    }
+
+    @Override
     public void setSAAPUMINENJonossa(int pituus) {
         Platform.runLater(
                 () -> {

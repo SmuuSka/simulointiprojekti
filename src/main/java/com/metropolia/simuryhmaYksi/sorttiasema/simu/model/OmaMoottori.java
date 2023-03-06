@@ -6,7 +6,6 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Moottori;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
-import org.xml.sax.Parser;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -34,6 +33,7 @@ public class OmaMoottori extends Moottori {
 
         // Järjestelmään Saapuminen
         saapumisprosessi = new Saapumisprosessi(new Negexp(15, 5), tapahtumalista, TapahtumanTyyppi.PALVELUTISKI_SAAPUMINEN);
+        System.out.println(Arrays.toString(palvelupisteet));
     }
 
 
@@ -234,16 +234,25 @@ public class OmaMoottori extends Moottori {
         for (int i = 1; i < palvelupisteet.length; i++){
             jatteenKokonaismaara += ((Jatelava) (palvelupisteet[i])).getMaara();
         }
-        /* 
+        
         System.out.println("Jatteen kokonaismäärä: " + jatteenKokonaismaara);
         System.out.println("Asiakkaiden kokonaismäärä: " + (Asiakas.getID()));
         System.out.println("Keskimääräinen jätemäärä per asiakas: " + jatteenKokonaismaara / (Asiakas.getID()) + " kg");
-        */
+    
         Laskenta laskenta = new Laskenta(saapumistenMaara, palveltujenLkm , aa, koleskelu, jatteenKokonaismaara);
         laskenta.laske();
         System.out.println(laskenta);
         kontrolleri.tallennaTulokset(laskenta);
+        reset();
     }
+
+
+    public void reset(){
+        Kello.getInstance().setAika(0);
+        palvelupisteet[0].setI(0);
+        Asiakas.i = 0;
+    }
+
 
     @Override
     public void lopeta() {

@@ -1,8 +1,5 @@
 package com.metropolia.simuryhmaYksi.sorttiasema.simu.model;
 import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.ContinuousGenerator;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriMtoV;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtumalista;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Trace;
 
@@ -89,6 +86,10 @@ public class Palvelupiste {
 
 	public LinkedList<Asiakas> getJono(){
 		return jono;
+	}
+
+	public void setI(int j){
+		i = 0;
 	}
 
 }

@@ -27,8 +27,10 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void kaynnistaSimulointi() throws SQLException {
         //Luodaan Gui:n aloitakäskyn perusteella uusi moottori ja tietokantaolio
         moottori = new OmaMoottori(this);
+        System.out.println("GETAIKA" + ui.getAika());
         tietokanta = new DAO();
         moottori.setAjetaanTyhjaksi(ui.getAjeetaankoLoppuun());
+        System.out.println("GETAIKA" + ui.getAika());
         //tietokanta.poistaTaulu();
         //Asetetaan simulointiaika ja viive moottorille
         //Tallennetaan simulointiparametrit tietokantaan
@@ -42,6 +44,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         Asiakas.setJatemaara(ui.getVaihteluvali());
         Asiakas.setTJATELAJI(ui.getJateLaijenProsentit());
         System.out.println("Uista tuleva vaihteluväli: " + Arrays.toString(ui.getVaihteluvali()));
+        ui.setAloitaButtonText();
         //Käynnistetään moottori
         ((Thread)moottori).start();
 
