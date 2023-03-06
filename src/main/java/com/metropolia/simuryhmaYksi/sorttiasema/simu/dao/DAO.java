@@ -69,7 +69,7 @@ public class DAO implements IDAO {
                         String columnName = resultSetMetaData.getColumnName(i);
                         tuloksetINT.add(new SimpleIntegerProperty(rs.getInt(i)));
                     }
-                    for (int j = 13; j < resultSetMetaData.getColumnCount(); j++) {
+                    for (int j = 13; j < resultSetMetaData.getColumnCount() + 1; j++) {
                         String columnName = resultSetMetaData.getColumnName(j);
                         tuloksetDouble.add((new SimpleDoubleProperty(rs.getDouble(j))));
                     }

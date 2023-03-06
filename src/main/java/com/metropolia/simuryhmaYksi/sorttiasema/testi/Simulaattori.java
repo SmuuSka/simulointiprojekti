@@ -39,6 +39,10 @@ public class Simulaattori { //Tekstipohjainen
         public void setSAAPUMISJononPituus(int size) {
             
         }
+                @Override
+                public double getAktiivisuus() {
+                        return 0;
+                }
         });
 		m.setSimulointiaika(50);
 		m.start();

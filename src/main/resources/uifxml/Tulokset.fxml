@@ -62,7 +62,7 @@
                                     </Label>
                                     <ScrollPane hbarPolicy="NEVER" layoutY="52.0" prefHeight="502.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
                                        <content>
-                                          <GridPane prefHeight="745.0" prefWidth="522.0">
+                                          <GridPane prefWidth="522.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -100,72 +100,206 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Heitetty määrä yhteensä kiloina (kg):" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                                <Label text="Simulaation aika:" GridPane.halignment="CENTER" />
-                                                <Label text="Palveltujen lukumäärä:" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                                <Label fx:id="TULOKSET_HEITETTY_YHT" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                                <Label fx:id="TULOKSET_SIMUAIKA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                <Label fx:id="TULOKSET_PALVELTU_LKM" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                                <Label text="Elektroniikka jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                <Label text="Palavaa jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                                <Label text="Palamatonta jätettä:" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                                <Label text="Saapuneiden lukumäärä:" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                                <Label fx:id="TULOKSET_HEITETTY_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                <Label fx:id="TULOKSET_HEITETTY_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                                <Label fx:id="TULOKSET_HEITETTY_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                                <Label fx:id="TULOKSET_SAAPUNUT_LKM" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                                <Label alignment="CENTER" text="Oleskeluaika palvelupisteellä: Saapuminen:" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                                                <Label text="Oleskeluaika palvelupisteellä: Palavajäte:" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
-                                                <Label text="Oleskeluaika palvelupisteellä: PalamatonJäte:" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
-                                                <Label text="Oleskeluaika palvelupisteellä: ElektroniikkaJäte:" GridPane.halignment="CENTER" GridPane.rowIndex="13" />
-                                                <Label text="Palveltujen lukumäärä: SaapumisPiste" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                                <Label text="Palveltujen Lukumäärä: PalamatonJäte" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                                                <Label text="Palveltujen Lukumäärä: ElektroniikkaJäte" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                                                <Label text="SaapumisPiste aktiivisuus aika yht:" GridPane.halignment="CENTER" GridPane.rowIndex="14" />
-                                                <Label text="PalamatonJätepiste aktiivisuus aika yht:" GridPane.halignment="CENTER" GridPane.rowIndex="15" />
-                                                <Label text="PalavaJätepiste aktiivisuus aika yht:" GridPane.halignment="CENTER" GridPane.rowIndex="16" />
-                                                <Label text="ElektroniikkaJätepiste aktiivisuus aika yht:" GridPane.halignment="CENTER" GridPane.rowIndex="17" />
-                                                <Label text="Asiakkaita per/aikayksikkö:" GridPane.halignment="CENTER" GridPane.rowIndex="18" />
-                                                <Label text=" Keskimääräinen jonon pituus: SaapumisPiste" GridPane.halignment="CENTER" GridPane.rowIndex="19" />
-                                                <Label prefHeight="17.0" prefWidth="242.0" text=" Keskimääräinen jonon pituus: PalamatonJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="20" />
-                                                <Label prefHeight="17.0" prefWidth="243.0" text=" Keskimääräinen jonon pituus: PalavaJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="21" />
-                                                <Label prefHeight="17.0" prefWidth="244.0" text=" Keskimääräinen jonon pituus: ElektroniikkaJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="22" />
-                                                <Label prefHeight="17.0" prefWidth="142.0" text="Käyttöaste: SaapumisPiste" GridPane.halignment="CENTER" GridPane.rowIndex="23" GridPane.valignment="CENTER" />
-                                                <Label text="Käyttöaste: PalamatonJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="24" />
-                                                <Label text="Käyttöaste: PalavaJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="25" />
-                                                <Label text="Käyttöaste: ElektroniikkaJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="26" />
-                                                <Label text="Keskimääräinen Jäte (AsiakasJäte / Palvelupistejäte / KokonaisJäte) " GridPane.halignment="CENTER" GridPane.rowIndex="31" />
-                                                <Label text="Keskimääräinen palveluaika: SaapumisPiste" GridPane.halignment="CENTER" GridPane.rowIndex="27" />
-                                                <Label text="Keskimääräinen palveluaika: PalamatonJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="28" />
-                                                <Label text="Keskimääräinen palveluaika: PalavaJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="29" />
-                                                <Label text="Keskimääräinen palveluaika: ElektroniikkaJätepiste" GridPane.halignment="CENTER" GridPane.rowIndex="30" />
-                                                <Label fx:id="TULOKSET_PALVELTU_LK_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                                                <Label fx:id="TULOKSET_PALVELTU_LK_SAAPUMINEN" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                                <Label fx:id="TULOKSET_PALVELTU_LK_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                                                <Label fx:id="TULOKSET_OLESKELUAIKA_SAAPUMINEN" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                                                <Label fx:id="TULOKSET_OLESKELUAIKA_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
-                                                <Label fx:id="TULOKSET_OLESKELUAIKA_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
-                                                <Label fx:id="TULOKSET_OLESKELUAIKA_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="13" />
-                                                <Label fx:id="TULOKSET_AKTIIVISUUSYHT_SAAPUMISPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14" />
-                                                <Label fx:id="TULOKSET_AKTIIVISUUSYHT_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="15" />
-                                                <Label fx:id="TULOKSET_AKTIIVISUUSYHT_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="16" />
-                                                <Label fx:id="TULOKSET_AKTIIVISUUSYHT_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="17" />
-                                                <Label fx:id="TULOKSET_ASIAKASPER_AIKAYKSIKKO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="18" />
-                                                <Label fx:id="TULOKSET_KESKMAARA_JONO_SAAPUMISPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="19" />
-                                                <Label fx:id="TULOKSET_KESKMAARA_JONO_PALAMATONPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="20" />
-                                                <Label fx:id="TULOKSET_KESKMAARA_JONO_PALAVAPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="21" />
-                                                <Label fx:id="TULOKSET_KESKMAARA_JONO_ELEKTROPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="22" />
-                                                <Label fx:id="TULOKSET_KAYTTOASTE_SAAPUMISPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="23" />
-                                                <Label fx:id="TULOKSET_KAYTTOASTE_PALAMATONPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="24" />
-                                                <Label fx:id="TULOKSET_KAYTTOASTE_PALAVAPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="25" />
-                                                <Label fx:id="TULOKSET_KAYTTOASTE_ELEKTROPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="26" />
-                                                <Label fx:id="TULOKSET_KESKPALVELUAIKA_SAAPUMISPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="27" />
-                                                <Label fx:id="TULOKSET_KESKPALVELUAIKA_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="28" />
-                                                <Label fx:id="TULOKSET_KESKPALVELUAIKA_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="29" />
-                                                <Label fx:id="TULOKSET_KESKPALVELUAIKA_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="30" />
-                                                <Label fx:id="TULOKSET_KESKJÄTEMAARA_APKJ" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="31" />
+                                                <Label text="Heitetty määrä yhteensä kiloina (kg):" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets />
+                                                   </GridPane.margin></Label>
+                                                <Label text="Simulaation aika:" textAlignment="CENTER" GridPane.halignment="LEFT" />
+                                                <Label text="Palveltujen lukumäärä:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
+                                                <Label fx:id="TULOKSET_HEITETTY_YHT" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_SIMUAIKA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_PALVELTU_LKM" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label text="Elektroniikka jätettä:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                                                <Label text="Palavaa jätettä:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+                                                <Label text="Palamatonta jätettä:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
+                                                <Label text="Saapuneiden lukumäärä:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
+                                                <Label fx:id="TULOKSET_HEITETTY_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_HEITETTY_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_HEITETTY_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_SAAPUNUT_LKM" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label alignment="CENTER" text="Oleskeluaika palvelupisteellä: Saapuminen:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="11" />
+                                                <Label text="Oleskeluaika palvelupisteellä: Palavajäte:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="12" />
+                                                <Label text="Oleskeluaika palvelupisteellä: PalamatonJäte:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="13" />
+                                                <Label text="Oleskeluaika palvelupisteellä: ElektroniikkaJäte:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="14" />
+                                                <Label text="Palveltujen lukumäärä: SaapumisPiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="7" />
+                                                <Label text="Palveltujen Lukumäärä: PalamatonJäte" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="8" />
+                                                <Label text="Palveltujen Lukumäärä: ElektroniikkaJäte" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="9" />
+                                                <Label text="SaapumisPiste aktiivisuus aika yht:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="19" />
+                                                <Label text="PalamatonJätepiste aktiivisuus aika yht:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="20" />
+                                                <Label text="PalavaJätepiste aktiivisuus aika yht:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="21" />
+                                                <Label text="ElektroniikkaJätepiste aktiivisuus aika yht:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="22" />
+                                                <Label text="Asiakkaita per/aikayksikkö:" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="23" />
+                                                <Label text=" Keskimääräinen jonon pituus: SaapumisPiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="24" />
+                                                <Label prefHeight="17.0" prefWidth="242.0" text=" Keskimääräinen jonon pituus: PalamatonJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="25" />
+                                                <Label prefHeight="17.0" prefWidth="243.0" text=" Keskimääräinen jonon pituus: PalavaJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="26" />
+                                                <Label text=" Keskimääräinen jonon pituus: ElektroniikkaJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="27" />
+                                                <Label prefHeight="17.0" prefWidth="142.0" text="Käyttöaste: SaapumisPiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="28" GridPane.valignment="CENTER" />
+                                                <Label text="Käyttöaste: PalamatonJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="29" />
+                                                <Label text="Käyttöaste: PalavaJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="30" />
+                                                <Label text="Käyttöaste: ElektroniikkaJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="31" />
+                                                <Label text="Keskimääräinen Jäte (AsiakasJäte / Palvelupistejäte / KokonaisJäte) " textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="36" />
+                                                <Label text="Keskimääräinen palveluaika: SaapumisPiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="32" />
+                                                <Label text="Keskimääräinen palveluaika: PalamatonJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="33" />
+                                                <Label text="Keskimääräinen palveluaika: PalavaJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="34" />
+                                                <Label text="Keskimääräinen palveluaika: ElektroniikkaJätepiste" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="35" />
+                                                <Label fx:id="TULOKSET_PALVELTU_LK_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_PALVELTU_LK_SAAPUMINEN" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_PALVELTU_LK_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_OLESKELUAIKA_SAAPUMINEN" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_OLESKELUAIKA_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_OLESKELUAIKA_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="13">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_OLESKELUAIKA_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_AKTIIVISUUSYHT_SAAPUMISPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="19">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_AKTIIVISUUSYHT_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="20">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_AKTIIVISUUSYHT_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="21">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_AKTIIVISUUSYHT_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="22">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_ASIAKASPER_AIKAYKSIKKO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="23">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKMAARA_JONO_SAAPUMISPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="24">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKMAARA_JONO_PALAMATONPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="25">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKMAARA_JONO_PALAVAPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="26">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKMAARA_JONO_ELEKTROPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="27">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KAYTTOASTE_SAAPUMISPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="28">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KAYTTOASTE_PALAMATONPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="29">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KAYTTOASTE_PALAVAPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="30">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KAYTTOASTE_ELEKTROPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="31">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKPALVELUAIKA_SAAPUMISPISTE" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="32">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKPALVELUAIKA_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="33">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKPALVELUAIKA_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="34">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKPALVELUAIKA_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="35">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_KESKJÄTEMAARA_APKJ" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="36">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label text="Palveltujen Lukumäärä: PalavaJäte" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="10" />
+                                                <Label fx:id="TULOKSET_PALVELTU_LK_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label text="Keskimääräinen läpimenoaika: SaapumisPiste" textAlignment="CENTER" GridPane.rowIndex="15" />
+                                                <Label text="Keskimääräinen läpimenoaika: PalavaJätepiste" textAlignment="CENTER" GridPane.rowIndex="16" />
+                                                <Label text="Keskimääräinen läpimenoaika: PalamatonJätepiste" textAlignment="CENTER" GridPane.rowIndex="17" />
+                                                <Label text="Keskimääräinen läpimenoaika: ElektroniikkaJäte" textAlignment="CENTER" GridPane.rowIndex="18" />
+                                                <Label fx:id="TULOKSET_KESKLAPIMENO_SAAPUMINEN" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="15">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="TULOKSET_KESKLAPIMENO_PALAVA" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="16">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="TULOKSET_KESKLAPIMENO_PALAMATON" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="17">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="TULOKSET_KESKLAPIMENO_ELEKTRO" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="18">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
                                              </children>
                                           </GridPane>
                                        </content>

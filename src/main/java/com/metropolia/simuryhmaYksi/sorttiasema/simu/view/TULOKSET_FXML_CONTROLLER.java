@@ -83,6 +83,17 @@ public class TULOKSET_FXML_CONTROLLER {
     private Label TULOKSET_KESKJÄTEMAARA_APKJ;
 
     @FXML
+    private Label TULOKSET_KESKLAPIMENO_ELEKTRO;
+
+    @FXML
+    private Label TULOKSET_KESKLAPIMENO_PALAMATON;
+
+    @FXML
+    private Label TULOKSET_KESKLAPIMENO_PALAVA;
+
+    @FXML
+    private Label TULOKSET_KESKLAPIMENO_SAAPUMINEN;
+    @FXML
     private Label TULOKSET_KESKMAARA_JONO_ELEKTROPISTE;
 
     @FXML
@@ -123,6 +134,8 @@ public class TULOKSET_FXML_CONTROLLER {
 
     @FXML
     private Label TULOKSET_PALVELTU_LK_ELEKTRO;
+    @FXML
+    private Label TULOKSET_PALVELTU_LK_PALAVA;
 
     @FXML
     private Label TULOKSET_PALVELTU_LK_PALAMATON;
@@ -241,6 +254,22 @@ public class TULOKSET_FXML_CONTROLLER {
         return TULOKSET_KAYTTOASTE_SAAPUMISPISTE;
     }
 
+    public Label getTULOKSET_KESKLAPIMENO_ELEKTRO() {
+        return TULOKSET_KESKLAPIMENO_ELEKTRO;
+    }
+
+    public Label getTULOKSET_KESKLAPIMENO_PALAMATON() {
+        return TULOKSET_KESKLAPIMENO_PALAMATON;
+    }
+
+    public Label getTULOKSET_KESKLAPIMENO_PALAVA() {
+        return TULOKSET_KESKLAPIMENO_PALAVA;
+    }
+
+    public Label getTULOKSET_KESKLAPIMENO_SAAPUMINEN() {
+        return TULOKSET_KESKLAPIMENO_SAAPUMINEN;
+    }
+
     public Label getTULOKSET_KESKJÄTEMAARA_APKJ() {
         return TULOKSET_KESKJÄTEMAARA_APKJ;
     }
@@ -299,6 +328,10 @@ public class TULOKSET_FXML_CONTROLLER {
 
     public Label getTULOKSET_PALVELTU_LK_ELEKTRO() {
         return TULOKSET_PALVELTU_LK_ELEKTRO;
+    }
+
+    public Label getTULOKSET_PALVELTU_LK_PALAVA() {
+        return TULOKSET_PALVELTU_LK_PALAVA;
     }
 
     public Label getTULOKSET_PALVELTU_LK_PALAMATON() {

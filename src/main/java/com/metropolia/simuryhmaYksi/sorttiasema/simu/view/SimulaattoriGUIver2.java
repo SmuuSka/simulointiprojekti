@@ -50,7 +50,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private int palavaJateProsentti = 0;
     private int palamatonJateProsentti = 0;
     private int simulaatioAika = 0;
-    private int asiakasPerKg = 0;
+    private double asiakasPerKg = 0;
 
     private boolean onkoSimuloitu = false;
     private int simulaatioViive = 0;
@@ -159,7 +159,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             strategiaButton.setOnAction(event -> {
                 try {
                     simulaatioAika = Integer.parseInt(simulointiAikaInput.getText());
-                    asiakasPerKg = Integer.parseInt(asiakasPurku_KG_Sekunti.getText());
+                    asiakasPerKg = Double.parseDouble(asiakasPurku_KG_Sekunti.getText());
                     simulaatioViive = Integer.parseInt(simulointiAikaViiveInput.getText());
                     elektroJateProsentti = Integer.parseInt(elektroniikkaJatePROSENTTI.getText());
                     palavaJateProsentti = Integer.parseInt(palavaJatePROSENTTI.getText());
@@ -172,15 +172,14 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     alert.setContentText("Syöte kenttiin ei voi syötää kirjaimia arvona!");
                     alert.show();
                 }
-                if (simulaatioAika <= 0 || simulaatioViive <= 0 || asiakasPerKg <= 0){
+                if (simulaatioViive <= 0 || simulaatioAika <= 0 || asiakasPerKg <= 0) {
                     System.out.println("Kaikkiin kenttiin pitää syöttää numero arvoja.");
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Varoitus");
                     alert.setHeaderText("Varoitus:");
-                    alert.setContentText("Siulaatioaika,Viive ja Asiakas kilo per sekunti ei voi olla Nollia!");
+                    alert.setContentText("Simulaatioaika,viive ja asiakasSecperkg ei voi olla nollia");
                     alert.show();
-                }
-                else if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti != 100) {
+                } else if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti != 100) {
                     int summa = elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti;
                     System.out.println("Jäteprosentti luvut pitää olla yhteensä 100%, sinulla on " + summa + "%");
                     Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -206,16 +205,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä. Tai et ole antanut mitään arvoja.");
                             alert.show();
                         } else {
-                                if (rootPaaSimu.getScene() != null){
-                                    primaryStage.setScene(scene);
-                                    primaryStage.setTitle("Sortti-Asema Simu");
-                                    primaryStage.show();
-                                }else{
-                                    scene = new Scene(loaderSIMU.getRoot());
-                                    primaryStage.setScene(scene);
-                                    primaryStage.setTitle("Sortti-Asema Simu");
-                                    primaryStage.show();
-                                }
+                            if (rootPaaSimu.getScene() != null) {
+                                primaryStage.setScene(scene);
+                                primaryStage.setTitle("Sortti-Asema Simu");
+                                primaryStage.show();
+                            } else {
+                                scene = new Scene(loaderSIMU.getRoot());
+                                primaryStage.setScene(scene);
+                                primaryStage.setTitle("Sortti-Asema Simu");
+                                primaryStage.show();
+                            }
 
 
                             //PÄÄSIMULAATORIN ELEMENTIT ALKAA TÄSTÄ
@@ -264,7 +263,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                             System.out.println(scene.getRoot().toString());
                                             primaryStage.setScene(root2.getScene());
                                             restartProgram(primaryStage);
-                                        }else {
+                                        } else {
                                             kontrolleri.setVisualisointi(getVisualisointi());
                                             try {
                                                 kontrolleri.kaynnistaSimulointi();
@@ -312,6 +311,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             e.printStackTrace();
         }
     }
+
     //-------------------------------------------------------------------------------------------
     public void restartProgram(Stage primaryStage) {
         onkoSimuloitu = false;
@@ -322,11 +322,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 strategiaFXML_Controller = new STRATEGIA_FXML_CONTROLLER(kontrolleri);
                 loaderStrategia.setController(strategiaFXML_Controller);
                 rootStrategia = loaderStrategia.load();
-                    Parent root = loaderStrategia.getRoot();
-                    Scene scene = new Scene(root);
-                    primaryStage.setScene(scene);
-                    primaryStage.show();
-                    start(primaryStage);
+                Parent root = loaderStrategia.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                primaryStage.show();
+                start(primaryStage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -354,46 +354,46 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                         tuloksetStage.setScene(scene);
 
                         TableView TABLE_VIEW_DATA = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA();
-                            TableColumn<SimulaatioData, Integer> idCOLUMN = new TableColumn<SimulaatioData, Integer>("#");
-                            idCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, Integer>("id"));
-                            TableColumn<SimulaatioData, LocalDate> aikaCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Päivämäärä");
-                            aikaCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("paivamaara"));
-                            TableColumn<SimulaatioData, Boolean> ajetaankoTyhjaksiCOLUMN = new TableColumn<SimulaatioData, Boolean>("Ajetaanko Tyhjäksi");
-                            ajetaankoTyhjaksiCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData,Boolean>("ajetaanTyhjaksi"));
+                        TableColumn<SimulaatioData, Integer> idCOLUMN = new TableColumn<SimulaatioData, Integer>("#");
+                        idCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, Integer>("id"));
+                        TableColumn<SimulaatioData, LocalDate> aikaCOLUMN = new TableColumn<SimulaatioData, LocalDate>("Päivämäärä");
+                        aikaCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, LocalDate>("paivamaara"));
+                        TableColumn<SimulaatioData, Boolean> ajetaankoTyhjaksiCOLUMN = new TableColumn<SimulaatioData, Boolean>("Ajetaanko Tyhjäksi");
+                        ajetaankoTyhjaksiCOLUMN.setCellValueFactory(new PropertyValueFactory<SimulaatioData, Boolean>("ajetaanTyhjaksi"));
 
-                            TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN, aikaCOLUMN,ajetaankoTyhjaksiCOLUMN);
-                            aikaCOLUMN.setCellValueFactory(
-                                    cellData -> cellData.getValue().paivamaaraProperty());
-                            idCOLUMN.setCellValueFactory(
-                                    cellData -> cellData.getValue().idProperty().asObject());
-                            TABLE_VIEW_DATA.setItems(dataob);
-                            ajetaankoTyhjaksiCOLUMN.setCellValueFactory(
+                        TABLE_VIEW_DATA.getColumns().addAll(idCOLUMN, aikaCOLUMN, ajetaankoTyhjaksiCOLUMN);
+                        aikaCOLUMN.setCellValueFactory(
+                                cellData -> cellData.getValue().paivamaaraProperty());
+                        idCOLUMN.setCellValueFactory(
+                                cellData -> cellData.getValue().idProperty().asObject());
+                        TABLE_VIEW_DATA.setItems(dataob);
+                        ajetaankoTyhjaksiCOLUMN.setCellValueFactory(
                                 cellData -> cellData.getValue().simulaatioTyhjaksiProperty());
-                            TABLE_VIEW_DATA.setItems(dataob);
+                        TABLE_VIEW_DATA.setItems(dataob);
 
                         tuloksetStage.setOnCloseRequest(event -> {
                             datatulokset.clear();
                         });
 
-                            tuloksetStage.show();
+                        tuloksetStage.show();
 
-                            TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                                System.out.println(obs.getValue());
-                                valittuData(obs, newSelection, TULOKSET_FXML_CONTROLLER);
-                                SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
+                        TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                            System.out.println(obs.getValue());
+                            valittuData(obs, newSelection, TULOKSET_FXML_CONTROLLER);
+                            SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
 
-                                //Poista valittu dataNappi.
-                                tuloksetPoistaTulosButton.setOnAction(event -> {
-                                    try {
-                                        poistaData(selectedItem.getId());
-                                        dataob.remove(selectedItem);
+                            //Poista valittu dataNappi.
+                            tuloksetPoistaTulosButton.setOnAction(event -> {
+                                try {
+                                    poistaData(selectedItem.getId());
+                                    dataob.remove(selectedItem);
 
-                                    } catch (SQLException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    System.out.println("POISTETTU DATA");
-                                });
+                                } catch (SQLException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                System.out.println("POISTETTU DATA");
                             });
+                        });
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -409,30 +409,108 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         kontrolleri.poistaTulos(ID);
     }
 
-    public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri){
+    public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri) {
         if (newSelection != null) {
             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
             //SIMUAIKA TULOS
-            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getParametrit().aikaProperty().doubleValue()) + "/Simulaattoriin syötetty aika");
-//            //ROSKEN KOKONAIS MÄÄRÄ
-            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(5).doubleValue()) + " Kg");
+            tuloksetkontrolleri.getTULOKSET_SIMUAIKA().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(4).doubleValue()));
+            //ROSKEN KOKONAIS MÄÄRÄ
+            tuloksetkontrolleri.getTULOKSET_HEITETTY_YHT().setText(selectedItem.getTulokset().getTuloksetDOUBLE().get(5).doubleValue() + " Kg");
             //ELEKTROJÄTE
-            //PALAVAJÄTE
+            tuloksetkontrolleri.getTULOKSET_HEITETTY_ELEKTRO().setText(selectedItem.getTulokset().getTuloksetDOUBLE().get(24).doubleValue() + " Kg");
             //PALAMATONJÄTE
+            tuloksetkontrolleri.getTULOKSET_HEITETTY_PALAMATON().setText(selectedItem.getTulokset().getTuloksetDOUBLE().get(25).doubleValue() + " Kg");
+            //PALAVAJÄTE
+            tuloksetkontrolleri.getTULOKSET_HEITETTY_PALAVA().setText(selectedItem.getTulokset().getTuloksetDOUBLE().get(26).doubleValue() + " Kg");
+            //Saapumeiden lukumäärä
+            tuloksetkontrolleri.getTULOKSET_SAAPUNUT_LKM().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(0).intValue()));
+            //Palveltujien lukumäärä
+            tuloksetkontrolleri.getTULOKSET_PALVELTU_LKM().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(1).intValue()));
+            //Palveltujien lukumäärä SaapumisPiste
+            tuloksetkontrolleri.getTULOKSET_PALVELTU_LK_SAAPUMINEN().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(6).intValue()));
+            //Palveltujien lukumäärä Elektro
+            tuloksetkontrolleri.getTULOKSET_PALVELTU_LK_ELEKTRO().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(7).intValue()));
+            //Palveltujien lukumäärä Palamaton
+            tuloksetkontrolleri.getTULOKSET_PALVELTU_LK_PALAMATON().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(8).intValue()));
+            //Palveltujien lukumäärä Palava
+            tuloksetkontrolleri.getTULOKSET_PALVELTU_LK_PALAVA().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(9).intValue()));
+            //Oleskeluaika Saapuminen
+            tuloksetkontrolleri.getTULOKSET_OLESKELUAIKA_SAAPUMINEN().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(2).intValue()));
+            //Oleskeluaika Elektroniikka
+            tuloksetkontrolleri.getTULOKSET_OLESKELUAIKA_ELEKTRO().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(3).intValue()));
+            //Oleskeluaika Palamaton
+            tuloksetkontrolleri.getTULOKSET_OLESKELUAIKA_PALAMATON().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(4).intValue()));
+            //Oleskeluaika Palava
+            tuloksetkontrolleri.getTULOKSET_OLESKELUAIKA_PALAVA().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(5).intValue()));
+            //Oleskeluaika Palava
+            tuloksetkontrolleri.getTULOKSET_OLESKELUAIKA_PALAVA().setText(Integer.toString(selectedItem.getTulokset().getTuloksetINT().get(5).intValue()));
+            //Aktiivisuus Saapuminen
+            tuloksetkontrolleri.getTULOKSET_AKTIIVISUUSYHT_SAAPUMISPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(0).doubleValue()));
+            //Aktiivisuus Elektro
+            tuloksetkontrolleri.getTULOKSET_AKTIIVISUUSYHT_ELEKTRO().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(1).doubleValue()));
+            //Aktiivisuus Palamaton
+            tuloksetkontrolleri.getTULOKSET_AKTIIVISUUSYHT_PALAMATON().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(2).doubleValue()));
+            //Aktiivisuus Palava
+            tuloksetkontrolleri.getTULOKSET_AKTIIVISUUSYHT_PALAVA().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(3).doubleValue()));
+            //Asiakkaita per aikayksikkö
+            tuloksetkontrolleri.getTULOKSET_ASIAKASPER_AIKAYKSIKKO().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(6).doubleValue()));
+            //Keskimääräinen jonon pituus Saapuva
+            tuloksetkontrolleri.getTULOKSET_KESKMAARA_JONO_SAAPUMISPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(7).doubleValue()));
+            //Keskimääräinen jonon pituus Elektro
+            tuloksetkontrolleri.getTULOKSET_KESKMAARA_JONO_ELEKTROPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(8).doubleValue()));
+            //Keskimääräinen jonon pituus Palamaton
+            tuloksetkontrolleri.getTULOKSET_KESKMAARA_JONO_PALAMATONPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(9).doubleValue()));
+            //Keskimääräinen jonon pituus Palava
+            tuloksetkontrolleri.getTULOKSET_KESKMAARA_JONO_PALAVAPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(10).doubleValue()));
+            //Keskimääräinen Läpimenoaika Saapuminen
+            tuloksetkontrolleri.getTULOKSET_KESKLAPIMENO_SAAPUMINEN().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(11).doubleValue()));
+            //Keskimääräinen Läpimenoaika Elektro
+            tuloksetkontrolleri.getTULOKSET_KESKLAPIMENO_ELEKTRO().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(12).doubleValue()));
+            //Keskimääräinen Läpimenoaika Palamaton
+            tuloksetkontrolleri.getTULOKSET_KESKLAPIMENO_PALAMATON().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(13).doubleValue()));
+            //Keskimääräinen Läpimenoaika Palava
+            tuloksetkontrolleri.getTULOKSET_KESKLAPIMENO_PALAVA().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(14).doubleValue()));
+            //Käyttöaste Saapuminen
+            tuloksetkontrolleri.getTULOKSET_KAYTTOASTE_SAAPUMISPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(15).doubleValue()));
+            //Käyttöaste Elektro
+            tuloksetkontrolleri.getTULOKSET_KAYTTOASTE_ELEKTROPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(16).doubleValue()));
+            //Käyttöaste Palamaton
+            tuloksetkontrolleri.getTULOKSET_KAYTTOASTE_PALAMATONPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(17).doubleValue()));
+            //Käyttöaste Palava
+            tuloksetkontrolleri.getTULOKSET_KAYTTOASTE_PALAVAPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(18).doubleValue()));
+            //Käyttöaste Palava
+            tuloksetkontrolleri.getTULOKSET_KAYTTOASTE_PALAVAPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(18).doubleValue()));
+            //Keskimääräinen Palveluaika Saapuminen
+            tuloksetkontrolleri.getTULOKSET_KESKPALVELUAIKA_SAAPUMISPISTE().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(19).doubleValue()));
+            //Keskimääräinen Palveluaika Elektro
+            tuloksetkontrolleri.getTULOKSET_KESKPALVELUAIKA_ELEKTRO().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(20).doubleValue()));
+            //Keskimääräinen Palveluaika Palamaton
+            tuloksetkontrolleri.getTULOKSET_KESKPALVELUAIKA_PALAMATON().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(21).doubleValue()));
+            //Keskimääräinen Palveluaika Palava
+            tuloksetkontrolleri.getTULOKSET_KESKPALVELUAIKA_PALAVA().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(22).doubleValue()));
+            //Keskimääräinen Jäte (Asiakasjäte / palvelupistejäte /kokonaisjäte)
+            tuloksetkontrolleri.getTULOKSET_KESKJÄTEMAARA_APKJ().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(23).doubleValue()));
 
             //INPUTS
             //INPUT VIIVE
-            tuloksetkontrolleri.getTULOKSET_INPUT_VIIVE().setText(Double.toString(selectedItem.getParametrit().getViive()/1000) + "/ Sekuntia");
+            tuloksetkontrolleri.getTULOKSET_INPUT_VIIVE().setText(selectedItem.getParametrit().getViive() / 1000 + "/ Sekuntia");
             //INPUT_AIKA
-            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(Double.toString(selectedItem.getParametrit().getAika()) + "/ AikaYksikköä");
-            //INPUT_VIIVE
+            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA().setText(selectedItem.getParametrit().getAika() + "/ AikaYksikköä");
+            //INPUT MIN JA MAX
+            tuloksetkontrolleri.getTULOKSET_INPUT_MIN_KG().setText(Double.toString(selectedItem.getParametrit().getVmin()));
+            tuloksetkontrolleri.getTULOKSET_INPUT_MAX_KG().setText(Double.toString(selectedItem.getParametrit().getVmax()));
+            //SorttiAseman Aktiivisuus
+            //---DB puutuu
+
+            //INPUT KG kesto per sec
+            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA_PER_KG().setText(Double.toString(selectedItem.getParametrit().getPurkunopeus()));;
 
             //INPUT_PROSENTTI_ELEKTRO
             tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getParametrit().getJateTE()) + "%");
             //INPUT_PROSENTTI_PALAMATON
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getParametrit().getJateTPJ())+"%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAMATON().setText(Integer.toString(selectedItem.getParametrit().getJateTPJ()) + "%");
             //INPUT_PROSENTTI_PALAVA
-            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getParametrit().getJateTPNJ())+"%");
+            tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_PALAVA().setText(Integer.toString(selectedItem.getParametrit().getJateTPNJ()) + "%");
 
 
         } else {
@@ -509,7 +587,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    public void setAloitaButtonText(){
+    public void setAloitaButtonText() {
         aloitaButton.setText("Käynnistä uudelleen");
     }
 
