@@ -215,11 +215,6 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
-    public int getStrategiaTapahtumat() {
-        return 0;
-    }
-
-    @Override
     public int getElektro_JateCounter() {
         return 0;
     }
