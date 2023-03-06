@@ -6,6 +6,6 @@ public interface IMoottori {
     public long getViive();
     public void viive();
     public void setAjetaanTyhjaksi(boolean ajetaanTyhjaksi);
+    public void lopetasimulaatio();
     public boolean getAjetaanTyhjaksi();
-    public void lopeta();
 }

@@ -2,10 +2,7 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.model;
 
 import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.*;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriMtoV;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Moottori;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Saapumisprosessi;
-import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtuma;
+import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.*;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -18,11 +15,10 @@ public class OmaMoottori extends Moottori {
     private double ELEKTROjatteidenmaara = 0;
     private double PALAVAjatteidenmaara = 0;
     private double PALAMATONjatteidenmaara = 0;
-
+    private Thread simulationThread;
     public OmaMoottori(IKontrolleriMtoV kontrolleri) {
         super(kontrolleri);
         palvelupisteet = new Palvelupiste[4];
-
         //Palvelutiski
         palvelupisteet[0] = new Palvelutiski(new Normal(10, 6), tapahtumalista);
 
@@ -36,142 +32,142 @@ public class OmaMoottori extends Moottori {
         System.out.println(Arrays.toString(palvelupisteet));
     }
 
-
     @Override
     protected void alustukset() {
-        saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
+                saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
     }
 
     @Override
     protected void suoritaTapahtuma(Tapahtuma t) {  // B-vaiheen tapahtumat
+                Asiakas a;
+                int jono1 = t.getTapahtumanLuoja();
+                int jono2 = t.getTyyppi().ordinal();
 
-        Asiakas a;
-        int jono1 = t.getTapahtumanLuoja();
-        int jono2 = t.getTyyppi().ordinal();
+                System.out.println("ASIAKAS LÄHTEE JONOSTA " + jono1 + " JA SAAPUU JONOON " + jono2);
+                switch (t.getTyyppi()) {
 
-        System.out.println("ASIAKAS LÄHTEE JONOSTA " + jono1 + " JA SAAPUU JONOON " + jono2);
-        switch (t.getTyyppi()) {
-
-            case PALVELUTISKI_SAAPUMINEN:
-                if(Kello.getInstance().getAika() < getSimulointiaika()){
-                    saapumistenMaara++;
-                    kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
-                    a = new Asiakas();
-                    //Palvetiskijono = tapahtumalista
-                    palvelupisteet[0].lisaaJonoon(a);
-                    saapumisprosessi.generoiSeuraava();
-                }
-                break;
-
-            case ELEKTRONIIKKA_SAAPUMINEN:
-                switch (palvelupisteet[jono1].palvelupisteID){
-                    case 0:
-                        kontrolleri.getVisualisointi().moveAsiakasELEKTRO();
-                }
-                a = palvelupisteet[jono1].otaJonosta();
-                a.setSaapumisaika(kello.getAika());
-                palvelupisteet[jono2].lisaaJonoon(a);
-                break;
-            case PALAMATONJATE_SAAPUMINEN:
-                switch (palvelupisteet[jono1].palvelupisteID){
-                    case 0:
-                        kontrolleri.getVisualisointi().moveAsiakasEPA();
-                }
-                a = palvelupisteet[jono1].otaJonosta();
-                a.setSaapumisaika(kello.getAika());
-                palvelupisteet[jono2].lisaaJonoon(a);
-                break;
-
-            case PALAVAJATE_SAAPUMINEN:
-                switch (palvelupisteet[jono1].palvelupisteID){
-                    case 0:
-                        kontrolleri.getVisualisointi().moveAsiakasPALAVA();
-                }
-                a = palvelupisteet[jono1].otaJonosta();
-                a.setSaapumisaika(kello.getAika());
-                palvelupisteet[jono2].lisaaJonoon(a);
-                break;
-            case POISTUMINEN:
-                a = palvelupisteet[jono1].otaJonosta();
-                switch (palvelupisteet[jono1].palvelupisteID){
-                    case 1:
-                        poistunutMaara++;
-                        kontrolleri.getVisualisointi().moveAsiakasELEKTRO_POISTUMINEN();
-                        kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
-                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
+                    case PALVELUTISKI_SAAPUMINEN:
+                        if (Kello.getInstance().getAika() < getSimulointiaika()) {
+                            saapumistenMaara++;
+                            kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
+                            a = new Asiakas();
+                            //Palvetiskijono = tapahtumalista
+                            palvelupisteet[0].lisaaJonoon(a);
+                            saapumisprosessi.generoiSeuraava();
+                        }
                         break;
-                    case 2:
-                        poistunutMaara++;
-                        kontrolleri.getVisualisointi().moveAsiakasEPA_POISTUMINEN();
-                        kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[2].getJono().size());
-                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
+
+                    case ELEKTRONIIKKA_SAAPUMINEN:
+                        switch (palvelupisteet[jono1].palvelupisteID) {
+                            case 0:
+                                kontrolleri.getVisualisointi().moveAsiakasELEKTRO();
+                                break;
+                        }
+                        a = palvelupisteet[jono1].otaJonosta();
+                        a.setSaapumisaika(kello.getAika());
+                        palvelupisteet[jono2].lisaaJonoon(a);
                         break;
-                    case 3:
-                        poistunutMaara++;
-                        kontrolleri.getVisualisointi().moveAsiakasPALAVA_POISTUMINEN();
+                    case PALAMATONJATE_SAAPUMINEN:
+                        switch (palvelupisteet[jono1].palvelupisteID) {
+                            case 0:
+                                kontrolleri.getVisualisointi().moveAsiakasEPA();
+                                break;
+                        }
+                        a = palvelupisteet[jono1].otaJonosta();
+                        a.setSaapumisaika(kello.getAika());
+                        palvelupisteet[jono2].lisaaJonoon(a);
+                        break;
+
+                    case PALAVAJATE_SAAPUMINEN:
+                        switch (palvelupisteet[jono1].palvelupisteID) {
+                            case 0:
+                                kontrolleri.getVisualisointi().moveAsiakasPALAVA();
+                                break;
+                        }
+                        a = palvelupisteet[jono1].otaJonosta();
+                        a.setSaapumisaika(kello.getAika());
+                        palvelupisteet[jono2].lisaaJonoon(a);
+                        break;
+                    case POISTUMINEN:
+                        a = palvelupisteet[jono1].otaJonosta();
+                        switch (palvelupisteet[jono1].palvelupisteID) {
+                            case 1:
+                                poistunutMaara++;
+                                kontrolleri.getVisualisointi().moveAsiakasELEKTRO_POISTUMINEN();
+                                kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
+                                kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
+                                break;
+                            case 2:
+                                poistunutMaara++;
+                                kontrolleri.getVisualisointi().moveAsiakasEPA_POISTUMINEN();
+                                kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[2].getJono().size());
+                                kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
+                                break;
+                            case 3:
+                                poistunutMaara++;
+                                kontrolleri.getVisualisointi().moveAsiakasPALAVA_POISTUMINEN();
+                                kontrolleri.getVisualisointi().removeJONOPALIKKA_PALAVA(palvelupisteet[3].getJono().size());
+                                kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
+                                break;
+                        }
+                        a.raportti();
+                        break;
+                }
+
+                //PALAVAJÄTE REITTI ANIMOINTI
+                try {
+                    if (palvelupisteet[jono1].palvelupisteID == 3) {
+                        PALAVAjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                        kontrolleri.getVisualisointi().setPALAVA_COUNTER(PALAVAjatteidenmaara);
+                    } else if (palvelupisteet[jono1].palvelupisteID == 2) {
+                        PALAMATONjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                        kontrolleri.getVisualisointi().setPALAMATON_COUNTER(PALAMATONjatteidenmaara);
+                    } else if (palvelupisteet[jono1].palvelupisteID == 1) {
+                        ELEKTROjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
+                        kontrolleri.getVisualisointi().setELEKTRO_COUNTER(ELEKTROjatteidenmaara);
+                    }
+                    //SAAPUMISPISTE JONO/REITTI ANIMOINTI
+                    if (palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 0) {
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_SAAPUMINEN();
+                    } else if (palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 1) {
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
+                        //PALAVA REITTI ANIMOINTI
+                    } else if (palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 2) {
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
+                    } else if (palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 3) {
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
+                    } else if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 2) {
+                        kontrolleri.getVisualisointi().moveAsiakasPA_EPA();
                         kontrolleri.getVisualisointi().removeJONOPALIKKA_PALAVA(palvelupisteet[3].getJono().size());
-                        kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
-                        break;
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
+                    } else if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 1) {
+                        kontrolleri.getVisualisointi().moveAsiakasPALAVA_ELEKTRO();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_PALAVA(palvelupisteet[3].getJono().size());
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
+                        //EPA REITTI ANIMOINTI
+                    } else if (palvelupisteet[jono1].palvelupisteID == 2 && palvelupisteet[jono2].palvelupisteID == 3) {
+                        kontrolleri.getVisualisointi().moveAsiakasEPA_PA();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[jono1].getJono().size());
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
+                    } else if (palvelupisteet[jono1].palvelupisteID == 2 && palvelupisteet[jono2].palvelupisteID == 1) {
+                        kontrolleri.getVisualisointi().moveAsiakasEPA_ELEKTRO();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[jono1].getJono().size());
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
+                        //ELEKTRO REITTI ANIMOINTI
+                    } else if (palvelupisteet[jono1].palvelupisteID == 1 && palvelupisteet[jono2].palvelupisteID == 2) {
+                        kontrolleri.getVisualisointi().moveAsiakasELEKTRO_EPA();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
+                    } else if (palvelupisteet[jono1].palvelupisteID == 1 && palvelupisteet[jono2].palvelupisteID == 3) {
+                        kontrolleri.getVisualisointi().moveAsiakasELEKTRO_PALAVA();
+                        kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
+                        kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
                 }
-                a.raportti();
-                break;
-        }
-		
-        //PALAVAJÄTE REITTI ANIMOINTI
-        try {
-            if(palvelupisteet[jono1].palvelupisteID == 3){
-                PALAVAjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
-                kontrolleri.getVisualisointi().setPALAVA_COUNTER(PALAVAjatteidenmaara);
-            } else if(palvelupisteet[jono1].palvelupisteID == 2){
-                PALAMATONjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
-                kontrolleri.getVisualisointi().setPALAMATON_COUNTER(PALAMATONjatteidenmaara);
-            }else if(palvelupisteet[jono1].palvelupisteID == 1){
-                ELEKTROjatteidenmaara = ((Jatelava) (palvelupisteet[jono1])).getMaara();
-                kontrolleri.getVisualisointi().setELEKTRO_COUNTER(ELEKTROjatteidenmaara);
-            }
-            //SAAPUMISPISTE JONO/REITTI ANIMOINTI
-            if (palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 0){
-                kontrolleri.getVisualisointi().addJONOPALIKKA_SAAPUMINEN();
-            } else if (palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 1){
-                kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
-                //PALAVA REITTI ANIMOINTI
-            }else if(palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 2){
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
-                kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
-            }else if(palvelupisteet[jono1].palvelupisteID == 0 && palvelupisteet[jono2].palvelupisteID == 3){
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_SAAPUMINEN(palvelupisteet[0].getJono().size());
-                kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
-            }
-            else if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 2) {
-                kontrolleri.getVisualisointi().moveAsiakasPA_EPA();
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_PALAVA(palvelupisteet[3].getJono().size());
-                kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
-            } else if (palvelupisteet[jono1].palvelupisteID == 3 && palvelupisteet[jono2].palvelupisteID == 1) {
-                kontrolleri.getVisualisointi().moveAsiakasPALAVA_ELEKTRO();
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_PALAVA(palvelupisteet[3].getJono().size());
-                kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
-                //EPA REITTI ANIMOINTI
-            }else if(palvelupisteet[jono1].palvelupisteID == 2 && palvelupisteet[jono2].palvelupisteID == 3) {
-                kontrolleri.getVisualisointi().moveAsiakasEPA_PA();
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[jono1].getJono().size());
-                kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
-            }else if(palvelupisteet[jono1].palvelupisteID == 2 && palvelupisteet[jono2].palvelupisteID == 1){
-                kontrolleri.getVisualisointi().moveAsiakasEPA_ELEKTRO();
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_EPA(palvelupisteet[jono1].getJono().size());
-                kontrolleri.getVisualisointi().addJONOPALIKKA_ELEKTRO();
-                //ELEKTRO REITTI ANIMOINTI
-            }else if (palvelupisteet[jono1].palvelupisteID == 1 && palvelupisteet[jono2].palvelupisteID == 2){
-                kontrolleri.getVisualisointi().moveAsiakasELEKTRO_EPA();
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
-                kontrolleri.getVisualisointi().addJONOPALIKKA_EPA();
-            }else if (palvelupisteet[jono1].palvelupisteID == 1 && palvelupisteet[jono2].palvelupisteID == 3){
-                kontrolleri.getVisualisointi().moveAsiakasELEKTRO_PALAVA();
-                kontrolleri.getVisualisointi().removeJONOPALIKKA_ELEKTRO(palvelupisteet[1].getJono().size());
-                kontrolleri.getVisualisointi().addJONOPALIKKA_PALAVA();
-            }
-        }catch(ArrayIndexOutOfBoundsException e){
-        }
     }
 
     public void setVarattu(){
@@ -255,7 +251,7 @@ public class OmaMoottori extends Moottori {
 
 
     @Override
-    public void lopeta() {
-
+    public void lopetasimulaatio() {
+        lopetaSimuMootori();
     }
 }

@@ -15,10 +15,6 @@ public class Simulaattori { //Tekstipohjainen
            @Override
            public void naytaLoppuaika(double aika) {
             }
-           @Override
-            public void visualisoiAsiakas() {
-
-            }
         @Override
         public void tallennaTulokset(Laskenta suureet) throws SQLException {
             
