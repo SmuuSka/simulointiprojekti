@@ -49,7 +49,7 @@ public class DAO implements IDAO {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 rs.first();
-                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getDouble(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
                 simulaatioDataOlio.setParametrit(simulaationParametrit);
             }
         }
@@ -69,7 +69,7 @@ public class DAO implements IDAO {
                         String columnName = resultSetMetaData.getColumnName(i);
                         tuloksetINT.add(new SimpleIntegerProperty(rs.getInt(i)));
                     }
-                    for (int j = 13; j < resultSetMetaData.getColumnCount(); j++) {
+                    for (int j = 13; j < resultSetMetaData.getColumnCount() + 1; j++) {
                         String columnName = resultSetMetaData.getColumnName(j);
                         tuloksetDouble.add((new SimpleDoubleProperty(rs.getDouble(j))));
                     }
@@ -99,7 +99,7 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public synchronized void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit, int viive, double purkuaika) throws SQLException {
+    public synchronized void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit, double viive, double purkuaika) throws SQLException {
         lisaaSimulaatioTaulu();
         lisaaTuloksetTaulu();
         lisaaParametritTaulu();
@@ -118,7 +118,7 @@ public class DAO implements IDAO {
         }
     }
     private void lisaaParametritTaulu() throws SQLException {
-        String query = "CREATE TABLE IF NOT EXISTS parametrit (parametriID INT PRIMARY KEY AUTO_INCREMENT, simulaatioID INT, simulointiaika DECIMAL,viive INT,purkunopeusPerSek DECIMAL(10,1)," +
+        String query = "CREATE TABLE IF NOT EXISTS parametrit (parametriID INT PRIMARY KEY AUTO_INCREMENT, simulaatioID INT, simulointiaika DECIMAL,viive DECIMAL,purkunopeusPerSek DECIMAL(10,1)," +
                 "\tvaihteluvaliMin INT,\n" +
                 "\tvaihteluvaliMax INT ,\n" +
                 "\tjatteenTodennakoisyysElektroniikka INT,\n" +
@@ -194,7 +194,7 @@ public class DAO implements IDAO {
         }
     }
 
-    private void lisaaParametrit(double simulointiaika, int[] vaihteluvali, int[] jateprosentit, int viive, double purkunopeus) throws SQLException {
+    private void lisaaParametrit(double simulointiaika, int[] vaihteluvali, int[] jateprosentit, double viive, double purkunopeus) throws SQLException {
         String query = "INSERT INTO parametrit (parametriID,simulaatioID,simulointiaika,viive,purkunopeusPerSek,vaihteluvaliMin," +
                 "vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalamatonJate," +
                 "jatteenTodennakoisyysPalavaJate) VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -207,7 +207,7 @@ public class DAO implements IDAO {
             //Simulaatioaika
             ps.setDouble(3, simulointiaika);
             //Simulaation viive
-            ps.setInt(4,viive);
+            ps.setDouble(4,viive);
             //Purkunopeus per sekuntti
             ps.setDouble(5,purkunopeus);
             //Jätemäärä MIN

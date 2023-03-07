@@ -22,7 +22,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     private IDAO tietokanta;
     private IVisualisointi nayttoVisual;
     private int counter = 0;
-    public Kontrolleri(ISimulaattoriUI ui){
+
+    public Kontrolleri(ISimulaattoriUI ui) {
         this.ui = ui;
     }
 
@@ -49,9 +50,9 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         // placeholder
         long viive = 500;
         // Vähentää viivettä 0.5s
-        if (moottori.getViive() - viive >= 1){
+        if (moottori.getViive() - viive >= 1) {
             moottori.setViive(moottori.getViive() - viive);
-            ui.setAnimaationViive((int)(moottori.getViive()));
+            ui.setAnimaationViive((int) (moottori.getViive()));
         }
     }
 
@@ -59,7 +60,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void hidasta() {
         // Lisää viivettä 0.5s
         moottori.setViive(moottori.getViive() + 500);
-        ui.setAnimaationViive((int)(moottori.getViive() + 500));
+        ui.setAnimaationViive((int) (moottori.getViive() + 500));
 
     }
 
@@ -67,6 +68,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public IVisualisointi getVisualisointi() {
         return nayttoVisual;
     }
+
     @Override
     public void lopetaSimulointi() {
         moottori.lopetasimulaatio();
@@ -83,7 +85,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         if (ui.getAjeetaankoLoppuun()){
             onkoAjetaanloppuun = 1;
         }
-        tietokanta.luoData(onkoAjetaanloppuun,ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit(),40,1.5);
+        tietokanta.luoData(onkoAjetaanloppuun, ui.getAika(), ui.getVaihteluvali(), ui.getJateLaijenProsentit(), (int) ui.getViive(), ui.getPurkuNopeus());
         tietokanta.paivitaData(suureet);
         ui.showTulokset(tietokanta.simulaatioColumnData());
         tietokanta.suljeYhteys();
@@ -99,7 +101,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 
     @Override
     public boolean onkoSimulointiPaalla() {
-    return ((Thread)moottori).isAlive();
+        return ((Thread) moottori).isAlive();
     }
 
     @Override
@@ -111,7 +113,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     @Override
     public void showTuloksetAction() throws SQLException {
         tietokanta = new DAO();
-        switch (counter){
+        switch (counter) {
             case 0:
                 counter = 1;
 
@@ -129,6 +131,21 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
+    public double getAktiivisuus() {
+        switch (ui.getRuuhkaAika()) {
+            case 1:
+                return 2;
+
+            case 2:
+                return 1;
+
+            case 3:
+                return 0.5;
+        }
+        return ui.getRuuhkaAika();
+    }
+
+    @Override
     public void setPTJononPituus(int pituus) {
         ui.setPTJateJonossa(pituus);
     }
@@ -137,12 +154,13 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void setPJononPituus(int pituus) {
         ui.setPJateJonossa(pituus);
     }
+
     @Override
     public void setSAAPUMISJononPituus(int pituus) {
         ui.setSAAPUMINENJonossa(pituus);
     }
 
-   public void setAnimaationViive(int viive){
+    public void setAnimaationViive(int viive) {
         ui.setAnimaationViive(viive);
-   }
+    }
 }
