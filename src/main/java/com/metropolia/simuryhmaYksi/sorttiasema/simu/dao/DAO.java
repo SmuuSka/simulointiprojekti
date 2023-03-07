@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 public class DAO implements IDAO {
     private int indexTulokset_1 = 1, indexTulokset_2 = 1;
     private  SimulaatioData simulaatioDataOlio;
-    private PreparedStatement pstesti;
     private final Connection connection;
     private static final ResourceBundle rb = ResourceBundle.getBundle("System");
     private static final String url1 = rb.getString("url1") + rb.getString("username1") + rb.getString("password1");
@@ -45,12 +44,12 @@ public class DAO implements IDAO {
 
     private void haeSimulaationParametrit() throws SQLException {
         String id = Integer.toString(simulaatioDataOlio.getId());
-        String query = "SELECT simulointiaika,viive, purkunopeusPerSek, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate,jatteenTodennakoisyysPalamatonJate FROM parametrit WHERE parametrit.parametriID="+id;
+        String query = "SELECT simulointiaika,viive, purkunopeusPerSek, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalamatonJate,jatteenTodennakoisyysPalavaJate FROM parametrit WHERE parametrit.parametriID="+id;
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 rs.first();
-                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getInt(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getDouble(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
                 simulaatioDataOlio.setParametrit(simulaationParametrit);
             }
         }
@@ -70,7 +69,7 @@ public class DAO implements IDAO {
                         String columnName = resultSetMetaData.getColumnName(i);
                         tuloksetINT.add(new SimpleIntegerProperty(rs.getInt(i)));
                     }
-                    for (int j = 13; j < resultSetMetaData.getColumnCount(); j++) {
+                    for (int j = 13; j < resultSetMetaData.getColumnCount() + 1; j++) {
                         String columnName = resultSetMetaData.getColumnName(j);
                         tuloksetDouble.add((new SimpleDoubleProperty(rs.getDouble(j))));
                     }
@@ -100,7 +99,7 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public synchronized void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit, int viive, double purkuaika) throws SQLException {
+    public synchronized void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit, double viive, double purkuaika) throws SQLException {
         lisaaSimulaatioTaulu();
         lisaaTuloksetTaulu();
         lisaaParametritTaulu();
@@ -118,23 +117,20 @@ public class DAO implements IDAO {
             ps.executeUpdate();
         }
     }
-
     private void lisaaParametritTaulu() throws SQLException {
-        String query = "CREATE TABLE IF NOT EXISTS parametrit (parametriID INT PRIMARY KEY AUTO_INCREMENT, simulaatioID INT, simulointiaika DECIMAL,viive INT,purkunopeusPerSek DECIMAL(10,1)," +
+        String query = "CREATE TABLE IF NOT EXISTS parametrit (parametriID INT PRIMARY KEY AUTO_INCREMENT, simulaatioID INT, simulointiaika DECIMAL,viive DECIMAL,purkunopeusPerSek DECIMAL(10,1)," +
                 "\tvaihteluvaliMin INT,\n" +
                 "\tvaihteluvaliMax INT ,\n" +
                 "\tjatteenTodennakoisyysElektroniikka INT,\n" +
-                "\tjatteenTodennakoisyysPalavaJate INT,\n" +
                 "\tjatteenTodennakoisyysPalamatonJate INT,\n" +
+                "\tjatteenTodennakoisyysPalavaJate INT,\n" +
                 "    CONSTRAINT fk_parametrit_simulaatioID\n" +
                 "    FOREIGN KEY (simulaatioID)\n" +
                 "    REFERENCES simulaatio(simulaatioID) ON DELETE CASCADE)";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            pstesti = ps;
             ps.executeUpdate();
         }
-        System.out.println("Suljettu yhteys: " + pstesti.isClosed());
     }
 
     private void lisaaTuloksetTaulu() throws SQLException {
@@ -145,36 +141,39 @@ public class DAO implements IDAO {
                 "\tpalveltujenLKM INT(11),\n" +
                 "\tkokonaisoleskeluaikaSaapuva INT(11),\n" +
                 "\tkokonaisoleskeluaikaElektroniikka INT(11),\n" +
-                "\tkokonaisoleskeluaikaPalavaJate INT(11),\n" +
                 "\tkokonaisoleskeluaikaPalamatonJate INT(11),\n" +
+                "\tkokonaisoleskeluaikaPalavaJate INT(11),\n" +
                 "\tpalveltujenLkmSaapuva INT(11) ,\n" +
                 "\tpalveltujenLkmElektroniikka INT(11),\n" +
-                "\tpalveltujenLkmPalavaJate INT(11),\n" +
                 "\tpalveltujenLkmPalamatonJate INT(11),\n" +
+                "\tpalveltujenLkmPalavaJate INT(11),\n" +
                 "\taktiiviaikaSaapuva DECIMAL(10,1),\n" +
                 "\taktiiviaikaElektroniikka DECIMAL(10,1),\n" +
-                "\taktiiviaikaPalavaJate DECIMAL(10,1),\n" +
                 "\taktiiviaikaPalamatonJate DECIMAL(10,1),\n" +
+                "\taktiiviaikaPalavaJate DECIMAL(10,1),\n" +
                 "\tkokonaisaika DECIMAL(10,1),\n" +
                 "\tjatteenKokonaismaara DECIMAL(10,1),\n" +
                 "\tsuoritusteho DECIMAL(10,1),\n" +
                 "\tavgJononPituusSaapuva DECIMAL(10,1),\n" +
                 "\tavgJononPituusElektroniikka DECIMAL(10,1),\n" +
-                "\tavgJononPituusPalavaJate DECIMAL(10,1),\n" +
                 "\tavgJononPituusPalamatonJate DECIMAL(10,1),\n" +
+                "\tavgJononPituusPalavaJate DECIMAL(10,1),\n" +
                 "\tavgLapimenoSaapuva DECIMAL(10,1),\n" +
                 "\tavgLapimenoElektroniikka DECIMAL(10,1),\n" +
-                "\tavgLapimenoPalavaJate DECIMAL(10,1),\n" +
                 "\tavgLapimenoPalamatonJate DECIMAL(10,1),\n" +
+                "\tavgLapimenoPalavaJate DECIMAL(10,1),\n" +
                 "\tkayttoasteSaapuva DECIMAL(10,1),\n" +
                 "\tkayttoasteElektroniikka DECIMAL(10,1),\n" +
-                "\tkayttoastePalavaJate DECIMAL(10,1),\n" +
                 "\tkayttoastePalamatonJate DECIMAL(10,1),\n" +
+                "\tkayttoastePalavaJate DECIMAL(10,1),\n" +
                 "\tavgPalveluaikaSaapuva DECIMAL(10,1),\n" +
                 "\tavgPalveluaikaElektroniikka DECIMAL(10,1),\n" +
-                "\tavgPalveluaikaPalavaJate DECIMAL(10,1),\n" +
                 "\tavgPalveluaikaPalamatonJate DECIMAL(10,1),\n" +
+                "\tavgPalveluaikaPalavaJate DECIMAL(10,1),\n" +
                 "\tavgJatteenmaara DECIMAL(10,1),\n" +
+                "\tjatemaaraElektroniikka DECIMAL(10,1),\n" +
+                "\tjatemaaraPalamatonJate DECIMAL(10,1),\n" +
+                "\tjatemaaraPalavaJate DECIMAL(10,1),\n" +
                 "\tCONSTRAINT fk_simulaatioID\n" +
                 "\tFOREIGN KEY (simulaatioID)\n" +
                 "\tREFERENCES simulaatio(simulaatioID) ON DELETE CASCADE)";
@@ -195,10 +194,10 @@ public class DAO implements IDAO {
         }
     }
 
-    private void lisaaParametrit(double simulointiaika, int[] vaihteluvali, int[] jateprosentit, int viive, double purkunopeus) throws SQLException {
+    private void lisaaParametrit(double simulointiaika, int[] vaihteluvali, int[] jateprosentit, double viive, double purkunopeus) throws SQLException {
         String query = "INSERT INTO parametrit (parametriID,simulaatioID,simulointiaika,viive,purkunopeusPerSek,vaihteluvaliMin," +
-                "vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalavaJate," +
-                "jatteenTodennakoisyysPalamatonJate) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                "vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalamatonJate," +
+                "jatteenTodennakoisyysPalavaJate) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             //ParametriID
@@ -208,7 +207,7 @@ public class DAO implements IDAO {
             //Simulaatioaika
             ps.setDouble(3, simulointiaika);
             //Simulaation viive
-            ps.setInt(4,viive);
+            ps.setDouble(4,viive);
             //Purkunopeus per sekuntti
             ps.setDouble(5,purkunopeus);
             //Jätemäärä MIN
@@ -217,9 +216,9 @@ public class DAO implements IDAO {
             ps.setInt(7, vaihteluvali[1]);
             //Elektroniikan prosentit
             ps.setInt(8, jateprosentit[0]);
-            //Palavan jätteen prosentit
-            ps.setInt(9, jateprosentit[1]);
             //Palamattoman jätteen prosentit
+            ps.setInt(9, jateprosentit[1]);
+            //Palavan jätteen prosentit
             ps.setInt(10, jateprosentit[2]);
 
             ps.executeUpdate();
@@ -234,12 +233,12 @@ public class DAO implements IDAO {
                 "                palveltujenLKM,\n" +
                 "                kokonaisoleskeluaikaSaapuva,\n" +
                 "                kokonaisoleskeluaikaElektroniikka,\n" +
-                "                kokonaisoleskeluaikaPalavaJate,\n" +
                 "                kokonaisoleskeluaikaPalamatonJate,\n" +
+                "                kokonaisoleskeluaikaPalavaJate,\n" +
                 "                palveltujenLkmSaapuva,\n" +
                 "                palveltujenLkmElektroniikka,\n" +
-                "                palveltujenLkmPalavaJate,\n" +
-                "                palveltujenLkmPalamatonJate) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+                "                palveltujenLkmPalamatonJate,\n" +
+                "                palveltujenLkmPalavaJate) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             //ParametriID
@@ -250,7 +249,7 @@ public class DAO implements IDAO {
             ps.setInt(indexTulokset_1++, suureet.getSaapuneidenLkm());
             //PalveltujenLKM
             ps.setInt(indexTulokset_1++, suureet.getPalveltujenMaara());
-            //Kokonaisoleskeluaika Palvelupisteellä, Saapuminen,Elektroniikka,Palava Jäte,Palava Jäte
+            //Kokonaisoleskeluaika Palvelupisteellä, Saapuminen,Elektroniikka,Palamaton Jäte,Palava Jäte
             long[] kOAjat = suureet.getKokonaisoleskeluajat();
             for (long i : kOAjat) {
                 ps.setInt(indexTulokset_1++, (int) i);
@@ -266,7 +265,7 @@ public class DAO implements IDAO {
     }
 
     private void tuloksetDouble(Laskenta suureet) throws SQLException {
-        String query = "UPDATE tulokset SET aktiiviaikaSaapuva = ?, aktiiviaikaElektroniikka = ?, aktiiviaikaPalavaJate = ?, aktiiviaikaPalamatonJate = ?, kokonaisaika= ?, jatteenKokonaismaara= ?, suoritusteho= ?, avgJononPituusSaapuva= ?, avgJononPituusElektroniikka= ?, avgJononPituusPalavaJate= ?, avgJononPituusPalamatonJate= ?, avgLapimenoSaapuva= ?, avgLapimenoElektroniikka= ?, avgLapimenoPalavaJate= ?, avgLapimenoPalamatonJate= ?, kayttoasteSaapuva= ?, kayttoasteElektroniikka= ?, kayttoastePalavaJate= ?, kayttoastePalamatonJate= ?, avgPalveluaikaSaapuva= ?, avgPalveluaikaElektroniikka= ?, avgPalveluaikaPalavaJate= ?, avgPalveluaikaPalamatonJate= ?, avgJatteenmaara = ? WHERE tuloksetID=?";
+        String query = "UPDATE tulokset SET aktiiviaikaSaapuva = ?, aktiiviaikaElektroniikka = ?, aktiiviaikaPalamatonJate = ?, aktiiviaikaPalavaJate = ?, kokonaisaika= ?, jatteenKokonaismaara= ?, suoritusteho= ?, avgJononPituusSaapuva= ?, avgJononPituusElektroniikka= ?, avgJononPituusPalamatonJate= ?,avgJononPituusPalavaJate= ?, avgLapimenoSaapuva= ?, avgLapimenoElektroniikka= ?, avgLapimenoPalamatonJate= ?, avgLapimenoPalavaJate= ?, kayttoasteSaapuva= ?, kayttoasteElektroniikka= ?,kayttoastePalamatonJate= ?,kayttoastePalavaJate= ?, avgPalveluaikaSaapuva= ?, avgPalveluaikaElektroniikka= ?,  avgPalveluaikaPalamatonJate= ?,avgPalveluaikaPalavaJate= ?, avgJatteenmaara = ?, jatemaaraElektroniikka = ?,jatemaaraPalamatonJate = ?,jatemaaraPalavaJate = ? WHERE tuloksetID=?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             //Palvelupisteiden aktiiviajat,Saapuminen Elektroniikka,Palava Jäte,Palamaton Jäte
             double[] aktiiviaika = suureet.getAktiiviajat();
@@ -279,22 +278,22 @@ public class DAO implements IDAO {
             ps.setDouble(indexTulokset_2++, suureet.getJatteenKokonaismaara());
             //Suoritusteho
             ps.setDouble(indexTulokset_2++, suureet.getSuoritusteho());
-            //Keskimääräinen Jonon Pituus, Saapuminen,Elektroniikka,Palava Jäte,Palamaton Jäte
+            //Keskimääräinen Jonon Pituus, Saapuminen,Elektroniikka,Palamaton Jäte,Palava Jäte
             double[] avgJPS = suureet.getKeskmJononpituudet();
             for (double d : avgJPS) {
                 ps.setDouble(indexTulokset_2++, d);
             }
-            //Keskimääräinen läpimenoaika, Saapuminen, Elektroniikka,  Palava Jäte, Palamaton Jäte
+            //Keskimääräinen läpimenoaika, Saapuminen, Elektroniikka,Palamaton Jäte,Palava Jäte
             double[] avgLapimeno = suureet.getKeskmLapimenoajat();
             for (double d : avgLapimeno) {
                 ps.setDouble(indexTulokset_2++, d);
             }
-            //Palvelupisteiden Kayttoasteet, Saapuminen, Elektroniikka, Palava Jäte, Palamaton Jäte
+            //Palvelupisteiden Kayttoasteet, Saapuminen, Elektroniikka,Palamaton Jäte,Palava Jäte
             double[] avgKayttoasteet = suureet.getKayttoasteet();
             for (double d : avgKayttoasteet) {
                 ps.setDouble(indexTulokset_2++, d);
             }
-            //Palvelupisteiden Palveluajat, Saapuminen, Elektroniikka, Palava Jäte, Palamaton Jäte
+            //Palvelupisteiden Palveluajat, Saapuminen, Elektroniikka,Palamaton Jäte,Palava Jäte
             double[] palveluajat = suureet.getKeskmPalveluajat();
             for (double d : palveluajat) {
                 ps.setDouble(indexTulokset_2++, d);
@@ -306,6 +305,11 @@ public class DAO implements IDAO {
             } else {
                 // Anna normi value
                 ps.setDouble(indexTulokset_2++, suureet.getKeskmJatteenmaara());
+            }
+            //Palvelupisteiden jätemäärät, Elektroniikka, Palamaton Jäte,Palava Jäte
+            double[] jatemaaraPalvelupisteella = suureet.getJatteenMaarat();
+            for (double d : jatemaaraPalvelupisteella){
+                ps.setDouble(indexTulokset_2++, d);
             }
             //Tulokset-taulun avain
             ps.setInt(indexTulokset_2++, simuID);

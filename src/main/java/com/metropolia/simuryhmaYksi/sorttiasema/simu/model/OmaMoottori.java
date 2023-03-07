@@ -20,20 +20,18 @@ public class OmaMoottori extends Moottori {
     private double ELEKTROjatteidenmaara = 0;
     private double PALAVAjatteidenmaara = 0;
     private double PALAMATONjatteidenmaara = 0;
-    private Thread simulationThread;
     public OmaMoottori(IKontrolleriMtoV kontrolleri) {
         super(kontrolleri);
         palvelupisteet = new Palvelupiste[4];
         //Palvelutiski
         palvelupisteet[0] = new Palvelutiski(new Normal(10, 6), tapahtumalista);
-
         //Jätelavat
         palvelupisteet[1] = new Jatelava(new Normal(10, 6), tapahtumalista, Jatelaji.ELEKTRONIIKKA);
         palvelupisteet[2] = new Jatelava(new Normal(10, 10), tapahtumalista, Jatelaji.PALAMATONAJATE);
         palvelupisteet[3] = new Jatelava(new Normal(5, 3), tapahtumalista, Jatelaji.PALAVAJATE);
 
         // Järjestelmään Saapuminen
-        saapumisprosessi = new Saapumisprosessi(new Negexp(15, 5), tapahtumalista, TapahtumanTyyppi.PALVELUTISKI_SAAPUMINEN);
+        saapumisprosessi = new Saapumisprosessi(new Negexp(15 * kontrolleri.getAktiivisuus(), 5), tapahtumalista, TapahtumanTyyppi.PALVELUTISKI_SAAPUMINEN);
         System.out.println(Arrays.toString(palvelupisteet));
     }
 
