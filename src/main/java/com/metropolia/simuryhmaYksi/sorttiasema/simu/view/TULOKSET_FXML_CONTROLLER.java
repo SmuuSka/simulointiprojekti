@@ -145,7 +145,9 @@ public class TULOKSET_FXML_CONTROLLER {
 
     @FXML
     private Button TULOKSET_POISTANAPPI;
+    @FXML
 
+    private Button TULOKSET_POISTAKAIKKI;
     @FXML
     private Label TULOKSET_SAAPUNUT_LKM;
 
@@ -184,6 +186,10 @@ public class TULOKSET_FXML_CONTROLLER {
 
     public Label getTULOKSET_INPUT_AIKA_PER_KG() {
         return TULOKSET_INPUT_AIKA_PER_KG;
+    }
+
+    public Button getTULOKSET_POISTAKAIKKI() {
+        return TULOKSET_POISTAKAIKKI;
     }
 
     public Label getTULOKSET_INPUT_AKTIIVISUUS() {

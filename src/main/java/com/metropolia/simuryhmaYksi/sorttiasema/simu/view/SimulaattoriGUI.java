@@ -210,11 +210,6 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     }
 
     @Override
-    public int getRuuhkaAika() {
-        return 0;
-    }
-
-    @Override
     public int getElektro_JateCounter() {
         return 0;
     }
@@ -290,5 +285,10 @@ public class SimulaattoriGUI extends Application implements ISimulaattoriUI {
     public void setAloitaButtonText() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setAloitaButtonText'");
+    }
+
+    @Override
+    public String getAktiivisuus() {
+        return null;
     }
 }
