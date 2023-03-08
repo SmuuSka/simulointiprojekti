@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private TULOKSET_FXML_CONTROLLER TULOKSET_FXML_CONTROLLER;
-    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton;
+    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton,tuloksetPoistaKaikkiTuloksetButton;
 
     private TextField simulointiAikaInput, simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
             palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
@@ -151,7 +151,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 try {
                     kontrolleri.showTuloksetAction();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("TULOSTUKSISSA EI OLE DATAA");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Ilmoitus");
+                    alert.setHeaderText("Ilmoitus");
+                    alert.setContentText("Tuloksia ei ole,Käynnistä simulaatio jotta voit luoda tuloksia.");
+                    alert.show();
                 }
             });
 
@@ -375,7 +380,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             datatulokset.clear();
                         });
 
-                        tuloksetStage.show();
 
                         TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                             System.out.println(obs.getValue());
@@ -387,17 +391,29 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 try {
                                     poistaData(selectedItem.getId());
                                     dataob.remove(selectedItem);
-
                                 } catch (SQLException e) {
                                     throw new RuntimeException(e);
                                 }
                                 System.out.println("POISTETTU DATA");
                             });
+
+                            tuloksetPoistaKaikkiTuloksetButton.setOnAction(actionEvent -> {
+                                try{
+                                    kontrolleri.avaaDATAYHTEYS();
+                                    kontrolleri.poistaKaikkiDATA();
+                                    dataob.clear();
+                                }catch(SQLException e){
+                                    throw new RuntimeException(e);
+                                }
+                            });
+
                         });
+                        tuloksetStage.show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
+                    tuloksetPoistaKaikkiTuloksetButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTAKAIKKI();
                     TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().selectLast();
 
 
@@ -504,7 +520,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //INPUT KG kesto per sec
             tuloksetkontrolleri.getTULOKSET_INPUT_AIKA_PER_KG().setText(Double.toString(selectedItem.getParametrit().getPurkunopeus()));;
-
+            //INPUT Aktiivisuus
+            tuloksetkontrolleri.getTULOKSET_INPUT_AKTIIVISUUS().setText(selectedItem.getParametrit().getAktiivisuus());
             //INPUT_PROSENTTI_ELEKTRO
             tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getParametrit().getJateTE()) + "%");
             //INPUT_PROSENTTI_PALAMATON
@@ -541,7 +558,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
 
     @Override
-    public int getRuuhkaAika() {
+    public String getAktiivisuus() {
         //Radiobuttonin "getter" radiogroupista.
         RadioButton id = (RadioButton) aktiivisuusRadioGroup.getSelectedToggle();
 
@@ -549,15 +566,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         switch (id.getId()) {
             case "1":
                 System.out.println("Aktiivisuus : Rauhallinen");
-                return 1;
+                id.getId();
+                return "Rauhallinen";
             case "2":
                 System.out.println("Aktiivisuus : Normaali");
-                return 2;
+                return "Normaali";
             case "3":
                 System.out.println("Aktiivisuus : Ruuhka");
-                return 3;
+                return "Ruuhka";
         }
-        return 0;
+        return "Ei ole valittu aktiivisuuta (Eli normina pysyy)";
     }
 
     @Override

@@ -18,4 +18,8 @@ public interface IKontrolleriVtoM {
    void poistaTulos(int ID) throws SQLException;
     boolean onkoSimulointiPaalla();
   void showTuloksetAction() throws SQLException;
+
+    void poistaKaikkiDATA() throws SQLException;
+
+    void avaaDATAYHTEYS();
 }

@@ -81,8 +81,9 @@ public class SimulaatioData{
 
         private final IntegerProperty vmin, vmax, jateTE, jateTPJ, jateTPNJ;
         private final DoubleProperty aika, purkunopeus, viive;
+        private final StringProperty aktiivisuus;
 
-        public SimulaationParametrit(double aika,double viive, double purkunopeus, int vmin, int vmax,int jateTE, int jateTPJ, int jateTPNJ){
+        public SimulaationParametrit(double aika,double viive, double purkunopeus, int vmin, int vmax,int jateTE, int jateTPJ, int jateTPNJ, String aktiivisuus){
             this.aika = new SimpleDoubleProperty(aika);
             this.viive = new SimpleDoubleProperty(viive);
             this.purkunopeus = new SimpleDoubleProperty(purkunopeus);
@@ -91,6 +92,7 @@ public class SimulaatioData{
             this.jateTE = new SimpleIntegerProperty(jateTE);
             this.jateTPJ = new SimpleIntegerProperty(jateTPJ);
             this.jateTPNJ = new SimpleIntegerProperty(jateTPNJ);
+            this.aktiivisuus = new SimpleStringProperty(aktiivisuus);
 
         }
 
@@ -105,7 +107,16 @@ public class SimulaatioData{
                     ", aika=" + aika +
                     ", purkunopeus=" + purkunopeus +
                     ", viive=" + viive +
+                    ", aktiivisuus=" + aktiivisuus +
                     '}';
+        }
+
+        public String getAktiivisuus() {
+            return aktiivisuus.get();
+        }
+
+        public StringProperty aktiivisuusProperty() {
+            return aktiivisuus;
         }
 
         public int getVmin() {
