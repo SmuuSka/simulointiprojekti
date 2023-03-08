@@ -364,7 +364,7 @@
                                                    </font></Label>
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Min ja Max kg määrä per asiakas:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Elektroniikka jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                                <Label fx:id="TULOKSET_INPUT_AKTIIVISUUS" alignment="CENTER" contentDisplay="CENTER" text="Sortti-Aseman aktiivisuus:" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="Sortti-Aseman aktiivisuus:" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                                                 <Label fx:id="TULOKSET_INPUT_MIN_KG" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="100.0" />
@@ -377,7 +377,7 @@
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font></Label>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                                <Label fx:id="TULOKSET_INPUT_AKTIIVISUUS" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font></Label>

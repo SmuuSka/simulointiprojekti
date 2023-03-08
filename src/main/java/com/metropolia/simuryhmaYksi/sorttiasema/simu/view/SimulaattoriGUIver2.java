@@ -391,7 +391,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 try {
                                     poistaData(selectedItem.getId());
                                     dataob.remove(selectedItem);
-                                    tuloksetStage.close();
                                 } catch (SQLException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -402,7 +401,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 try{
                                     kontrolleri.avaaDATAYHTEYS();
                                     kontrolleri.poistaKaikkiDATA();
-                                    dataob.removeAll();
+                                    dataob.clear();
                                 }catch(SQLException e){
                                     throw new RuntimeException(e);
                                 }
@@ -521,7 +520,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //INPUT KG kesto per sec
             tuloksetkontrolleri.getTULOKSET_INPUT_AIKA_PER_KG().setText(Double.toString(selectedItem.getParametrit().getPurkunopeus()));;
-
+            //INPUT Aktiivisuus
+            tuloksetkontrolleri.getTULOKSET_INPUT_AKTIIVISUUS().setText(selectedItem.getParametrit().getAktiivisuus());
             //INPUT_PROSENTTI_ELEKTRO
             tuloksetkontrolleri.getTULOKSET_INPUT_PROSENTTI_ELEKTRO().setText(Integer.toString(selectedItem.getParametrit().getJateTE()) + "%");
             //INPUT_PROSENTTI_PALAMATON
@@ -558,7 +558,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
 
     @Override
-    public int getRuuhkaAika() {
+    public String getAktiivisuus() {
         //Radiobuttonin "getter" radiogroupista.
         RadioButton id = (RadioButton) aktiivisuusRadioGroup.getSelectedToggle();
 
@@ -566,15 +566,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         switch (id.getId()) {
             case "1":
                 System.out.println("Aktiivisuus : Rauhallinen");
-                return 1;
+                id.getId();
+                return "Rauhallinen";
             case "2":
                 System.out.println("Aktiivisuus : Normaali");
-                return 2;
+                return "Normaali";
             case "3":
                 System.out.println("Aktiivisuus : Ruuhka");
-                return 3;
+                return "Ruuhka";
         }
-        return 0;
+        return "Ei ole valittu aktiivisuuta (Eli normina pysyy)";
     }
 
     @Override

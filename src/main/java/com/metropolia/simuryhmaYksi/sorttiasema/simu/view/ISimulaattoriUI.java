@@ -36,7 +36,6 @@ public interface ISimulaattoriUI {
      int[] getJatelajiProsentit();
 
     //Simulaattorin Aktiivisuus input arvot.
-    int getRuuhkaAika();
 
     //Simulaatorin pois heitetty Jätteen lable elementin arvot.
      int getElektro_JateCounter();
@@ -58,4 +57,6 @@ public interface ISimulaattoriUI {
 
      // Käynnistä button teksti
      public void setAloitaButtonText();
+
+    String getAktiivisuus();
 }
