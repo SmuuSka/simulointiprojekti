@@ -130,6 +130,15 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         ui.setEJateJonossa(pituus);
     }
 
+    public void poistaKaikkiDATA() throws SQLException {
+        tietokanta.poistaTaulu();
+    }
+
+    @Override
+    public void avaaDATAYHTEYS() {
+        tietokanta = new DAO();
+    }
+
     @Override
     public double getAktiivisuus() {
         switch (ui.getRuuhkaAika()) {

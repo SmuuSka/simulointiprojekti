@@ -29,6 +29,18 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <HBox alignment="CENTER" prefHeight="39.0" prefWidth="522.0" style="-fx-background-color: #d7edca;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <Button fx:id="TULOKSET_POISTAKAIKKI" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="29.0" prefWidth="146.0" text="Poista Kaikki Tulokset">
+                           <effect>
+                              <SepiaTone level="0.08" />
+                           </effect>
+                        </Button>
+                     </children>
+                     <effect>
+                        <DropShadow height="30.53" radius="13.115" width="23.93" />
+                     </effect>
+                  </HBox>
                </children>
             </AnchorPane>
           <AnchorPane prefHeight="633.0" prefWidth="496.0">
@@ -319,7 +331,7 @@
                                     </Label>
                                     <ScrollPane hbarPolicy="NEVER" layoutY="57.0" prefHeight="497.0" prefWidth="522.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="57.0">
                                        <content>
-                                          <GridPane alignment="CENTER" prefHeight="497.0" prefWidth="522.0">
+                                          <GridPane alignment="CENTER" prefHeight="595.0" prefWidth="522.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -338,28 +350,60 @@
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Viive:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Simulaation aika:" GridPane.halignment="CENTER" />
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Asiakaan ajankesto per (kg):" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                                <Label fx:id="TULOKSET_INPUT_VIIVE" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                                <Label fx:id="TULOKSET_INPUT_AIKA" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                <Label fx:id="TULOKSET_INPUT_AIKA_PER_KG" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label fx:id="TULOKSET_INPUT_VIIVE" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_INPUT_AIKA" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_INPUT_AIKA_PER_KG" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Min ja Max kg määrä per asiakas:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Elektroniikka jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                                 <Label fx:id="TULOKSET_INPUT_AKTIIVISUUS" alignment="CENTER" contentDisplay="CENTER" text="Sortti-Aseman aktiivisuus:" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                                                 <Label fx:id="TULOKSET_INPUT_MIN_KG" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <GridPane.margin>
-                                                      <Insets left="50.0" right="50.0" />
+                                                      <Insets left="100.0" />
                                                    </GridPane.margin>
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
                                                 </Label>
-                                                <Label fx:id="TULOKSET_INPUT_PROSENTTI_ELEKTRO" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                                <Label alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label fx:id="TULOKSET_INPUT_PROSENTTI_ELEKTRO" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Palava jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                                                 <Label alignment="CENTER" contentDisplay="CENTER" text="Palamaton jäte % :" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                                 <Label fx:id="TULOKSET_INPUT_MAX_KG" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                                    <GridPane.margin>
-                                                      <Insets left="50.0" right="50.0" />
+                                                      <Insets right="100.0" />
                                                    </GridPane.margin>
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
                                                 </Label>
-                                                <Label fx:id="TULOKSET_INPUT_PROSENTTI_PALAVA" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                                <Label fx:id="TULOKSET_INPUT_PROSENTTI_PALAMATON" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label fx:id="TULOKSET_INPUT_PROSENTTI_PALAVA" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label fx:id="TULOKSET_INPUT_PROSENTTI_PALAMATON" alignment="CENTER" contentDisplay="CENTER" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font></Label>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="11.0" text="-" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
                                              </children>
                                           </GridPane>
                                        </content>

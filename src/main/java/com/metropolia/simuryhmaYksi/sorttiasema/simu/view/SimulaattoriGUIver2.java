@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private TULOKSET_FXML_CONTROLLER TULOKSET_FXML_CONTROLLER;
-    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton;
+    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton,tuloksetPoistaKaikkiTuloksetButton;
 
     private TextField simulointiAikaInput, simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
             palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
@@ -151,7 +151,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 try {
                     kontrolleri.showTuloksetAction();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("TULOSTUKSISSA EI OLE DATAA");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Ilmoitus");
+                    alert.setHeaderText("Ilmoitus");
+                    alert.setContentText("Tuloksia ei ole,Käynnistä simulaatio jotta voit luoda tuloksia.");
+                    alert.show();
                 }
             });
 
@@ -375,7 +380,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             datatulokset.clear();
                         });
 
-                        tuloksetStage.show();
 
                         TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                             System.out.println(obs.getValue());
@@ -387,17 +391,30 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 try {
                                     poistaData(selectedItem.getId());
                                     dataob.remove(selectedItem);
-
+                                    tuloksetStage.close();
                                 } catch (SQLException e) {
                                     throw new RuntimeException(e);
                                 }
                                 System.out.println("POISTETTU DATA");
                             });
+
+                            tuloksetPoistaKaikkiTuloksetButton.setOnAction(actionEvent -> {
+                                try{
+                                    kontrolleri.avaaDATAYHTEYS();
+                                    kontrolleri.poistaKaikkiDATA();
+                                    dataob.removeAll();
+                                }catch(SQLException e){
+                                    throw new RuntimeException(e);
+                                }
+                            });
+
                         });
+                        tuloksetStage.show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     tuloksetPoistaTulosButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTANAPPI();
+                    tuloksetPoistaKaikkiTuloksetButton = TULOKSET_FXML_CONTROLLER.getTULOKSET_POISTAKAIKKI();
                     TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().selectLast();
 
 
