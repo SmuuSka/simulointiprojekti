@@ -40,7 +40,7 @@ public interface ISimulaattoriUI {
     void setAnimaationViive(int viive);
 
     // Käynnistä button teksti
-    public void setAloitaButtonText();
+    void setAloitaButtonText();
 
     String getAktiivisuus();
 }
