@@ -222,12 +222,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 primaryStage.setScene(scene);
                                 primaryStage.setTitle("Sortti-Asema Simu");
                                 primaryStage.centerOnScreen();
+                                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.9);
+                                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
                                 primaryStage.show();
                             } else {
                                 scene = new Scene(loaderSIMU.getRoot());
                                 primaryStage.setScene(scene);
                                 primaryStage.setTitle("Sortti-Asema Simu");
                                 primaryStage.centerOnScreen();
+                                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.9);
+                                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
                                 primaryStage.show();
                             }
 
@@ -343,6 +347,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 Parent root = loaderStrategia.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
+                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.84);
+                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
                 primaryStage.show();
                 primaryStage.centerOnScreen();
                 start(primaryStage);
