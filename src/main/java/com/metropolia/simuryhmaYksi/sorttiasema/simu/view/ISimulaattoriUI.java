@@ -10,53 +10,37 @@ import java.util.ArrayList;
  */
 
 public interface ISimulaattoriUI {
+    void showTulokset(ArrayList<SimulaatioData> dataColumn);
 
-    //INTERFACE METHOTID
-    //  TULOKSET IKKUNA
-
-    //INTERFACE METHOTID
-    //  TULOKSET IKKUNA
-     void showTulokset(ArrayList<SimulaatioData> dataColumn);
     void poistaData(int ID) throws SQLException;
 
-    //INTERFACE METHOTID
-    //  TULOKSET IKKUNA
-
-
     double getAika();
-     long getViive();
-     void setLoppuaika();
+
+    long getViive();
+
     //Asiakaan Jäte MIN ja MAX määrä getteri.
-     int[] getVaihteluvali();
-     int[] getJateLaijenProsentit();
-    //Asiakaan kesto 1 kilon heittämisessä getter.
-     double getAsiakasKgPerSekunti();
+    int[] getVaihteluvali();
 
-    //Simulaattorin Mitä jätettä tuotaan "prosentti int"
-     int[] getJatelajiProsentit();
+    int[] getJateLaijenProsentit();
 
-    //Simulaattorin Aktiivisuus input arvot.
+    Double getPurkuNopeus();
 
-    //Simulaatorin pois heitetty Jätteen lable elementin arvot.
-     int getElektro_JateCounter();
-     int getPalavaJateCounter();
-     int getPalamatonJateCounter();
+    boolean getAjeetaankoLoppuun();
 
-     Double getPurkuNopeus();
-     boolean getAjeetaankoLoppuun();
-     STRATEGIA_FXML_CONTROLLER getStrategiaController();
+    IVisualisointi getVisualisointi();
 
+    void setEJateJonossa(int pituus);
 
+    void setPTJateJonossa(int pituus);
 
-     IVisualisointi getVisualisointi();
-     void setEJateJonossa(int pituus);
-     void setPTJateJonossa(int pituus);
-     void setPJateJonossa(int pituus);
-     void setSAAPUMINENJonossa(int pituus);
-     void setAnimaationViive(int viive);
+    void setPJateJonossa(int pituus);
 
-     // Käynnistä button teksti
-     public void setAloitaButtonText();
+    void setSAAPUMINENJonossa(int pituus);
+
+    void setAnimaationViive(int viive);
+
+    // Käynnistä button teksti
+    public void setAloitaButtonText();
 
     String getAktiivisuus();
 }
