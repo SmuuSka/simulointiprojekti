@@ -11,7 +11,7 @@ public class Jategeneraattori {
 
     private int[] todT;
     private LinkedList<Jate> jatteet = new LinkedList<>();
-    private final static int ERIJATTEIDENLKM = 3;
+    //private final static int ERIJATTEIDENLKM = 3;
 
     // Jakauman mukainen satunnaisluku generaattori
     private ContinuousGenerator generaattori;
@@ -69,8 +69,9 @@ public class Jategeneraattori {
      * Huom. Generoidut jätteet voivat olla samoja.
      */
     public void generoiJatteet(){
-
-        for (int i=0;i<ERIJATTEIDENLKM;i++){
+        int lkm = 0;
+        for (int j : todT) if (j > 0) lkm++;
+        for (int i=0;i<lkm;i++){
 
             int arvottuLaji = arvoArvo(todT);
             boolean loytyi = false;
