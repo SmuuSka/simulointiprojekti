@@ -45,7 +45,7 @@ public class Jatelava extends Palvelupiste {
         // Jätelavalle jätetty jäte
         Jate poistettuJate = jatteet.removeFirst();
         
-        double palveluaika = generator.sample() * poistettuJate.getPaino();
+        double palveluaika = Math.abs(generator.sample()) * poistettuJate.getPaino();
 
         double poistumisaika = Kello.getInstance().getAika()+palveluaika;
         palveltava.setPoistumisaika(poistumisaika);
