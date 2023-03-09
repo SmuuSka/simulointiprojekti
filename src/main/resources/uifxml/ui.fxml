@@ -40,7 +40,7 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: a2d4c2; -fx-background-color: a5e8cd;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <children>
-                              <Button id="BUTTON_ALOITA" fx:id="BUTTON_ALOITA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #64E986;" text="Aloita" textAlignment="CENTER">
+                              <Button id="BUTTON_ALOITA" fx:id="BUTTON_ALOITA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" style="-fx-background-color: #64E986;" text="Aloita" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -51,7 +51,7 @@
                                     <DropShadow />
                                  </effect>
                               </Button>
-                              <Button id="BUTTON_LOPETA" fx:id="BUTTON_LOPETA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #E41B17;" text="Lopeta" textAlignment="CENTER">
+                              <Button id="BUTTON_LOPETA" fx:id="BUTTON_LOPETA" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" style="-fx-background-color: #E41B17;" text="Lopeta" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -123,7 +123,7 @@
                                     <Image url="@palvelupiste.png" />
                                  </image>
                               </ImageView>
-                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= PalveluPiste">
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= Saapumispiste">
                                  <font>
                                     <Font size="16.0" />
                                  </font></Label>
@@ -162,7 +162,7 @@
                                     <Image url="@Elektroniikkajäte.png" />
                                  </image>
                               </ImageView>
-                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= ElektoniikkaJäte">
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= Elektoniikka Jäte">
                                  <font>
                                     <Font size="16.0" />
                                  </font></Label>
@@ -175,7 +175,7 @@
                                     <Image url="@PalavaJäte.png" />
                                  </image>
                               </ImageView>
-                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= PalavaJäte">
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= Palava Jäte">
                                  <font>
                                     <Font size="16.0" />
                                  </font></Label>
@@ -188,7 +188,7 @@
                                     <Image url="@EiPalavaJäte.png" />
                                  </image>
                               </ImageView>
-                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= PalamatonJäte">
+                              <Label alignment="CENTER" prefHeight="32.0" prefWidth="142.0" text="= Palamaton Jäte">
                                  <font>
                                     <Font size="16.0" />
                                  </font></Label>
@@ -219,7 +219,7 @@
                      <children>
                         <VBox id="INFO_SIMJÄTE_VBOX" fx:id="INFO_SIMJÄTE_VBOX" alignment="CENTER" prefHeight="171.0" prefWidth="220.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="220.0" text="Pois Heitetty Jätteiden määrä" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="33.0" prefWidth="220.0" text="Pois Heitettyjen Jätteiden määrä" />
                               <Pane id="INFO_ELEKTRONIIKKA_SOLU" prefHeight="75.0" prefWidth="249.0">
                                  <children>
                                     <ImageView fitHeight="46.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">

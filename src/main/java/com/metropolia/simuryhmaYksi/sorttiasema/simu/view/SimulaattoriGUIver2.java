@@ -26,15 +26,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private TULOKSET_FXML_CONTROLLER TULOKSET_FXML_CONTROLLER;
-    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton,tuloksetPoistaKaikkiTuloksetButton;
+    private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton, tuloksetPoistaKaikkiTuloksetButton;
 
     private TextField simulointiAikaInput, simulointiAikaViiveInput, asiakasJateMIN_INPUT, asiakasJateMAX_INPUT, elektroniikkaJatePROSENTTI,
             palavaJatePROSENTTI, palamatonJatePROSENTTI, asiakasPurku_KG_Sekunti;
@@ -68,15 +66,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private static String[] mainArgs;
     //-------------------------------------------------------------------------------------------
 
+    /**
+     * Tästä aloitetaan SimulaatoriGUI käynnistys
+     */
     public static void main(String[] args) {
         launch(args);
-        setMainArgs(args);
     }
 
-    private static void setMainArgs(String[] args) {
-        mainArgs = args;
-    }
-
+    /**
+     * Tässä methodissa tehdään kaikki aloitukseen liityvät asiat
+     */
     @Override
     public void init() {
         Trace.setTraceLevel(Trace.Level.INFO);
@@ -84,6 +83,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     }
 
+    /**
+     * Täälä aloitetaan ohjelman visualisointi
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -147,6 +149,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(loaderStrategia.getRoot());
+            /**Tämä avaa Tulokset ikkunan missä näkyy tietokannasta tuotut tulokset */
             strategiaNaytaTuloksetButton.setOnAction(actionEvent -> {
                 try {
                     kontrolleri.showTuloksetAction();
@@ -161,6 +164,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             });
 
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
+            /**Siirytään Pääsimulaattori ikkunaan,missä visualisoitaan ja lasketaan tulokset käyttäjän syötteiten avulla. */
             strategiaButton.setOnAction(event -> {
                 try {
                     simulaatioAika = Integer.parseInt(simulointiAikaInput.getText());
@@ -318,6 +322,10 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     //-------------------------------------------------------------------------------------------
+
+    /**
+     * Tämä kutsutaan kun painetaan käynnistä uudelleen nappia, se avaa uudestaan strategia ikkunan missä syötetään uusia syötteitä.
+     */
     public void restartProgram(Stage primaryStage) {
         onkoSimuloitu = false;
         Platform.runLater(() -> {
@@ -340,6 +348,10 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
+
+    /**
+     * Kun näytä tulokset nappia on painettu tai kun simulaatio on päätynyt, mennään tähän methodiin joka avaa tulokset ikkunan ja tulostaa tarvittavan datan.
+     */
     @Override
     public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
         Platform.runLater(
@@ -386,7 +398,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             valittuData(obs, newSelection, TULOKSET_FXML_CONTROLLER);
                             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
 
-                            //Poista valittu dataNappi.
+                            //Poista valittu Tulos Nappi.
                             tuloksetPoistaTulosButton.setOnAction(event -> {
                                 try {
                                     poistaData(selectedItem.getId());
@@ -398,11 +410,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             });
 
                             tuloksetPoistaKaikkiTuloksetButton.setOnAction(actionEvent -> {
-                                try{
+                                try {
                                     kontrolleri.avaaDATAYHTEYS();
                                     kontrolleri.poistaKaikkiDATA();
                                     dataob.clear();
-                                }catch(SQLException e){
+                                } catch (SQLException e) {
                                     throw new RuntimeException(e);
                                 }
                             });
@@ -420,11 +432,17 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 });
     }
 
+    /**
+     * Tämä poistaa tietyn tuloksen joka on valittu.
+     */
     @Override
     public void poistaData(int ID) throws SQLException {
         kontrolleri.poistaTulos(ID);
     }
 
+    /**
+     * Kun tulos ikkunassa valitaan dataa, täälä päivetetään valitun datan mukaan tietoja tuloksiin.
+     */
     public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri) {
         if (newSelection != null) {
             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
@@ -515,11 +533,10 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //INPUT MIN JA MAX
             tuloksetkontrolleri.getTULOKSET_INPUT_MIN_KG().setText(Double.toString(selectedItem.getParametrit().getVmin()));
             tuloksetkontrolleri.getTULOKSET_INPUT_MAX_KG().setText(Double.toString(selectedItem.getParametrit().getVmax()));
-            //SorttiAseman Aktiivisuus
-            //---DB puutuu
 
             //INPUT KG kesto per sec
-            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA_PER_KG().setText(Double.toString(selectedItem.getParametrit().getPurkunopeus()));;
+            tuloksetkontrolleri.getTULOKSET_INPUT_AIKA_PER_KG().setText(Double.toString(selectedItem.getParametrit().getPurkunopeus()));
+            ;
             //INPUT Aktiivisuus
             tuloksetkontrolleri.getTULOKSET_INPUT_AKTIIVISUUS().setText(selectedItem.getParametrit().getAktiivisuus());
             //INPUT_PROSENTTI_ELEKTRO
@@ -537,27 +554,19 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     //------------------------------------------------------------------------------
 
     @Override
+    /**Haetaan käyttäjän syöttämä simulaatioaika.*/
     public double getAika() {
         return Double.parseDouble(simulointiAikaInput.getText());
     }
 
     @Override
+    /**Haetaan simulaation viive.*/
     public long getViive() {
         return simulaatioViive;
     }
 
     @Override
-    public double getAsiakasKgPerSekunti() {
-        return Double.parseDouble(asiakasPurku_KG_Sekunti.getText());
-    }
-
-    @Override
-    public int[] getJatelajiProsentit() {
-        return new int[0];
-    }
-
-
-    @Override
+    /**Haetaan käyttäjän valitsema aktiivisuus.*/
     public String getAktiivisuus() {
         //Radiobuttonin "getter" radiogroupista.
         RadioButton id = (RadioButton) aktiivisuusRadioGroup.getSelectedToggle();
@@ -578,11 +587,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         return "Ei ole valittu aktiivisuuta (Eli normina pysyy)";
     }
 
-    @Override
-    public int getElektro_JateCounter() {
-        return Integer.parseInt(paaSim_ELEKTRO_JateCounter.getText());
-    }
-
     // Elektroniikka jonon pituus tekstin setteri
     public void setEJateJonossa(int pituus) {
         Platform.runLater(
@@ -592,11 +596,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    public int getPalavaJateCounter() {
-        return Integer.parseInt(paaSim_PALAVA_JateCounter.getText());
-    }
-
-    @Override
+    /**Asetetaan Palavajätepiste jono tekstiin tällä hetkellä oleva jonon pituus.*/
     public void setPJateJonossa(int pituus) {
         Platform.runLater(
                 () -> {
@@ -610,16 +610,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
+    /**Asetetaan Saapumispiste jono tekstiin tällä hetkellä oleva jonon pituus.*/
     public void setSAAPUMINENJonossa(int pituus) {
         Platform.runLater(
                 () -> {
                     paaSim_SAAPUMISIAYHT_COUNTER.setText(String.valueOf(pituus));
                 });
-    }
-
-    @Override
-    public int getPalamatonJateCounter() {
-        return Integer.parseInt(paaSim_PALAMATON_JateCounter.getText());
     }
 
     @Override
@@ -634,21 +630,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    public STRATEGIA_FXML_CONTROLLER getStrategiaController() {
-        return strategiaFXML_Controller;
-    }
-
-    @Override
+    /**Asetetaan Palaamattomanjätepisteen jono tekstiin tällä hetkellä oleva jonon pituus.*/
     public void setPTJateJonossa(int pituus) {
         Platform.runLater(
                 () -> {
                     paaSim_JONOINFO_PALAMATONJATE.setText(String.valueOf(pituus));
                 });
-
-    }
-
-    @Override
-    public void setLoppuaika() {
 
     }
 
@@ -666,6 +653,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
+    /**Haetaan käyttäjän syöttämät jätelaji prosentit.*/
     public int[] getJateLaijenProsentit() {
         int[] prosenttiLista = new int[0];
         if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti == 100) {
