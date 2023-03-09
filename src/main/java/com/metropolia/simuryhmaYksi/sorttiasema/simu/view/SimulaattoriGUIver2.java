@@ -221,7 +221,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 primaryStage.setScene(scene);
                                 primaryStage.setTitle("Sortti-Asema Simu");
                                 primaryStage.centerOnScreen();
-                                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY());
+                                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.9);
+                                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxX());
                                 primaryStage.show();
                             } else {
                                 scene = new Scene(loaderSIMU.getRoot());
