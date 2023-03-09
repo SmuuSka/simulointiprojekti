@@ -19,4 +19,5 @@ public interface IKontrolleriMtoV {
     void setPJononPituus(int size);
      void setSAAPUMISJononPituus(int size);
     double getAktiivisuus();
+    double getPurkuNopeus();
 }

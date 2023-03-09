@@ -26,9 +26,10 @@ public class OmaMoottori extends Moottori {
         //Palvelutiski
         palvelupisteet[0] = new Palvelutiski(new Normal(10, 6), tapahtumalista);
         //Jätelavat
-        palvelupisteet[1] = new Jatelava(new Normal(10, 6), tapahtumalista, Jatelaji.ELEKTRONIIKKA);
-        palvelupisteet[2] = new Jatelava(new Normal(10, 10), tapahtumalista, Jatelaji.PALAMATONAJATE);
-        palvelupisteet[3] = new Jatelava(new Normal(5, 3), tapahtumalista, Jatelaji.PALAVAJATE);
+        double kgPerSec = kontrolleri.getPurkuNopeus();
+        palvelupisteet[1] = new Jatelava(new Normal(kgPerSec, 3), tapahtumalista, Jatelaji.ELEKTRONIIKKA);
+        palvelupisteet[2] = new Jatelava(new Normal(kgPerSec, 3), tapahtumalista, Jatelaji.PALAMATONAJATE);
+        palvelupisteet[3] = new Jatelava(new Normal(kgPerSec, 3), tapahtumalista, Jatelaji.PALAVAJATE);
 
         // Järjestelmään Saapuminen
         saapumisprosessi = new Saapumisprosessi(new Negexp(15 * kontrolleri.getAktiivisuus(), 5), tapahtumalista, TapahtumanTyyppi.PALVELUTISKI_SAAPUMINEN);

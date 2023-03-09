@@ -43,6 +43,11 @@ public class Simulaattori { //Tekstipohjainen
                 public double getAktiivisuus() {
                         return 0;
                 }
+                @Override
+                public double getPurkuNopeus() {
+                    // TODO Auto-generated method stub
+                    throw new UnsupportedOperationException("Unimplemented method 'getPurkuNopeus'");
+                }
         });
 		m.setSimulointiaika(50);
 		m.start();
