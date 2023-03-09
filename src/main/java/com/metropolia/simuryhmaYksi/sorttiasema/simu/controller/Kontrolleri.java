@@ -170,4 +170,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void setAnimaationViive(int viive) {
         ui.setAnimaationViive(viive);
     }
+
+    public double getPurkuNopeus(){
+        return ui.getPurkuNopeus();
+    }
 }

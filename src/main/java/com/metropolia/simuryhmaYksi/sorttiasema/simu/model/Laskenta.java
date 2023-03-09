@@ -6,10 +6,13 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ * 
+ * Laskentaluokassa käsitellään havainnolliset suureet järjestelmän suorituskykysuureiksi.
  */
 
 public class Laskenta {
 
+    // Palvelupisteiden lukumäärä
     private final int LKM = 4;
 
     // Havainnoitavia suureita
@@ -43,7 +46,9 @@ public class Laskenta {
         this.jatteenMaarat = jatteenMaarat;
         System.out.println(Arrays.toString(jatteenMaarat));
     }
-
+    /**
+     * Metodi joka kutsuu kaikkia settereitä asettaakseen suorituskykysuureet
+     */
     public void laske(){
         setPalveltujenMaara();
         setKeskmJatteenmaara();
@@ -54,7 +59,9 @@ public class Laskenta {
         setKeskimaaraisetLapimenoajat();
         keskmJononpituudet();
     }
-
+    /**
+     * Laskutoimitus palveltujen kokonaismäärälle
+     */
     public void setPalveltujenMaara(){
         int j = 0;
         for (int i = 0; i < LKM; i++){
@@ -62,25 +69,33 @@ public class Laskenta {
         }
         palveltujenMaara=j;
     }
-
+    /**
+     * Laskutoimitukset keskimääräiselle jätteenmäärälle
+     */
     public void setKeskmJatteenmaara(){
         keskmJatteenmaara = jatteenKokonaismaara/palveltujenMaara;
         if (jatteenKokonaismaara == 0){
             keskmJatteenmaara = 0;
         }
     }
-
-
+    /**
+     * Laskutoimitukset kayttoasteille
+     */
     public void setKayttoasteet(){
         for (int i = 0; i < LKM; i++){
             kayttoasteet[i] = aktiiviajat[i]/kokonaisaika;
         }
     }
-
+    /**
+     * Laskutoimitus järjestelmän suoritusteholle
+     */
     public void setSuoritusteho(){
         suoritusteho = palveltujenMaara/kokonaisaika;
     }
 
+    /**
+     * Laskutoimitukset keskimääräisille palveluajoille
+     */
     public void setKeskmPalveluajat(){
         for (int i = 0; i < LKM; i++) {
             if (palveltujenLkm[i] == 0) {
@@ -90,7 +105,9 @@ public class Laskenta {
             }
         }
     }
-
+    /**
+     * Laskutoimitukset keskimääräisille läpimenoajoille
+     */
     public void setKeskimaaraisetLapimenoajat(){
         try {
         for (int i = 0; i < LKM; i++){
@@ -100,7 +117,9 @@ public class Laskenta {
 
         }
     }
-
+    /**
+     * Laskutoimitukset keskimääräiselle jononpituuksille
+     */
     public void keskmJononpituudet(){
         try {
             for (int i = 0; i < LKM; i++){
