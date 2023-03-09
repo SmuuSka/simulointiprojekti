@@ -3,7 +3,6 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.controller.IKontrolleriVtoM;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 
 
 public class STRATEGIA_FXML_CONTROLLER {
@@ -19,9 +18,6 @@ public class STRATEGIA_FXML_CONTROLLER {
     private Button STRATEGIA_NAYTATULOKSET;
     @FXML
     private ToggleGroup AktiivisuusGroup;
-
-    @FXML
-    private AnchorPane STRATEGIA_MAINSOFTWARE_PANE;
 
     @FXML
     private TextField STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ;
@@ -57,19 +53,9 @@ public class STRATEGIA_FXML_CONTROLLER {
     @FXML
     private TextField STRATEGIA_SIMULOINTIAIKA;
 
-    @FXML
-    private CheckBox STRATEGIA_TAPAHTUMAT_ASIAKASAUTO;
-
-    @FXML
-    private CheckBox STRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA;
-
-
     /////////////
     ///STRATEGIA GETTERIT!
 
-    public AnchorPane getSTRATEGIA_MAINSOFTWARE_PANE() {
-        return STRATEGIA_MAINSOFTWARE_PANE;
-    }
     public TextField getSTRATEGIA_SIMULOINTIVIIVE() {
         return STRATEGIA_SIMULOINTIVIIVE;
     }
@@ -82,11 +68,11 @@ public class STRATEGIA_FXML_CONTROLLER {
         return AktiivisuusGroup;
     }
 
-    public TextField getSTRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ() {
+    public TextField getSTRATEGIA_ASIAKAS_MAX_JATEMAARA() {
         return STRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ;
     }
 
-    public TextField getSTRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ() {
+    public TextField getSTRATEGIA_ASIAKAS_MIN_JATEMAARA() {
         return STRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ;
     }
 
@@ -106,7 +92,7 @@ public class STRATEGIA_FXML_CONTROLLER {
         return STRATEGIA_SIMULOINTIAIKA;
     }
 
-    public TextField getSTRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ() {
+    public TextField getSTRATEGIA_ELEKTRONIIKKAJATE_PROSENTTIMAARA() {
         return STRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ;
     }
 
@@ -114,24 +100,16 @@ public class STRATEGIA_FXML_CONTROLLER {
         return STRATEGIA_KGMAARA_SEKUNTEJA;
     }
 
-    public TextField getSTRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ() {
+    public TextField getSTRATEGIA_PALAAMATONJATE_PROSENTTIMAARA() {
         return STRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ;
     }
 
-    public TextField getSTRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ() {
+    public TextField getSTRATEGIA_PALAVAJATE_PROSENTTIMAARA() {
         return STRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ;
     }
 
     public Button getSTRATEGIA_SIIRY_SIMULAATIOON() {
         return STRATEGIA_SIIRY_SIMULAATIOON;
-    }
-
-    public CheckBox getSTRATEGIA_TAPAHTUMAT_ASIAKASAUTO() {
-        return STRATEGIA_TAPAHTUMAT_ASIAKASAUTO;
-    }
-
-    public CheckBox getSTRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA() {
-        return STRATEGIA_TAPAHTUMAT_SAAPUMISPISTEONGELMA;
     }
 
     public CheckBox getSTRATEGIA_JONOT_AJALOPPUUN() {

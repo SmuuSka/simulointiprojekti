@@ -13,10 +13,10 @@ import javafx.scene.shape.Rectangle;
  * @Author Kaspar Tullus
  */
 
-public class PÄÄSIMULAATORI_FXML_CONTROLLER {
+public class PAASIMULAATORI_FXML_CONTROLLER {
     private IKontrolleriVtoM kontrolleri;
 
-    public PÄÄSIMULAATORI_FXML_CONTROLLER(IKontrolleriVtoM kontrolleri) {
+    public PAASIMULAATORI_FXML_CONTROLLER(IKontrolleriVtoM kontrolleri) {
         this.kontrolleri = kontrolleri;
     }
 
