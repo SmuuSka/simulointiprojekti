@@ -4,7 +4,7 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.view;
  */
 
 public interface IVisualisointi {
-    public void tyhjennaNaytto();
+    void tyhjennaNaytto();
 
     void lisaaSaapumistenMaara(int maara);
 

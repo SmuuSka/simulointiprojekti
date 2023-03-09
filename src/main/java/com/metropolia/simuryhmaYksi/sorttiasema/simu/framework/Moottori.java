@@ -37,29 +37,27 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 
 	public void run(){
-				kello.setAika(0);
-				alustukset(); // luodaan mm. ensimmäinen tapahtuma
-				//Kunnes viimeinen asiakas on poistunut
-				while (simuloidaan()) {
-					viive();
-					Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
-					kello.setAika(nykyaika());
+		kello.setAika(0);
+		alustukset();
+		while (simuloidaan()) {
+			viive();
+			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
+			kello.setAika(nykyaika());
 
-					Trace.out(Trace.Level.INFO, "\nB-vaihe:");
-					suoritaBTapahtumat();
-					setTekstit();
+			Trace.out(Trace.Level.INFO, "\nB-vaihe:");
+			suoritaBTapahtumat();
+			setTekstit();
 
-					Trace.out(Trace.Level.INFO, "\nC-vaihe:");
-					yritaCTapahtumat();
+			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
+			yritaCTapahtumat();
 
-					setVarattu();
-
-				}
-				try {
-					tulokset();
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
+			setVarattu();
+		}
+		try {
+			tulokset();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	private void suoritaBTapahtumat(){
