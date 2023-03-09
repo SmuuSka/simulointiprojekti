@@ -276,7 +276,7 @@ public class TULOKSET_FXML_CONTROLLER {
         return TULOKSET_KESKLAPIMENO_SAAPUMINEN;
     }
 
-    public Label getTULOKSET_KESKJÄTEMAARA_APKJ() {
+    public Label getTULOKSET_KESKJATEMAARA_APKJ() {
         return TULOKSET_KESKJÄTEMAARA_APKJ;
     }
 

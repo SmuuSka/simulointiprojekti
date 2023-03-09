@@ -55,7 +55,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     private ToggleGroup aktiivisuusRadioGroup;
     private Scene scene;
 
-    private PÄÄSIMULAATORI_FXML_CONTROLLER mainFXML_Controller;
+    private PAASIMULAATORI_FXML_CONTROLLER mainFXML_Controller;
     private STRATEGIA_FXML_CONTROLLER strategiaFXML_Controller;
     private Parent root;
     private Parent rootPaaSimu;
@@ -91,11 +91,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
         try {
             primaryStagePara = primaryStage;
+            primaryStage.centerOnScreen();
             primaryStage.getIcons().add(new Image("/uifxml/LOGO.png"));
             FXMLLoader loaderStrategia = new FXMLLoader(getClass().getResource("/uifxml/Strategia.fxml"));
             FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
             strategiaFXML_Controller = new STRATEGIA_FXML_CONTROLLER(kontrolleri);
-            mainFXML_Controller = new PÄÄSIMULAATORI_FXML_CONTROLLER(kontrolleri);
+            mainFXML_Controller = new PAASIMULAATORI_FXML_CONTROLLER(kontrolleri);
             loaderStrategia.setController(strategiaFXML_Controller);
             loaderSIMU.setController(mainFXML_Controller);
             rootStrategia = loaderStrategia.load();
@@ -114,16 +115,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             simulointiAikaViiveInput = strategiaFXML_Controller.getSTRATEGIA_SIMULOINTIVIIVE();
 
             //Min ja Max kg määrä per asiakas.
-            asiakasJateMIN_INPUT = strategiaFXML_Controller.getSTRATEGIA_ASIAKAS_MIN_JÄTEMÄÄRÄ();
-            asiakasJateMAX_INPUT = strategiaFXML_Controller.getSTRATEGIA_ASIAKAS_MAX_JÄTEMÄÄRÄ();
+            asiakasJateMIN_INPUT = strategiaFXML_Controller.getSTRATEGIA_ASIAKAS_MIN_JATEMAARA();
+            asiakasJateMAX_INPUT = strategiaFXML_Controller.getSTRATEGIA_ASIAKAS_MAX_JATEMAARA();
 
             /// Purku aika per kg
             asiakasPurku_KG_Sekunti = strategiaFXML_Controller.getSTRATEGIA_KGMAARA_SEKUNTEJA();
 
             //Jäte Prosentti määrät (kuinka paljon tuodaan jätettä)
-            elektroniikkaJatePROSENTTI = strategiaFXML_Controller.getSTRATEGIA_ELEKTRONIIKKAJÄTE_PROSENTTIMÄÄRÄ();
-            palavaJatePROSENTTI = strategiaFXML_Controller.getSTRATEGIA_PALAVAJÄTE_PROSENTTIMÄÄRÄ();
-            palamatonJatePROSENTTI = strategiaFXML_Controller.getSTRATEGIA_PALAAMATONJÄTE_PROSENTTIMÄÄRÄ();
+            elektroniikkaJatePROSENTTI = strategiaFXML_Controller.getSTRATEGIA_ELEKTRONIIKKAJATE_PROSENTTIMAARA();
+            palavaJatePROSENTTI = strategiaFXML_Controller.getSTRATEGIA_PALAVAJATE_PROSENTTIMAARA();
+            palamatonJatePROSENTTI = strategiaFXML_Controller.getSTRATEGIA_PALAAMATONJATE_PROSENTTIMAARA();
 
             //RadioButtonGroup
             aktiivisuusRadioGroup = strategiaFXML_Controller.getAktiivisuusGroup();
@@ -217,11 +218,13 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                             if (rootPaaSimu.getScene() != null) {
                                 primaryStage.setScene(scene);
                                 primaryStage.setTitle("Sortti-Asema Simu");
+                                primaryStage.centerOnScreen();
                                 primaryStage.show();
                             } else {
                                 scene = new Scene(loaderSIMU.getRoot());
                                 primaryStage.setScene(scene);
                                 primaryStage.setTitle("Sortti-Asema Simu");
+                                primaryStage.centerOnScreen();
                                 primaryStage.show();
                             }
 
@@ -269,7 +272,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                         if (onkoSimuloitu) {
                                             onkoSimuloitu = false;
                                             Parent root2 = loaderStrategia.getRoot();
-                                            System.out.println(scene.getRoot().toString());
                                             primaryStage.setScene(root2.getScene());
                                             restartProgram(primaryStage);
                                         } else {
@@ -339,6 +341,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
                 primaryStage.show();
+                primaryStage.centerOnScreen();
                 start(primaryStage);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -368,6 +371,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                         tuloksetStage.initModality(Modality.WINDOW_MODAL);
                         tuloksetStage.initOwner(primaryStagePara);
                         Scene scene = new Scene(page);
+                        tuloksetStage.centerOnScreen();
                         tuloksetStage.setScene(scene);
 
                         TableView TABLE_VIEW_DATA = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA();
@@ -394,7 +398,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
 
                         TABLE_VIEW_DATA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                            System.out.println(obs.getValue());
                             valittuData(obs, newSelection, TULOKSET_FXML_CONTROLLER);
                             SimulaatioData selectedItem = TULOKSET_FXML_CONTROLLER.getTABLE_VIEW_DATA().getSelectionModel().getSelectedItem();
 
@@ -406,7 +409,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 } catch (SQLException e) {
                                     throw new RuntimeException(e);
                                 }
-                                System.out.println("POISTETTU DATA");
+                                System.out.println("Data Poistettu");
                             });
 
                             tuloksetPoistaKaikkiTuloksetButton.setOnAction(actionEvent -> {
@@ -523,7 +526,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             //Keskimääräinen Palveluaika Palava
             tuloksetkontrolleri.getTULOKSET_KESKPALVELUAIKA_PALAVA().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(22).doubleValue()));
             //Keskimääräinen Jäte (Asiakasjäte / palvelupistejäte /kokonaisjäte)
-            tuloksetkontrolleri.getTULOKSET_KESKJÄTEMAARA_APKJ().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(23).doubleValue()));
+            tuloksetkontrolleri.getTULOKSET_KESKJATEMAARA_APKJ().setText(Double.toString(selectedItem.getTulokset().getTuloksetDOUBLE().get(23).doubleValue()));
 
             //INPUTS
             //INPUT VIIVE
@@ -536,7 +539,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //INPUT KG kesto per sec
             tuloksetkontrolleri.getTULOKSET_INPUT_AIKA_PER_KG().setText(Double.toString(selectedItem.getParametrit().getPurkunopeus()));
-            ;
             //INPUT Aktiivisuus
             tuloksetkontrolleri.getTULOKSET_INPUT_AKTIIVISUUS().setText(selectedItem.getParametrit().getAktiivisuus());
             //INPUT_PROSENTTI_ELEKTRO

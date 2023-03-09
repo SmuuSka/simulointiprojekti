@@ -33,7 +33,7 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     private int animationTimeinMillis = 2000;
     private ISimulaattoriUI ui;
     private IKontrolleriVtoM kontrolleri;
-    private PÄÄSIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller;
+    private PAASIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller;
 
     private Pane AnimationPane;
     private Label ELEKTRO_COUNTER, PALAVA_COUNTER, PALAMATON_COUNTER;
@@ -99,12 +99,12 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
     List<Rectangle> JONO_EPA_LIST;
     List<Rectangle> JONO_SAAPU_LIST;
 
-    public Visualisointi2(PÄÄSIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller, IKontrolleriVtoM kontrolleri, ISimulaattoriUI ui) throws IOException {
+    public Visualisointi2(PAASIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller, IKontrolleriVtoM kontrolleri, ISimulaattoriUI ui) throws IOException {
         this.ui = ui;
         this.kontrolleri = kontrolleri;
         this.PÄÄSIMULAATORIFXML_controller = PÄÄSIMULAATORIFXML_controller;
         this.animationTimeinMillis = (int) ui.getViive();
-        PÄÄSIMULAATORIFXML_controller = new PÄÄSIMULAATORI_FXML_CONTROLLER(kontrolleri);
+        PÄÄSIMULAATORIFXML_controller = new PAASIMULAATORI_FXML_CONTROLLER(kontrolleri);
         FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
         loaderSIMU.setController(PÄÄSIMULAATORIFXML_controller);
         root = loaderSIMU.load();
