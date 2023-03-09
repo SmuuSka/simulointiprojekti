@@ -11,6 +11,9 @@ import java.util.ResourceBundle;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ * Data Access Object
+ * Luokan tarkoituksena on tietokannasta tuoda/viedä dataa
+ * @see IDAO
  */
 
 public class DAO implements IDAO {
@@ -22,12 +25,23 @@ public class DAO implements IDAO {
     private static int simuID;
     private static ArrayList<SimulaatioData> simulaatioDataObjektiLista = new ArrayList<>();
 
-
-    private synchronized void haeKaikkiTiedot() throws SQLException {
-        haeSimulaationTiedot();
+    /**
+     * Konstruktori, joka luo uuden yhteyden tietokantaan.
+     */
+    public DAO() {
+        try {
+            connection = (Connection) DriverManager.getConnection(url1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void haeSimulaationTiedot() throws SQLException {
+    /**
+     * Hakee ensimmäisen taulun tiedot tietokannasta, ja kutsuu muiden taulujen hakumetodeja.
+     * Metodit on palasteltu useampaan osaan koodin luettavuuden kannalta.
+     * @throws SQLException
+     */
+    private void  haeSimulaationTiedot() throws SQLException {
         String id = Integer.toString(simuID);
         String query = "SELECT * FROM simulaatio";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -42,6 +56,10 @@ public class DAO implements IDAO {
         }
     }
 
+    /**
+     * Hakee tietokannasta parametrit-taulun tiedot ja luo siitä hakuoliota.
+     * @throws SQLException
+     */
     private void haeSimulaationParametrit() throws SQLException {
         String id = Integer.toString(simulaatioDataOlio.getId());
         String query = "SELECT simulointiaika,viive, purkunopeusPerSek, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalamatonJate,jatteenTodennakoisyysPalavaJate, aktiivisuus FROM parametrit WHERE parametrit.parametriID="+id;
@@ -55,30 +73,37 @@ public class DAO implements IDAO {
         }
     }
 
+    /**
+     * Hakee tietokannasta tulokset-taulun tiedot ja luo siitä hakuoliota.
+     * @throws SQLException
+     */
     private void haeSimulaattorinTulokset() throws SQLException {
         String id = Integer.toString(simulaatioDataOlio.getId());
         String query = "SELECT * FROM tulokset WHERE tulokset.tuloksetID="+id;
-        ArrayList<SimpleIntegerProperty> tuloksetINT = new ArrayList<>();
-        ArrayList<SimpleDoubleProperty> tuloksetDouble = new ArrayList<>();
+        ArrayList<SimpleIntegerProperty> tuloksetJotkaKokonaislukuja = new ArrayList<>();
+        ArrayList<SimpleDoubleProperty> tuloksetJotkaLiukulukuja = new ArrayList<>();
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 rs.first();
                 ResultSetMetaData resultSetMetaData = (ResultSetMetaData) rs.getMetaData();
                     for (int i = 3; i < 13; i++) {
-                        String columnName = resultSetMetaData.getColumnName(i);
-                        tuloksetINT.add(new SimpleIntegerProperty(rs.getInt(i)));
+                        tuloksetJotkaKokonaislukuja.add(new SimpleIntegerProperty(rs.getInt(i)));
                     }
                     for (int j = 13; j < resultSetMetaData.getColumnCount() + 1; j++) {
-                        String columnName = resultSetMetaData.getColumnName(j);
-                        tuloksetDouble.add((new SimpleDoubleProperty(rs.getDouble(j))));
+                        tuloksetJotkaLiukulukuja.add((new SimpleDoubleProperty(rs.getDouble(j))));
                     }
-                    SimulaatioData.SimulaattorinTulokset simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tuloksetINT, tuloksetDouble);
+                    SimulaatioData.SimulaattorinTulokset simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tuloksetJotkaKokonaislukuja, tuloksetJotkaLiukulukuja);
                     simulaatioDataOlio.setTulokset(simulaattorinTulokset);
             }
         }
     }
 
+    /**
+     * Hakee viimeisimmäksi lisätyn tiedon tietokannasta ja palauttaa simulaatiotuloksen ID:n.
+     * @return kokonaisluku ID
+     * @throws SQLException
+     */
     private int setID() throws SQLException {
         String query = "SELECT simulaatioID FROM simulaatio";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -90,14 +115,6 @@ public class DAO implements IDAO {
         return simuID;
     }
 
-    public DAO() {
-        try {
-            connection = (Connection) DriverManager.getConnection(url1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public synchronized void luoData(int tyhjaksi, double aika, int[] vaihteluvali, int[] jateprosentit, double viive, double purkuaika, String aktiivisuus) throws SQLException {
         lisaaSimulaatioTaulu();
@@ -107,6 +124,10 @@ public class DAO implements IDAO {
         lisaaParametrit(aika, vaihteluvali, jateprosentit, viive,purkuaika, aktiivisuus);
     }
 
+    /**
+     * Jos tietokannasta ei löydy simulaatio-taulua, metodi luo taulun Twr-lausekkeella.
+     * @throws SQLException
+     */
     private void lisaaSimulaatioTaulu() throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS simulaatio (" +
                 "simulaatioID INT PRIMARY KEY AUTO_INCREMENT," +
@@ -117,6 +138,11 @@ public class DAO implements IDAO {
             ps.executeUpdate();
         }
     }
+
+    /**
+     * Jos tietokannasta ei löydy parametrit-taulua, metodi luo taulun Twr-lausekkeella.
+     * @throws SQLException
+     */
     private void lisaaParametritTaulu() throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS parametrit (parametriID INT PRIMARY KEY AUTO_INCREMENT," +
                 " simulaatioID INT," +
@@ -136,6 +162,10 @@ public class DAO implements IDAO {
         }
     }
 
+    /**
+     * Jos tietokannasta ei löydy tulokset-taulua, metodi luo taulun Twr-lausekkeella.
+     * @throws SQLException
+     */
     private void lisaaTuloksetTaulu() throws SQLException {
         String query = "CREATE TABLE IF NOT EXISTS tulokset (\n" +
                 "\ttuloksetID INT(11) PRIMARY KEY AUTO_INCREMENT,\n" +
@@ -186,6 +216,11 @@ public class DAO implements IDAO {
         }
     }
 
+    /**
+     * Metodi lisää simulaatio-tauluun uuden simulaatiodatan Twr-lausekkeella.
+     * @param ajaTyhjaksiSimulaattori kontrollerin kautta UI:sta tuleva tieto.
+     * @throws SQLException
+     */
     private void lisaaSimulaatio(int ajaTyhjaksiSimulaattori) throws SQLException {
         String query = "INSERT INTO simulaatio (paivamaara,ajetaanTyhjaksi) VALUES (?,?)";
 
@@ -197,6 +232,16 @@ public class DAO implements IDAO {
         }
     }
 
+    /**
+     * Metodi lisää parametrit-tauluun uuden simulaation parametridatan Twr-lausekkeella.
+     * @param simulointiaika = kontrollerin kautta UI:sta tuleva tieto.
+     * @param vaihteluvali = kontrollerin kautta UI:sta tuleva tieto.
+     * @param jateprosentit = kontrollerin kautta UI:sta tuleva tieto.
+     * @param viive = kontrollerin kautta UI:sta tuleva tieto.
+     * @param purkunopeus = kontrollerin kautta UI:sta tuleva tieto.
+     * @param aktiivisuus = kontrollerin kautta UI:sta tuleva tieto.
+     * @throws SQLException
+     */
     private void lisaaParametrit(double simulointiaika, int[] vaihteluvali, int[] jateprosentit, double viive, double purkunopeus, String aktiivisuus) throws SQLException {
         String query = "INSERT INTO parametrit (parametriID,simulaatioID,simulointiaika,viive,purkunopeusPerSek,vaihteluvaliMin," +
                 "vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalamatonJate," +
@@ -223,12 +268,18 @@ public class DAO implements IDAO {
             ps.setInt(9, jateprosentit[1]);
             //Palavan jätteen prosentit
             ps.setInt(10, jateprosentit[2]);
+            //Ruuhkatiedot
             ps.setString(11,aktiivisuus);
 
             ps.executeUpdate();
         }
     }
 
+    /**
+     * Metodi liittää uuden simulaation kokonaislukudatan tulokset-tauluun.
+     * @param suureet tulevat kontrollerin kautta Laskenta-luokasta.
+     * @throws SQLException
+     */
     private void tuloksetINT(Laskenta suureet) throws SQLException {
         String query = "INSERT INTO tulokset (" +
                 "                tuloksetID," +
@@ -267,6 +318,12 @@ public class DAO implements IDAO {
             ps.executeUpdate();
         }
     }
+
+    /**
+     * Metodi liittää uuden simulaation liukulukudatan tulokset-tauluun.
+     * @param suureet tulevat kontrollerin kautta Laskenta-luokasta.
+     * @throws SQLException
+     */
 
     private void tuloksetDouble(Laskenta suureet) throws SQLException {
         String query = "UPDATE tulokset SET aktiiviaikaSaapuva = ?, aktiiviaikaElektroniikka = ?, aktiiviaikaPalamatonJate = ?, aktiiviaikaPalavaJate = ?, kokonaisaika= ?, jatteenKokonaismaara= ?, suoritusteho= ?, avgJononPituusSaapuva= ?, avgJononPituusElektroniikka= ?, avgJononPituusPalamatonJate= ?,avgJononPituusPalavaJate= ?, avgLapimenoSaapuva= ?, avgLapimenoElektroniikka= ?, avgLapimenoPalamatonJate= ?, avgLapimenoPalavaJate= ?, kayttoasteSaapuva= ?, kayttoasteElektroniikka= ?,kayttoastePalamatonJate= ?,kayttoastePalavaJate= ?, avgPalveluaikaSaapuva= ?, avgPalveluaikaElektroniikka= ?,  avgPalveluaikaPalamatonJate= ?,avgPalveluaikaPalavaJate= ?, avgJatteenmaara = ?, jatemaaraElektroniikka = ?,jatemaaraPalamatonJate = ?,jatemaaraPalavaJate = ? WHERE tuloksetID=?";
@@ -307,7 +364,7 @@ public class DAO implements IDAO {
                 // Jos keskmJatteenmaara on NAN anna NULL sitten ei ole erroreja
                 ps.setNull(indexTulokset_2++, Types.DOUBLE);
             } else {
-                // Anna normi value
+                // Anna normaalitulos
                 ps.setDouble(indexTulokset_2++, suureet.getKeskmJatteenmaara());
             }
             //Palvelupisteiden jätemäärät, Elektroniikka, Palamaton Jäte,Palava Jäte
@@ -330,12 +387,12 @@ public class DAO implements IDAO {
 
     @Override
     public synchronized ArrayList<SimulaatioData> simulaatioColumnData() throws SQLException {
-        haeKaikkiTiedot();
+        haeSimulaationTiedot();
         return simulaatioDataObjektiLista;
     }
 
     @Override
-    public synchronized void poistaTaulu() throws SQLException {
+    public synchronized void poistaKaikkiTietokannanTaulut() throws SQLException {
         String query = "DROP TABLE parametrit,tulokset, simulaatio";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.executeUpdate();

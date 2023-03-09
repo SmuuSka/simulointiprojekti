@@ -10,7 +10,6 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.ISimulaattoriUI;
 import com.metropolia.simuryhmaYksi.sorttiasema.simu.view.IVisualisointi;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
@@ -105,9 +104,8 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     @Override
-    public IVisualisointi setVisualisointi(IVisualisointi visualisointi) {
+    public void setVisualisointi(IVisualisointi visualisointi) {
         this.nayttoVisual = visualisointi;
-        return visualisointi;
     }
 
     @Override
@@ -131,7 +129,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
     public void poistaKaikkiDATA() throws SQLException {
-        tietokanta.poistaTaulu();
+        tietokanta.poistaKaikkiTietokannanTaulut();
     }
 
     @Override

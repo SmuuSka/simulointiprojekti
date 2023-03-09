@@ -10,9 +10,7 @@ import java.sql.SQLException;
  */
 
 public interface IKontrolleriMtoV {
-     void naytaLoppuaika(double aika);
     void tallennaTulokset(Laskenta suureet) throws SQLException;
-
     IVisualisointi getVisualisointi();
     void setEJononPituus(int pituus);
     void setPTJononPituus(int size);
