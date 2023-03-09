@@ -20,6 +20,18 @@ public class Jatelava extends Palvelupiste {
         this.lavanTyyppi = lavanTyyppi;
     }
 
+    /**
+     * Jätelavojen palvelu.
+     * 
+     * Logiikkaa:
+     * Kutsuu yliluokan aloitaPalvelu metodia, missä kaikille palvelupisteille on yhteiset osuudet palvelusta.
+     * Ottaa käsittelyyn jonon ensimmäisen asiakkaan, poistaa siltä tuomansa jätteen ja arpoo jätteen määrän sekä normaalijakauman perusteella 
+     * palveluajan asiakkaalle.
+     * Asetetaan palvelupistekohtaiset suorituskykysuureet, kuten aktiivi- ja kokokonaisoleskeluaika.
+     * Lisätään poistetun jätteenmäärä palvelupisteen kokonaisjätemäärään.
+     * Lopuksi katsotaan asiakkaalle vielä seuraava tapahtuma hänen "jätelistansa" avulla,
+     * ja tapahtumalistalle lisätään poistumistapahtuma ajan hetkelle nykyaika + palveluaika.
+     */
     @Override
     public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
         super.aloitaPalvelu();
@@ -51,10 +63,18 @@ public class Jatelava extends Palvelupiste {
 		tapahtumalista.lisaa(new Tapahtuma(seuraavaTapahtuma, poistumisaika, palvelupisteID));
 	}
 
+    /**
+     * 
+     * @return maara
+     */
     public double getMaara(){
         return maara;
     }
 
+    /**
+     * 
+     * @return
+     */
     public Jatelaji getLavanTyyppi() {
         return lavanTyyppi;
     }

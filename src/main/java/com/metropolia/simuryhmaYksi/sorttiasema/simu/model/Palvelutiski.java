@@ -13,7 +13,15 @@ public class Palvelutiski extends Palvelupiste {
     public Palvelutiski(ContinuousGenerator generator, Tapahtumalista tapahtumalista) {
         super(generator, tapahtumalista);
     }
-
+	/**
+	 * Palvelutiskin palvelu
+	 * Logiikkaa:
+	 * Käsittelee ensimmäisen asiakkaan jonosta.
+	 * Generoi normaalijakauman mukaisen palveluajan.
+	 * Lisää palvelupistekohtaiset suorituskykysuureet.
+	 * Luo seuraavan tapahtuman perustuen asiakkaan jätteisiin.
+	 * Lisää tapahtuman tapahtumalistaan.
+	 */
     public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		super.aloitaPalvelu();
 		Asiakas a = jono.peek();

@@ -43,10 +43,11 @@ public class OmaMoottori extends Moottori {
     @Override
     protected void suoritaTapahtuma(Tapahtuma t) {  // B-vaiheen tapahtumat
                 Asiakas a;
+                //Lähtöjono
                 int jono1 = t.getTapahtumanLuoja();
+                //Saapumisjono
                 int jono2 = t.getTyyppi().ordinal();
 
-                System.out.println("ASIAKAS LÄHTEE JONOSTA " + jono1 + " JA SAAPUU JONOON " + jono2);
                 switch (t.getTyyppi()) {
 
                     case PALVELUTISKI_SAAPUMINEN:
@@ -54,7 +55,6 @@ public class OmaMoottori extends Moottori {
                             saapumistenMaara++;
                             kontrolleri.getVisualisointi().lisaaSaapumistenMaara(saapumistenMaara);
                             a = new Asiakas();
-                            //Palvetiskijono = tapahtumalista
                             palvelupisteet[0].lisaaJonoon(a);
                             saapumisprosessi.generoiSeuraava();
                         }
@@ -247,7 +247,9 @@ public class OmaMoottori extends Moottori {
         reset();
     }
 
-
+    /**
+     * Stattisten muuttujien nollaus uudelleenajoa varten.
+     */
     public void reset(){
         Kello.getInstance().setAika(0);
         palvelupisteet[0].setI(0);
