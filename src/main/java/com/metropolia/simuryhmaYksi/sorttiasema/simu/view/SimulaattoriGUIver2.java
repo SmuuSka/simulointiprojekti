@@ -94,7 +94,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             primaryStagePara = primaryStage;
             primaryStage.centerOnScreen();
             primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.84);
-            primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
             primaryStage.getIcons().add(new Image("/uifxml/LOGO.png"));
             FXMLLoader loaderStrategia = new FXMLLoader(getClass().getResource("/uifxml/Strategia.fxml"));
             FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
@@ -223,7 +222,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 primaryStage.setTitle("Sortti-Asema Simu");
                                 primaryStage.centerOnScreen();
                                 primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.9);
-                                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
+                                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxX());
                                 primaryStage.show();
                             } else {
                                 scene = new Scene(loaderSIMU.getRoot());
@@ -231,7 +230,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                                 primaryStage.setTitle("Sortti-Asema Simu");
                                 primaryStage.centerOnScreen();
                                 primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.9);
-                                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
                                 primaryStage.show();
                             }
 
@@ -273,7 +271,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
 
                                 System.out.println("Siirytään Pääsimulaatorille.");
-
                                 try {
                                     aloitaButton.setOnAction(event1 -> {
                                         if (onkoSimuloitu) {
@@ -347,10 +344,10 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 Parent root = loaderStrategia.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
-                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.84);
-                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
-                primaryStage.show();
+                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.9);
+                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
                 primaryStage.centerOnScreen();
+                primaryStage.show();
                 start(primaryStage);
             } catch (Exception e) {
                 e.printStackTrace();
