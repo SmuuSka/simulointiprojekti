@@ -343,11 +343,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                 rootStrategia = loaderStrategia.load();
                 Parent root = loaderStrategia.getRoot();
                 Scene scene = new Scene(root);
-                primaryStage.setScene(scene);
-                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.84);
-                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
-                primaryStage.show();
                 primaryStage.centerOnScreen();
+                primaryStage.setScene(scene);
+                primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.9);
+                primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
+                primaryStage.show();
                 start(primaryStage);
             } catch (Exception e) {
                 e.printStackTrace();
