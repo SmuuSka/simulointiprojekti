@@ -23,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -92,6 +93,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
         try {
             primaryStagePara = primaryStage;
             primaryStage.centerOnScreen();
+            primaryStage.setHeight(Screen.getPrimary().getBounds().getMaxY()*0.84);
+            primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX()*0.9);
             primaryStage.getIcons().add(new Image("/uifxml/LOGO.png"));
             FXMLLoader loaderStrategia = new FXMLLoader(getClass().getResource("/uifxml/Strategia.fxml"));
             FXMLLoader loaderSIMU = new FXMLLoader(getClass().getResource("/uifxml/ui.fxml"));
