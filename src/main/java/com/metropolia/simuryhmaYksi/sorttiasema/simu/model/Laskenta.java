@@ -36,7 +36,14 @@ public class Laskenta {
     
   
     
-
+    /**
+     * @param saapuneidenLkm
+     * @param palveltujenLkm
+     * @param aktiiviajat
+     * @param kokonaisoleskeluajat
+     * @param jatteenKokonaismaara
+     * @param jatteenMaarat
+     */
     public Laskenta(int saapuneidenLkm, int[] palveltujenLkm, double[] aktiiviajat, long[] kokonaisoleskeluajat, double jatteenKokonaismaara, double[] jatteenMaarat) {
         this.saapuneidenLkm = saapuneidenLkm;
         this.palveltujenLkm = palveltujenLkm;

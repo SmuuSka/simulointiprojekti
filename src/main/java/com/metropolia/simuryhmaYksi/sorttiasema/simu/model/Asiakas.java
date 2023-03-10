@@ -40,7 +40,7 @@ public class Asiakas {
 		saapumisaika = Kello.getInstance().getAika();
 		System.out.println(Arrays.toString(TJATELAJI));
 		// Lisätään asiakkaalle generoidut jätteet
-		int vaihteluvali = JATEMAARAN_VAIHTELUVALI[1]-JATEMAARAN_VAIHTELUVALI[0];
+		int vaihteluvali = JATEMAARAN_VAIHTELUVALI[1]+JATEMAARAN_VAIHTELUVALI[0];
 		jategeneraattori = new Jategeneraattori(TJATELAJI, new Normal(vaihteluvali/2, 1.0));
 		jategeneraattori.generoiJatteet();
 		jatteet = jategeneraattori.getJatteet();

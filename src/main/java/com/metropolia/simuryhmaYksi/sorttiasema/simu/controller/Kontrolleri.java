@@ -73,10 +73,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         moottori.lopetasimulaatio();
     }
 
-    @Override
-    public void naytaLoppuaika(double aika) {
 
-    }
 
     @Override
     public void tallennaTulokset(Laskenta suureet) throws SQLException {
@@ -98,10 +95,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         tietokanta.suljeYhteys();
     }
 
-    @Override
-    public boolean onkoSimulointiPaalla() {
-        return ((Thread) moottori).isAlive();
-    }
 
     @Override
     public void setVisualisointi(IVisualisointi visualisointi) {
