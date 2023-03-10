@@ -25,11 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ * @author Kaspar Tullus
+ */
+
+/**
+ * Täälä visualisoitaan ja animoitaan.
  */
 
 public class Visualisointi2 extends Canvas implements IVisualisointi {
-    private int asiakasLkm = 0;
     private int animationTimeinMillis = 2000;
     private ISimulaattoriUI ui;
     private IKontrolleriVtoM kontrolleri;
@@ -92,12 +95,16 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
 
     //---------------------------------------------------------------------------------------------
     private Parent root;
-    private Stage stage;
-    private Scene scene;
     List<Rectangle> JONO_PALAVA_LIST;
     List<Rectangle> JONO_ELEKTRO_LIST;
     List<Rectangle> JONO_EPA_LIST;
     List<Rectangle> JONO_SAAPU_LIST;
+    /**
+     * Tämä on Visualisoinnin constructori.
+     * @param kontrolleri Annetaan IKontrolleriVTOM kontrolleri josta lähetetään Mootoriin tietoa.
+     * @param ui Annetaan ISimulaatori Interface visualisointia varten
+     * @param PÄÄSIMULAATORIFXML_controller Annetaan Pääsimulaatorin kontrolleri visualisointiin.
+     */
 
     public Visualisointi2(PAASIMULAATORI_FXML_CONTROLLER PÄÄSIMULAATORIFXML_controller, IKontrolleriVtoM kontrolleri, ISimulaattoriUI ui) throws IOException {
         this.ui = ui;
@@ -123,7 +130,9 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         tyhjennaNaytto();
     }
 
-
+    /**
+     *Resetoi arvot UI:ssa.
+     */
     public void tyhjennaNaytto() {
         ui.setEJateJonossa(0);
         ui.setPJateJonossa(0);
@@ -144,10 +153,6 @@ public class Visualisointi2 extends Canvas implements IVisualisointi {
         Platform.runLater(() -> {
             POISTUNUT_INFO.setText(Integer.toString(maara));
         });
-    }
-
-    public void uusiAsiakas() {
-        asiakasLkm++;
     }
 
     @Override

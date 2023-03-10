@@ -13,6 +13,9 @@ import javafx.scene.shape.Rectangle;
  * @Author Kaspar Tullus
  */
 
+/**
+ * Täälä hoitetaan kaikki Pääsimulaatori näkymän FXML getterit UI:ta varten
+ */
 public class PAASIMULAATORI_FXML_CONTROLLER {
     private IKontrolleriVtoM kontrolleri;
 
@@ -202,10 +205,6 @@ public class PAASIMULAATORI_FXML_CONTROLLER {
         return EPA_POISHEITETTY_NUM;
     }
 
-    public VBox getINFO_SIMJÄTE_VBOX() {
-        return INFO_SIMJÄTE_VBOX;
-    }
-
     public Label getJONOSSAINFO_ELEKTRO() {
         return JONOSSAINFO_ELEKTRO;
     }
@@ -282,30 +281,6 @@ public class PAASIMULAATORI_FXML_CONTROLLER {
         return LINE_SIIRTYY_PA_TO_EPA;
     }
 
-    public GridPane getNAPPI_LAATIKKO() {
-        return NAPPI_LAATIKKO;
-    }
-
-    public ImageView getPALVELUPISTE_ELEKTRO() {
-        return PALVELUPISTE_ELEKTRO;
-    }
-
-    public ImageView getPALVELUPISTE_EPA() {
-        return PALVELUPISTE_EPA;
-    }
-
-    public ImageView getPALVELUPISTE_PA() {
-        return PALVELUPISTE_PA;
-    }
-
-    public ImageView getPALVELUPISTE_POISTUMINEN() {
-        return PALVELUPISTE_POISTUMINEN;
-    }
-
-    public ImageView getPALVELUPISTE_SAAPUMINEN() {
-        return PALVELUPISTE_SAAPUMINEN;
-    }
-
     public Ellipse getPA_PALVELUSSAINFO() {
         return PA_PALVELUSSAINFO;
     }
@@ -320,10 +295,6 @@ public class PAASIMULAATORI_FXML_CONTROLLER {
 
     public Ellipse getSAAPUMINEN_PALVELUSSAINFO() {
         return SAAPUMINEN_PALVELUSSAINFO;
-    }
-
-    public AnchorPane getSIMULAATIO_VIEWBOX() {
-        return SIMULAATIO_VIEWBOX;
     }
 
     public HBox getJONO_ELEKTRO() {
