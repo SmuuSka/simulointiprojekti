@@ -31,6 +31,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Tässä aloitetaan pääohjelman visualisointi,myös käyttäjän syötetyt tiedot on täälä..
+ */
 public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI {
     private TULOKSET_FXML_CONTROLLER TULOKSET_FXML_CONTROLLER;
     private Button aloitaButton, nopeutaButton, hidastaButton, strategiaButton, lopetaButton, strategiaNaytaTuloksetButton, tuloksetPoistaTulosButton, tuloksetPoistaKaikkiTuloksetButton;
@@ -58,17 +61,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     private PAASIMULAATORI_FXML_CONTROLLER mainFXML_Controller;
     private STRATEGIA_FXML_CONTROLLER strategiaFXML_Controller;
-    private Parent root;
     private Parent rootPaaSimu;
     private Parent rootStrategia;
     private IKontrolleriVtoM kontrolleri;
     private Stage primaryStagePara;
     private IVisualisointi naytto;
-    private static String[] mainArgs;
     //-------------------------------------------------------------------------------------------
 
     /**
      * Tästä aloitetaan SimulaatoriGUI käynnistys
+     * @param args Tämä lähetetään lauch methodille joka käynnistää ohjelman.
      */
     public static void main(String[] args) {
         launch(args);
@@ -81,11 +83,11 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     public void init() {
         Trace.setTraceLevel(Trace.Level.INFO);
         kontrolleri = new Kontrolleri(this);
-
     }
 
     /**
      * Täälä aloitetaan ohjelman visualisointi
+     * @param primaryStage ikkunoille tarkoitettu STAGE property jota käytetään ikkunoiden luomiseen ja vaihtamiseen setRoot ja getScenen avulla.
      */
     @Override
     public void start(Stage primaryStage) {
@@ -152,7 +154,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
             //-ASETETAAN STRATEGIA SCENE-//
             scene = new Scene(loaderStrategia.getRoot());
-            /**Tämä avaa Tulokset ikkunan missä näkyy tietokannasta tuotut tulokset */
+            //Tämä avaa Tulokset ikkunan missä näkyy tietokannasta tuotut tulokset
             strategiaNaytaTuloksetButton.setOnAction(actionEvent -> {
                 try {
                     kontrolleri.showTuloksetAction();
@@ -167,7 +169,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
             });
 
             //Siiry PÄÄSIMULAATIO IKKUNAAN KUN PAINETAAN OK NAPPIA STRATEGIASSA
-            /**Siirytään Pääsimulaattori ikkunaan,missä visualisoitaan ja lasketaan tulokset käyttäjän syötteiten avulla. */
             strategiaButton.setOnAction(event -> {
                 try {
                     simulaatioAika = Integer.parseInt(simulointiAikaInput.getText());
@@ -209,14 +210,19 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
                     } catch (NumberFormatException numberex) {
                         System.out.println("Et ole Syöttänyt mitää arvoja asiakkaan min ja max kilo määriin!");
                     } finally {
-
                         if (asiakasMin < 0 || asiakasMax < 0 || asiakasMin == asiakasMax) {
                             Alert alert = new Alert(Alert.AlertType.WARNING);
                             alert.setTitle("Varoitus");
                             alert.setHeaderText("Varoitus:");
                             alert.setContentText("Minimi/Maksimi kilo määrä ei voi olla alle 0 ja molemmat eivät voi olla samoja määriä. Tai et ole antanut mitään arvoja.");
                             alert.show();
-                        } else {
+                        }else if(asiakasMax > 120){
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Varoitus");
+                            alert.setHeaderText("Varoitus:");
+                            alert.setContentText("Maksimi kilo määrä voi olla Maksimisaan 1200, ei yli.");
+                            alert.show();
+                        }else{
                             if (rootPaaSimu.getScene() != null) {
                                 primaryStage.setScene(scene);
                                 primaryStage.setTitle("Sortti-Asema Simu");
@@ -331,6 +337,7 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     /**
      * Tämä kutsutaan kun painetaan käynnistä uudelleen nappia, se avaa uudestaan strategia ikkunan missä syötetään uusia syötteitä.
+     * @param primaryStage ikkunoille tarkoitettu STAGE property jota käytetään ikkunoiden luomiseen ja vaihtamiseen setRoot ja getScenen avulla.
      */
     public void restartProgram(Stage primaryStage) {
         onkoSimuloitu = false;
@@ -357,15 +364,12 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     //INTERFACE METHOTID
     //  TULOKSET IKKUNA
-
-    /**
-     * Kun näytä tulokset nappia on painettu tai kun simulaatio on päätynyt, mennään tähän methodiin joka avaa tulokset ikkunan ja tulostaa tarvittavan datan.
-     */
     @Override
     public void showTulokset(ArrayList<SimulaatioData> datatulokset) {
         Platform.runLater(
                 () -> {
                     try {
+                        //Asetetaan Uusi kontrolleri tulostus ikkunalle
                         TULOKSET_FXML_CONTROLLER = new TULOKSET_FXML_CONTROLLER(kontrolleri);
                         ObservableList<SimulaatioData> dataob = FXCollections.observableArrayList(datatulokset);
                         FXMLLoader loader = new FXMLLoader();
@@ -443,6 +447,8 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     /**
      * Tämä poistaa tietyn tuloksen joka on valittu.
+     * @param ID Tietokannan tieton ID
+     * @throws SQLException
      */
     @Override
     public void poistaData(int ID) throws SQLException {
@@ -451,6 +457,9 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
 
     /**
      * Kun tulos ikkunassa valitaan dataa, täälä päivetetään valitun datan mukaan tietoja tuloksiin.
+     * @param obs Listan Valuet
+     * @param newSelection Valittu data columista
+     * @param tuloksetkontrolleri Tulokset ikkunan FXML kontrolleri.
      */
     public void valittuData(ObservableValue obs, Object newSelection, TULOKSET_FXML_CONTROLLER tuloksetkontrolleri) {
         if (newSelection != null) {
@@ -562,19 +571,16 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     //------------------------------------------------------------------------------
 
     @Override
-    /**Haetaan käyttäjän syöttämä simulaatioaika.*/
     public double getAika() {
         return Double.parseDouble(simulointiAikaInput.getText());
     }
 
     @Override
-    /**Haetaan simulaation viive.*/
     public long getViive() {
         return simulaatioViive;
     }
 
     @Override
-    /**Haetaan käyttäjän valitsema aktiivisuus.*/
     public String getAktiivisuus() {
         //Radiobuttonin "getter" radiogroupista.
         RadioButton id = (RadioButton) aktiivisuusRadioGroup.getSelectedToggle();
@@ -604,7 +610,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    /**Asetetaan Palavajätepiste jono tekstiin tällä hetkellä oleva jonon pituus.*/
     public void setPJateJonossa(int pituus) {
         Platform.runLater(
                 () -> {
@@ -618,7 +623,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    /**Asetetaan Saapumispiste jono tekstiin tällä hetkellä oleva jonon pituus.*/
     public void setSAAPUMINENJonossa(int pituus) {
         Platform.runLater(
                 () -> {
@@ -638,7 +642,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    /**Asetetaan Palaamattomanjätepisteen jono tekstiin tällä hetkellä oleva jonon pituus.*/
     public void setPTJateJonossa(int pituus) {
         Platform.runLater(
                 () -> {
@@ -661,7 +664,6 @@ public class SimulaattoriGUIver2 extends Application implements ISimulaattoriUI 
     }
 
     @Override
-    /**Haetaan käyttäjän syöttämät jätelaji prosentit.*/
     public int[] getJateLaijenProsentit() {
         int[] prosenttiLista = new int[0];
         if (elektroJateProsentti + palavaJateProsentti + palamatonJateProsentti == 100) {
