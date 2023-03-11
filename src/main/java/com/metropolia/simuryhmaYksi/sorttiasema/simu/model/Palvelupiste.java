@@ -7,7 +7,9 @@ import java.util.LinkedList;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
- *
+ */
+
+/**
  * Palvelupiste on pääluokka Palevutiski ja Jätelava-luokalle
  */
 

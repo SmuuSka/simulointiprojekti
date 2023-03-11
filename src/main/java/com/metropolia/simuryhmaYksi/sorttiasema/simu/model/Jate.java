@@ -4,7 +4,9 @@ import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.Normal;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
- *
+ */
+
+/**
  * Jäte-luokka, jossa määritellään jätteen ominaisuudet
  */
 public class Jate {
@@ -20,7 +22,7 @@ public class Jate {
     /**
      * Konstruktori, joka luo jätteen
      * @param jatelaji Jätegeneraattorista tuleva jätelaji
-     * @param maara Jätemäärä
+     * @param maara Jätegeneraattorista tuleva jätemäärä
      */
     public Jate(Jatelaji jatelaji, double maara){
         this.paino = maara;
@@ -45,7 +47,7 @@ public class Jate {
 
     /**
      * Setteri jätteen painolle
-     * @param paino
+     * @param paino tuleva Jätegeneraattorista määrä
      */
     public void setPaino(double paino){
         this.paino = paino;

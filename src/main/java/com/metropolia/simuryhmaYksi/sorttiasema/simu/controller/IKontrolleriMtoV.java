@@ -9,10 +9,14 @@ import java.sql.SQLException;
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
  */
 
+/**
+ * Rajapinta Mallista näkymään
+ */
+
 public interface IKontrolleriMtoV {
     /**
      * Tallentaa simulaatioajon tulokset
-     * @param suureet
+     * @param suureet OmaMoottorista tulevat suureet
      * @throws SQLException
      */
     void tallennaTulokset(Laskenta suureet) throws SQLException;
@@ -23,24 +27,24 @@ public interface IKontrolleriMtoV {
     IVisualisointi getVisualisointi();
     /**
      * Asettaa käyttöliittymään elektroniikka jätelavan jonon pituuden
-     * @param pituus
+     * @param pituus OmaMoottorista tuleva jononpituus
      */
     void setEJononPituus(int pituus);
     /**
      * Asettaa käyttöliittymään palamattoman jätteen jätelavan jonon pituuden
-     * @param size
+     * @param pituus OmaMoottorista tuleva jononpituus
      */
-    void setPTJononPituus(int size);
+    void setPTJononPituus(int pituus);
     /**
      * Asettaa käyttöliittymään palavan jätteen jätelavan jonon pituuden
-     * @param size
+     * @param pituus OmaMoottorista tuleva jononpituus
      */
-    void setPJononPituus(int size);
+    void setPJononPituus(int pituus);
     /**
      * Asettaa käyttöliittymään saapumisien määrän
-     * @param size
+     * @param pituus OmaMoottorista tuleva jononpituus
      */
-    void setSAAPUMISJononPituus(int size);
+    void setSAAPUMISJononPituus(int pituus);
     /**
      * @return ruuhkaisuus
      */
