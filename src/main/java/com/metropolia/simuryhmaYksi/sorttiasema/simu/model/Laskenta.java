@@ -168,7 +168,11 @@ public class Laskenta {
     public void setKeskimaaraisetLapimenoajat(){
         try {
         for (int i = 0; i < LKM; i++){
-            keskmLapimenoajat[i] = kokonaisoleskeluajat[i]/palveltujenLkm[i];
+            if (palveltujenLkm[i] == 0){
+                keskmLapimenoajat[i] = 0;
+            } else {
+                keskmLapimenoajat[i] = kokonaisoleskeluajat[i]/palveltujenLkm[i];
+            }
         }
         } catch (Exception e) {
 
