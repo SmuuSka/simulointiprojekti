@@ -10,6 +10,10 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtumalista;
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
  */
 
+/**
+ * Jätelava luokka on aliluokka Palvelupiste-luokasta, missä määritellään jätelajittelupiste
+ */
+
 public class Jatelava extends Palvelupiste {
     /**
      * Jätelavalle olevan jätteen määrä
@@ -21,9 +25,9 @@ public class Jatelava extends Palvelupiste {
     private final Jatelaji lavanTyyppi;
     /**
      * 
-     * @param generator
-     * @param tapahtumalista
-     * @param lavanTyyppi
+     * @param generator Satunnaislukugeneraattori
+     * @param tapahtumalista Asiakkaiden tapahtumalista
+     * @param lavanTyyppi Jätetyyppi
      */
     public Jatelava(ContinuousGenerator generator, Tapahtumalista tapahtumalista, Jatelaji lavanTyyppi) {
         super(generator, tapahtumalista);
@@ -74,23 +78,23 @@ public class Jatelava extends Palvelupiste {
 	}
 
     /**
-     * 
-     * @return maara
+     * Getteri jätemäärälle
+     * @return palauttaa jätemäärän jätelavalla
      */
     public double getMaara(){
         return maara;
     }
 
     /**
-     * 
-     * @return Jatelaji jota kyseinen jätelava.
+     * Getteri jätelavalle
+     * @return palauttaa jätelajin, jota kyseinen jätelava edustaa.
      */
     public Jatelaji getLavanTyyppi() {
         return lavanTyyppi;
     }
 
     /**
-     * @return merkkijonoesitys oliosta.
+     * @return merkkijonoesitys jätelava-oliosta.
      */
     public String toString(){
         return "Lava: "+getLavanTyyppi()+", Jätteen määrä lavalla: "+getMaara()+" kg"; 

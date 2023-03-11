@@ -15,6 +15,10 @@ import java.sql.SQLException;
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
  */
 
+/**
+ * Kontrolleri-luokka ohjaa simulaattorin toimintaa
+ */
+
 public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     /**
      * Simulaattorin käyttöliittymä
@@ -49,7 +53,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         moottori = new OmaMoottori(this);
         tietokanta = new DAO();
         moottori.setAjetaanTyhjaksi(ui.getAjeetaankoLoppuun());
-        //tietokanta.poistaTaulu();
         //Asetetaan simulointiaika ja viive moottorille
         //Tallennetaan simulointiparametrit tietokantaan
         moottori.setSimulointiaika(ui.getAika());
@@ -132,10 +135,19 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
                 break;
         }
     }
+
+    /**
+     * Setteri elektroniikka jätelavan jononpituudelle
+     * @param pituus
+     */
     public void setEJononPituus(int pituus){
         ui.setEJateJonossa(pituus);
     }
 
+    /**
+     * Poistaa kaikki tietokannan taulut
+     * @throws SQLException
+     */
     public void poistaKaikkiDATA() throws SQLException {
         tietokanta.poistaKaikkiTietokannanTaulut();
     }
@@ -176,7 +188,7 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
     /**
      * 
-     * @param viive
+     * @param viive Ui:sta tuleva viive
      */
     public void setAnimaationViive(int viive) {
         ui.setAnimaationViive(viive);

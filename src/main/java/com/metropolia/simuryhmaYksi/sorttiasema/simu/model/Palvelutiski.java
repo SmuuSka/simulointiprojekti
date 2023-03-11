@@ -8,9 +8,19 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtumalista;
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
  */
 
+/**
+ * Palvelutiski on Palvelupisteen alaluokka,
+ * jossa luodaan uusia saapumistapahtumia, ja aloitetaan asiakkaan palvelu.
+ */
+
 public class Palvelutiski extends Palvelupiste {
-    
-    public Palvelutiski(ContinuousGenerator generator, Tapahtumalista tapahtumalista) {
+
+	/**
+	 *
+	 * @param generator Satunnaislukugeneraattori
+	 * @param tapahtumalista Asikkaiden tapahtumalista
+	 */
+	public Palvelutiski(ContinuousGenerator generator, Tapahtumalista tapahtumalista) {
         super(generator, tapahtumalista);
     }
 	/**

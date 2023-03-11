@@ -9,6 +9,10 @@ import java.sql.SQLException;
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
  */
 
+/**
+ * Rajapinta näkymästä malliin
+ */
+
 public interface IKontrolleriVtoM {
 
   /**
@@ -26,7 +30,7 @@ public interface IKontrolleriVtoM {
   void hidasta();
   /**
    * Asetetaan visualisointi
-   * @param visualisointi
+   * @param visualisointi Näkymän rajapinta
    */
   void setVisualisointi(IVisualisointi visualisointi);
   /**
@@ -36,7 +40,7 @@ public interface IKontrolleriVtoM {
   void lopetaSimulointi() throws SQLException;
   /**
    * Poistaa yksittäisen tuloksen
-   * @param ID
+   * @param ID Ui:sta tuleva column id
    * @throws SQLException
    */
   void poistaTulos(int ID) throws SQLException;

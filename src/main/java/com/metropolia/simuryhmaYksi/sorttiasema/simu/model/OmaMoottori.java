@@ -20,9 +20,6 @@ public class OmaMoottori extends Moottori {
      */
     private int poistunutMaara = 0;
     /**
-     * 
-     */
-    /**
     * Järjestelmään saapuneiden määrä
     */
     private int saapumistenMaara = 0;
@@ -39,7 +36,7 @@ public class OmaMoottori extends Moottori {
     */
     private double PALAMATONjatteidenmaara = 0;
     /**
-    * @param kontrolleri
+    * @param kontrolleri Simulaattorin kontrolleri
     */
     public OmaMoottori(IKontrolleriMtoV kontrolleri) {
         super(kontrolleri);
@@ -56,17 +53,12 @@ public class OmaMoottori extends Moottori {
         saapumisprosessi = new Saapumisprosessi(new Negexp(15 * kontrolleri.getAktiivisuus(), 5), tapahtumalista, TapahtumanTyyppi.PALVELUTISKI_SAAPUMINEN);
         System.out.println(Arrays.toString(palvelupisteet));
     }
-    /**
-     * Luodaan ensimmäinen saapuminen järjestelmään
-     */
+
     @Override
     protected void alustukset() {
             saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
     }
-    /**
-     * @param Suoritettva B-tapahtuma
-     * Suoritetaan B-tapahtuma sekä siihen liittyvät animaatiot
-     */
+
     @Override
     protected void suoritaTapahtuma(Tapahtuma t) {  // B-vaiheen tapahtumat
                 Asiakas a;
@@ -236,10 +228,7 @@ public class OmaMoottori extends Moottori {
         // Asetetaan poistuneet teksti
         kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
 	}
-    /**
-     * Haetaan simulaation havainnolliset suureet, lasketaan niistä suorituskykysuureet Laskenta-luokan avulla.
-     * Tallennetaan nämä tiedot tietokantaan ja näytetään tietokanta-ikkuna käyttöliittymässä.
-     */
+
     @Override
     protected void tulokset() throws SQLException {
         poistunutMaara = 0;
@@ -279,7 +268,7 @@ public class OmaMoottori extends Moottori {
     }
 
     /**
-     * Stattisten muuttujien nollaus uudelleenajoa varten.
+     * Staattisten muuttujien nollaus uudelleenajoa varten.
      */
     public void reset(){
         Kello.getInstance().setAika(0);

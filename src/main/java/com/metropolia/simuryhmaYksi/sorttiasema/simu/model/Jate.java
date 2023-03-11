@@ -5,42 +5,40 @@ import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.Normal;
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
  */
+
+/**
+ * Jäte-luokka, jossa määritellään jätteen ominaisuudet
+ */
 public class Jate {
+    /**
+     * Jätteen paino
+     */
     private double paino;
+    /**
+     * Jätteen laji
+     */
     private Jatelaji jatelaji;
 
-    public Jate(){
-    }
-
     /**
-     * @param jatelaji
-     * @param maara
+     * Konstruktori, joka luo jätteen
+     * @param jatelaji Jätegeneraattorista tuleva jätelaji
+     * @param maara Jätegeneraattorista tuleva jätemäärä
      */
     public Jate(Jatelaji jatelaji, double maara){
         this.paino = maara;
         this.jatelaji = jatelaji;
     }
-    /**
-     * 
-     * @param vaihteluvali
-     * @param jatelaji
-     */
-    public Jate(int[] vaihteluvali, Jatelaji jatelaji){
-        this.paino = new Normal((vaihteluvali[1] +vaihteluvali[0]) / vaihteluvali.length,10).sample();
-        System.out.println("Paino Jäte-luokasta: " + paino);
-        this.jatelaji = jatelaji;
-    }
 
     /**
-     * 
-     * @return paino
+     * Getteri jätteen painolle
+     * @return palauttaa jätteen painon
      */
     public double getPaino() {
         return paino;
     }
 
     /**
-     * 
+     * Getteri jäte-olin jätelajille
      * @return jatelaji
      */
     public Jatelaji getJatelaji() {
@@ -48,15 +46,16 @@ public class Jate {
     }
 
     /**
-     * 
-     * @param paino
+     * Setteri jätteen painolle
+     * @param paino tuleva Jätegeneraattorista määrä
      */
     public void setPaino(double paino){
         this.paino = paino;
     }
 
     /**
-     * @return merkkijonoesitys
+     *
+     * @return Palauttaa jäte-oliosta merkkijonoesityksen
      */
     @Override
     public String toString() {

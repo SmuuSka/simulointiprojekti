@@ -11,18 +11,38 @@ import java.util.ResourceBundle;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
+/**
  * Data Access Object
  * Luokan tarkoituksena on tietokannasta tuoda/viedä dataa
  * @see IDAO
  */
 
 public class DAO implements IDAO {
-    private int indexTulokset_1 = 1, indexTulokset_2 = 1;
-    private  SimulaatioData simulaatioDataOlio;
+    /**
+     * simulaatioTulos on yksi tietokannasta haettu simulaatiotulos-olio
+     */
+    private  SimulaatioData simulaatioTulos;
+    /**
+     * Yhteysmuuttuja tietokannan ja simulaattorin välillä
+     */
     private final Connection connection;
+    /**
+     * Haetaan tietoa System.properties tiedostosta
+     */
     private static final ResourceBundle rb = ResourceBundle.getBundle("System");
+    /**
+     * Haetaan tiedostosta merkkijonot
+     */
     private static final String url1 = rb.getString("url1") + rb.getString("username1") + rb.getString("password1");
+    /**
+     * Simulaatin ID
+     */
     private static int simuID;
+    /**
+     * Kaikki tietokanta-oliot listattuna
+     */
     private static ArrayList<SimulaatioData> simulaatioDataObjektiLista = new ArrayList<>();
 
     /**
@@ -47,10 +67,10 @@ public class DAO implements IDAO {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    simulaatioDataOlio = new SimulaatioData(rs.getInt(1), rs.getDate(2).toLocalDate(), rs.getByte(3));
+                    simulaatioTulos = new SimulaatioData(rs.getInt(1), rs.getDate(2).toLocalDate(), rs.getByte(3));
                     haeSimulaationParametrit();
                     haeSimulaattorinTulokset();
-                    simulaatioDataObjektiLista.add(simulaatioDataOlio);
+                    simulaatioDataObjektiLista.add(simulaatioTulos);
                 }
             }
         }
@@ -61,14 +81,14 @@ public class DAO implements IDAO {
      * @throws SQLException
      */
     private void haeSimulaationParametrit() throws SQLException {
-        String id = Integer.toString(simulaatioDataOlio.getId());
+        String id = Integer.toString(simulaatioTulos.getId());
         String query = "SELECT simulointiaika,viive, purkunopeusPerSek, vaihteluvaliMin,vaihteluvaliMax,jatteenTodennakoisyysElektroniikka,jatteenTodennakoisyysPalamatonJate,jatteenTodennakoisyysPalavaJate, aktiivisuus FROM parametrit WHERE parametrit.parametriID="+id;
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 rs.first();
-                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioDataOlio.new SimulaationParametrit(rs.getDouble(1), rs.getDouble(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9));
-                simulaatioDataOlio.setParametrit(simulaationParametrit);
+                SimulaatioData.SimulaationParametrit simulaationParametrit = simulaatioTulos.new SimulaationParametrit(rs.getDouble(1), rs.getDouble(2), rs.getDouble(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9));
+                simulaatioTulos.setParametrit(simulaationParametrit);
             }
         }
     }
@@ -78,7 +98,7 @@ public class DAO implements IDAO {
      * @throws SQLException
      */
     private void haeSimulaattorinTulokset() throws SQLException {
-        String id = Integer.toString(simulaatioDataOlio.getId());
+        String id = Integer.toString(simulaatioTulos.getId());
         String query = "SELECT * FROM tulokset WHERE tulokset.tuloksetID="+id;
         ArrayList<SimpleIntegerProperty> tuloksetJotkaKokonaislukuja = new ArrayList<>();
         ArrayList<SimpleDoubleProperty> tuloksetJotkaLiukulukuja = new ArrayList<>();
@@ -93,8 +113,8 @@ public class DAO implements IDAO {
                     for (int j = 13; j < resultSetMetaData.getColumnCount() + 1; j++) {
                         tuloksetJotkaLiukulukuja.add((new SimpleDoubleProperty(rs.getDouble(j))));
                     }
-                    SimulaatioData.SimulaattorinTulokset simulaattorinTulokset = simulaatioDataOlio.new SimulaattorinTulokset(tuloksetJotkaKokonaislukuja, tuloksetJotkaLiukulukuja);
-                    simulaatioDataOlio.setTulokset(simulaattorinTulokset);
+                    SimulaatioData.SimulaattorinTulokset simulaattorinTulokset = simulaatioTulos.new SimulaattorinTulokset(tuloksetJotkaKokonaislukuja, tuloksetJotkaLiukulukuja);
+                    simulaatioTulos.setTulokset(simulaattorinTulokset);
             }
         }
     }
@@ -281,6 +301,7 @@ public class DAO implements IDAO {
      * @throws SQLException
      */
     private void tuloksetINT(Laskenta suureet) throws SQLException {
+        int indexTulokset_1 = 1;
         String query = "INSERT INTO tulokset (" +
                 "                tuloksetID," +
                 "                simulaatioID," +
@@ -326,6 +347,7 @@ public class DAO implements IDAO {
      */
 
     private void tuloksetDouble(Laskenta suureet) throws SQLException {
+        int indexTulokset_2 = 1;
         String query = "UPDATE tulokset SET aktiiviaikaSaapuva = ?, aktiiviaikaElektroniikka = ?, aktiiviaikaPalamatonJate = ?, aktiiviaikaPalavaJate = ?, kokonaisaika= ?, jatteenKokonaismaara= ?, suoritusteho= ?, avgJononPituusSaapuva= ?, avgJononPituusElektroniikka= ?, avgJononPituusPalamatonJate= ?,avgJononPituusPalavaJate= ?, avgLapimenoSaapuva= ?, avgLapimenoElektroniikka= ?, avgLapimenoPalamatonJate= ?, avgLapimenoPalavaJate= ?, kayttoasteSaapuva= ?, kayttoasteElektroniikka= ?,kayttoastePalamatonJate= ?,kayttoastePalavaJate= ?, avgPalveluaikaSaapuva= ?, avgPalveluaikaElektroniikka= ?,  avgPalveluaikaPalamatonJate= ?,avgPalveluaikaPalavaJate= ?, avgJatteenmaara = ?, jatemaaraElektroniikka = ?,jatemaaraPalamatonJate = ?,jatemaaraPalavaJate = ? WHERE tuloksetID=?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             //Palvelupisteiden aktiiviajat,Saapuminen Elektroniikka,Palava Jäte,Palamaton Jäte

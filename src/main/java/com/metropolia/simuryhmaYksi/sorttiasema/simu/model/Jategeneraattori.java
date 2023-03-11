@@ -7,6 +7,11 @@ import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.ContinuousGe
 /**
  * @author Samu Aikio, Joel Tikkanen, Kaspar Tullus
  */
+
+/**
+ * Jätegeneraattori-luokassa luodaan UI:sta tulevien parametrien ja satunnaislukugeneraattorin perusteella
+ * jätteiden ominaisuuksia.
+ */
 public class Jategeneraattori {
     /**
      * Todennäköisyysjakauma eri jätelajeille.
@@ -16,15 +21,16 @@ public class Jategeneraattori {
      * Jatelista, jonka jategeneraattori generoi generoiJatteet metodilla
      */
     private LinkedList<Jate> jatteet = new LinkedList<>();
-    //private final static int ERIJATTEIDENLKM = 3;
 
-    // Jakauman mukainen satunnaisluku generaattori
+    /**
+     * Satunnaislukugeneraattorin muuttuja
+     */
     private ContinuousGenerator generaattori;
 
     /**
-     * 
-     * @param todT
-     * @param generaattori
+     * Konstruktori
+     * @param todT UI:sta tulevat todennäköisyydet jätteille
+     * @param generaattori Satunnaislukugeneraattori
      */
     public Jategeneraattori(int[] todT, ContinuousGenerator generaattori) {
         this.todT = todT;
@@ -44,7 +50,7 @@ public class Jategeneraattori {
      * 
      * Kun arvottu luku on väliltä [0, 2], niin voimme hyödyntää sitä helposti Jätelaji enumin käsittelyssä.
      * 
-     * @param arr
+     * @param arr arvottu numero
      * @return arvottu numero väliltä [0,2]
      */
     public int arvoArvo(int[] arr){
@@ -93,8 +99,8 @@ public class Jategeneraattori {
     }
 
     /**
-     * 
-     * @return jatteet
+     * Getteri jätelistalle
+     * @return palauttaa Jäte-tyyppisen listan jätteistä
      */
     public LinkedList<Jate> getJatteet(){
         return jatteet;

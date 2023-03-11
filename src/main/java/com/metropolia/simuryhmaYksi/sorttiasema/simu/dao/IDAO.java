@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
- * Data Access Objectin rajapinta
+ */
+
+/**Data Access Objectin rajapinta
  */
 
 public interface IDAO {

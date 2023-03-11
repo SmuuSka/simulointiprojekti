@@ -6,43 +6,93 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Kello;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
- * 
+ */
+
+ /**
  * Laskentaluokassa käsitellään havainnolliset suureet järjestelmän suorituskykysuureiksi.
  */
 
 public class Laskenta {
 
-    // Palvelupisteiden lukumäärä
+     /**
+      * Palvelupisteiden lukumäärä
+      */
     private final int LKM = 4;
 
-    // Havainnoitavia suureita
+     /**
+      * Saapuneiden asiakkaiden lukumäärä palvelupisteillä
+      */
     private int saapuneidenLkm;
+
+     /**
+      * Palveltujen asiakkaiden määrä palvelupisteillä
+      */
     private int[] palveltujenLkm;
+     /**
+      * Palveltujen asiakkaiden määrä palvelupisteellä
+      */
     private int palveltujenMaara;
+
+     /**
+      * Palvelupisteiden aktiiviajat
+      */
     private double[] aktiiviajat;
+
+     /**
+      * Simulaation kokonaisaika
+      */
     private double kokonaisaika = Kello.getInstance().getAika();
+
+     /**
+      * Palvelupisteiden kokonaisoleskeluajat
+      */
     private long[] kokonaisoleskeluajat;
+     /**
+      * Jätteiden kokonaismäärä
+      */
     private double jatteenKokonaismaara;
+     /**
+      * Jätemäärät palvelupisteillä
+      */
     private double[] jatteenMaarat;
     
 
     // Johdettuja suureita
+     /**
+      * Simulaation suoritusteho
+      */
     private double suoritusteho;
+     /**
+      * Keskimääräiset jonopituudet palvelupisteillä
+      */
     private double[] keskmJononpituudet = new double[LKM];
+     /**
+      * Keskimääräiset läpimenoajat palvelupisteillä
+      */
     private double[] keskmLapimenoajat = new double[LKM];
+     /**
+      * Palvelupisteiden käyttöasteet
+      */
     private double[] kayttoasteet = new double[LKM];
+     /**
+      * Keskimääräiset palveluajat palvelupisteillä
+      */
     private double[] keskmPalveluajat = new double[LKM];
+
+     /**
+      * Keskimääräinen jätemäärä
+      */
     private double keskmJatteenmaara;
     
   
     
     /**
-     * @param saapuneidenLkm
-     * @param palveltujenLkm
-     * @param aktiiviajat
-     * @param kokonaisoleskeluajat
-     * @param jatteenKokonaismaara
-     * @param jatteenMaarat
+     * @param saapuneidenLkm OmaMoottorista tuleva parametri
+     * @param palveltujenLkm OmaMoottorista tuleva parametri
+     * @param aktiiviajat OmaMoottorista tuleva parametri
+     * @param kokonaisoleskeluajat OmaMoottorista tuleva parametri
+     * @param jatteenKokonaismaara OmaMoottorista tuleva parametri
+     * @param jatteenMaarat OmaMoottorista tuleva parametri
      */
     public Laskenta(int saapuneidenLkm, int[] palveltujenLkm, double[] aktiiviajat, long[] kokonaisoleskeluajat, double jatteenKokonaismaara, double[] jatteenMaarat) {
         this.saapuneidenLkm = saapuneidenLkm;
@@ -137,66 +187,122 @@ public class Laskenta {
         
     }
 
-    public int getLKM() {
-        return LKM;
-    }
-
+     /**
+      * Getteri saapuneiden lukumäärälle
+      * @return palauttaa saapuneiden lukumäärän
+      */
     public int getSaapuneidenLkm() {
         return saapuneidenLkm;
     }
 
+     /**
+      * Getteri palveltujen lukumäärälle
+      * @return palauttaa palveltujen lukumäärän palvelupisteillä
+      */
     public int[] getPalveltujenLkm() {
         return palveltujenLkm;
     }
 
+     /**
+      * Getteri palveltujen lukumäärälle
+      * @return palauttaa palveltujen lukumäärän
+      */
     public int getPalveltujenMaara() {
         return palveltujenMaara;
     }
+     /**
+      * Getteri palvelupisteiden aktiiviajoille
+      * @return palauttaa palvelupisteiden aktiiviajat
+      */
 
     public double[] getAktiiviajat() {
         return aktiiviajat;
     }
 
+     /**
+      * Getteri simulaation kokonaisajalle
+      * @return palauttaa simulaation kokonaisajan
+      */
     public double getKokonaisaika() {
         return kokonaisaika;
     }
 
+     /**
+      * Getteri palvelupisteiden kokonaisoleskeluajat
+      * @return palauttaa palvelupisteiden kokonaisajat
+      */
     public long[] getKokonaisoleskeluajat() {
         return kokonaisoleskeluajat;
     }
+     /**
+      * Getteri jätteiden kokonaismäärälle
+      * @return palauttaa jätteiden kokonaismäärän
+      */
 
     public double getJatteenKokonaismaara() {
         return jatteenKokonaismaara;
     }
+     /**
+      * Getteri jätteiden kokonaismäärille palvelupisteillä
+      * @return palauttaa palvelupisteiden kokonaisjätemäärät
+      */
 
     public double[] getJatteenMaarat() {
         return jatteenMaarat;
     }
+     /**
+      * Getteri simulaation suoritusteholle
+      * @return palauttaa suoritustehon
+      */
 
     public double getSuoritusteho() {
         return suoritusteho;
     }
 
+     /**
+      * Getteri keskimääräisille jononpituuksille palvelupisteillä
+      * @return palauttaa keskimääräiset jononpituudet palvelupisteillä
+      */
     public double[] getKeskmJononpituudet() {
         return keskmJononpituudet;
     }
 
+     /**
+      * Getteri keskimääräisille läpimenoajoille palvelupisteillä
+      * @return palauttaa keskimääräiset läpimenoajat palvelupisteillä
+      */
     public double[] getKeskmLapimenoajat() {
         return keskmLapimenoajat;
     }
 
+     /**
+      * Getteri keskimääräisille palvelupisteiden käyttöasteet
+      * @return palauttaa keskimääräiset palvelupisteiden käyttöasteet
+      */
     public double[] getKayttoasteet() {
         return kayttoasteet;
     }
 
+     /**
+      * Getteri keskimääräisille palveluajoille palvelupisteillä
+      * @return palauttaa keskimääräiset palvelupisteiden palveluajat
+      */
     public double[] getKeskmPalveluajat() {
         return keskmPalveluajat;
     }
 
+     /**
+      * Getteri jätemäärien keskiarvolle
+      * @return palauttaa jätemäärän keskiarvon
+      */
     public double getKeskmJatteenmaara() {
         return keskmJatteenmaara;
     }
 
+     /**
+      *
+      * @return palauttaa merkkijonoesityksen laskentaluokasta
+      */
     @Override
     public String toString() {
         return "Laskenta{" +
