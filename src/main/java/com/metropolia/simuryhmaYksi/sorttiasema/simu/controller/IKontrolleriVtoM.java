@@ -10,15 +10,48 @@ import java.sql.SQLException;
  */
 
 public interface IKontrolleriVtoM {
+
+  /**
+   * Käynnistää simuloinnin
+   * @throws SQLException
+   */
   void kaynnistaSimulointi() throws SQLException;
-    void nopeuta();
-   void hidasta();
-   void setVisualisointi(IVisualisointi visualisointi);
-    void lopetaSimulointi() throws SQLException;
-   void poistaTulos(int ID) throws SQLException;
+  /**
+   * Nopeuttaa simulointi, eli vähentää viivettä
+   */
+  void nopeuta();
+  /**
+   * Hidastaa simulointi, eli lisää viivettä
+   */
+  void hidasta();
+  /**
+   * Asetetaan visualisointi
+   * @param visualisointi
+   */
+  void setVisualisointi(IVisualisointi visualisointi);
+  /**
+   * Kutsuu moottorin lopetasimulaatio metodia
+   * @throws SQLException
+   */
+  void lopetaSimulointi() throws SQLException;
+  /**
+   * Poistaa yksittäisen tuloksen
+   * @param ID
+   * @throws SQLException
+   */
+  void poistaTulos(int ID) throws SQLException;
+  /**
+   * Näyttää tietokantaikkunan
+   * @throws SQLException
+   */
   void showTuloksetAction() throws SQLException;
-
-    void poistaKaikkiDATA() throws SQLException;
-
-    void avaaDATAYHTEYS();
+  /**
+   * Poistaa kaikki taulut
+   * @throws SQLException
+   */
+  void poistaKaikkiDATA() throws SQLException;
+  /**
+  * Tietokanta yhteyden avaaminen
+  */
+  void avaaDATAYHTEYS();
 }

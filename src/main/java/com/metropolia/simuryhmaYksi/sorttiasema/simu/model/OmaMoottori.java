@@ -15,11 +15,32 @@ import java.util.Arrays;
 public class OmaMoottori extends Moottori {
 
     private Saapumisprosessi saapumisprosessi;
+    /**
+     * Järjestelmästä poistuneiden määrä
+     */
     private int poistunutMaara = 0;
+    /**
+     * 
+     */
+    /**
+    * Järjestelmään saapuneiden määrä
+    */
     private int saapumistenMaara = 0;
+    /**
+    * Apumuuttuja elektroniikka jätteen määrälle.
+    */
     private double ELEKTROjatteidenmaara = 0;
+    /**
+    * Apumuuttuja palavan jätteen määrälle.
+    */
     private double PALAVAjatteidenmaara = 0;
+    /**
+    * Apumuuttuja palamattoman jätteen määrälle.
+    */
     private double PALAMATONjatteidenmaara = 0;
+    /**
+    * @param kontrolleri
+    */
     public OmaMoottori(IKontrolleriMtoV kontrolleri) {
         super(kontrolleri);
         palvelupisteet = new Palvelupiste[4];
@@ -35,12 +56,17 @@ public class OmaMoottori extends Moottori {
         saapumisprosessi = new Saapumisprosessi(new Negexp(15 * kontrolleri.getAktiivisuus(), 5), tapahtumalista, TapahtumanTyyppi.PALVELUTISKI_SAAPUMINEN);
         System.out.println(Arrays.toString(palvelupisteet));
     }
-
+    /**
+     * Luodaan ensimmäinen saapuminen järjestelmään
+     */
     @Override
     protected void alustukset() {
-                saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
+            saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
     }
-
+    /**
+     * @param Suoritettva B-tapahtuma
+     * Suoritetaan B-tapahtuma sekä siihen liittyvät animaatiot
+     */
     @Override
     protected void suoritaTapahtuma(Tapahtuma t) {  // B-vaiheen tapahtumat
                 Asiakas a;
@@ -173,13 +199,16 @@ public class OmaMoottori extends Moottori {
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
     }
-
+    /**
+     * Asetetaan käyttöliittymään tieto, mitkä jonot ovat varattuja
+     */
     public void setVarattu(){
 
         int palvelutiskiPituus = palvelupisteet[0].getJono().size();
         int elektroniikkaPituus = palvelupisteet[1].getJono().size();
         int palamatonPituus = palvelupisteet[2].getJono().size();
         int palavaPituus = palvelupisteet[3].getJono().size();
+
         kontrolleri.getVisualisointi().setSAAPUMINEN_VARATTU(palvelutiskiPituus !=0);
 
         kontrolleri.getVisualisointi().setEPA_VARATTU(palamatonPituus !=0);
@@ -187,11 +216,9 @@ public class OmaMoottori extends Moottori {
         kontrolleri.getVisualisointi().setELEKTRO_VARATTU(elektroniikkaPituus !=0);
 
         kontrolleri.getVisualisointi().setPALAVA_VARATTU(palavaPituus !=0);
-
-
     }
 
-
+    // Asetetaan käyttöliittymään jonojen pituudet sekä saapuneiden, että poistuneiden määrät
 	public void setTekstit(){
 
         // Asetetaan saapumisjonon pituus
@@ -209,7 +236,10 @@ public class OmaMoottori extends Moottori {
         // Asetetaan poistuneet teksti
         kontrolleri.getVisualisointi().lisaaPoistunutMaara(poistunutMaara);
 	}
-
+    /**
+     * Haetaan simulaation havainnolliset suureet, lasketaan niistä suorituskykysuureet Laskenta-luokan avulla.
+     * Tallennetaan nämä tiedot tietokantaan ja näytetään tietokanta-ikkuna käyttöliittymässä.
+     */
     @Override
     protected void tulokset() throws SQLException {
         poistunutMaara = 0;
@@ -257,7 +287,9 @@ public class OmaMoottori extends Moottori {
         Asiakas.i = 0;
     }
 
-
+    /**
+     * Lopettaa simuloinnin.
+     */
     @Override
     public void lopetasimulaatio() {
         lopetaSimuMootori();

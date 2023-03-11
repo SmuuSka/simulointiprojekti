@@ -8,8 +8,13 @@ import com.metropolia.simuryhmaYksi.sorttiasema.eduni.distributions.ContinuousGe
  * @author Samu Aikio, Joel Tikkanen, Kaspar Tullus
  */
 public class Jategeneraattori {
-
+    /**
+     * Todennäköisyysjakauma eri jätelajeille.
+     */
     private int[] todT;
+    /**
+     * Jatelista, jonka jategeneraattori generoi generoiJatteet metodilla
+     */
     private LinkedList<Jate> jatteet = new LinkedList<>();
     //private final static int ERIJATTEIDENLKM = 3;
 
