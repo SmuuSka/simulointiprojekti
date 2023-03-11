@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
- *
+ */
+
+/**
  * SimulaatioData-luokassa käsitellään tietokannasta haettua tietoa ja tehdään tuloksista tulosolio.
  */
 

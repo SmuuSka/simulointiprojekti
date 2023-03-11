@@ -11,6 +11,9 @@ import java.util.ResourceBundle;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
+ */
+
+/**
  * Data Access Object
  * Luokan tarkoituksena on tietokannasta tuoda/viedä dataa
  * @see IDAO

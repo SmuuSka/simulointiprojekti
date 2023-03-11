@@ -8,7 +8,9 @@ import java.util.LinkedList;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
- *
+ */
+
+/**
  * Asiakas-luokka määrittelee simulaattorissa käytettävän asiakkaan ominaisuudet
  */
 
@@ -33,11 +35,6 @@ public class Asiakas {
 	 * Apumuuttuja asiakkaan indeksoinnin ylläpitämiseen
 	 */
 	public static int i = 0;
-	/**
-	 *
-	 */
-	//private static long sum = 0;
-
 	/**
 	 * Jate-tyyppinen lista asiakkaan jätteille
  	 */

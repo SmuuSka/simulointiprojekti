@@ -2,7 +2,9 @@ package com.metropolia.simuryhmaYksi.sorttiasema.simu.model;
 
 /**
  * @author Samu Aikio, Kaspar Tullus, Joel Tikkanen
- *
+ */
+
+/*
  * Simulaattorissa käytettävät tapahtumatyypit
  */
 
