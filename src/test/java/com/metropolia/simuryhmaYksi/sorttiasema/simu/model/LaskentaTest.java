@@ -77,7 +77,11 @@ public class LaskentaTest {
         l.laske();
         double[] keskmla = new double[4];
         for (int i = 0;i<4;i++){
-            keskmla[i] = kokonaisoleskeluajat[i]/palveltujenLkm[i];
+            if (palveltujenLkm[i] == 0){
+                keskmla[i] = 0;
+            } else {
+                keskmla[i] = kokonaisoleskeluajat[i]/palveltujenLkm[i];
+            }
         }
         assertArrayEquals(keskmla, l.getKeskmLapimenoajat(),  "getKeskmLapimenoajat ei toimi oikein.");
     }
@@ -87,7 +91,11 @@ public class LaskentaTest {
         l.laske();
         double[] keskmpa = new double[4];
         for (int i = 0;i<4;i++){
-            keskmpa[i] = aktiiviajat[i]/palveltujenLkm[i];
+            if (palveltujenLkm[i] == 0){
+                keskmpa[i] = 0;
+            } else {
+                keskmpa[i] = aktiiviajat[i]/palveltujenLkm[i];
+            }
         }
         assertArrayEquals(keskmpa, l.getKeskmPalveluajat(), "getKeskmPalveluajat ei toimi oikein.");
     }
