@@ -16,12 +16,29 @@ import java.sql.SQLException;
  */
 
 public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
+    /**
+     * Simulaattorin käyttöliittymä
+     */
     private ISimulaattoriUI ui;
+    /**
+     * Simulaation moottori
+     */
     private IMoottori moottori;
+    /**
+     * DAO
+     */
     private IDAO tietokanta;
+    /**
+     * visualisointi 
+     */
     private IVisualisointi nayttoVisual;
+    /**
+     * Apumuuttuja
+     */
     private int counter = 0;
-
+    /**
+     * @param ui
+     */
     public Kontrolleri(ISimulaattoriUI ui) {
         this.ui = ui;
     }
@@ -74,7 +91,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     }
 
 
-
     @Override
     public void tallennaTulokset(Laskenta suureet) throws SQLException {
         int onkoAjetaanloppuun = 0;
@@ -86,7 +102,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         ui.showTulokset(tietokanta.simulaatioColumnData());
         tietokanta.suljeYhteys();
     }
-
 
     @Override
     public void poistaTulos(int ID) throws SQLException {
@@ -159,11 +174,16 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
     public void setSAAPUMISJononPituus(int pituus) {
         ui.setSAAPUMINENJonossa(pituus);
     }
-
+    /**
+     * 
+     * @param viive
+     */
     public void setAnimaationViive(int viive) {
         ui.setAnimaationViive(viive);
     }
-
+    /**
+     * Haetaan käyttöliittymästä käyttäjän asettama purkunopeus
+     */
     public double getPurkuNopeus(){
         return ui.getPurkuNopeus();
     }

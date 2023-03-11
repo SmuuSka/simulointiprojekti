@@ -9,5 +9,5 @@ public enum TapahtumanTyyppi{
 	ELEKTRONIIKKA_SAAPUMINEN, // Asiakas saapuu elektroniikkalavan jonoon
 	PALAMATONJATE_SAAPUMINEN, // Asiakas saapuu palamattoman jätteen jonoon
 	PALAVAJATE_SAAPUMINEN, // Asiakas saapuu palavan jätteen jonoon
-	POISTUMINEN // Asiakas poistuu joltakin jätelavalta (demoversiossa tämä on palavan jätteen lava)
+	POISTUMINEN // Asiakas poistuu joltakin jätelavalta
 }

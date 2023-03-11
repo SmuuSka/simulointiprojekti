@@ -11,10 +11,20 @@ import com.metropolia.simuryhmaYksi.sorttiasema.simu.framework.Tapahtumalista;
  */
 
 public class Jatelava extends Palvelupiste {
-
+    /**
+     * Jätelavalle olevan jätteen määrä
+     */
     private double maara;
+    /**
+     * Jätelaji mitä jätelava vastaanottaa
+     */
     private final Jatelaji lavanTyyppi;
-
+    /**
+     * 
+     * @param generator
+     * @param tapahtumalista
+     * @param lavanTyyppi
+     */
     public Jatelava(ContinuousGenerator generator, Tapahtumalista tapahtumalista, Jatelaji lavanTyyppi) {
         super(generator, tapahtumalista);
         this.lavanTyyppi = lavanTyyppi;
@@ -73,14 +83,15 @@ public class Jatelava extends Palvelupiste {
 
     /**
      * 
-     * @return
+     * @return Jatelaji jota kyseinen jätelava.
      */
     public Jatelaji getLavanTyyppi() {
         return lavanTyyppi;
     }
 
-    
-
+    /**
+     * @return merkkijonoesitys oliosta.
+     */
     public String toString(){
         return "Lava: "+getLavanTyyppi()+", Jätteen määrä lavalla: "+getMaara()+" kg"; 
     }
