@@ -49,7 +49,6 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
         moottori = new OmaMoottori(this);
         tietokanta = new DAO();
         moottori.setAjetaanTyhjaksi(ui.getAjeetaankoLoppuun());
-        //tietokanta.poistaTaulu();
         //Asetetaan simulointiaika ja viive moottorille
         //Tallennetaan simulointiparametrit tietokantaan
         moottori.setSimulointiaika(ui.getAika());
